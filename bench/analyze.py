@@ -67,7 +67,7 @@ def fname(prefix, rix, g):
 summary = {"notes": __doc__, "groups": []}
 for g in GROUPS:
     out = {"label": g[0], "tag": g[1]}
-    first = {}
+    first, ran, allrec = {}, {}, {}
     for key, prefix, rix, _, _ in PLANNERS:
         name = fname(prefix, rix, g)
         D, P = load(name)
@@ -87,11 +87,18 @@ for g in GROUPS:
                                    for st in {r["status"] for r in val if not r["success"]}}
         out[key] = s
         first[key] = {(r["scene"], r["index"]): r for r in ok if r.get("trial", 0) == 0}
+        ran[key] = {(r["scene"], r["index"]) for r in val}
+        allrec[key] = D["records"]
     for key in ("curobo_v1", "curobo_v2"):
         if out["vamp"] and out[key]:
             both = sorted(set(first["vamp"]) & set(first[key]))
-            out[f"{key}_over_vamp"] = {
-                "median_wall_ratio": out[key]["wall_ms"]["median"] / out["vamp"]["wall_ms"]["median"],
+            # VAMP restricted to exactly the queries this cuRobo version ran (v2 runs a subset)
+            sub = [r for r in allrec["vamp"] if r["valid"] and (r["scene"], r["index"]) in ran[key]]
+            vs = [r for r in sub if r["success"]]
+            vamp_sub = {"queries": len(sub), "success": len(vs), "wall_ms": stats([wall_ms("vamp", r) for r in vs])}
+            out[f"{key}_vs_vamp_same_queries"] = {
+                "vamp_on_same_queries": vamp_sub,
+                "median_wall_ratio": out[key]["wall_ms"]["median"] / vamp_sub["wall_ms"]["median"],
                 "paired_wall_ratio": stats([wall_ms(key, first[key][k]) / wall_ms("vamp", first["vamp"][k]) for k in both])}
     summary["groups"].append(out)
     cell = lambda s: f"{s['success']}/{s['queries']} med {s['wall_ms']['median']:.3g} ms" if s else "pending"

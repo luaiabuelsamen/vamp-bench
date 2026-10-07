@@ -31,16 +31,16 @@ for s in $SETS; do
   $PL $OUT/curobo_${sc}_$c.power.json -- $CP bench/curobo_mbm.py --robot $c --robot-cfg configs/${c}_shared.yml \
     --problems problems/$sc.pkl --tag $sc --trials 10 --out $OUT/curobo_${sc}_$c.json || echo "FAILED v1 $sc"
 done
-# cuRoboV2 (current; existing build in clean_env venv, editable -> curobo_berkeley/curobo ac5f931)
+# cuRoboV2 (current; ~10-20 s/plan on this board, so a deterministic subset under a ~2 h budget; existing build in clean_env venv, editable -> curobo_berkeley/curobo ac5f931)
 C2=~/projects/clean_env/venv/bin/python
 export PYTHONPATH=bench
 for r in panda ur5; do
-  $PL $OUT/curobo2_mbm_$r.power.json -- $C2 bench/curobo2_mbm.py --robot $r --out $OUT/curobo2_mbm_$r.json || echo "FAILED v2 $r"
+  $PL $OUT/curobo2_mbm_$r.power.json -- $C2 bench/curobo2_mbm.py --robot $r --stride 10 --max-attempts 20 --budget-s 1500 --out $OUT/curobo2_mbm_$r.json || echo "FAILED v2 $r"
 done
 for s in $SETS; do
   IFS=: read -r sc c m <<<"$s"
   $PL $OUT/curobo2_${sc}_$c.power.json -- $C2 bench/curobo2_mbm.py --robot $c --robot-cfg configs/${c}_shared_v2.yml \
-    --problems problems/$sc.pkl --tag $sc --trials 10 --out $OUT/curobo2_${sc}_$c.json || echo "FAILED v2 $sc"
+    --problems problems/$sc.pkl --tag $sc --trials 1 --max-attempts 20 --budget-s 900 --out $OUT/curobo2_${sc}_$c.json || echo "FAILED v2 $sc"
 done
 # every cuRobo success re-checked with VAMP's collision checker
 export PYTHONPATH=

@@ -17,17 +17,20 @@ def _pose(o):
 
 
 def problem_to_world(p):
+    # Names are unique per problem: cuRoboV2 caches meshes by name and would otherwise reuse a previous
+    # problem's geometry ("Mesh already in cache, reusing existing instance").
+    tag = f"{p['problem']}_{p.get('index', 0)}_"
     cuboids, capsules, spheres = [], [], []
     for o in p["sphere"]:
-        spheres.append(Sphere(name=o["name"], radius=o["radius"], pose=list(o["position"]) + [1, 0, 0, 0]))
+        spheres.append(Sphere(name=tag + o["name"], radius=o["radius"], pose=list(o["position"]) + [1, 0, 0, 0]))
     for o in p["cylinder"]:
         if p["problem"] == "box":
-            cuboids.append(Cuboid(name=o["name"], pose=_pose(o), dims=[2 * o["radius"], 2 * o["radius"], o["length"]]))
+            cuboids.append(Cuboid(name=tag + o["name"], pose=_pose(o), dims=[2 * o["radius"], 2 * o["radius"], o["length"]]))
         else:
             h = o["length"] / 2
-            capsules.append(Capsule(name=o["name"], radius=o["radius"], base=[0, 0, -h], tip=[0, 0, h], pose=_pose(o)))
+            capsules.append(Capsule(name=tag + o["name"], radius=o["radius"], base=[0, 0, -h], tip=[0, 0, h], pose=_pose(o)))
     for o in p["box"]:
-        cuboids.append(Cuboid(name=o["name"], pose=_pose(o), dims=[2 * v for v in o["half_extents"]]))
+        cuboids.append(Cuboid(name=tag + o["name"], pose=_pose(o), dims=[2 * v for v in o["half_extents"]]))
     # Cuboids stay analytic (cuRobo OBB checker); capsules/spheres become triangle meshes (cuRobo MESH checker),
     # since cuRobo v1 has no analytic capsule/sphere obstacle.
     meshes = [o.get_mesh() for o in capsules + spheres]
