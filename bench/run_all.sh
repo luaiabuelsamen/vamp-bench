@@ -20,20 +20,36 @@ for s in gantry_pillars:ur5erail gantry_free:ur5erail ur5e_pillars:ur5e; do
 done
 fi
 if [ $MODE != vamp ]; then
+SETS="gantry_pillars:ur5e_rail:ur5erail gantry_free:ur5e_rail:ur5erail ur5e_pillars:ur5e:ur5e"
+# cuRobo v1 (the version the paper used)
 export PYTHONPATH=third_party/curobo_v1/src:bench
 for r in panda ur5; do
-  $PL $OUT/curobo_mbm_$r.power.json -- $CP bench/curobo_mbm.py --robot $r --out $OUT/curobo_mbm_$r.json
+  $PL $OUT/curobo_mbm_$r.power.json -- $CP bench/curobo_mbm.py --robot $r --out $OUT/curobo_mbm_$r.json || echo "FAILED v1 $r"
 done
-for s in gantry_pillars:ur5e_rail gantry_free:ur5e_rail ur5e_pillars:ur5e; do
-  sc=${s%%:*}; c=${s##*:}
-  $PL $OUT/curobo_${sc}_$c.power.json -- $CP bench/curobo_mbm.py --robot $c --robot-cfg configs/${c}_shared.yml --problems problems/$sc.pkl --tag $sc --trials 10 --out $OUT/curobo_${sc}_$c.json
+for s in $SETS; do
+  IFS=: read -r sc c m <<<"$s"
+  $PL $OUT/curobo_${sc}_$c.power.json -- $CP bench/curobo_mbm.py --robot $c --robot-cfg configs/${c}_shared.yml \
+    --problems problems/$sc.pkl --tag $sc --trials 10 --out $OUT/curobo_${sc}_$c.json || echo "FAILED v1 $sc"
 done
+# cuRoboV2 (current; existing build in clean_env venv, editable -> curobo_berkeley/curobo ac5f931)
+C2=~/projects/clean_env/venv/bin/python
+export PYTHONPATH=bench
+for r in panda ur5; do
+  $PL $OUT/curobo2_mbm_$r.power.json -- $C2 bench/curobo2_mbm.py --robot $r --out $OUT/curobo2_mbm_$r.json || echo "FAILED v2 $r"
+done
+for s in $SETS; do
+  IFS=: read -r sc c m <<<"$s"
+  $PL $OUT/curobo2_${sc}_$c.power.json -- $C2 bench/curobo2_mbm.py --robot $c --robot-cfg configs/${c}_shared_v2.yml \
+    --problems problems/$sc.pkl --tag $sc --trials 10 --out $OUT/curobo2_${sc}_$c.json || echo "FAILED v2 $sc"
+done
+# every cuRobo success re-checked with VAMP's collision checker
 export PYTHONPATH=
-for f in $OUT/curobo_mbm_panda.json:panda: $OUT/curobo_mbm_ur5.json:ur5: \
-         $OUT/curobo_gantry_pillars_ur5e_rail.json:ur5erail:problems/gantry_pillars.pkl \
-         $OUT/curobo_gantry_free_ur5e_rail.json:ur5erail:problems/gantry_free.pkl \
-         $OUT/curobo_ur5e_pillars_ur5e.json:ur5e:problems/ur5e_pillars.pkl; do
-  IFS=: read -r j m p <<<"$f"; $VP bench/crossval.py $j $m $p
+for v in curobo curobo2; do
+  for r in panda ur5; do [ -f $OUT/${v}_mbm_$r.json ] && $VP bench/crossval.py $OUT/${v}_mbm_$r.json $r || true; done
+  for s in $SETS; do
+    IFS=: read -r sc c m <<<"$s"
+    [ -f $OUT/${v}_${sc}_$c.json ] && $VP bench/crossval.py $OUT/${v}_${sc}_$c.json $m problems/$sc.pkl || true
+  done
 done
 fi
 echo ALL DONE

@@ -1,11 +1,12 @@
 """Aggregate raw runs into committed results: results/summary.json, results/records/*.json, results/figure.png.
 
 Primary timing metric (apples to apples): wall-clock per query on the same Jetson, measured from Python.
-  VAMP:   env construction + RRT-Connect + simplification          (wall_us)
-  cuRobo: update_world + plan_single_js incl. CUDA sync            (world_update_us + plan_wall_us)
+  VAMP:      env construction + RRT-Connect + simplification            (wall_us)
+  cuRobo v1: update_world + plan_single_js incl. CUDA sync              (world_update_us + plan_wall_us)
+  cuRoboV2:  clear cache + update_world + reset_seed + plan_cspace, sync (world_update_us + plan_wall_us)
 Planner-internal times are reported too (VAMP total_us; cuRobo solve_time_us).
 Time distributions are over successful queries; success rate is reported separately.
-cuRobo cells are null ("pending") until its clean GPU run exists in results/raw.
+A planner's cells are null ("pending") until its raw file exists in results/raw.
 """
 import json
 from pathlib import Path
@@ -20,6 +21,11 @@ GROUPS = [  # (label, tag, vamp module, curobo robot)
     ("UR5e+rail · no obstacles (paper)", "gantry_free", "ur5erail", "ur5e_rail"),
     ("UR5e · pillars (paper)", "ur5e_pillars", "ur5e", "ur5e"),
 ]
+# key, file prefix, which robot name the file uses, display name, colour (validated categorical slots 1-3)
+PLANNERS = [("vamp", "vamp", 2, "VAMP, 1 CPU core (Cortex-A78AE, NEON)", "#2a78d6"),
+            ("curobo_v1", "curobo", 3, "cuRobo v1 (paper's version), Orin NX GPU", "#eb6834"),
+            ("curobo_v2", "curobo2", 3, "cuRoboV2 (current), Orin NX GPU", "#1baf7a")]
+SHORT = {"vamp": "VAMP", "curobo_v1": "cuRobo v1", "curobo_v2": "cuRoboV2"}
 
 
 def stats(x):
@@ -43,101 +49,100 @@ def slim(name, D):
     """Committed per-query records (paths dropped to keep git small)."""
     out = ROOT / f"results/records/{name}.json"; out.parent.mkdir(parents=True, exist_ok=True)
     meta = {k: v for k, v in D.items() if k != "records"}
-    recs = [{k: v for k, v in r.items() if k != "path"} for r in D["records"]]
-    json.dump({**meta, "records": recs}, open(out, "w"))
+    json.dump({**meta, "records": [{k: v for k, v in r.items() if k != "path"} for r in D["records"]]}, open(out, "w"))
 
 
-def vamp_times(r):
-    return r["wall_us"] / 1e3
+def wall_ms(key, r):
+    return r["wall_us"] / 1e3 if key == "vamp" else (r["world_update_us"] + r["plan_wall_us"]) / 1e3
 
 
-def curobo_times(r):
-    return (r["world_update_us"] + r["plan_wall_us"]) / 1e3
+def internal_ms(key, r):
+    return r["total_us"] / 1e3 if key == "vamp" else (r["solve_time_us"] or np.nan) / 1e3
+
+
+def fname(prefix, rix, g):
+    return f"{prefix}_{g[1]}_{g[rix]}"
 
 
 summary = {"notes": __doc__, "groups": []}
-for label, tag, vm, cr in GROUPS:
-    vname, cname = f"vamp_{tag}_{vm}", f"curobo_{tag}_{cr}"
-    V, Vp = load(vname); C, Cp = load(cname)
-    g = {"label": label, "tag": tag, "vamp": None, "curobo": None}
-    if V:
-        slim(vname, V)
-        vv = [r for r in V["records"] if r["valid"]]; vs = [r for r in vv if r["success"]]
-        g["vamp"] = {"source": f"results/records/{vname}.json", "queries": len(vv), "success": len(vs),
-                     "success_rate": len(vs) / len(vv), "wall_ms": stats([vamp_times(r) for r in vs]),
-                     "internal_ms": stats([r["total_us"] / 1e3 for r in vs]),
-                     "path_length_rad": stats([r["path_length_l2"] for r in vs]), "power": Vp}
-    if C:
-        slim(cname, C)
-        cv = [r for r in C["records"] if r["valid"]]; cs = [r for r in cv if r["success"]]
-        g["curobo"] = {"source": f"results/records/{cname}.json", "queries": len(cv), "success": len(cs),
-                       "success_rate": len(cs) / len(cv),
-                       "success_vamp_validated": sum(bool(r.get("vamp_validated")) for r in cs),
-                       "wall_ms": stats([curobo_times(r) for r in cs]),
-                       "plan_only_wall_ms": stats([r["plan_wall_us"] / 1e3 for r in cs]),
-                       "internal_ms": stats([r["solve_time_us"] / 1e3 for r in cs]),
-                       "path_length_rad": stats([r["path_length_l2"] for r in cs]),
-                       "failure_status": {s: sum(r["status"] == s for r in cv if not r["success"])
-                                          for s in {r["status"] for r in cv if not r["success"]}}, "power": Cp}
-    if V and C:
-        vmap = {(r["scene"], r["index"]): r for r in V["records"] if r.get("success") and r.get("trial", 0) == 0}
-        cmap = {(r["scene"], r["index"]): r for r in C["records"] if r.get("success") and r.get("trial", 0) == 0}
-        both = sorted(set(vmap) & set(cmap))
-        g["paired_wall_ratio_curobo_over_vamp"] = stats([curobo_times(cmap[k]) / vamp_times(vmap[k]) for k in both])
-        g["median_wall_ratio"] = g["curobo"]["wall_ms"]["median"] / g["vamp"]["wall_ms"]["median"]
-    summary["groups"].append(g)
-    fmt = lambda s: f"{s['success']}/{s['queries']} med {s['wall_ms']['median']:.3g} ms" if s else "pending"
-    print(f"{label:34s} VAMP {fmt(g['vamp'])} | cuRobo {fmt(g['curobo'])}")
+for g in GROUPS:
+    out = {"label": g[0], "tag": g[1]}
+    first = {}
+    for key, prefix, rix, _, _ in PLANNERS:
+        name = fname(prefix, rix, g)
+        D, P = load(name)
+        out[key] = None
+        if not D:
+            continue
+        slim(name, D)
+        val = [r for r in D["records"] if r["valid"]]; ok = [r for r in val if r["success"]]
+        s = {"source": f"results/records/{name}.json", "queries": len(val), "success": len(ok),
+             "success_rate": len(ok) / len(val), "wall_ms": stats([wall_ms(key, r) for r in ok]),
+             "internal_ms": stats([internal_ms(key, r) for r in ok]),
+             "path_length_rad": stats([r["path_length_l2"] for r in ok]), "power": P,
+             "settings": D.get("settings"), "plan_config": D.get("plan_config"), "planner": D.get("planner")}
+        if key != "vamp":
+            s["success_vamp_validated"] = sum(bool(r.get("vamp_validated")) for r in ok)
+            s["failure_status"] = {st: sum(r["status"] == st for r in val if not r["success"])
+                                   for st in {r["status"] for r in val if not r["success"]}}
+        out[key] = s
+        first[key] = {(r["scene"], r["index"]): r for r in ok if r.get("trial", 0) == 0}
+    for key in ("curobo_v1", "curobo_v2"):
+        if out["vamp"] and out[key]:
+            both = sorted(set(first["vamp"]) & set(first[key]))
+            out[f"{key}_over_vamp"] = {
+                "median_wall_ratio": out[key]["wall_ms"]["median"] / out["vamp"]["wall_ms"]["median"],
+                "paired_wall_ratio": stats([wall_ms(key, first[key][k]) / wall_ms("vamp", first["vamp"][k]) for k in both])}
+    summary["groups"].append(out)
+    cell = lambda s: f"{s['success']}/{s['queries']} med {s['wall_ms']['median']:.3g} ms" if s else "pending"
+    print(f"{g[0]:34s} " + " | ".join(f"{SHORT[k]} {cell(out[k])}" for k, *_ in PLANNERS))
 
 agree = ROOT / "results/collision_model_agreement.json"
 if agree.exists():
     summary["collision_model_agreement"] = json.load(open(agree))
 json.dump(summary, open(ROOT / "results/summary.json", "w"), indent=1, default=float)
 
-# ---- figure: one panel, log-scale wall time per query, paired rows per problem set ----
+# ---- figure: one panel, log-scale wall time per query, three rows per problem set ----
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-BLUE, ORANGE, INK, INK2, GRID, SURF = "#2a78d6", "#eb6834", "#0b0b0b", "#52514e", "#e6e5e0", "#fcfcfb"
+from matplotlib.ticker import FuncFormatter
+INK, INK2, GRID, SURF = "#0b0b0b", "#52514e", "#e6e5e0", "#fcfcfb"
 plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 9, "axes.edgecolor": INK2,
                      "axes.labelcolor": INK2, "xtick.color": INK2, "ytick.color": INK})
-G = summary["groups"]
-fig, ax = plt.subplots(figsize=(9, 1.2 + 0.8 * len(G)), facecolor=SURF)
+fig, ax = plt.subplots(figsize=(9.5, 1.3 + 1.05 * len(GROUPS)), facecolor=SURF)
 ax.set_facecolor(SURF)
 rng = np.random.default_rng(0)
-yt, yl, xs = [], [], []
-for i, (g, (label, tag, vm, cr)) in enumerate(list(zip(G, GROUPS))[::-1]):
-    y0 = float(i)
-    for dy, col, name, s, tf in ((0.18, BLUE, f"vamp_{tag}_{vm}", g["vamp"], vamp_times),
-                                 (-0.18, ORANGE, f"curobo_{tag}_{cr}", g["curobo"], curobo_times)):
-        y = y0 + dy
-        if not s:
-            ax.text(1.0, y, "cuRobo: pending clean GPU run", va="center", fontsize=8, color=INK2, style="italic")
+yt, xs = [], []
+offs = [0.27, 0.0, -0.27]
+for i, (g, s) in enumerate(list(zip(GROUPS, summary["groups"]))[::-1]):
+    for (key, prefix, rix, _, col), dy in zip(PLANNERS, offs):
+        y = i + dy
+        if not s[key]:
+            ax.text(1.0, y, f"{SHORT[key]}: pending clean GPU run", va="center", fontsize=7.5, color=INK2, style="italic")
             continue
-        D, _ = load(name)
-        vals = [tf(r) for r in D["records"] if r.get("success")]
+        D, _ = load(fname(prefix, rix, g))
+        vals = [wall_ms(key, r) for r in D["records"] if r.get("success")]
         xs += vals
-        ax.scatter(vals, y + rng.uniform(-0.09, 0.09, len(vals)), s=3, color=col, alpha=0.3, linewidths=0)
-        st = s["wall_ms"]
+        ax.scatter(vals, y + rng.uniform(-0.07, 0.07, len(vals)), s=3, color=col, alpha=0.3, linewidths=0)
+        st = s[key]["wall_ms"]
         ax.plot([st["p25"], st["p75"]], [y, y], color=col, lw=4, solid_capstyle="round")
-        ax.plot([st["median"]], [y], marker="|", ms=12, mew=2, color=INK)
-        ax.text(max(vals) * 1.5, y, f"median {st['median']:.3g} ms · {s['success']}/{s['queries']} solved",
-                va="center", fontsize=8, color=INK2)
-    yt.append(y0); yl.append(label)
-ax.set_xscale("log"); ax.set_yticks(yt); ax.set_yticklabels(yl)
-ax.set_ylim(-0.6, len(G) - 0.4)
-from matplotlib.ticker import FuncFormatter
+        ax.plot([st["median"]], [y], marker="|", ms=10, mew=2, color=INK)
+        ax.text(max(vals) * 1.5, y, f"{SHORT[key]} {st['median']:.3g} ms · {s[key]['success']}/{s[key]['queries']}",
+                va="center", fontsize=7.5, color=INK2)
+    yt.append(i)
+ax.set_xscale("log"); ax.set_yticks(yt); ax.set_yticklabels([g[0] for g in GROUPS][::-1])
+ax.set_ylim(-0.6, len(GROUPS) - 0.4)
 ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:g}"))
-ax.set_xlim(min(xs) / 2, max(10000, max(xs) * 30))
-ax.set_xlabel("wall-clock time per query, ms (log scale). Dots = successful queries, bar = IQR, tick = median")
+ax.set_xlim(min(xs) / 2, max(10000, max(xs) * 40))
+ax.set_xlabel("wall-clock time per query, ms (log scale). Dots = solved queries, bar = IQR, tick = median")
 ax.grid(axis="x", color=GRID, lw=0.8); ax.set_axisbelow(True)
 for sp in ("top", "right", "left"):
     ax.spines[sp].set_visible(False)
 ax.tick_params(axis="y", length=0)
-ax.legend(handles=[Line2D([], [], color=BLUE, lw=4, label="VAMP, 1 CPU core (Cortex-A78AE, NEON)"),
-                   Line2D([], [], color=ORANGE, lw=4, label="cuRobo v1, Orin NX GPU")],
-          loc="lower left", bbox_to_anchor=(0, 1.0), ncol=2, frameon=False)
+ax.legend(handles=[Line2D([], [], color=c, lw=4, label=n) for _, _, _, n, c in PLANNERS],
+          loc="lower left", bbox_to_anchor=(0, 1.0), ncol=3, frameon=False, fontsize=8)
 ax.set_title("Same Jetson Orin NX 16GB · identical sphere models, obstacles and joint-space queries",
              loc="left", fontsize=10, color=INK, pad=26)
 fig.tight_layout()

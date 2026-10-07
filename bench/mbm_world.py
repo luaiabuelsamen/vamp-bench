@@ -4,7 +4,11 @@ VAMP (vamp.problem_dict_to_vamp) models MBM cylinders as capsules (end points at
 except in the `box` scenario where they become cuboids with half extents (r, r, length/2).
 We reproduce exactly that here.
 """
-from curobo.geom.types import Capsule, Cuboid, Sphere, WorldConfig
+try:  # cuRobo v1
+    from curobo.geom.types import Capsule, Cuboid, Sphere, WorldConfig
+except ImportError:  # cuRoboV2 keeps the same obstacle types under _src and calls the world SceneCfg
+    from curobo._src.geom.types import Capsule, Cuboid, Sphere
+    from curobo._src.geom.types import SceneCfg as WorldConfig
 
 
 def _pose(o):

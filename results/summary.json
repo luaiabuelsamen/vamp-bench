@@ -1,5 +1,5 @@
 {
- "notes": "Aggregate raw runs into committed results: results/summary.json, results/records/*.json, results/figure.png.\n\nPrimary timing metric (apples to apples): wall-clock per query on the same Jetson, measured from Python.\n  VAMP:   env construction + RRT-Connect + simplification          (wall_us)\n  cuRobo: update_world + plan_single_js incl. CUDA sync            (world_update_us + plan_wall_us)\nPlanner-internal times are reported too (VAMP total_us; cuRobo solve_time_us).\nTime distributions are over successful queries; success rate is reported separately.\ncuRobo cells are null (\"pending\") until its clean GPU run exists in results/raw.\n",
+ "notes": "Aggregate raw runs into committed results: results/summary.json, results/records/*.json, results/figure.png.\n\nPrimary timing metric (apples to apples): wall-clock per query on the same Jetson, measured from Python.\n  VAMP:      env construction + RRT-Connect + simplification            (wall_us)\n  cuRobo v1: update_world + plan_single_js incl. CUDA sync              (world_update_us + plan_wall_us)\n  cuRoboV2:  clear cache + update_world + reset_seed + plan_cspace, sync (world_update_us + plan_wall_us)\nPlanner-internal times are reported too (VAMP total_us; cuRobo solve_time_us).\nTime distributions are over successful queries; success rate is reported separately.\nA planner's cells are null (\"pending\") until its raw file exists in results/raw.\n",
  "groups": [
   {
    "label": "Panda \u00b7 MBM",
@@ -85,9 +85,13 @@
       " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
       " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
      ]
-    }
+    },
+    "settings": null,
+    "plan_config": null,
+    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults"
    },
-   "curobo": null
+   "curobo_v1": null,
+   "curobo_v2": null
   },
   {
    "label": "UR5 \u00b7 MBM",
@@ -173,9 +177,13 @@
       " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
       " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
      ]
-    }
+    },
+    "settings": null,
+    "plan_config": null,
+    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults"
    },
-   "curobo": null
+   "curobo_v1": null,
+   "curobo_v2": null
   },
   {
    "label": "UR5e+rail \u00b7 pillars (paper)",
@@ -267,9 +275,13 @@
       " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
       " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
      ]
-    }
+    },
+    "settings": null,
+    "plan_config": null,
+    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults"
    },
-   "curobo": null
+   "curobo_v1": null,
+   "curobo_v2": null
   },
   {
    "label": "UR5e+rail \u00b7 no obstacles (paper)",
@@ -361,9 +373,13 @@
       " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
       " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
      ]
-    }
+    },
+    "settings": null,
+    "plan_config": null,
+    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults"
    },
-   "curobo": null
+   "curobo_v1": null,
+   "curobo_v2": null
   },
   {
    "label": "UR5e \u00b7 pillars (paper)",
@@ -455,9 +471,13 @@
       " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
       " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
      ]
-    }
+    },
+    "settings": null,
+    "plan_config": null,
+    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults"
    },
-   "curobo": null
+   "curobo_v1": null,
+   "curobo_v2": null
   }
  ],
  "collision_model_agreement": {

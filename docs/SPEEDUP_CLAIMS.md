@@ -18,7 +18,8 @@ Short answer: **none of 62x, 50x or 12x is supported by a committed results file
 | 60x, 50 ms | Sundaralingam et al. 2023, cuRobo paper (arXiv 2310.17274) abstract | NVIDIA's own claim: cuRobo vs. state-of-the-art trajectory optimization on desktop GPUs. It is not a result of this paper. |
 | 50x | `~/projects/luai/MotionPlanning/BRUTAL_TRUTH.txt:28`, `src/movel_optimizer_gpu.hpp:7`, `tests/test.cpp:276` ("Expected speedup: 50-100x") | An unbenchmarked expectation in a different project (a C++ GPU IK prototype). |
 | 12x | `~/projects/luai/MotionPlanning/BUILD_SUCCESS.md:107` ("12x smaller than full cuRobo") | Binary size, not speed. |
-| 62x | not found anywhere on jetson3 | — |
+| 61x, 12x, 10x | cuRoboV2 abstract (Sivakumar/NVIDIA et al., arXiv 2603.05493) | "up to 61x speedup" is for V2's whole-body kernels (kinematics, inverse dynamics, self-collision), "12x lower cross-seed variance than GMR" is about retargeting, and "10x faster" is about ESDF perception. None of them is a planning-time speedup over a planner baseline. |
+| 62x | not found anywhere on jetson3 | Probably a conflation of cuRobo v1's "60x" or V2's "61x"; no file says 62x. |
 
 ## The ratios the on-disk data can support
 - **cuRobo:** `~/projects/curobo_berkeley/logs/results_*.json`, 77 runs × 2 plans, gantry UR5e + 2F-140, **no obstacles** (`world_config=None` in `pick_and_place.py`). Success: 154/154. Median `solve_time` 0.372 s, median `total_time` 0.683 s, mean `total_time` 0.824 s.
