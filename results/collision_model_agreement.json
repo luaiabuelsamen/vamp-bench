@@ -1,0 +1,34 @@
+{
+ "panda": {
+  "n": 4000,
+  "agree": 1.0,
+  "vamp_valid": 3352,
+  "curobo_valid": 3352,
+  "vamp_only_valid": 0,
+  "curobo_only_valid": 0
+ },
+ "ur5": {
+  "n": 4000,
+  "agree": 1.0,
+  "vamp_valid": 1839,
+  "curobo_valid": 1839,
+  "vamp_only_valid": 0,
+  "curobo_only_valid": 0
+ },
+ "ur5erail": {
+  "n": 4000,
+  "agree": 1.0,
+  "vamp_valid": 1562,
+  "curobo_valid": 1562,
+  "vamp_only_valid": 0,
+  "curobo_only_valid": 0
+ },
+ "ur5e": {
+  "n": 4000,
+  "agree": 1.0,
+  "vamp_valid": 1428,
+  "curobo_valid": 1428,
+  "vamp_only_valid": 0,
+  "curobo_only_valid": 0
+ }
+}

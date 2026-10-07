@@ -33,6 +33,26 @@ def build(urdf, srdf, ee_link, retract, out):
         a, b = d.get("link1"), d.get("link2")
         if a in spheres and b in spheres:
             ignore[a].add(b)
+    # Links on one rigid body (fixed joints) are never checked by VAMP/cricket (pinocchio merges them); match that.
+    par = {}
+    def find(x):
+        while par.get(x, x) != x:
+            x = par[x]
+        return x
+    for j in joints:
+        if j.get("type") == "fixed":
+            par[find(j.find("child").get("link"))] = find(j.find("parent").get("link"))
+    names = sorted(spheres)
+    for i, x in enumerate(names):
+        for y in names[i + 1:]:
+            if find(x) == find(y):
+                ignore[x].add(y)
+    # cricket applies an SRDF-disabled pair to the whole rigid bodies the two links belong to.
+    body_pairs = {frozenset((find(a), find(b))) for a in list(ignore) for b in ignore[a]}
+    for i, x in enumerate(names):
+        for y in names[i + 1:]:
+            if frozenset((find(x), find(y))) in body_pairs:
+                ignore[x].add(y)
     links = sorted(spheres)
     n = len(active)
     cfg = {"robot_cfg": {"kinematics": {
