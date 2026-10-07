@@ -6,4 +6,4 @@ Milestone: M4 — VAMP full benchmark done (CPU); README/EMAIL_NOTES/figure with
 Last result: VAMP medians 1.76 ms Panda MBM (699/699), 2.02 ms UR5 MBM (689/689), 0.55–0.97 ms paper scenes (results/summary.json)
 Blocked: clean cuRobo run waits for idle GPU (flagship has priority; watcher bench/wait_idle_then_curobo.sh starts it after 10 idle min). Source of 62x/50x/12x not on jetson3 — Luai to point to it
 Next: on idle GPU, cuRobo run (~2–3 h) -> crossval -> analyze -> fill README/EMAIL_NOTES pending cells
-Updated: 2026-10-07 00:55
+Updated: 2026-10-07 03:48
