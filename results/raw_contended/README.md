@@ -1,0 +1,2 @@
+# CONTENDED — do not cite
+cuRobo Panda MBM run from 2026-10-06 23:20 – 2026-10-07 00:26. The GPU was shared with another job the whole time (GR3D_FREQ ~99% before this run started; see `curobo_mbm_panda.power.json`). These numbers overstate cuRobo's time and are kept only for reference. The run was stopped during the UR5 set on orchestrator instruction (GPU priority to the flagship). The UR5 and paper-scene cuRobo sets were never run under contention. Clean numbers: `results/raw/` after `bench/run_all.sh --curobo-only`.

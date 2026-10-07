@@ -1,0 +1,497 @@
+{
+ "notes": "Aggregate raw runs into committed results: results/summary.json, results/records/*.json, results/figure.png.\n\nPrimary timing metric (apples to apples): wall-clock per query on the same Jetson, measured from Python.\n  VAMP:   env construction + RRT-Connect + simplification          (wall_us)\n  cuRobo: update_world + plan_single_js incl. CUDA sync            (world_update_us + plan_wall_us)\nPlanner-internal times are reported too (VAMP total_us; cuRobo solve_time_us).\nTime distributions are over successful queries; success rate is reported separately.\ncuRobo cells are null (\"pending\") until its clean GPU run exists in results/raw.\n",
+ "groups": [
+  {
+   "label": "Panda \u00b7 MBM",
+   "tag": "mbm",
+   "vamp": {
+    "source": "results/records/vamp_mbm_panda.json",
+    "queries": 699,
+    "success": 699,
+    "success_rate": 1.0,
+    "wall_ms": {
+     "n": 699,
+     "mean": 2.0377986223175966,
+     "p5": 1.0952366,
+     "p25": 1.436361,
+     "median": 1.7562929999999999,
+     "p75": 2.249801,
+     "p95": 3.8879802000000003,
+     "max": 7.961595
+    },
+    "internal_ms": {
+     "n": 699,
+     "mean": 1.4700100815450645,
+     "p5": 0.5484242,
+     "p25": 0.882275,
+     "median": 1.204336,
+     "p75": 1.6635385,
+     "p95": 3.3348071,
+     "max": 7.460581
+    },
+    "path_length_rad": {
+     "n": 699,
+     "mean": 5.167795835134809,
+     "p5": 3.741932916641235,
+     "p25": 4.3219287395477295,
+     "median": 4.9009904861450195,
+     "p75": 5.659905433654785,
+     "p95": 7.969490814208986,
+     "max": 11.794755935668945
+    },
+    "power": {
+     "cmd": [
+      ".venv/bin/python",
+      "bench/vamp_mbm.py",
+      "--robot",
+      "panda",
+      "--out",
+      "results/raw/vamp_mbm_panda.json"
+     ],
+     "returncode": 0,
+     "wall_s": 1.9071500301361084,
+     "n_samples": 7,
+     "VDD_IN_mW": {
+      "mean": 19243.571428571428,
+      "median": 19333.0,
+      "max": 20071.0
+     },
+     "VDD_CPU_GPU_CV_mW": {
+      "mean": 8347.285714285714,
+      "median": 8307.0,
+      "max": 9050.0
+     },
+     "GR3D_pct": {
+      "mean": 99.0,
+      "median": 99.0,
+      "max": 99.0
+     },
+     "cpu_temp_C": {
+      "mean": 74.72728571428571,
+      "median": 74.843,
+      "max": 75.156
+     },
+     "gpu_temp_C": {
+      "mean": 74.08,
+      "median": 74.062,
+      "max": 74.437
+     },
+     "top_processes_at_start": [
+      "35.9 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
+      " 5.7 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.1 claude --dangerously-skip-permissions",
+      " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
+      " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
+     ]
+    }
+   },
+   "curobo": null
+  },
+  {
+   "label": "UR5 \u00b7 MBM",
+   "tag": "mbm",
+   "vamp": {
+    "source": "results/records/vamp_mbm_ur5.json",
+    "queries": 689,
+    "success": 689,
+    "success_rate": 1.0,
+    "wall_ms": {
+     "n": 689,
+     "mean": 2.4333542017416545,
+     "p5": 1.1606604,
+     "p25": 1.572766,
+     "median": 2.021839,
+     "p75": 2.58103,
+     "p95": 4.801002800000001,
+     "max": 32.654601
+    },
+    "internal_ms": {
+     "n": 689,
+     "mean": 1.8768153947750361,
+     "p5": 0.6206902,
+     "p25": 1.044874,
+     "median": 1.459482,
+     "p75": 1.997999,
+     "p95": 4.237402600000002,
+     "max": 32.129269
+    },
+    "path_length_rad": {
+     "n": 689,
+     "mean": 6.68860941199675,
+     "p5": 4.074644374847412,
+     "p25": 5.384219169616699,
+     "median": 6.530997276306152,
+     "p75": 7.920827865600586,
+     "p95": 9.856293487548829,
+     "max": 17.913211822509766
+    },
+    "power": {
+     "cmd": [
+      ".venv/bin/python",
+      "bench/vamp_mbm.py",
+      "--robot",
+      "ur5",
+      "--out",
+      "results/raw/vamp_mbm_ur5.json"
+     ],
+     "returncode": 0,
+     "wall_s": 2.0823559761047363,
+     "n_samples": 8,
+     "VDD_IN_mW": {
+      "mean": 19569.625,
+      "median": 19475.0,
+      "max": 20213.0
+     },
+     "VDD_CPU_GPU_CV_mW": {
+      "mean": 8603.5,
+      "median": 8454.0,
+      "max": 9201.0
+     },
+     "GR3D_pct": {
+      "mean": 99.0,
+      "median": 99.0,
+      "max": 99.0
+     },
+     "cpu_temp_C": {
+      "mean": 74.8355,
+      "median": 74.781,
+      "max": 75.062
+     },
+     "gpu_temp_C": {
+      "mean": 74.339375,
+      "median": 74.35900000000001,
+      "max": 74.562
+     },
+     "top_processes_at_start": [
+      "35.9 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
+      " 5.7 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.1 claude --dangerously-skip-permissions",
+      " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
+      " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
+     ]
+    }
+   },
+   "curobo": null
+  },
+  {
+   "label": "UR5e+rail \u00b7 pillars (paper)",
+   "tag": "gantry_pillars",
+   "vamp": {
+    "source": "results/records/vamp_gantry_pillars_ur5erail.json",
+    "queries": 1030,
+    "success": 1020,
+    "success_rate": 0.9902912621359223,
+    "wall_ms": {
+     "n": 1020,
+     "mean": 0.9677763294117647,
+     "p5": 0.5811366000000001,
+     "p25": 0.8387530000000001,
+     "median": 0.9506775000000001,
+     "p75": 1.090091,
+     "p95": 1.3463106499999995,
+     "max": 4.375917
+    },
+    "internal_ms": {
+     "n": 1020,
+     "mean": 0.4042419980392157,
+     "p5": 0.056962000000000006,
+     "p25": 0.29596325,
+     "median": 0.400208,
+     "p75": 0.529604,
+     "p95": 0.7541228000000001,
+     "max": 1.693411
+    },
+    "path_length_rad": {
+     "n": 1020,
+     "mean": 5.3795887538031035,
+     "p5": 3.5168238520622253,
+     "p25": 4.5723772048950195,
+     "median": 5.335106372833252,
+     "p75": 5.971270799636841,
+     "p95": 7.670698261260986,
+     "max": 10.821939468383789
+    },
+    "power": {
+     "cmd": [
+      ".venv/bin/python",
+      "bench/vamp_mbm.py",
+      "--robot",
+      "ur5erail",
+      "--problems",
+      "problems/gantry_pillars.pkl",
+      "--tag",
+      "gantry_pillars",
+      "--trials",
+      "10",
+      "--out",
+      "results/raw/vamp_gantry_pillars_ur5erail.json"
+     ],
+     "returncode": 0,
+     "wall_s": 67.04824686050415,
+     "n_samples": 261,
+     "VDD_IN_mW": {
+      "mean": 19616.831417624522,
+      "median": 19626.0,
+      "max": 20950.0
+     },
+     "VDD_CPU_GPU_CV_mW": {
+      "mean": 8868.505747126437,
+      "median": 8907.0,
+      "max": 9947.0
+     },
+     "GR3D_pct": {
+      "mean": 99.00383141762453,
+      "median": 99.0,
+      "max": 100.0
+     },
+     "cpu_temp_C": {
+      "mean": 76.94872413793104,
+      "median": 77.375,
+      "max": 78.75
+     },
+     "gpu_temp_C": {
+      "mean": 76.15406896551724,
+      "median": 76.187,
+      "max": 77.687
+     },
+     "top_processes_at_start": [
+      "35.9 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
+      " 5.7 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.1 claude --dangerously-skip-permissions",
+      " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
+      " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
+     ]
+    }
+   },
+   "curobo": null
+  },
+  {
+   "label": "UR5e+rail \u00b7 no obstacles (paper)",
+   "tag": "gantry_free",
+   "vamp": {
+    "source": "results/records/vamp_gantry_free_ur5erail.json",
+    "queries": 1030,
+    "success": 1030,
+    "success_rate": 1.0,
+    "wall_ms": {
+     "n": 1030,
+     "mean": 0.5808230902912621,
+     "p5": 0.51870205,
+     "p25": 0.5353490000000001,
+     "median": 0.553366,
+     "p75": 0.5891270000000001,
+     "p95": 0.6763661999999999,
+     "max": 4.122659
+    },
+    "internal_ms": {
+     "n": 1030,
+     "mean": 0.03128530582524272,
+     "p5": 0.0229099,
+     "p25": 0.027913,
+     "median": 0.0302895,
+     "p75": 0.03387325,
+     "p95": 0.04162005,
+     "max": 0.137893
+    },
+    "path_length_rad": {
+     "n": 1030,
+     "mean": 4.641822696889489,
+     "p5": 2.808288335800171,
+     "p25": 3.988090753555298,
+     "median": 4.564873695373535,
+     "p75": 5.123096466064453,
+     "p95": 7.02816104888916,
+     "max": 7.6650872230529785
+    },
+    "power": {
+     "cmd": [
+      ".venv/bin/python",
+      "bench/vamp_mbm.py",
+      "--robot",
+      "ur5erail",
+      "--problems",
+      "problems/gantry_free.pkl",
+      "--tag",
+      "gantry_free",
+      "--trials",
+      "10",
+      "--out",
+      "results/raw/vamp_gantry_free_ur5erail.json"
+     ],
+     "returncode": 0,
+     "wall_s": 24.025259017944336,
+     "n_samples": 93,
+     "VDD_IN_mW": {
+      "mean": 19545.612903225807,
+      "median": 19475.0,
+      "max": 20213.0
+     },
+     "VDD_CPU_GPU_CV_mW": {
+      "mean": 8718.279569892473,
+      "median": 8756.0,
+      "max": 9201.0
+     },
+     "GR3D_pct": {
+      "mean": 99.0,
+      "median": 99.0,
+      "max": 99.0
+     },
+     "cpu_temp_C": {
+      "mean": 78.24462365591398,
+      "median": 78.25,
+      "max": 78.906
+     },
+     "gpu_temp_C": {
+      "mean": 77.84805376344086,
+      "median": 77.843,
+      "max": 78.468
+     },
+     "top_processes_at_start": [
+      "36.1 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
+      " 5.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.1 claude --dangerously-skip-permissions",
+      " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
+      " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
+     ]
+    }
+   },
+   "curobo": null
+  },
+  {
+   "label": "UR5e \u00b7 pillars (paper)",
+   "tag": "ur5e_pillars",
+   "vamp": {
+    "source": "results/records/vamp_ur5e_pillars_ur5e.json",
+    "queries": 1030,
+    "success": 1030,
+    "success_rate": 1.0,
+    "wall_ms": {
+     "n": 1030,
+     "mean": 0.9412006398058252,
+     "p5": 0.553638,
+     "p25": 0.61084,
+     "median": 0.972278,
+     "p75": 1.11720475,
+     "p95": 1.4257529999999998,
+     "max": 5.0005180000000005
+    },
+    "internal_ms": {
+     "n": 1030,
+     "mean": 0.3871831718446602,
+     "p5": 0.0399923,
+     "p25": 0.061307,
+     "median": 0.4410415,
+     "p75": 0.5634692499999999,
+     "p95": 0.8430474,
+     "max": 2.032272
+    },
+    "path_length_rad": {
+     "n": 1030,
+     "mean": 6.1624853722100115,
+     "p5": 3.97399640083313,
+     "p25": 5.394292593002319,
+     "median": 5.987020015716553,
+     "p75": 7.084682464599609,
+     "p95": 8.357714223861693,
+     "max": 12.894247055053711
+    },
+    "power": {
+     "cmd": [
+      ".venv/bin/python",
+      "bench/vamp_mbm.py",
+      "--robot",
+      "ur5e",
+      "--problems",
+      "problems/ur5e_pillars.pkl",
+      "--tag",
+      "ur5e_pillars",
+      "--trials",
+      "10",
+      "--out",
+      "results/raw/vamp_ur5e_pillars_ur5e.json"
+     ],
+     "returncode": 0,
+     "wall_s": 21.433612823486328,
+     "n_samples": 83,
+     "VDD_IN_mW": {
+      "mean": 19677.14457831325,
+      "median": 19484.0,
+      "max": 20799.0
+     },
+     "VDD_CPU_GPU_CV_mW": {
+      "mean": 8794.43373493976,
+      "median": 8756.0,
+      "max": 9495.0
+     },
+     "GR3D_pct": {
+      "mean": 99.0,
+      "median": 99.0,
+      "max": 99.0
+     },
+     "cpu_temp_C": {
+      "mean": 78.59521686746989,
+      "median": 78.593,
+      "max": 79.343
+     },
+     "gpu_temp_C": {
+      "mean": 78.44081927710843,
+      "median": 78.406,
+      "max": 78.843
+     },
+     "top_processes_at_start": [
+      "36.1 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
+      " 5.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      " 3.1 claude --dangerously-skip-permissions",
+      " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
+      " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
+     ]
+    }
+   },
+   "curobo": null
+  }
+ ],
+ "collision_model_agreement": {
+  "panda": {
+   "n": 4000,
+   "agree": 1.0,
+   "vamp_valid": 3352,
+   "curobo_valid": 3352,
+   "vamp_only_valid": 0,
+   "curobo_only_valid": 0
+  },
+  "ur5": {
+   "n": 4000,
+   "agree": 1.0,
+   "vamp_valid": 1839,
+   "curobo_valid": 1839,
+   "vamp_only_valid": 0,
+   "curobo_only_valid": 0
+  },
+  "ur5erail": {
+   "n": 4000,
+   "agree": 1.0,
+   "vamp_valid": 1562,
+   "curobo_valid": 1562,
+   "vamp_only_valid": 0,
+   "curobo_only_valid": 0
+  },
+  "ur5e": {
+   "n": 4000,
+   "agree": 1.0,
+   "vamp_valid": 1428,
+   "curobo_valid": 1428,
+   "vamp_only_valid": 0,
+   "curobo_only_valid": 0
+  }
+ }
+}

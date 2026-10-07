@@ -1,0 +1,8 @@
+# Facts for writing to Prof. Kavraki
+These are facts to use, not a draft. Each one traces to `results/summary.json` or `docs/`. Text in [brackets] is filled in after the clean cuRobo GPU run.
+
+1. We compared VAMP (`27cb9b6`) and cuRobo v1 (the version our paper used) on a single Jetson Orin NX 16 GB. VAMP ran on one Cortex-A78AE core using NEON, and cuRobo ran on the Orin NX's GPU. Both planners checked collisions against the same sphere models and the same obstacles, and their two collision checkers agreed on all 16,000 random configurations we tested.
+2. On VAMP's MotionBenchMaker problems, VAMP solved all 699 Panda problems and all 689 UR5 problems. Median wall-clock time per query, including Python overhead, was 1.76 ms for the Panda and 2.02 ms for the UR5. cuRobo [solved X/699 and X/689, with medians of X ms and X ms].
+3. We also generated VAMP robot models with cricket for the two robots in our paper: the UR5e, and the UR5e on a 7th-axis rail. On the paper's pick-and-place scenes, VAMP's median was 0.55–0.97 ms per query (1030/1030 solved on two scenes, 1020/1030 on the rail-with-pillars scene). cuRobo's median was [X ms].
+4. [Once the cuRobo run is done, state the ratio of medians in one sentence. If cuRobo is slower even with a GPU, say so plainly.] One difference to note: cuRobo returns a smooth, time-parameterized trajectory, while VAMP's output is a geometric path that still needs time parameterization.
+5. The code, the problem sets and the per-query results are in one repository, so her group can reproduce the comparison or extend it, for example to a desktop GPU or an x86 CPU with AVX2.

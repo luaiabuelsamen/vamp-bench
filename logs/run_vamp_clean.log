@@ -1,0 +1,28 @@
+bookshelf_thin 100/100 median total us 1114.8765
+cage 100/100 median total us 2281.1620000000003
+box 100/100 median total us 1296.0194999999999
+bookshelf_tall 100/100 median total us 971.046
+bookshelf_small 100/100 median total us 969.142
+table_under_pick 100/100 median total us 1454.409
+table_pick 99/99 median total us 891.779
+wrote results/raw/vamp_mbm_panda.json
+powerlog results/raw/vamp_mbm_panda.power.json VDD_IN mean mW 19244 GR3D mean 99
+bookshelf_tall 95/95 median total us 1772.295
+bookshelf_thin 99/99 median total us 1925.453
+table_under_pick 99/99 median total us 1477.338
+bookshelf_small 96/96 median total us 1042.8404999999998
+box 100/100 median total us 967.1255
+table_pick 100/100 median total us 1163.95
+cage 100/100 median total us 3232.9275
+wrote results/raw/vamp_mbm_ur5.json
+powerlog results/raw/vamp_mbm_ur5.power.json VDD_IN mean mW 19570 GR3D mean 99
+gantry_pillars 1020/1030 median total us nan
+wrote results/raw/vamp_gantry_pillars_ur5erail.json
+powerlog results/raw/vamp_gantry_pillars_ur5erail.power.json VDD_IN mean mW 19617 GR3D mean 99
+gantry_free 1030/1030 median total us 30.2895
+wrote results/raw/vamp_gantry_free_ur5erail.json
+powerlog results/raw/vamp_gantry_free_ur5erail.power.json VDD_IN mean mW 19546 GR3D mean 99
+ur5e_pillars 1030/1030 median total us 441.0415
+wrote results/raw/vamp_ur5e_pillars_ur5e.json
+powerlog results/raw/vamp_ur5e_pillars_ur5e.power.json VDD_IN mean mW 19677 GR3D mean 99
+ALL DONE

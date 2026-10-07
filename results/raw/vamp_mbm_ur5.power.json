@@ -8,17 +8,17 @@
   "results/raw/vamp_mbm_ur5.json"
  ],
  "returncode": 0,
- "wall_s": 2.1638731956481934,
+ "wall_s": 2.0823559761047363,
  "n_samples": 8,
  "VDD_IN_mW": {
-  "mean": 21243.125,
-  "median": 21242.0,
-  "max": 21393.0
+  "mean": 19569.625,
+  "median": 19475.0,
+  "max": 20213.0
  },
  "VDD_CPU_GPU_CV_mW": {
-  "mean": 9790.0,
-  "median": 9790.0,
-  "max": 9943.0
+  "mean": 8603.5,
+  "median": 8454.0,
+  "max": 9201.0
  },
  "GR3D_pct": {
   "mean": 99.0,
@@ -26,22 +26,22 @@
   "max": 99.0
  },
  "cpu_temp_C": {
-  "mean": 86.68725,
-  "median": 86.7025,
-  "max": 86.875
+  "mean": 74.8355,
+  "median": 74.781,
+  "max": 75.062
  },
  "gpu_temp_C": {
-  "mean": 86.04275,
-  "median": 86.0625,
-  "max": 86.375
+  "mean": 74.339375,
+  "median": 74.35900000000001,
+  "max": 74.562
  },
  "top_processes_at_start": [
-  "93.1 python3 tools/check_numbers.py",
-  "37.7 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_state --arm so101 --stiffness stiff --cond pos --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_pos_act_state_s0.json",
-  "11.2 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-  " 8.5 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-  " 6.7 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-  " 4.1 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-  " 3.1 claude --dangerously-skip-permissions"
+  "35.9 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
+  " 5.7 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  " 3.1 claude --dangerously-skip-permissions",
+  " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
+  " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
  ]
 }

@@ -1,0 +1,47 @@
+{
+ "cmd": [
+  "/home/jetson3/projects/curobo_berkeley/venv/bin/python",
+  "bench/curobo_mbm.py",
+  "--robot",
+  "panda",
+  "--out",
+  "results/raw/curobo_mbm_panda.json"
+ ],
+ "returncode": 0,
+ "wall_s": 4160.990572452545,
+ "n_samples": 16204,
+ "VDD_IN_mW": {
+  "mean": 17458.803381881018,
+  "median": 16959.0,
+  "max": 24023.0
+ },
+ "VDD_CPU_GPU_CV_mW": {
+  "mean": 8705.878239940756,
+  "median": 7870.0,
+  "max": 13680.0
+ },
+ "GR3D_pct": {
+  "mean": 98.98710195013577,
+  "median": 99.0,
+  "max": 100.0
+ },
+ "cpu_temp_C": {
+  "mean": 80.86798043692916,
+  "median": 79.125,
+  "max": 88.75
+ },
+ "gpu_temp_C": {
+  "mean": 79.06279813626266,
+  "median": 78.093,
+  "max": 86.843
+ },
+ "top_processes_at_start": [
+  "37.9 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_state --arm so101 --stiffness stiff --cond pos --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_pos_act_state_s0.json",
+  "11.0 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  " 8.5 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  " 6.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  " 4.0 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  " 3.1 claude --dangerously-skip-permissions",
+  " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789"
+ ]
+}
