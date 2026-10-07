@@ -1,0 +1,15 @@
+{
+  "name": "UR5e",
+  "urdf": "ur5e_spherized.urdf",
+  "srdf": "ur5e.srdf",
+  "end_effector": "tool0",
+  "resolution": 32,
+  "template": "templates/fk_template.hh",
+  "subtemplates": [
+    {
+      "name": "ccfk",
+      "template": "templates/ccfk_template.hh"
+    }
+  ],
+  "output": "ur5e.hh"
+}

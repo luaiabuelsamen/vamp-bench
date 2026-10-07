@@ -1,0 +1,313 @@
+Fetch Shard Index for conda-forge/linux-aarch64                                                 ⧖ Starting
+Fetch Shard Index for conda-forge/linux-aarch64                                           ✔ Done (0.3 sec)
+Fetch Shard Index for conda-forge/noarch                                                        ⧖ Starting
+Fetch Shard Index for conda-forge/noarch                                                  ✔ Done (0.4 sec)
+Fetching and Parsing Packages' Shards                                                           ⧖ Starting
+Fetching and Parsing Packages' Shards                                                     ✔ Done (8.5 sec)
+
+Resolving Environment                                                                           ⧖ Starting
+Resolving Environment                                                                     ✔ Done (1.5 sec)
+
+Transaction
+
+  Prefix: /home/jetson3/projects/vamp-bench/third_party/mm/cricket
+
+  Updating specs:
+
+   - pinocchio
+   - cppad
+   - eigen
+   - cgal-cpp
+   - nlohmann_json
+   - cmake
+   - cxx-compiler
+   - ninja
+   - fmt
+   - pkg-config
+   - patch
+   - git
+
+
+  Package                               Version  Build                  Channel          Size
+───────────────────────────────────────────────────────────────────────────────────────────────
+  Install:
+───────────────────────────────────────────────────────────────────────────────────────────────
+
+  + _openmp_mutex                           4.5  20_gnu                 conda-forge      29kB
+  + ampl-asl                              1.0.0  h5ad3122_2             conda-forge     486kB
+  + arm-variant                           1.2.0  sbsa                   conda-forge       7kB
+  + assimp                                6.0.5  hd4167bb_2             conda-forge       4MB
+  + binutils_impl_linux-aarch64          2.46.1  default_h5f4c503_102   conda-forge       5MB
+  + bzip2                                 1.0.8  h4777abc_10            conda-forge     195kB
+  + c-ares                               1.34.8  h29ee22c_2             conda-forge     241kB
+  + ca-certificates                   2026.7.22  hbd8a1cb_0             conda-forge     132kB
+  + casadi                                3.7.2  py314h2afd27f_4        conda-forge       6MB
+  + cgal-cpp                              6.2.1  hb2c21df_0             conda-forge       6MB
+  + cli11                                 2.7.2  h7ac5ae9_1             conda-forge     103kB
+  + cmake                                 4.4.4  hcbeb305_0             conda-forge      26MB
+  + coal-python                           3.0.4  np2py314h575f11a_2     conda-forge       2MB
+  + conda-gcc-specs                      15.3.0  hbdd0822_7             conda-forge      33kB
+  + console_bridge                        1.0.2  hdd96247_1             conda-forge      18kB
+  + cppad                            20260000.0  hfae3067_0             conda-forge     500kB
+  + cxx-compiler                          2.0.0  hf41333a_0             conda-forge       7kB
+  + eigen                                 5.0.1  hbf0d46f_3             conda-forge       1MB
+  + eigen-abi                         5.0.1.100  h9a8c16c_3             conda-forge      13kB
+  + eigenpy                              3.13.0  np2py314h0cf52ca_1     conda-forge       4MB
+  + elfutils                              0.196  h424db8c_0             conda-forge       1MB
+  + fmt                                  12.1.0  h166da81_1             conda-forge     197kB
+  + gcc                                  15.3.0  hfdd745d_7             conda-forge      30kB
+  + gcc_impl_linux-aarch64               15.3.0  h543efd9_7             conda-forge      75MB
+  + git                                  2.56.0  pl5440h0749d22_0       conda-forge      17MB
+  + gmp                                   6.3.0  h4d6b352_3             conda-forge     457kB
+  + gxx                                  15.3.0  hfdd745d_7             conda-forge      29kB
+  + gxx_impl_linux-aarch64               15.3.0  hcb04d1e_7             conda-forge      15MB
+  + icu                                    78.3  py311h3512406_2        conda-forge      15MB
+  + ipopt                               3.14.19  h3640754_2             conda-forge       1MB
+  + kernel-headers_linux-aarch64         5.14.0  h05a177a_3             conda-forge       1MB
+  + keyutils                              1.6.3  h5bc82ec_1             conda-forge     130kB
+  + krb5                                 1.22.2  h095d8e5_2             conda-forge       2MB
+  + ld_impl_linux-aarch64                2.46.1  default_h1979696_102   conda-forge     905kB
+  + libarchive                            3.8.9  gpl_h1204ebd_101       conda-forge       1MB
+  + libblas                              3.11.0  11_h1797440_nvpl       conda-forge      18kB
+  + libblasfeo                          0.1.4.3  h1dbf749_100           conda-forge     835kB
+  + libboost                             1.90.0  h47d6679_3             conda-forge       4MB
+  + libboost-devel                       1.90.0  hf41333a_3             conda-forge      39kB
+  + libboost-headers                     1.90.0  h707e725_3             conda-forge      15MB
+  + libboost-python                      1.90.0  py314hea2faff_3        conda-forge     127kB
+  + libboost-python-devel                1.90.0  py314h45fbc36_3        conda-forge      18kB
+  + libcblas                             3.11.0  11_h882ec00_nvpl       conda-forge      18kB
+  + libcoal                               3.0.4  h6743baf_2             conda-forge       2MB
+  + libcurl                              8.22.0  h86273da_0             conda-forge     524kB
+  + libedit                        3.1.20260512  pl5321hc48eb74_0       conda-forge     150kB
+  + libev                                  4.33  h80f16a2_3             conda-forge      46kB
+  + libexpat                              2.8.5  h4154aff_0             conda-forge      79kB
+  + libfatrop                             0.0.4  h5ad3122_1             conda-forge     230kB
+  + libffi                                3.7.0  hdaad0be_1             conda-forge      63kB
+  + libgcc                               16.2.0  h205dda4_7             conda-forge     628kB
+  + libgcc-devel_linux-aarch64           15.3.0  h6e7e4e0_107           conda-forge       2MB
+  + libgcc-ng                            16.2.0  he9431aa_7             conda-forge      29kB
+  + libgfortran                          16.2.0  he9431aa_7             conda-forge      29kB
+  + libgfortran5                         16.2.0  hc864f27_7             conda-forge       1MB
+  + libgomp                              16.2.0  h8acb6b2_7             conda-forge     617kB
+  + libgz-cmake                           5.1.1  h4125222_1             conda-forge     216kB
+  + libgz-math                            9.3.0  h58f8fa6_2             conda-forge     316kB
+  + libgz-tools                           2.0.3  h7ac5ae9_1             conda-forge      51kB
+  + libgz-utils                           4.0.0  h102fee7_3             conda-forge      80kB
+  + libhwloc                             2.13.0  default_ha95e27d_1000  conda-forge       2MB
+  + libiconv                               1.18  h1ea5142_3             conda-forge     786kB
+  + liblapack                            3.11.0  11_hdce3f5c_nvpl       conda-forge      18kB
+  + liblzma                               5.8.3  he30d5cf_1             conda-forge     126kB
+  + libmpdec                              4.0.0  he30d5cf_2             conda-forge     114kB
+  + libnghttp2                           1.68.1  ha4b982d_1             conda-forge     735kB
+  + libnvpl-blas0                       0.5.0.1  he7ea4f9_1             conda-forge     914kB
+  + libnvpl-lapack0                       0.3.2  he7ea4f9_0             conda-forge      10MB
+  + libosqp                               1.0.0  np2py313ha2de5d4_2     conda-forge      85kB
+  + libpinocchio                          4.1.0  h2d5f279_1             conda-forge       5MB
+  + libpsl                               0.23.1  hb8431ed_1             conda-forge      73kB
+  + libpython                            3.14.8  hc71fabe_101_cp314     conda-forge      10MB
+  + libqdldl                              0.1.8  h5ad3122_1             conda-forge      22kB
+  + libsanitizer                         15.3.0  he541324_7             conda-forge       7MB
+  + libscotch                            7.0.11  int64_h588e91d_3       conda-forge     379kB
+  + libsdformat                          16.1.0  py310h8306b03_0        conda-forge       1MB
+  + libspral                         2025.09.18  h1068211_2             conda-forge     357kB
+  + libsqlite                            3.53.4  hd26f1b6_102           conda-forge     967kB
+  + libssh2                              1.11.1  h7572e3e_1             conda-forge     316kB
+  + libstdcxx                            16.2.0  hef695bb_7             conda-forge       6MB
+  + libstdcxx-devel_linux-aarch64        15.3.0  h0e8df58_107           conda-forge      18MB
+  + libstdcxx-ng                         16.2.0  hdbbeba8_7             conda-forge      29kB
+  + libuuid                              2.42.4  hd6fdeab_0             conda-forge      36kB
+  + libuv                                1.52.1  h80f16a2_1             conda-forge     457kB
+  + libxcrypt                            4.4.38  h80f16a2_0             conda-forge     134kB
+  + libxml2                              2.15.4  h92b9305_0             conda-forge      49kB
+  + libxml2-16                           2.15.4  h2e5089f_0             conda-forge     631kB
+  + libzlib                               1.3.2  hdc9db2a_3             conda-forge      70kB
+  + lz4-c                                1.10.0  hfb11796_2             conda-forge     219kB
+  + lzo                                    2.10  h29ee22c_1003          conda-forge     213kB
+  + metis                                 5.1.0  h94a1348_1008          conda-forge       4MB
+  + mpfr                                  4.2.2  h4b21e80_1             conda-forge       2MB
+  + mumps-include                         5.8.2  hc1a8ae2_3             conda-forge      27kB
+  + mumps-seq                             5.8.2  gfortran_h23c4eb5_3    conda-forge       3MB
+  + ncurses                                 6.6  h2b6f883_1             conda-forge     955kB
+  + ninja                                1.13.2  hdc560ac_1             conda-forge     182kB
+  + nlohmann_json                        3.12.0  h7ac5ae9_2             conda-forge     137kB
+  + numpy                                 2.5.3  py314h6cbe925_0        conda-forge       8MB
+  + octomap                              1.10.1  h45ce4d5_1             conda-forge     274kB
+  + openssl                               3.6.5  he6ad1d5_0             conda-forge       4MB
+  + patch                                   2.8  h80f16a2_1003          conda-forge     145kB
+  + pcre2                                 10.47  he574923_1             conda-forge       1MB
+  + perl                                 5.44.0  1_h5bc82ec_perl5       conda-forge      11MB
+  + pinocchio                             4.1.0  py314h323ae61_1        conda-forge      10kB
+  + pinocchio-python                      4.1.0  np2py314h6341bac_1     conda-forge      15MB
+  + pkg-config                           0.29.2  hfbd14cd_1013          conda-forge     338kB
+  + python                               3.14.8  hbec3b18_101_cp314     conda-forge      26MB
+  + python_abi                             3.14  9_cp314                conda-forge       7kB
+  + qhull                                2020.2  h70be974_5             conda-forge     555kB
+  + qhull-static                         2020.2  h70be974_5             conda-forge     456kB
+  + readline                                8.3  ha7194a6_1             conda-forge     364kB
+  + rhash                                 1.4.6  he30d5cf_2             conda-forge     211kB
+  + ruby                                  3.4.2  hf77cb2b_0             conda-forge      10MB
+  + scipy                                1.18.1  py314hb3ba6a9_1        conda-forge      17MB
+  + spdlog                               1.17.0  hb3fff47_2             conda-forge     196kB
+  + sysroot_linux-aarch64                  2.34  h96c1060_3             conda-forge      40MB
+  + tinyxml2                             11.0.0  hfb11796_1             conda-forge     136kB
+  + tk                                   8.6.13  noxft_hf03c496_4       conda-forge       4MB
+  + tzdata                                2026c  h151e31d_0             conda-forge     119kB
+  + urdfdom                               6.0.1  h57aec1e_0             conda-forge     119kB
+  + urdfdom_headers                       3.0.1  h45ce4d5_1             conda-forge      22kB
+  + yaml                                  0.2.5  h29ee22c_3             conda-forge      89kB
+  + zlib                                  1.3.2  hdc9db2a_3             conda-forge     100kB
+  + zstd                                  1.5.7  h9d15635_7             conda-forge     615kB
+
+  Summary:
+
+  Install: 124 packages
+
+  Total download: 429MB
+
+───────────────────────────────────────────────────────────────────────────────────────────────
+
+
+warning  libmamba Security Warning: This transaction includes executing package scripts (pre/post-link/unlink) if present. These scripts can contain arbitrary code. Please ensure you trust the package sources.
+
+Transaction starting
+Linking eigen-5.0.1-hbf0d46f_3
+Linking nlohmann_json-3.12.0-h7ac5ae9_2
+Linking libgomp-16.2.0-h8acb6b2_7
+Linking libzlib-1.3.2-hdc9db2a_3
+Linking eigen-abi-5.0.1.100-h9a8c16c_3
+Linking mumps-include-5.8.2-hc1a8ae2_3
+Linking _openmp_mutex-4.5-20_gnu
+Linking zlib-1.3.2-hdc9db2a_3
+Linking zstd-1.5.7-h9d15635_7
+Linking libgcc-16.2.0-h205dda4_7
+Linking ld_impl_linux-aarch64-2.46.1-default_h1979696_102
+Linking lzo-2.10-h29ee22c_1003
+Linking yaml-0.2.5-h29ee22c_3
+Linking c-ares-1.34.8-h29ee22c_2
+Linking libev-4.33-h80f16a2_3
+Linking keyutils-1.6.3-h5bc82ec_1
+Linking libgfortran5-16.2.0-hc864f27_7
+Linking rhash-1.4.6-he30d5cf_2
+Linking libuv-1.52.1-h80f16a2_1
+Linking bzip2-1.0.8-h4777abc_10
+Linking libffi-3.7.0-hdaad0be_1
+Linking libsqlite-3.53.4-hd26f1b6_102
+Linking libmpdec-4.0.0-he30d5cf_2
+Linking liblzma-5.8.3-he30d5cf_1
+Linking ncurses-6.6-h2b6f883_1
+Linking tk-8.6.13-noxft_hf03c496_4
+Linking libblasfeo-0.1.4.3-h1dbf749_100
+Linking libuuid-2.42.4-hd6fdeab_0
+Linking libgcc-ng-16.2.0-he9431aa_7
+Linking libiconv-1.18-h1ea5142_3
+Linking libxcrypt-4.4.38-h80f16a2_0
+Linking libstdcxx-16.2.0-hef695bb_7
+Linking pkg-config-0.29.2-hfbd14cd_1013
+Linking patch-2.8-h80f16a2_1003
+Linking libexpat-2.8.5-h4154aff_0
+Linking libgfortran-16.2.0-he9431aa_7
+Linking pcre2-10.47-he574923_1
+Linking libedit-3.1.20260512-pl5321hc48eb74_0
+Linking readline-8.3-ha7194a6_1
+Linking perl-5.44.0-1_h5bc82ec_perl5
+Linking lz4-c-1.10.0-hfb11796_2
+Linking cli11-2.7.2-h7ac5ae9_1
+Linking gmp-6.3.0-h4d6b352_3
+Linking octomap-1.10.1-h45ce4d5_1
+Linking assimp-6.0.5-hd4167bb_2
+Linking libqdldl-0.1.8-h5ad3122_1
+Linking icu-78.3-py311h3512406_2
+Linking libgz-cmake-5.1.1-h4125222_1
+Linking tinyxml2-11.0.0-hfb11796_1
+Linking metis-5.1.0-h94a1348_1008
+Linking urdfdom_headers-3.0.1-h45ce4d5_1
+Linking ampl-asl-1.0.0-h5ad3122_2
+Linking libfatrop-0.0.4-h5ad3122_1
+Linking libpython-3.14.8-hc71fabe_101_cp314
+Linking libstdcxx-ng-16.2.0-hdbbeba8_7
+Linking libsanitizer-15.3.0-he541324_7
+Linking ninja-1.13.2-hdc560ac_1
+Linking fmt-12.1.0-h166da81_1
+Linking cppad-20260000.0-hfae3067_0
+Linking libscotch-7.0.11-int64_h588e91d_3
+Linking mpfr-4.2.2-h4b21e80_1
+Linking libosqp-1.0.0-np2py313ha2de5d4_2
+Linking libxml2-16-2.15.4-h2e5089f_0
+Linking libpsl-0.23.1-hb8431ed_1
+Linking libboost-1.90.0-h47d6679_3
+Linking console_bridge-1.0.2-hdd96247_1
+Linking qhull-2020.2-h70be974_5
+Linking spdlog-1.17.0-hb3fff47_2
+Linking libxml2-2.15.4-h92b9305_0
+Linking urdfdom-6.0.1-h57aec1e_0
+Linking qhull-static-2020.2-h70be974_5
+warning  libmamba [qhull-static-2020.2-h70be974_5] The following files were already present in the environment:
+    - lib/cmake/Qhull/QhullConfig.cmake
+    - lib/cmake/Qhull/QhullConfigVersion.cmake
+    - lib/cmake/Qhull/QhullTargets-release.cmake
+    - lib/cmake/Qhull/QhullTargets.cmake
+Linking libgz-utils-4.0.0-h102fee7_3
+Linking libhwloc-2.13.0-default_ha95e27d_1000
+Linking libgz-math-9.3.0-h58f8fa6_2
+Linking libstdcxx-devel_linux-aarch64-15.3.0-h0e8df58_107
+Linking libgcc-devel_linux-aarch64-15.3.0-h6e7e4e0_107
+Linking ca-certificates-2026.7.22-hbd8a1cb_0
+Linking python_abi-3.14-9_cp314
+Linking tzdata-2026c-h151e31d_0
+Linking libboost-headers-1.90.0-h707e725_3
+Linking kernel-headers_linux-aarch64-5.14.0-h05a177a_3
+Linking arm-variant-1.2.0-sbsa
+Linking sysroot_linux-aarch64-2.34-h96c1060_3
+Linking openssl-3.6.5-he6ad1d5_0
+Linking libboost-devel-1.90.0-hf41333a_3
+Linking libnvpl-blas0-0.5.0.1-he7ea4f9_1
+Linking binutils_impl_linux-aarch64-2.46.1-default_h5f4c503_102
+Linking libarchive-3.8.9-gpl_h1204ebd_101
+Linking ruby-3.4.2-hf77cb2b_0
+Linking libssh2-1.11.1-h7572e3e_1
+Linking krb5-1.22.2-h095d8e5_2
+Linking libnghttp2-1.68.1-ha4b982d_1
+Linking python-3.14.8-hbec3b18_101_cp314
+Linking libcoal-3.0.4-h6743baf_2
+Linking cgal-cpp-6.2.1-hb2c21df_0
+Linking libnvpl-lapack0-0.3.2-he7ea4f9_0
+Linking libblas-3.11.0-11_h1797440_nvpl
+Linking gcc_impl_linux-aarch64-15.3.0-h543efd9_7
+Linking elfutils-0.196-h424db8c_0
+Linking libcurl-8.22.0-h86273da_0
+Linking liblapack-3.11.0-11_hdce3f5c_nvpl
+Linking libcblas-3.11.0-11_h882ec00_nvpl
+Linking conda-gcc-specs-15.3.0-hbdd0822_7
+Linking gxx_impl_linux-aarch64-15.3.0-hcb04d1e_7
+Linking libgz-tools-2.0.3-h7ac5ae9_1
+Linking git-2.56.0-pl5440h0749d22_0
+Linking cmake-4.4.4-hcbeb305_0
+Linking mumps-seq-5.8.2-gfortran_h23c4eb5_3
+Linking libspral-2025.09.18-h1068211_2
+Linking numpy-2.5.3-py314h6cbe925_0
+Linking gcc-15.3.0-hfdd745d_7
+Linking libsdformat-16.1.0-py310h8306b03_0
+Linking ipopt-3.14.19-h3640754_2
+Linking scipy-1.18.1-py314hb3ba6a9_1
+Linking libboost-python-1.90.0-py314hea2faff_3
+Linking gxx-15.3.0-hfdd745d_7
+Linking casadi-3.7.2-py314h2afd27f_4
+Linking libboost-python-devel-1.90.0-py314h45fbc36_3
+Linking cxx-compiler-2.0.0-hf41333a_0
+Linking libpinocchio-4.1.0-h2d5f279_1
+Linking eigenpy-3.13.0-np2py314h0cf52ca_1
+Linking coal-python-3.0.4-np2py314h575f11a_2
+Linking pinocchio-python-4.1.0-np2py314h6341bac_1
+Linking pinocchio-4.1.0-py314h323ae61_1
+
+Transaction finished
+
+
+To activate this environment, use:
+
+    micromamba activate /home/jetson3/projects/vamp-bench/third_party/mm/cricket
+
+Or to execute a single command in this environment, use:
+
+    micromamba run -p /home/jetson3/projects/vamp-bench/third_party/mm/cricket mycommand
+

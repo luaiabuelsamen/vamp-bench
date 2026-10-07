@@ -1,0 +1,351 @@
+[1/13] Building CXX object CMakeFiles/cricket.dir/src/codegen.cc.o
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h:46,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:40,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/geometry.hpp:36,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/geometry.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:4,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/codegen.hh:3,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/src/codegen.cc:1:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h: In member function 'coal::Vec3s coal::AABB::center() const':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h:164:31: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  164 |   inline Vec3s center() const { return (min_ + max_) * 0.5; }
+      |                               ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.h:207,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch.h:42,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:42:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx: In static member function 'static coal::Vec2s coal::ContactPatchSolver::computeLineSegmentIntersection(const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&)':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx:410:67: note: parameter passing for argument of type 'Eigen::Matrix<double, 2, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  410 |     const Vec2s& a, const Vec2s& b, const Vec2s& c, const Vec2s& d) {
+      |                                                                   ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:358,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/multibody.hpp:23,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/model.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:3:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h: In instantiation of 'const Eigen::MatrixBase<Derived>::PlainObject Eigen::MatrixBase<Derived>::normalized() const [with Derived = Eigen::Matrix<double, 3, 1>; PlainObject = Eigen::Matrix<double, 3, 1>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/math/transform.h:264:32:   required from here
+  264 |   basis.col(2) = vec.normalized();
+      |                  ~~~~~~~~~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h:92:87: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+   92 | EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const typename MatrixBase<Derived>::PlainObject MatrixBase<Derived>::normalized()
+      |                                                                                       ^~~~~~~~~~~~~~~~~~~
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:328:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h: In instantiation of 'Eigen::DenseBase<Derived>::EvalReturnType Eigen::DenseBase<Derived>::eval() const [with Derived = Eigen::Transpose<const Eigen::Matrix<double, 3, 1> >; EvalReturnType = const Eigen::Matrix<double, 1, 3>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/IO.h:223:42:   required from 'std::ostream& Eigen::operator<<(std::ostream&, const DenseBase<Derived>&) [with Derived = Transpose<const Matrix<double, 3, 1> >; std::ostream = std::basic_ostream<char>]'
+  223 |   return internal::print_matrix(s, m.eval(), EIGEN_DEFAULT_IO_FORMAT);
+      |                                    ~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/geometry-object.hxx:632:43:   required from here
+  632 |        << geom_object.meshScale.transpose() << "\n"
+      |                                           ^
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h:386:56: note: parameter passing for argument of type 'Eigen::Matrix<double, 1, 3>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  386 |   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE EvalReturnType eval() const {
+      |                                                        ^~~~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h: In member function 'virtual coal::Matrix3s coal::CollisionGeometry::computeMomentofInertiaRelatedToCOM() const':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h:186:28: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  186 |     Vec3s com = computeCOM();
+      |                            ^
+[2/13] Building CXX object CMakeFiles/cricket.dir/src/tracing/frame_jacobian.cc.o
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h:46,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:40,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/geometry.hpp:36,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/geometry.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:4,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/codegen.hh:3,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/src/tracing/frame_jacobian.cc:1:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h: In member function 'coal::Vec3s coal::AABB::center() const':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h:164:31: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  164 |   inline Vec3s center() const { return (min_ + max_) * 0.5; }
+      |                               ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.h:207,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch.h:42,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:42:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx: In static member function 'static coal::Vec2s coal::ContactPatchSolver::computeLineSegmentIntersection(const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&)':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx:410:67: note: parameter passing for argument of type 'Eigen::Matrix<double, 2, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  410 |     const Vec2s& a, const Vec2s& b, const Vec2s& c, const Vec2s& d) {
+      |                                                                   ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:358,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/multibody.hpp:23,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/model.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:3:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h: In instantiation of 'const Eigen::MatrixBase<Derived>::PlainObject Eigen::MatrixBase<Derived>::normalized() const [with Derived = Eigen::Matrix<double, 3, 1>; PlainObject = Eigen::Matrix<double, 3, 1>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/math/transform.h:264:32:   required from here
+  264 |   basis.col(2) = vec.normalized();
+      |                  ~~~~~~~~~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h:92:87: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+   92 | EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const typename MatrixBase<Derived>::PlainObject MatrixBase<Derived>::normalized()
+      |                                                                                       ^~~~~~~~~~~~~~~~~~~
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:328:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h: In instantiation of 'Eigen::DenseBase<Derived>::EvalReturnType Eigen::DenseBase<Derived>::eval() const [with Derived = Eigen::Transpose<const Eigen::Matrix<double, 3, 1> >; EvalReturnType = const Eigen::Matrix<double, 1, 3>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/IO.h:223:42:   required from 'std::ostream& Eigen::operator<<(std::ostream&, const DenseBase<Derived>&) [with Derived = Transpose<const Matrix<double, 3, 1> >; std::ostream = std::basic_ostream<char>]'
+  223 |   return internal::print_matrix(s, m.eval(), EIGEN_DEFAULT_IO_FORMAT);
+      |                                    ~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/geometry-object.hxx:632:43:   required from here
+  632 |        << geom_object.meshScale.transpose() << "\n"
+      |                                           ^
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h:386:56: note: parameter passing for argument of type 'Eigen::Matrix<double, 1, 3>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  386 |   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE EvalReturnType eval() const {
+      |                                                        ^~~~
+[3/13] Building CXX object CMakeFiles/cricket.dir/src/tracing/forward_dynamics.cc.o
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h:46,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:40,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/geometry.hpp:36,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/geometry.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:4,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/codegen.hh:3,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/src/tracing/forward_dynamics.cc:1:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h: In member function 'coal::Vec3s coal::AABB::center() const':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h:164:31: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  164 |   inline Vec3s center() const { return (min_ + max_) * 0.5; }
+      |                               ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.h:207,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch.h:42,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:42:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx: In static member function 'static coal::Vec2s coal::ContactPatchSolver::computeLineSegmentIntersection(const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&)':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx:410:67: note: parameter passing for argument of type 'Eigen::Matrix<double, 2, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  410 |     const Vec2s& a, const Vec2s& b, const Vec2s& c, const Vec2s& d) {
+      |                                                                   ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:358,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/multibody.hpp:23,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/model.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:3:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h: In instantiation of 'const Eigen::MatrixBase<Derived>::PlainObject Eigen::MatrixBase<Derived>::normalized() const [with Derived = Eigen::Matrix<double, 3, 1>; PlainObject = Eigen::Matrix<double, 3, 1>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/math/transform.h:264:32:   required from here
+  264 |   basis.col(2) = vec.normalized();
+      |                  ~~~~~~~~~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h:92:87: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+   92 | EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const typename MatrixBase<Derived>::PlainObject MatrixBase<Derived>::normalized()
+      |                                                                                       ^~~~~~~~~~~~~~~~~~~
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:328:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h: In instantiation of 'Eigen::DenseBase<Derived>::EvalReturnType Eigen::DenseBase<Derived>::eval() const [with Derived = Eigen::Transpose<const Eigen::Matrix<double, 3, 1> >; EvalReturnType = const Eigen::Matrix<double, 1, 3>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/IO.h:223:42:   required from 'std::ostream& Eigen::operator<<(std::ostream&, const DenseBase<Derived>&) [with Derived = Transpose<const Matrix<double, 3, 1> >; std::ostream = std::basic_ostream<char>]'
+  223 |   return internal::print_matrix(s, m.eval(), EIGEN_DEFAULT_IO_FORMAT);
+      |                                    ~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/geometry-object.hxx:632:43:   required from here
+  632 |        << geom_object.meshScale.transpose() << "\n"
+      |                                           ^
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h:386:56: note: parameter passing for argument of type 'Eigen::Matrix<double, 1, 3>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  386 |   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE EvalReturnType eval() const {
+      |                                                        ^~~~
+[4/13] Building CXX object CMakeFiles/cricket.dir/src/tracing/integrate_configuration.cc.o
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h:46,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:40,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/geometry.hpp:36,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/geometry.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:4,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/codegen.hh:3,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/src/tracing/integrate_configuration.cc:1:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h: In member function 'coal::Vec3s coal::AABB::center() const':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h:164:31: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  164 |   inline Vec3s center() const { return (min_ + max_) * 0.5; }
+      |                               ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.h:207,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch.h:42,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:42:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx: In static member function 'static coal::Vec2s coal::ContactPatchSolver::computeLineSegmentIntersection(const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&)':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx:410:67: note: parameter passing for argument of type 'Eigen::Matrix<double, 2, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  410 |     const Vec2s& a, const Vec2s& b, const Vec2s& c, const Vec2s& d) {
+      |                                                                   ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:358,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/multibody.hpp:23,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/model.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:3:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h: In instantiation of 'const Eigen::MatrixBase<Derived>::PlainObject Eigen::MatrixBase<Derived>::normalized() const [with Derived = Eigen::Matrix<double, 3, 1>; PlainObject = Eigen::Matrix<double, 3, 1>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/math/transform.h:264:32:   required from here
+  264 |   basis.col(2) = vec.normalized();
+      |                  ~~~~~~~~~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h:92:87: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+   92 | EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const typename MatrixBase<Derived>::PlainObject MatrixBase<Derived>::normalized()
+      |                                                                                       ^~~~~~~~~~~~~~~~~~~
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:328:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h: In instantiation of 'Eigen::DenseBase<Derived>::EvalReturnType Eigen::DenseBase<Derived>::eval() const [with Derived = Eigen::Transpose<const Eigen::Matrix<double, 3, 1> >; EvalReturnType = const Eigen::Matrix<double, 1, 3>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/IO.h:223:42:   required from 'std::ostream& Eigen::operator<<(std::ostream&, const DenseBase<Derived>&) [with Derived = Transpose<const Matrix<double, 3, 1> >; std::ostream = std::basic_ostream<char>]'
+  223 |   return internal::print_matrix(s, m.eval(), EIGEN_DEFAULT_IO_FORMAT);
+      |                                    ~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/geometry-object.hxx:632:43:   required from here
+  632 |        << geom_object.meshScale.transpose() << "\n"
+      |                                           ^
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h:386:56: note: parameter passing for argument of type 'Eigen::Matrix<double, 1, 3>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  386 |   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE EvalReturnType eval() const {
+      |                                                        ^~~~
+[5/13] Linking CXX static library libcricket.a
+[6/13] Building CXX object CMakeFiles/dump_srdf.dir/src/dump_srdf.cc.o
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h:46,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:40,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/geometry.hpp:36,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/geometry.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:4,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/src/dump_srdf.cc:3:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h: In member function 'coal::Vec3s coal::AABB::center() const':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h:164:31: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  164 |   inline Vec3s center() const { return (min_ + max_) * 0.5; }
+      |                               ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.h:207,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch.h:42,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:42:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx: In static member function 'static coal::Vec2s coal::ContactPatchSolver::computeLineSegmentIntersection(const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&)':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx:410:67: note: parameter passing for argument of type 'Eigen::Matrix<double, 2, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  410 |     const Vec2s& a, const Vec2s& b, const Vec2s& c, const Vec2s& d) {
+      |                                                                   ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:358,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/multibody.hpp:23,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/model.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:3:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h: In instantiation of 'const Eigen::MatrixBase<Derived>::PlainObject Eigen::MatrixBase<Derived>::normalized() const [with Derived = Eigen::Matrix<double, 3, 1>; PlainObject = Eigen::Matrix<double, 3, 1>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/math/transform.h:264:32:   required from here
+  264 |   basis.col(2) = vec.normalized();
+      |                  ~~~~~~~~~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h:92:87: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+   92 | EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const typename MatrixBase<Derived>::PlainObject MatrixBase<Derived>::normalized()
+      |                                                                                       ^~~~~~~~~~~~~~~~~~~
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:328:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h: In instantiation of 'Eigen::DenseBase<Derived>::EvalReturnType Eigen::DenseBase<Derived>::eval() const [with Derived = Eigen::Transpose<const Eigen::Matrix<double, 3, 1> >; EvalReturnType = const Eigen::Matrix<double, 1, 3>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/IO.h:223:42:   required from 'std::ostream& Eigen::operator<<(std::ostream&, const DenseBase<Derived>&) [with Derived = Transpose<const Matrix<double, 3, 1> >; std::ostream = std::basic_ostream<char>]'
+  223 |   return internal::print_matrix(s, m.eval(), EIGEN_DEFAULT_IO_FORMAT);
+      |                                    ~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/geometry-object.hxx:632:43:   required from here
+  632 |        << geom_object.meshScale.transpose() << "\n"
+      |                                           ^
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h:386:56: note: parameter passing for argument of type 'Eigen::Matrix<double, 1, 3>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  386 |   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE EvalReturnType eval() const {
+      |                                                        ^~~~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h: In member function 'virtual coal::Matrix3s coal::CollisionGeometry::computeMomentofInertiaRelatedToCOM() const':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h:186:28: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  186 |     Vec3s com = computeCOM();
+      |                            ^
+[7/13] Building CXX object CMakeFiles/robot_info_test.dir/tests/robot_info_test.cc.o
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h:46,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:40,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/geometry.hpp:36,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/geometry.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:4,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/tests/robot_info_test.cc:1:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h: In member function 'coal::Vec3s coal::AABB::center() const':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h:164:31: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  164 |   inline Vec3s center() const { return (min_ + max_) * 0.5; }
+      |                               ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.h:207,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch.h:42,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:42:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx: In static member function 'static coal::Vec2s coal::ContactPatchSolver::computeLineSegmentIntersection(const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&)':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx:410:67: note: parameter passing for argument of type 'Eigen::Matrix<double, 2, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  410 |     const Vec2s& a, const Vec2s& b, const Vec2s& c, const Vec2s& d) {
+      |                                                                   ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:358,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/multibody.hpp:23,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/model.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:3:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h: In instantiation of 'const Eigen::MatrixBase<Derived>::PlainObject Eigen::MatrixBase<Derived>::normalized() const [with Derived = Eigen::Matrix<double, 3, 1>; PlainObject = Eigen::Matrix<double, 3, 1>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/math/transform.h:264:32:   required from here
+  264 |   basis.col(2) = vec.normalized();
+      |                  ~~~~~~~~~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h:92:87: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+   92 | EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const typename MatrixBase<Derived>::PlainObject MatrixBase<Derived>::normalized()
+      |                                                                                       ^~~~~~~~~~~~~~~~~~~
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:328:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h: In instantiation of 'Eigen::DenseBase<Derived>::EvalReturnType Eigen::DenseBase<Derived>::eval() const [with Derived = Eigen::Transpose<const Eigen::Matrix<double, 3, 1> >; EvalReturnType = const Eigen::Matrix<double, 1, 3>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/IO.h:223:42:   required from 'std::ostream& Eigen::operator<<(std::ostream&, const DenseBase<Derived>&) [with Derived = Transpose<const Matrix<double, 3, 1> >; std::ostream = std::basic_ostream<char>]'
+  223 |   return internal::print_matrix(s, m.eval(), EIGEN_DEFAULT_IO_FORMAT);
+      |                                    ~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/geometry-object.hxx:632:43:   required from here
+  632 |        << geom_object.meshScale.transpose() << "\n"
+      |                                           ^
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h:386:56: note: parameter passing for argument of type 'Eigen::Matrix<double, 1, 3>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  386 |   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE EvalReturnType eval() const {
+      |                                                        ^~~~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h: In member function 'virtual coal::Matrix3s coal::CollisionGeometry::computeMomentofInertiaRelatedToCOM() const':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h:186:28: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  186 |     Vec3s com = computeCOM();
+      |                            ^
+[8/13] Building CXX object CMakeFiles/tracing_test.dir/tests/tracing_test.cc.o
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h:46,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:40,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/geometry.hpp:36,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/geometry.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:4,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/codegen.hh:3,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/tests/tracing_test.cc:1:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h: In member function 'coal::Vec3s coal::AABB::center() const':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h:164:31: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  164 |   inline Vec3s center() const { return (min_ + max_) * 0.5; }
+      |                               ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.h:207,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch.h:42,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:42:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx: In static member function 'static coal::Vec2s coal::ContactPatchSolver::computeLineSegmentIntersection(const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&)':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx:410:67: note: parameter passing for argument of type 'Eigen::Matrix<double, 2, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  410 |     const Vec2s& a, const Vec2s& b, const Vec2s& c, const Vec2s& d) {
+      |                                                                   ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:358,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/multibody.hpp:23,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/model.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:3:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h: In instantiation of 'const Eigen::MatrixBase<Derived>::PlainObject Eigen::MatrixBase<Derived>::normalized() const [with Derived = Eigen::Matrix<double, 3, 1>; PlainObject = Eigen::Matrix<double, 3, 1>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/math/transform.h:264:32:   required from here
+  264 |   basis.col(2) = vec.normalized();
+      |                  ~~~~~~~~~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h:92:87: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+   92 | EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const typename MatrixBase<Derived>::PlainObject MatrixBase<Derived>::normalized()
+      |                                                                                       ^~~~~~~~~~~~~~~~~~~
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:328:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h: In instantiation of 'Eigen::DenseBase<Derived>::EvalReturnType Eigen::DenseBase<Derived>::eval() const [with Derived = Eigen::Transpose<const Eigen::Matrix<double, 3, 1> >; EvalReturnType = const Eigen::Matrix<double, 1, 3>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/IO.h:223:42:   required from 'std::ostream& Eigen::operator<<(std::ostream&, const DenseBase<Derived>&) [with Derived = Transpose<const Matrix<double, 3, 1> >; std::ostream = std::basic_ostream<char>]'
+  223 |   return internal::print_matrix(s, m.eval(), EIGEN_DEFAULT_IO_FORMAT);
+      |                                    ~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/geometry-object.hxx:632:43:   required from here
+  632 |        << geom_object.meshScale.transpose() << "\n"
+      |                                           ^
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h:386:56: note: parameter passing for argument of type 'Eigen::Matrix<double, 1, 3>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  386 |   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE EvalReturnType eval() const {
+      |                                                        ^~~~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h: In member function 'virtual coal::Matrix3s coal::CollisionGeometry::computeMomentofInertiaRelatedToCOM() const':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h:186:28: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  186 |     Vec3s com = computeCOM();
+      |                            ^
+[9/13] Building CXX object CMakeFiles/fkcc_gen.dir/src/fkcc_gen.cc.o
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h:46,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:40,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/geometry.hpp:36,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/geometry.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:4,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/codegen.hh:3,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/src/fkcc_gen.cc:1:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h: In member function 'coal::Vec3s coal::AABB::center() const':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/BV/AABB.h:164:31: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  164 |   inline Vec3s center() const { return (min_ + max_) * 0.5; }
+      |                               ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.h:207,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch.h:42,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/coal.hxx:42:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx: In static member function 'static coal::Vec2s coal::ContactPatchSolver::computeLineSegmentIntersection(const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&, const coal::Vec2s&)':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/contact_patch/contact_patch_solver.hxx:410:67: note: parameter passing for argument of type 'Eigen::Matrix<double, 2, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  410 |     const Vec2s& a, const Vec2s& b, const Vec2s& c, const Vec2s& d) {
+      |                                                                   ^
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:358,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/multibody.hpp:23,
+                 from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/deprecated/pinocchio/multibody/model.hpp:7,
+                 from /home/jetson3/projects/vamp-bench/third_party/cricket/include/cricket/robot_info.hh:3:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h: In instantiation of 'const Eigen::MatrixBase<Derived>::PlainObject Eigen::MatrixBase<Derived>::normalized() const [with Derived = Eigen::Matrix<double, 3, 1>; PlainObject = Eigen::Matrix<double, 3, 1>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/math/transform.h:264:32:   required from here
+  264 |   basis.col(2) = vec.normalized();
+      |                  ~~~~~~~~~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/Dot.h:92:87: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+   92 | EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const typename MatrixBase<Derived>::PlainObject MatrixBase<Derived>::normalized()
+      |                                                                                       ^~~~~~~~~~~~~~~~~~~
+In file included from /home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/Core:328:
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h: In instantiation of 'Eigen::DenseBase<Derived>::EvalReturnType Eigen::DenseBase<Derived>::eval() const [with Derived = Eigen::Transpose<const Eigen::Matrix<double, 3, 1> >; EvalReturnType = const Eigen::Matrix<double, 1, 3>]':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/IO.h:223:42:   required from 'std::ostream& Eigen::operator<<(std::ostream&, const DenseBase<Derived>&) [with Derived = Transpose<const Matrix<double, 3, 1> >; std::ostream = std::basic_ostream<char>]'
+  223 |   return internal::print_matrix(s, m.eval(), EIGEN_DEFAULT_IO_FORMAT);
+      |                                    ~~~~~~^~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/pinocchio/src/geometry/geometry-object.hxx:632:43:   required from here
+  632 |        << geom_object.meshScale.transpose() << "\n"
+      |                                           ^
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/eigen3/Eigen/src/Core/DenseBase.h:386:56: note: parameter passing for argument of type 'Eigen::Matrix<double, 1, 3>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  386 |   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE EvalReturnType eval() const {
+      |                                                        ^~~~
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h: In member function 'virtual coal::Matrix3s coal::CollisionGeometry::computeMomentofInertiaRelatedToCOM() const':
+/home/jetson3/projects/vamp-bench/third_party/mm/cricket/include/coal/collision_object.h:186:28: note: parameter passing for argument of type 'Eigen::Matrix<double, 3, 1>' when C++17 is enabled changed to match C++14 in GCC 10.1
+  186 |     Vec3s com = computeCOM();
+      |                            ^
+[10/13] Linking CXX executable dump_srdf
+[11/13] Linking CXX executable robot_info_test
+[12/13] Linking CXX executable tracing_test
+[13/13] Linking CXX executable fkcc_gen

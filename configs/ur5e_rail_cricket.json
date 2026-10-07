@@ -1,0 +1,15 @@
+{
+  "name": "UR5eRail",
+  "urdf": "ur5e_rail_spherized.urdf",
+  "srdf": "ur5e_rail.srdf",
+  "end_effector": "tool0",
+  "resolution": 32,
+  "template": "templates/fk_template.hh",
+  "subtemplates": [
+    {
+      "name": "ccfk",
+      "template": "templates/ccfk_template.hh"
+    }
+  ],
+  "output": "ur5e_rail.hh"
+}
