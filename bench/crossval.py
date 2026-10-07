@@ -12,7 +12,7 @@ import vamp
 
 ROOT = Path(__file__).resolve().parents[1]
 res = json.load(open(sys.argv[1])); vmod = getattr(vamp, sys.argv[2])
-pk = sys.argv[3] if len(sys.argv) > 3 else ROOT / f"third_party/vamp/resources/{res['robot']}/problems.pkl"
+pk = sys.argv[3] if len(sys.argv) > 3 and sys.argv[3] else ROOT / f"third_party/vamp/resources/{res['robot']}/problems.pkl"
 probs = pickle.load(open(pk, "rb"))["problems"]
 n = bad = 0
 for r in res["records"]:

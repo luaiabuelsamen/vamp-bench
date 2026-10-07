@@ -1,0 +1,47 @@
+{
+ "cmd": [
+  ".venv/bin/python",
+  "bench/vamp_mbm.py",
+  "--robot",
+  "panda",
+  "--out",
+  "results/raw/vamp_mbm_panda.json"
+ ],
+ "returncode": 0,
+ "wall_s": 1.8875391483306885,
+ "n_samples": 7,
+ "VDD_IN_mW": {
+  "mean": 21157.14285714286,
+  "median": 21242.0,
+  "max": 21393.0
+ },
+ "VDD_CPU_GPU_CV_mW": {
+  "mean": 9791.0,
+  "median": 9792.0,
+  "max": 9939.0
+ },
+ "GR3D_pct": {
+  "mean": 99.0,
+  "median": 99.0,
+  "max": 99.0
+ },
+ "cpu_temp_C": {
+  "mean": 86.263,
+  "median": 86.281,
+  "max": 86.437
+ },
+ "gpu_temp_C": {
+  "mean": 85.94614285714286,
+  "median": 85.937,
+  "max": 86.25
+ },
+ "top_processes_at_start": [
+  "90.5 python3 tools/check_numbers.py",
+  "37.7 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_state --arm so101 --stiffness stiff --cond pos --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_pos_act_state_s0.json",
+  "11.2 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  " 8.5 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  " 6.7 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  " 4.1 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  " 3.1 claude --dangerously-skip-permissions"
+ ]
+}

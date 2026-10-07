@@ -30,10 +30,10 @@ for scene, pset in data["problems"].items():
         if not p["valid"]:
             records.append({"scene": scene, "index": i, "valid": False}); continue
         for trial in range(args.trials):
+            sampler.reset(); sampler.skip(trial * 100000)  # per-trial seed; outside the timed region
             t0 = time.perf_counter_ns()
             env = vamp.problem_dict_to_vamp(p)
             t1 = time.perf_counter_ns()
-            sampler.reset(); sampler.skip(trial * 100000)
             res = planner(p["start"], p["goals"], env, plan_settings, sampler)
             rec = {"scene": scene, "index": i, "trial": trial, "valid": True, "success": bool(res.solved),
                    "env_build_us": (t1 - t0) / 1e3, "plan_us": res.nanoseconds / 1e3}
