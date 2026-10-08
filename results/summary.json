@@ -88,7 +88,12 @@
     },
     "settings": null,
     "plan_config": null,
-    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults"
+    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults",
+    "failures": {
+     "n": 0,
+     "queries": [],
+     "time_to_failure_ms": null
+    }
    },
    "curobo_v1": {
     "source": "results/records/curobo_mbm_panda.json",
@@ -191,6 +196,265 @@
      "timeout": 60.0
     },
     "planner": "cuRobo v1 (NVlabs/curobo ebb7170, v0.7.7-5) MotionGen.plan_single_js",
+    "failures": {
+     "n": 61,
+     "queries": [
+      [
+       "bookshelf_small",
+       12
+      ],
+      [
+       "bookshelf_small",
+       18
+      ],
+      [
+       "bookshelf_small",
+       31
+      ],
+      [
+       "bookshelf_small",
+       38
+      ],
+      [
+       "bookshelf_small",
+       43
+      ],
+      [
+       "bookshelf_small",
+       64
+      ],
+      [
+       "bookshelf_small",
+       68
+      ],
+      [
+       "bookshelf_small",
+       88
+      ],
+      [
+       "bookshelf_small",
+       89
+      ],
+      [
+       "bookshelf_small",
+       92
+      ],
+      [
+       "bookshelf_tall",
+       9
+      ],
+      [
+       "bookshelf_tall",
+       36
+      ],
+      [
+       "bookshelf_tall",
+       53
+      ],
+      [
+       "bookshelf_tall",
+       59
+      ],
+      [
+       "bookshelf_tall",
+       78
+      ],
+      [
+       "bookshelf_tall",
+       98
+      ],
+      [
+       "bookshelf_thin",
+       26
+      ],
+      [
+       "bookshelf_thin",
+       27
+      ],
+      [
+       "bookshelf_thin",
+       39
+      ],
+      [
+       "bookshelf_thin",
+       59
+      ],
+      [
+       "bookshelf_thin",
+       68
+      ],
+      [
+       "bookshelf_thin",
+       88
+      ],
+      [
+       "box",
+       29
+      ],
+      [
+       "box",
+       50
+      ],
+      [
+       "box",
+       55
+      ],
+      [
+       "box",
+       67
+      ],
+      [
+       "box",
+       90
+      ],
+      [
+       "cage",
+       0
+      ],
+      [
+       "cage",
+       3
+      ],
+      [
+       "cage",
+       5
+      ],
+      [
+       "cage",
+       7
+      ],
+      [
+       "cage",
+       10
+      ],
+      [
+       "cage",
+       12
+      ],
+      [
+       "cage",
+       13
+      ],
+      [
+       "cage",
+       14
+      ],
+      [
+       "cage",
+       22
+      ],
+      [
+       "cage",
+       26
+      ],
+      [
+       "cage",
+       29
+      ],
+      [
+       "cage",
+       43
+      ],
+      [
+       "cage",
+       44
+      ],
+      [
+       "cage",
+       47
+      ],
+      [
+       "cage",
+       52
+      ],
+      [
+       "cage",
+       56
+      ],
+      [
+       "cage",
+       61
+      ],
+      [
+       "cage",
+       63
+      ],
+      [
+       "cage",
+       69
+      ],
+      [
+       "cage",
+       76
+      ],
+      [
+       "cage",
+       77
+      ],
+      [
+       "cage",
+       78
+      ],
+      [
+       "cage",
+       81
+      ],
+      [
+       "cage",
+       84
+      ],
+      [
+       "cage",
+       88
+      ],
+      [
+       "cage",
+       90
+      ],
+      [
+       "cage",
+       92
+      ],
+      [
+       "cage",
+       98
+      ],
+      [
+       "table_pick",
+       6
+      ],
+      [
+       "table_pick",
+       31
+      ],
+      [
+       "table_under_pick",
+       12
+      ],
+      [
+       "table_under_pick",
+       19
+      ],
+      [
+       "table_under_pick",
+       73
+      ],
+      [
+       "table_under_pick",
+       79
+      ]
+     ],
+     "time_to_failure_ms": {
+      "n": 61,
+      "mean": 9906.409820076078,
+      "p5": 3864.210821222514,
+      "p25": 8148.667807225138,
+      "median": 8891.245428007096,
+      "p75": 11592.648890800774,
+      "p95": 14616.330924909562,
+      "max": 44295.416539069265
+     }
+    },
     "success_passing_vamp_segment_check_PROVISIONAL": 638,
     "success_flagged_by_vamp_segment_check_PROVISIONAL": 0,
     "failure_status": {
@@ -308,6 +572,61 @@
      "enable_graph_attempt": 1
     },
     "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
+    "failures": {
+     "n": 10,
+     "queries": [
+      [
+       "bookshelf_small",
+       0
+      ],
+      [
+       "bookshelf_small",
+       50
+      ],
+      [
+       "bookshelf_tall",
+       30
+      ],
+      [
+       "bookshelf_tall",
+       80
+      ],
+      [
+       "cage",
+       0
+      ],
+      [
+       "table_under_pick",
+       10
+      ],
+      [
+       "table_under_pick",
+       30
+      ],
+      [
+       "table_under_pick",
+       50
+      ],
+      [
+       "table_under_pick",
+       70
+      ],
+      [
+       "table_under_pick",
+       80
+      ]
+     ],
+     "time_to_failure_ms": {
+      "n": 10,
+      "mean": 46845.800661621615,
+      "p5": 14441.135087050498,
+      "p25": 17670.1345522888,
+      "median": 43357.79344942421,
+      "p75": 73579.24356719013,
+      "p95": 86414.41517085767,
+      "max": 93502.34766490757
+     }
+    },
     "success_passing_vamp_segment_check_PROVISIONAL": 55,
     "success_flagged_by_vamp_segment_check_PROVISIONAL": 4,
     "failure_status": {
@@ -470,7 +789,12 @@
     },
     "settings": null,
     "plan_config": null,
-    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults"
+    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults",
+    "failures": {
+     "n": 0,
+     "queries": [],
+     "time_to_failure_ms": null
+    }
    },
    "curobo_v1": null,
    "curobo_v2": null
@@ -568,7 +892,26 @@
     },
     "settings": null,
     "plan_config": null,
-    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults"
+    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults",
+    "failures": {
+     "n": 10,
+     "queries": [
+      [
+       "gantry_pillars",
+       64
+      ]
+     ],
+     "time_to_failure_ms": {
+      "n": 10,
+      "mean": 4262.929863799999,
+      "p5": 4175.5676079,
+      "p25": 4208.619418,
+      "median": 4230.0168619999995,
+      "p75": 4335.04248,
+      "p95": 4368.535781599999,
+      "max": 4392.752275999999
+     }
+    }
    },
    "curobo_v1": null,
    "curobo_v2": {
@@ -687,6 +1030,33 @@
      "enable_graph_attempt": 1
     },
     "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
+    "failures": {
+     "n": 3,
+     "queries": [
+      [
+       "gantry_pillars",
+       36
+      ],
+      [
+       "gantry_pillars",
+       61
+      ],
+      [
+       "gantry_pillars",
+       64
+      ]
+     ],
+     "time_to_failure_ms": {
+      "n": 3,
+      "mean": 16578.434471817065,
+      "p5": 12714.870787225664,
+      "p25": 12871.92480172962,
+      "median": 13068.242319859564,
+      "p75": 18529.848065925762,
+      "p95": 22899.13266277872,
+      "max": 23991.45381199196
+     }
+    },
     "success_passing_vamp_segment_check_PROVISIONAL": 84,
     "success_flagged_by_vamp_segment_check_PROVISIONAL": 16,
     "failure_status": {
@@ -814,7 +1184,12 @@
     },
     "settings": null,
     "plan_config": null,
-    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults"
+    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults",
+    "failures": {
+     "n": 0,
+     "queries": [],
+     "time_to_failure_ms": null
+    }
    },
    "curobo_v1": null,
    "curobo_v2": {
@@ -933,6 +1308,11 @@
      "enable_graph_attempt": 1
     },
     "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
+    "failures": {
+     "n": 0,
+     "queries": [],
+     "time_to_failure_ms": null
+    },
     "success_passing_vamp_segment_check_PROVISIONAL": 103,
     "success_flagged_by_vamp_segment_check_PROVISIONAL": 0,
     "failure_status": {}
@@ -1058,7 +1438,12 @@
     },
     "settings": null,
     "plan_config": null,
-    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults"
+    "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults",
+    "failures": {
+     "n": 0,
+     "queries": [],
+     "time_to_failure_ms": null
+    }
    },
    "curobo_v1": null,
    "curobo_v2": {
@@ -1177,6 +1562,25 @@
      "enable_graph_attempt": 1
     },
     "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
+    "failures": {
+     "n": 1,
+     "queries": [
+      [
+       "ur5e_pillars",
+       34
+      ]
+     ],
+     "time_to_failure_ms": {
+      "n": 1,
+      "mean": 17006.003296002746,
+      "p5": 17006.003296002746,
+      "p25": 17006.003296002746,
+      "median": 17006.003296002746,
+      "p75": 17006.003296002746,
+      "p95": 17006.003296002746,
+      "max": 17006.003296002746
+     }
+    },
     "success_passing_vamp_segment_check_PROVISIONAL": 98,
     "success_flagged_by_vamp_segment_check_PROVISIONAL": 4,
     "failure_status": {
@@ -1212,6 +1616,18 @@
    }
   }
  ],
+ "superseded": {
+  "curobo2_mbm_ur5": {
+   "reason": "UR5 URDF velocity cap 0.5 rad/s (fixed: configs/ur5_spherized_vel_pi.urdf)",
+   "queries": 64,
+   "success": 33
+  },
+  "curobo_mbm_ur5": {
+   "reason": "UR5 URDF velocity cap 0.5 rad/s (fixed: configs/ur5_spherized_vel_pi.urdf)",
+   "queries": 689,
+   "success": 4
+  }
+ },
  "collision_model_agreement": {
   "panda": {
    "n": 4000,

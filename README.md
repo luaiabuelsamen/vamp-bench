@@ -30,7 +30,7 @@ So on this board, VAMP on one of the 8 CPU cores is about 500x faster than cuRob
 
 ## All problem sets
 
-Wall-clock time per query; median, with p95 in parentheses. Success is what each planner reports. A provisional cross-check with VAMP's checker is described below.
+Wall-clock time per query; median, with p95 in parentheses. **Solved** means the planner reported success. This definition is used everywhere in this repo: tables, figure and `docs/EMAIL_NOTES.md`. A provisional cross-check with VAMP's checker is described below, and it does not change these counts.
 
 | Problem set | VAMP | cuRobo v1 | cuRoboV2 |
 |---|---|---|---|
@@ -51,7 +51,7 @@ Wall-clock time per query; median, with p95 in parentheses. Success is what each
 - 16 of 100 on rail/pillars
 - 4 of 102 on UR5e/pillars
 
-Each flagged trajectory has every waypoint collision-free, but one step between waypoints intersects an obstacle. cuRobo v1 had 0 of 638 flagged on Panda. This may still be a measurement artifact. The checks under way and their status are in [docs/V2_COLLISION_CHECK.md](docs/V2_COLLISION_CHECK.md).
+Each flagged trajectory has every waypoint collision-free, but one step between waypoints intersects an obstacle. If the finding is confirmed, V2's Panda count would drop from 59 to 55 (59 − 4). An earlier draft of this README used that 55. cuRobo v1 had 0 of 638 flagged on Panda. This may still be a measurement artifact. The checks under way and their status are in [docs/V2_COLLISION_CHECK.md](docs/V2_COLLISION_CHECK.md).
 
 **VAMP's one failure.** VAMP's only failures are a single rail/pillars query (problem 64). It fails on all 10 seeds, each after about 4.2 s at the default iteration cap.
 
@@ -65,7 +65,7 @@ Every number above is in `results/summary.json` (built by `bench/analyze.py` fro
 - **cuRoboV2** (`ac5f931`, v0.8.0.post1.dev33; the existing build in `~/projects/clean_env/venv`, not rebuilt):
   - Settings are those of NVIDIA's `benchmark/motion_plan_benchmark.py`: particle + L-BFGS IK and trajopt, 4 trajopt seeds, activation distance 0.0025, CUDA graphs, `warmup(enable_graph=True)`, `reset_seed()` before each query, graph seeding from attempt 1.
   - We cap `max_attempts` at 20 (the same as v1; V2's benchmark uses 100) to fit the shared GPU slot.
-  - At ~1–15 s per query, V2 runs a fixed subset: every 10th MBM problem, and one trial per paper problem.
+  - V2 takes a median 0.38–6.55 s per query (up to 19.7 s), so it runs a fixed subset: every 10th MBM problem, and one trial per paper problem.
   - Every recorded setting is in `results/records/curobo2_*.json`.
 - **Outputs differ in kind.** Both cuRobo versions return smooth, time-parameterized, jerk-limited trajectories. VAMP returns a geometric path that still needs time parameterization.
 - **Machine load during the GPU slot** (2026-10-07 17:42–21:06):

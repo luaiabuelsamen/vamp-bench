@@ -52,4 +52,5 @@ for v in curobo curobo2; do
   done
 done
 fi
+.venv/bin/python bench/analyze.py && python3 bench/check_consistency.py || true
 echo ALL DONE

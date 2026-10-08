@@ -86,6 +86,9 @@ for g in GROUPS:
              "internal_ms": stats([internal_ms(key, r) for r in ok]),
              "path_length_rad": stats([r["path_length_l2"] for r in ok]), "power": P,
              "settings": D.get("settings"), "plan_config": D.get("plan_config"), "planner": D.get("planner")}
+        fails = [r for r in val if not r["success"]]
+        s["failures"] = {"n": len(fails), "queries": sorted({(r["scene"], r["index"]) for r in fails}),
+                         "time_to_failure_ms": stats([wall_ms(key, r) if key != "vamp" else r["plan_us"] / 1e3 for r in fails])}
         if key != "vamp":
             s["success_passing_vamp_segment_check_PROVISIONAL"] = sum(bool(r.get("vamp_validated")) for r in raw_ok)
             s["success_flagged_by_vamp_segment_check_PROVISIONAL"] = sum(not r.get("vamp_validated") for r in raw_ok)
@@ -114,6 +117,15 @@ for g in GROUPS:
     summary["groups"].append(out)
     cell = lambda s: f"{s['success']}/{s['queries']} med {s['wall_ms']['median']:.3g} ms" if s else "pending"
     print(f"{g[0]:34s} " + " | ".join(f"{SHORT[k]} {cell(out[k])}" for k, *_ in PLANNERS))
+
+# superseded runs (kept for traceability; see results/raw/superseded/README.md)
+summary["superseded"] = {}
+for f in sorted((RAW / "superseded").glob("curobo*_mbm_*.json")):
+    if f.name.endswith(".power.json"):
+        continue
+    D = json.load(open(f)); val = [r for r in D["records"] if r["valid"]]
+    summary["superseded"][f.stem] = {"reason": "UR5 URDF velocity cap 0.5 rad/s (fixed: configs/ur5_spherized_vel_pi.urdf)",
+                                     "queries": len(val), "success": sum(r["success"] for r in val)}
 
 agree = ROOT / "results/collision_model_agreement.json"
 if agree.exists():
@@ -154,9 +166,10 @@ for i, (g, s) in enumerate(list(zip(GROUPS, summary["groups"]))[::-1]):
     yt.append(i)
 ax.set_xscale("log"); ax.set_yticks(yt); ax.set_yticklabels([g[0] for g in GROUPS][::-1])
 ax.set_ylim(-0.6, len(GROUPS) - 0.4)
-ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:g}"))
-ax.set_xlim(min(xs) / 2, max(10000, max(xs) * 40))
-ax.set_xlabel("wall-clock time per query, ms (log scale). Dots = solved queries, bar = IQR, tick = median")
+ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:,.0f}" if v >= 1 else f"{v:g}"))
+ax.set_xlim(min(xs) / 2, max(10000, max(xs) * 120))
+ax.set_xticks([t for t in (0.1, 1, 10, 100, 1000, 10000, 100000) if min(xs) / 2 <= t <= max(xs) * 120])
+ax.set_xlabel("wall-clock time per query, ms (log scale)\ndots = solved queries (solved = planner-reported success) · bar = IQR · tick = median")
 ax.grid(axis="x", color=GRID, lw=0.8); ax.set_axisbelow(True)
 for sp in ("top", "right", "left"):
     ax.spines[sp].set_visible(False)
