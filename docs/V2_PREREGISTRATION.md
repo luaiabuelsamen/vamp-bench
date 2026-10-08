@@ -72,3 +72,9 @@ The hash is recorded in `docs/V2_FREEZE.md` in the next commit. Nothing listed a
 - **CPU (now):** VAMP, P1, P2 and validation on 900 queries × 10 seeds.
 - **GPU:** cuRobo v1 on 900 × 10, then cuRoboV2 on 300 × 3. The exact GPU-hour figure goes in STATUS.md under Blocked once the CPU step has measured the query mix.
 - **Afterwards:** the pick-place sequence with MoveL segments (separate pre-registration, before it is run).
+
+## Amendments (logged before the affected data was used by any planner)
+- **A1 (2026-10-08, MπNets data preparation):** every MπNets problem was invalid under the shared model, because VAMP's `panda_link0` spheres intersect the robot stand (`cube_robot_stand`) and the table piece under the base in every configuration.
+  - Obstacles whose axis-aligned box overlaps the fixed base region (|x|, |y| < 0.15 m, z < 0.05 m) are removed, for all planners, before validity filtering (`bench/v2_select.py: touches_fixed_base`).
+  - The removed names are recorded per problem (`removed_base_obstacles`).
+  - On the first 40 problems per family, 27–40 of 40 become valid. Tabletop families are lowest, consistent with VAMP's note on finger separation.
