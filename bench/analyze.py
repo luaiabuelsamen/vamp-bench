@@ -6,6 +6,8 @@ Primary timing metric (apples to apples): wall-clock per query on the same Jetso
   cuRoboV2:  clear cache + update_world + reset_seed + plan_cspace, sync (world_update_us + plan_wall_us)
 Planner-internal times are reported too (VAMP total_us; cuRobo solve_time_us).
 Time distributions are over successful queries; success rate is reported separately.
+A cuRobo success counts only if every segment of its returned trajectory passes VAMP's validate_motion
+(bench/crossval.py); planner-reported successes are kept as success_reported_by_planner.
 A planner's cells are null ("pending") until its raw file exists in results/raw.
 """
 import json
@@ -75,14 +77,18 @@ for g in GROUPS:
         if not D:
             continue
         slim(name, D)
-        val = [r for r in D["records"] if r["valid"]]; ok = [r for r in val if r["success"]]
+        val = [r for r in D["records"] if r["valid"]]
+        raw_ok = [r for r in val if r["success"]]
+        # cuRobo successes count only if VAMP's checker (same model) finds the returned trajectory collision-free
+        ok = raw_ok if key == "vamp" else [r for r in raw_ok if r.get("vamp_validated")]
         s = {"source": f"results/records/{name}.json", "queries": len(val), "success": len(ok),
              "success_rate": len(ok) / len(val), "wall_ms": stats([wall_ms(key, r) for r in ok]),
              "internal_ms": stats([internal_ms(key, r) for r in ok]),
              "path_length_rad": stats([r["path_length_l2"] for r in ok]), "power": P,
              "settings": D.get("settings"), "plan_config": D.get("plan_config"), "planner": D.get("planner")}
         if key != "vamp":
-            s["success_vamp_validated"] = sum(bool(r.get("vamp_validated")) for r in ok)
+            s["success_reported_by_planner"] = len(raw_ok)
+            s["success_in_collision_under_shared_model"] = len(raw_ok) - len(ok)
             s["failure_status"] = {st: sum(r["status"] == st for r in val if not r["success"])
                                    for st in {r["status"] for r in val if not r["success"]}}
         out[key] = s
@@ -130,7 +136,7 @@ for i, (g, s) in enumerate(list(zip(GROUPS, summary["groups"]))[::-1]):
             ax.text(1.0, y, f"{SHORT[key]}: pending clean GPU run", va="center", fontsize=7.5, color=INK2, style="italic")
             continue
         D, _ = load(fname(prefix, rix, g))
-        vals = [wall_ms(key, r) for r in D["records"] if r.get("success")]
+        vals = [wall_ms(key, r) for r in D["records"] if r.get("success") and (key == "vamp" or r.get("vamp_validated"))]
         xs += vals
         ax.scatter(vals, y + rng.uniform(-0.07, 0.07, len(vals)), s=3, color=col, alpha=0.3, linewidths=0)
         st = s[key]["wall_ms"]

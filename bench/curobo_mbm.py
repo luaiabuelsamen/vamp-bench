@@ -86,7 +86,7 @@ out = Path(args.out or ROOT / f"results/raw/curobo_{args.tag}_{args.robot}.json"
 out.parent.mkdir(parents=True, exist_ok=True)
 json.dump({
     "planner": "cuRobo v1 (NVlabs/curobo ebb7170, v0.7.7-5) MotionGen.plan_single_js",
-    "robot": args.robot, "robot_model": str(Path(robot_cfg_path).relative_to(ROOT)), "problems": str(args.problems or "vamp resources"),
+    "robot": args.robot, "robot_model": str(Path(robot_cfg_path).resolve().relative_to(ROOT)), "problems": str(args.problems or "vamp resources"),
     "settings": SETTINGS, "plan_config": PLAN, "warmup_s": warmup_s,
     "host": platform.node(), "torch": torch.__version__, "gpu": torch.cuda.get_device_name(0),
     "records": records,

@@ -1,0 +1,829 @@
+17:32 flagship paused (no train_local.py)
+17:32 GR3D=0% idle_min=1
+17:33 GR3D=0% idle_min=2
+17:34 GR3D=0% idle_min=3
+17:35 GR3D=0% idle_min=4
+17:36 GR3D=0% idle_min=5
+17:37 GR3D=0% idle_min=6
+17:38 GR3D=0% idle_min=7
+17:39 GR3D=0% idle_min=8
+17:40 GR3D=0% idle_min=9
+17:41 GR3D=0% idle_min=10
+17:42 GPU idle 10 min; starting clean cuRobo run
+bookshelf_thin 94/100 median plan ms 730.1
+cage 72/100 median plan ms 228.3
+box 95/100 median plan ms 198.0
+bookshelf_tall 94/100 median plan ms 841.7
+bookshelf_small 90/100 median plan ms 870.1
+table_under_pick 96/100 median plan ms 2079.2
+table_pick 97/99 median plan ms 1001.1
+wrote results/raw/curobo_mbm_panda.json
+powerlog results/raw/curobo_mbm_panda.power.json VDD_IN mean mW 16547 GR3D mean 73
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+bookshelf_tall 0/95 median plan ms 10139.6
+bookshelf_thin 1/99 median plan ms 8844.7
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+table_under_pick 0/99 median plan ms 10058.6
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+bookshelf_small 0/96 median plan ms 8656.4
+Bias node is not valid, not using bias node
+box 0/100 median plan ms 2943.6
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+table_pick 3/100 median plan ms 12246.0
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+cage 0/100 median plan ms 6441.1
+wrote results/raw/curobo_mbm_ur5.json
+powerlog results/raw/curobo_mbm_ur5.power.json VDD_IN mean mW 15072 GR3D mean 76
+gantry_pillars 838/1030 median plan ms 158.0
+Traceback (most recent call last):
+  File "/home/jetson3/projects/vamp-bench/bench/curobo_mbm.py", line 89, in <module>
+    "robot": args.robot, "robot_model": str(Path(robot_cfg_path).relative_to(ROOT)), "problems": str(args.problems or "vamp resources"),
+  File "/usr/lib/python3.10/pathlib.py", line 818, in relative_to
+    raise ValueError("{!r} is not in the subpath of {!r}"
+ValueError: 'configs/ur5e_rail_shared.yml' is not in the subpath of '/home/jetson3/projects/vamp-bench' OR one path is relative and the other is absolute.
+powerlog results/raw/curobo_gantry_pillars_ur5e_rail.power.json VDD_IN mean mW 13913 GR3D mean 53
+FAILED v1 gantry_pillars
+gantry_free 1030/1030 median plan ms 143.7
+Traceback (most recent call last):
+  File "/home/jetson3/projects/vamp-bench/bench/curobo_mbm.py", line 89, in <module>
+    "robot": args.robot, "robot_model": str(Path(robot_cfg_path).relative_to(ROOT)), "problems": str(args.problems or "vamp resources"),
+  File "/usr/lib/python3.10/pathlib.py", line 818, in relative_to
+    raise ValueError("{!r} is not in the subpath of {!r}"
+ValueError: 'configs/ur5e_rail_shared.yml' is not in the subpath of '/home/jetson3/projects/vamp-bench' OR one path is relative and the other is absolute.
+powerlog results/raw/curobo_gantry_free_ur5e_rail.power.json VDD_IN mean mW 13964 GR3D mean 51
+FAILED v1 gantry_free
+ur5e_pillars 988/1030 median plan ms 364.0
+Traceback (most recent call last):
+  File "/home/jetson3/projects/vamp-bench/bench/curobo_mbm.py", line 89, in <module>
+    "robot": args.robot, "robot_model": str(Path(robot_cfg_path).relative_to(ROOT)), "problems": str(args.problems or "vamp resources"),
+  File "/usr/lib/python3.10/pathlib.py", line 818, in relative_to
+    raise ValueError("{!r} is not in the subpath of {!r}"
+ValueError: 'configs/ur5e_shared.yml' is not in the subpath of '/home/jetson3/projects/vamp-bench' OR one path is relative and the other is absolute.
+powerlog results/raw/curobo_ur5e_pillars_ur5e.power.json VDD_IN mean mW 13890 GR3D mean 49
+FAILED v1 ur5e_pillars
+Mesh already in cache, reusing existing instance: bookshelf_thin_1_Can1
+Mesh already in cache, reusing existing instance: bookshelf_thin_1_Can10
+Mesh already in cache, reusing existing instance: bookshelf_thin_1_Can2
+Mesh already in cache, reusing existing instance: bookshelf_thin_1_Can3
+Mesh already in cache, reusing existing instance: bookshelf_thin_1_Can4
+Mesh already in cache, reusing existing instance: bookshelf_thin_1_Can5
+Mesh already in cache, reusing existing instance: bookshelf_thin_1_Can6
+Mesh already in cache, reusing existing instance: bookshelf_thin_1_Can7
+Mesh already in cache, reusing existing instance: bookshelf_thin_1_Can8
+Mesh already in cache, reusing existing instance: bookshelf_thin_1_Can9
+bookshelf_thin 0 0 True 12269 ms
+cage 0 0 False 23743 ms
+box 0 0 True 3178 ms
+bookshelf_tall 0 0 True 13689 ms
+bookshelf_small 0 0 False 76059 ms
+table_under_pick 0 0 True 5139 ms
+table_pick 0 0 True 9304 ms
+bookshelf_thin 10 0 True 5887 ms
+cage 10 0 True 3121 ms
+box 10 0 True 1634 ms
+bookshelf_tall 10 0 True 7236 ms
+bookshelf_small 10 0 True 11255 ms
+table_under_pick 10 0 False 14678 ms
+table_pick 10 0 True 3630 ms
+bookshelf_thin 20 0 True 13903 ms
+cage 20 0 True 2385 ms
+box 20 0 True 3165 ms
+bookshelf_tall 20 0 True 7596 ms
+bookshelf_small 20 0 True 16381 ms
+table_under_pick 20 0 True 12814 ms
+table_pick 20 0 True 7490 ms
+bookshelf_thin 30 0 True 10272 ms
+cage 30 0 True 3132 ms
+box 30 0 True 3121 ms
+bookshelf_tall 30 0 False 39422 ms
+bookshelf_small 30 0 True 5956 ms
+table_under_pick 30 0 False 77679 ms
+table_pick 30 0 True 8014 ms
+bookshelf_thin 40 0 True 6314 ms
+cage 40 0 True 12658 ms
+box 40 0 True 1600 ms
+bookshelf_tall 40 0 True 9299 ms
+bookshelf_small 40 0 True 13639 ms
+table_under_pick 40 0 True 6182 ms
+bookshelf_thin 50 0 True 10230 ms
+cage 50 0 True 2307 ms
+box 50 0 True 10621 ms
+bookshelf_tall 50 0 True 8276 ms
+bookshelf_small 50 0 False 65972 ms
+table_under_pick 50 0 False 14097 ms
+table_pick 50 0 True 8984 ms
+bookshelf_thin 60 0 True 8602 ms
+cage 60 0 True 2308 ms
+box 60 0 True 3075 ms
+bookshelf_tall 60 0 True 8163 ms
+bookshelf_small 60 0 True 3761 ms
+table_under_pick 60 0 True 5206 ms
+table_pick 60 0 True 3679 ms
+bookshelf_thin 70 0 True 10130 ms
+cage 70 0 True 3068 ms
+box 70 0 True 3067 ms
+bookshelf_tall 70 0 True 5567 ms
+bookshelf_small 70 0 True 5364 ms
+table_under_pick 70 0 False 93459 ms
+table_pick 70 0 True 6975 ms
+bookshelf_thin 80 0 True 3776 ms
+cage 80 0 True 4454 ms
+box 80 0 True 3071 ms
+bookshelf_tall 80 0 False 47015 ms
+bookshelf_small 80 0 True 13131 ms
+table_under_pick 80 0 False 15584 ms
+table_pick 80 0 True 5710 ms
+bookshelf_thin 90 0 True 7346 ms
+cage 90 0 True 2322 ms
+box 90 0 True 3074 ms
+bookshelf_tall 90 0 True 19614 ms
+bookshelf_small 90 0 True 7129 ms
+table_under_pick 90 0 True 6921 ms
+table_pick 90 0 True 6675 ms
+done: 59/69 solved, budget cut: False
+wrote results/raw/curobo2_mbm_panda.json
+powerlog results/raw/curobo2_mbm_panda.power.json VDD_IN mean mW 17735 GR3D mean 90
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can1
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can2
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can3
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can4
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can5
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can6
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can7
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can8
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can9
+bookshelf_tall 0 0 True 7775 ms
+bookshelf_thin 0 0 True 2584 ms
+table_under_pick 0 0 False 52114 ms
+bookshelf_small 0 0 True 4570 ms
+box 0 0 True 2030 ms
+table_pick 0 0 False 54205 ms
+cage 0 0 False 15449 ms
+bookshelf_tall 10 0 True 2390 ms
+bookshelf_thin 10 0 False 51209 ms
+table_under_pick 10 0 True 3375 ms
+bookshelf_small 10 0 True 5548 ms
+box 10 0 True 2046 ms
+table_pick 10 0 False 58260 ms
+cage 10 0 True 2043 ms
+bookshelf_tall 20 0 False 71426 ms
+bookshelf_thin 20 0 True 3686 ms
+table_under_pick 20 0 True 5110 ms
+bookshelf_small 20 0 True 11157 ms
+box 20 0 True 2052 ms
+table_pick 20 0 True 4954 ms
+cage 20 0 False 20326 ms
+bookshelf_tall 30 0 False 56775 ms
+bookshelf_thin 30 0 True 3565 ms
+table_under_pick 30 0 False 49311 ms
+bookshelf_small 30 0 True 7763 ms
+box 30 0 True 2041 ms
+table_pick 30 0 False 42467 ms
+cage 30 0 False 14371 ms
+bookshelf_tall 40 0 False 85976 ms
+bookshelf_thin 40 0 True 7895 ms
+table_under_pick 40 0 True 2322 ms
+bookshelf_small 40 0 True 4927 ms
+box 40 0 True 1537 ms
+table_pick 40 0 False 43787 ms
+cage 40 0 False 15774 ms
+bookshelf_tall 50 0 False 73370 ms
+bookshelf_thin 50 0 False 45146 ms
+table_under_pick 50 0 True 3477 ms
+bookshelf_small 50 0 False 42984 ms
+box 50 0 True 1043 ms
+table_pick 50 0 False 37435 ms
+cage 50 0 False 14404 ms
+bookshelf_tall 60 0 False 46613 ms
+bookshelf_thin 60 0 True 15662 ms
+table_under_pick 60 0 True 5029 ms
+bookshelf_small 60 0 True 5619 ms
+box 60 0 True 1532 ms
+table_pick 60 0 True 5556 ms
+cage 60 0 True 2021 ms
+bookshelf_tall 70 0 False 77624 ms
+bookshelf_thin 70 0 True 3757 ms
+table_under_pick 70 0 False 45191 ms
+bookshelf_small 70 0 False 44515 ms
+box 70 0 True 3401 ms
+table_pick 70 0 False 63419 ms
+cage 70 0 False 15275 ms
+bookshelf_tall 80 0 False 61474 ms
+bookshelf_thin 80 0 False 54795 ms
+table_under_pick 80 0 False 12237 ms
+bookshelf_small 80 0 True 2288 ms
+box 80 0 True 2030 ms
+table_pick 80 0 False 66633 ms
+cage 80 0 False 22710 ms
+bookshelf_tall 90 0 False 42891 ms
+done: 33/64 solved, budget cut: True
+wrote results/raw/curobo2_mbm_ur5.json
+powerlog results/raw/curobo2_mbm_ur5.power.json VDD_IN mean mW 15707 GR3D mean 85
+gantry_pillars 0 0 True 1049 ms
+gantry_pillars 1 0 True 711 ms
+gantry_pillars 2 0 True 716 ms
+gantry_pillars 3 0 True 1418 ms
+gantry_pillars 4 0 True 2405 ms
+gantry_pillars 5 0 True 1627 ms
+gantry_pillars 6 0 True 719 ms
+gantry_pillars 7 0 True 714 ms
+gantry_pillars 8 0 True 713 ms
+gantry_pillars 9 0 True 713 ms
+gantry_pillars 10 0 True 1055 ms
+gantry_pillars 11 0 True 1408 ms
+gantry_pillars 12 0 True 713 ms
+gantry_pillars 13 0 True 718 ms
+gantry_pillars 14 0 True 1053 ms
+gantry_pillars 15 0 True 1459 ms
+gantry_pillars 16 0 True 1398 ms
+gantry_pillars 17 0 True 712 ms
+gantry_pillars 18 0 True 1393 ms
+gantry_pillars 19 0 True 1052 ms
+gantry_pillars 20 0 True 716 ms
+gantry_pillars 21 0 True 717 ms
+gantry_pillars 22 0 True 715 ms
+gantry_pillars 23 0 True 712 ms
+gantry_pillars 24 0 True 716 ms
+gantry_pillars 25 0 True 1756 ms
+gantry_pillars 26 0 True 1597 ms
+gantry_pillars 27 0 True 1387 ms
+gantry_pillars 28 0 True 718 ms
+gantry_pillars 29 0 True 716 ms
+gantry_pillars 30 0 True 2184 ms
+gantry_pillars 31 0 True 1056 ms
+gantry_pillars 32 0 True 1054 ms
+gantry_pillars 33 0 True 2162 ms
+gantry_pillars 34 0 True 1400 ms
+gantry_pillars 35 0 True 1406 ms
+gantry_pillars 36 0 False 12663 ms
+gantry_pillars 37 0 True 2541 ms
+gantry_pillars 38 0 True 1401 ms
+gantry_pillars 39 0 True 1054 ms
+gantry_pillars 40 0 True 1401 ms
+gantry_pillars 41 0 True 2346 ms
+gantry_pillars 42 0 True 713 ms
+gantry_pillars 43 0 True 1052 ms
+gantry_pillars 44 0 True 708 ms
+gantry_pillars 45 0 True 1603 ms
+gantry_pillars 46 0 True 1045 ms
+gantry_pillars 47 0 True 709 ms
+gantry_pillars 48 0 True 1392 ms
+gantry_pillars 49 0 True 1393 ms
+gantry_pillars 50 0 True 707 ms
+gantry_pillars 51 0 True 718 ms
+gantry_pillars 52 0 True 706 ms
+gantry_pillars 53 0 True 1046 ms
+gantry_pillars 54 0 True 2002 ms
+gantry_pillars 55 0 True 1568 ms
+gantry_pillars 56 0 True 2194 ms
+gantry_pillars 57 0 True 710 ms
+gantry_pillars 58 0 True 1330 ms
+gantry_pillars 59 0 True 1384 ms
+gantry_pillars 60 0 True 709 ms
+gantry_pillars 61 0 False 13057 ms
+gantry_pillars 62 0 True 711 ms
+gantry_pillars 63 0 True 709 ms
+gantry_pillars 64 0 False 23981 ms
+gantry_pillars 65 0 True 712 ms
+gantry_pillars 66 0 True 709 ms
+gantry_pillars 67 0 True 708 ms
+gantry_pillars 68 0 True 709 ms
+gantry_pillars 69 0 True 1382 ms
+gantry_pillars 70 0 True 2036 ms
+gantry_pillars 71 0 True 1045 ms
+gantry_pillars 72 0 True 1389 ms
+gantry_pillars 73 0 True 711 ms
+gantry_pillars 74 0 True 707 ms
+gantry_pillars 75 0 True 2422 ms
+gantry_pillars 76 0 True 710 ms
+gantry_pillars 77 0 True 709 ms
+gantry_pillars 78 0 True 1718 ms
+gantry_pillars 79 0 True 1771 ms
+gantry_pillars 80 0 True 709 ms
+gantry_pillars 81 0 True 704 ms
+gantry_pillars 82 0 True 2511 ms
+gantry_pillars 83 0 True 1388 ms
+gantry_pillars 84 0 True 707 ms
+gantry_pillars 85 0 True 708 ms
+gantry_pillars 86 0 True 2100 ms
+gantry_pillars 87 0 True 2267 ms
+gantry_pillars 88 0 True 1048 ms
+gantry_pillars 89 0 True 709 ms
+gantry_pillars 90 0 True 1548 ms
+gantry_pillars 91 0 True 713 ms
+gantry_pillars 92 0 True 1492 ms
+gantry_pillars 93 0 True 712 ms
+gantry_pillars 94 0 True 1388 ms
+gantry_pillars 95 0 True 707 ms
+gantry_pillars 96 0 True 709 ms
+gantry_pillars 97 0 True 1383 ms
+gantry_pillars 98 0 True 707 ms
+gantry_pillars 99 0 True 1431 ms
+gantry_pillars 100 0 True 1045 ms
+gantry_pillars 101 0 True 2074 ms
+gantry_pillars 102 0 True 2145 ms
+done: 100/103 solved, budget cut: False
+wrote results/raw/curobo2_gantry_pillars_ur5e_rail.json
+powerlog results/raw/curobo2_gantry_pillars_ur5e_rail.power.json VDD_IN mean mW 13157 GR3D mean 80
+gantry_free 0 0 True 414 ms
+gantry_free 1 0 True 727 ms
+gantry_free 2 0 True 711 ms
+gantry_free 3 0 True 721 ms
+gantry_free 4 0 True 371 ms
+gantry_free 5 0 True 541 ms
+gantry_free 6 0 True 371 ms
+gantry_free 7 0 True 722 ms
+gantry_free 8 0 True 371 ms
+gantry_free 9 0 True 371 ms
+gantry_free 10 0 True 372 ms
+gantry_free 11 0 True 723 ms
+gantry_free 12 0 True 729 ms
+gantry_free 13 0 True 372 ms
+gantry_free 14 0 True 370 ms
+gantry_free 15 0 True 540 ms
+gantry_free 16 0 True 371 ms
+gantry_free 17 0 True 372 ms
+gantry_free 18 0 True 542 ms
+gantry_free 19 0 True 371 ms
+gantry_free 20 0 True 541 ms
+gantry_free 21 0 True 369 ms
+gantry_free 22 0 True 370 ms
+gantry_free 23 0 True 370 ms
+gantry_free 24 0 True 371 ms
+gantry_free 25 0 True 370 ms
+gantry_free 26 0 True 718 ms
+gantry_free 27 0 True 371 ms
+gantry_free 28 0 True 370 ms
+gantry_free 29 0 True 539 ms
+gantry_free 30 0 True 371 ms
+gantry_free 31 0 True 370 ms
+gantry_free 32 0 True 540 ms
+gantry_free 33 0 True 371 ms
+gantry_free 34 0 True 542 ms
+gantry_free 35 0 True 371 ms
+gantry_free 36 0 True 541 ms
+gantry_free 37 0 True 718 ms
+gantry_free 38 0 True 371 ms
+gantry_free 39 0 True 542 ms
+gantry_free 40 0 True 371 ms
+gantry_free 41 0 True 719 ms
+gantry_free 42 0 True 540 ms
+gantry_free 43 0 True 718 ms
+gantry_free 44 0 True 369 ms
+gantry_free 45 0 True 541 ms
+gantry_free 46 0 True 540 ms
+gantry_free 47 0 True 370 ms
+gantry_free 48 0 True 371 ms
+gantry_free 49 0 True 370 ms
+gantry_free 50 0 True 541 ms
+gantry_free 51 0 True 370 ms
+gantry_free 52 0 True 371 ms
+gantry_free 53 0 True 377 ms
+gantry_free 54 0 True 538 ms
+gantry_free 55 0 True 370 ms
+gantry_free 56 0 True 719 ms
+gantry_free 57 0 True 540 ms
+gantry_free 58 0 True 370 ms
+gantry_free 59 0 True 540 ms
+gantry_free 60 0 True 540 ms
+gantry_free 61 0 True 370 ms
+gantry_free 62 0 True 711 ms
+gantry_free 63 0 True 369 ms
+gantry_free 64 0 True 369 ms
+gantry_free 65 0 True 717 ms
+gantry_free 66 0 True 370 ms
+gantry_free 67 0 True 717 ms
+gantry_free 68 0 True 371 ms
+gantry_free 69 0 True 370 ms
+gantry_free 70 0 True 369 ms
+gantry_free 71 0 True 546 ms
+gantry_free 72 0 True 369 ms
+gantry_free 73 0 True 540 ms
+gantry_free 74 0 True 540 ms
+gantry_free 75 0 True 370 ms
+gantry_free 76 0 True 712 ms
+gantry_free 77 0 True 540 ms
+gantry_free 78 0 True 370 ms
+gantry_free 79 0 True 373 ms
+gantry_free 80 0 True 722 ms
+gantry_free 81 0 True 717 ms
+gantry_free 82 0 True 542 ms
+gantry_free 83 0 True 720 ms
+gantry_free 84 0 True 541 ms
+gantry_free 85 0 True 369 ms
+gantry_free 86 0 True 717 ms
+gantry_free 87 0 True 542 ms
+gantry_free 88 0 True 369 ms
+gantry_free 89 0 True 369 ms
+gantry_free 90 0 True 370 ms
+gantry_free 91 0 True 370 ms
+gantry_free 92 0 True 369 ms
+gantry_free 93 0 True 540 ms
+gantry_free 94 0 True 380 ms
+gantry_free 95 0 True 541 ms
+gantry_free 96 0 True 540 ms
+gantry_free 97 0 True 541 ms
+gantry_free 98 0 True 540 ms
+gantry_free 99 0 True 370 ms
+gantry_free 100 0 True 369 ms
+gantry_free 101 0 True 370 ms
+gantry_free 102 0 True 369 ms
+done: 103/103 solved, budget cut: False
+wrote results/raw/curobo2_gantry_free_ur5e_rail.json
+powerlog results/raw/curobo2_gantry_free_ur5e_rail.power.json VDD_IN mean mW 11919 GR3D mean 60
+ur5e_pillars 0 0 True 1394 ms
+ur5e_pillars 1 0 True 703 ms
+ur5e_pillars 2 0 True 1041 ms
+ur5e_pillars 3 0 True 702 ms
+ur5e_pillars 4 0 True 2254 ms
+ur5e_pillars 5 0 True 2048 ms
+ur5e_pillars 6 0 True 707 ms
+ur5e_pillars 7 0 True 707 ms
+ur5e_pillars 8 0 True 1380 ms
+ur5e_pillars 9 0 True 708 ms
+ur5e_pillars 10 0 True 710 ms
+ur5e_pillars 11 0 True 706 ms
+ur5e_pillars 12 0 True 713 ms
+ur5e_pillars 13 0 True 1657 ms
+ur5e_pillars 14 0 True 709 ms
+ur5e_pillars 15 0 True 710 ms
+ur5e_pillars 16 0 True 707 ms
+ur5e_pillars 17 0 True 1063 ms
+ur5e_pillars 18 0 True 710 ms
+ur5e_pillars 19 0 True 708 ms
+ur5e_pillars 20 0 True 1045 ms
+ur5e_pillars 21 0 True 1398 ms
+ur5e_pillars 22 0 True 2339 ms
+ur5e_pillars 23 0 True 1037 ms
+ur5e_pillars 24 0 True 702 ms
+ur5e_pillars 25 0 True 2054 ms
+ur5e_pillars 26 0 True 703 ms
+ur5e_pillars 27 0 True 1043 ms
+ur5e_pillars 28 0 True 1595 ms
+ur5e_pillars 29 0 True 1375 ms
+ur5e_pillars 30 0 True 1896 ms
+ur5e_pillars 31 0 True 1040 ms
+ur5e_pillars 32 0 True 1040 ms
+ur5e_pillars 33 0 True 1039 ms
+ur5e_pillars 34 0 False 16995 ms
+ur5e_pillars 35 0 True 705 ms
+ur5e_pillars 36 0 True 1378 ms
+ur5e_pillars 37 0 True 704 ms
+ur5e_pillars 38 0 True 700 ms
+ur5e_pillars 39 0 True 2317 ms
+ur5e_pillars 40 0 True 704 ms
+ur5e_pillars 41 0 True 707 ms
+ur5e_pillars 42 0 True 1042 ms
+ur5e_pillars 43 0 True 709 ms
+ur5e_pillars 44 0 True 1385 ms
+ur5e_pillars 45 0 True 1630 ms
+ur5e_pillars 46 0 True 1045 ms
+ur5e_pillars 47 0 True 2598 ms
+ur5e_pillars 48 0 True 1038 ms
+ur5e_pillars 49 0 True 704 ms
+ur5e_pillars 50 0 True 705 ms
+ur5e_pillars 51 0 True 706 ms
+ur5e_pillars 52 0 True 704 ms
+ur5e_pillars 53 0 True 2588 ms
+ur5e_pillars 54 0 True 1043 ms
+ur5e_pillars 55 0 True 2400 ms
+ur5e_pillars 56 0 True 1950 ms
+ur5e_pillars 57 0 True 1385 ms
+ur5e_pillars 58 0 True 705 ms
+ur5e_pillars 59 0 True 2082 ms
+ur5e_pillars 60 0 True 705 ms
+ur5e_pillars 61 0 True 706 ms
+ur5e_pillars 62 0 True 704 ms
+ur5e_pillars 63 0 True 1386 ms
+ur5e_pillars 64 0 True 705 ms
+ur5e_pillars 65 0 True 1385 ms
+ur5e_pillars 66 0 True 707 ms
+ur5e_pillars 67 0 True 1039 ms
+ur5e_pillars 68 0 True 703 ms
+ur5e_pillars 69 0 True 706 ms
+ur5e_pillars 70 0 True 1913 ms
+ur5e_pillars 71 0 True 2321 ms
+ur5e_pillars 72 0 True 706 ms
+ur5e_pillars 73 0 True 704 ms
+ur5e_pillars 74 0 True 707 ms
+ur5e_pillars 75 0 True 707 ms
+ur5e_pillars 76 0 True 1937 ms
+ur5e_pillars 77 0 True 1713 ms
+ur5e_pillars 78 0 True 704 ms
+ur5e_pillars 79 0 True 1390 ms
+ur5e_pillars 80 0 True 1378 ms
+ur5e_pillars 81 0 True 1367 ms
+ur5e_pillars 82 0 True 704 ms
+ur5e_pillars 83 0 True 1042 ms
+ur5e_pillars 84 0 True 2105 ms
+ur5e_pillars 85 0 True 1386 ms
+ur5e_pillars 86 0 True 704 ms
+ur5e_pillars 87 0 True 1043 ms
+ur5e_pillars 88 0 True 1046 ms
+ur5e_pillars 89 0 True 705 ms
+ur5e_pillars 90 0 True 709 ms
+ur5e_pillars 91 0 True 2051 ms
+ur5e_pillars 92 0 True 704 ms
+ur5e_pillars 93 0 True 1390 ms
+ur5e_pillars 94 0 True 1038 ms
+ur5e_pillars 95 0 True 1742 ms
+ur5e_pillars 96 0 True 706 ms
+ur5e_pillars 97 0 True 700 ms
+ur5e_pillars 98 0 True 706 ms
+ur5e_pillars 99 0 True 703 ms
+ur5e_pillars 100 0 True 702 ms
+ur5e_pillars 101 0 True 1737 ms
+ur5e_pillars 102 0 True 704 ms
+done: 102/103 solved, budget cut: False
+wrote results/raw/curobo2_ur5e_pillars_ur5e.json
+powerlog results/raw/curobo2_ur5e_pillars_ur5e.power.json VDD_IN mean mW 12601 GR3D mean 79
+results/raw/curobo_mbm_panda.json cuRobo successes checked by VAMP: 638, in collision under shared model: 0
+results/raw/curobo_mbm_ur5.json cuRobo successes checked by VAMP: 4, in collision under shared model: 0
+results/raw/curobo2_mbm_panda.json cuRobo successes checked by VAMP: 59, in collision under shared model: 4
+results/raw/curobo2_mbm_ur5.json cuRobo successes checked by VAMP: 33, in collision under shared model: 2
+results/raw/curobo2_gantry_pillars_ur5e_rail.json cuRobo successes checked by VAMP: 100, in collision under shared model: 16
+results/raw/curobo2_gantry_free_ur5e_rail.json cuRobo successes checked by VAMP: 103, in collision under shared model: 0
+results/raw/curobo2_ur5e_pillars_ur5e.json cuRobo successes checked by VAMP: 102, in collision under shared model: 4
+ALL DONE
+21:06 run_all rc=0
+Panda · MBM                        VAMP 699/699 med 1.76 ms | cuRobo v1 638/699 med 849 ms | cuRoboV2 59/69 med 6.55e+03 ms
+UR5 · MBM                          VAMP 689/689 med 2.02 ms | cuRobo v1 4/689 med 3.61e+03 ms | cuRoboV2 33/64 med 3.52e+03 ms
+UR5e+rail · pillars (paper)        VAMP 1020/1030 med 0.951 ms | cuRobo v1 pending | cuRoboV2 100/103 med 1.06e+03 ms
+UR5e+rail · no obstacles (paper)   VAMP 1030/1030 med 0.553 ms | cuRobo v1 pending | cuRoboV2 103/103 med 379 ms
+UR5e · pillars (paper)             VAMP 1030/1030 med 0.972 ms | cuRobo v1 pending | cuRoboV2 102/103 med 1.05e+03 ms
+wrote results/summary.json results/records/ results/figure.png
+21:06 analyze rc=0
+21:06 SLOT DONE
+21:06 touched GPU_RELEASED

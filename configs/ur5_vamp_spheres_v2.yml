@@ -1,6 +1,6 @@
 robot_cfg:
   kinematics:
-    urdf_path: /home/jetson3/projects/vamp-bench/third_party/vamp/resources/ur5/ur5_spherized.urdf
+    urdf_path: /home/jetson3/projects/vamp-bench/configs/ur5_spherized_vel_pi.urdf
     asset_root_path: /home/jetson3/projects/vamp-bench/third_party/vamp/resources/ur5
     base_link: offset_link
     collision_link_names:
