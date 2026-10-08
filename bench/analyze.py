@@ -127,6 +127,25 @@ for f in sorted((RAW / "superseded").glob("curobo*_mbm_*.json")):
     summary["superseded"][f.stem] = {"reason": "UR5 URDF velocity cap 0.5 rad/s (fixed: configs/ur5_spherized_vel_pi.urdf)",
                                      "queries": len(val), "success": sum(r["success"] for r in val)}
 
+vc = ROOT / "results/v2_collision_check.json"
+if vc.exists():
+    d = json.load(open(vc)); fl = [q for c in d["cases"].values() for q in c["queries"] if q["kind"] == "flagged"]
+    ct = [q for c in d["cases"].values() for q in c["queries"] if q["kind"] == "control"]
+    pen = [q["A_stored"]["v2_max_penetration_m"] * 1e3 for q in fl]
+    fresh = [q["B_fresh"] for q in fl if q["B_fresh"].get("replan_success")]
+    summary["v2_collision_check"] = {
+        "flagged": len(fl), "controls": len(ct),
+        "flagged_confirmed_by_v2_checker": sum(q["A_stored"]["v2_colliding_act0"] > 0 for q in fl),
+        "flagged_same_samples_as_vamp": sum(q["A_stored"]["v2_colliding_act0"] == q["A_stored"]["vamp_colliding"] == q["A_stored"]["both"] for q in fl),
+        "controls_clean_both": sum(q["A_stored"]["v2_colliding_act0"] == 0 and q["A_stored"]["vamp_colliding"] == 0 for q in ct),
+        "waypoint_collisions_v2_act0": sum(q["A_stored"]["v2_colliding_at_waypoints_act0"] for q in fl + ct),
+        "penetration_mm": stats(pen), "over_1mm": sum(x > 1 for x in pen), "over_2p5mm": sum(x > 2.5 for x in pen),
+        "random_config_agreement": {t: c["random_config_agreement_v2_vs_vamp"] for t, c in d["cases"].items()},
+        "fresh_replans": len(fresh), "fresh_flagged_again": sum(b["vamp_interp_segments_failing"] > 0 for b in fresh),
+        "fresh_reproduced_stored": sum(b["same_as_stored"] for b in fresh),
+        "interpolation_dt_s": sorted({c["interpolation_dt"] for c in d["cases"].values()}),
+        "dense_resampling_selfcheck_passed": all(b["selfcheck_dense_vs_base_max_diff"] < 1e-3 for b in fresh)}
+
 agree = ROOT / "results/collision_model_agreement.json"
 if agree.exists():
     summary["collision_model_agreement"] = json.load(open(agree))

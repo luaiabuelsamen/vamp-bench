@@ -458,8 +458,8 @@
     "success_passing_vamp_segment_check_PROVISIONAL": 638,
     "success_flagged_by_vamp_segment_check_PROVISIONAL": 0,
     "failure_status": {
-     "MotionGenStatus.FINETUNE_TRAJOPT_FAIL": 1,
-     "MotionGenStatus.TRAJOPT_FAIL": 60
+     "MotionGenStatus.TRAJOPT_FAIL": 60,
+     "MotionGenStatus.FINETUNE_TRAJOPT_FAIL": 1
     }
    },
    "curobo_v2": {
@@ -1627,6 +1627,53 @@
    "queries": 689,
    "success": 4
   }
+ },
+ "v2_collision_check": {
+  "flagged": 24,
+  "controls": 15,
+  "flagged_confirmed_by_v2_checker": 24,
+  "flagged_same_samples_as_vamp": 24,
+  "controls_clean_both": 15,
+  "waypoint_collisions_v2_act0": 0,
+  "penetration_mm": {
+   "n": 24,
+   "mean": 1.105685718357563,
+   "p5": 0.08737612515687943,
+   "p25": 0.392143614590168,
+   "median": 0.9993761777877808,
+   "p75": 1.4764855150133371,
+   "p95": 3.000405989587306,
+   "max": 3.504350781440735
+  },
+  "over_1mm": 12,
+  "over_2p5mm": 3,
+  "random_config_agreement": {
+   "mbm": {
+    "n": 4000,
+    "agree": 1.0,
+    "vamp_only_valid": 0,
+    "v2_only_valid": 0
+   },
+   "gantry_pillars": {
+    "n": 4000,
+    "agree": 1.0,
+    "vamp_only_valid": 0,
+    "v2_only_valid": 0
+   },
+   "ur5e_pillars": {
+    "n": 4000,
+    "agree": 1.0,
+    "vamp_only_valid": 0,
+    "v2_only_valid": 0
+   }
+  },
+  "fresh_replans": 21,
+  "fresh_flagged_again": 4,
+  "fresh_reproduced_stored": 0,
+  "interpolation_dt_s": [
+   0.025
+  ],
+  "dense_resampling_selfcheck_passed": false
  },
  "collision_model_agreement": {
   "panda": {

@@ -7,4 +7,9 @@ These are facts to use, not a draft. Each one traces to `results/summary.json` o
 4. **Availability.** The code, the problem sets and the per-query results are in one repository, so her group can reproduce or extend the comparison (for example, to an x86 CPU or a desktop GPU).
 
 ## Provisional: do not use until verified
-- **Between-waypoint collisions in cuRoboV2 (provisional).** VAMP's segment check flags some cuRoboV2 reported successes: 4/59 on Panda, 16/100 on rail-with-pillars, 4/102 on UR5e-with-pillars. If confirmed, V2's Panda count would be 55/69 (59 − 4), as an earlier draft said. cuRobo v1 had 0 of 638 on Panda. This is not yet ruled out as a measurement artifact. Pending checks: (a) dense re-sampling of V2's own trajectory; (b) V2's own collision checker at the flagged configurations, with its activation distance and padding accounted for; (c) v1 counted the same way on every set. Status: `docs/V2_COLLISION_CHECK.md`.
+- **Small penetrations between cuRoboV2 waypoints (provisional).** VAMP's segment check flags 4/59 Panda, 16/100 rail-with-pillars and 4/102 UR5e-with-pillars cuRoboV2 successes.
+  - **Not an artifact of the collision model:** V2's own checker confirms all 24 at the same samples, and agrees with VAMP on 12,000/12,000 random configurations.
+  - **Size:** a median of 1.0 mm and a maximum of 3.5 mm, on the straight line between returned waypoints, never at a waypoint.
+  - **Why it stays out of the email:** whether V2's continuous spline itself penetrates is unverified. A millimetre-scale graze is not a meaningful claim to make to her.
+  - If subtracted, V2's Panda count would be 55/69 (59 − 4).
+  - Details: `docs/V2_COLLISION_CHECK.md`.

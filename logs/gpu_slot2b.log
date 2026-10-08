@@ -1,0 +1,5 @@
+start-state: 10-07-2026 22:24:34 RAM 8988/15656MB (lfb 18x4MB) SWAP 4663/7828MB (cached 1MB) CPU [81%@1984,78%@1984,59%@1984,37%@1984,90%@1984,92%@1984,89%@1984,22%@1984] GR3D_FREQ 0% cv0@72.125C cpu@73.843C soc2@71.781C soc0@70.968C cv1@71.156C gpu@70.843C tj@73.843C soc1@72.656C cv2@70.625C VDD_IN 12332mW/12332mW VDD_CPU_GPU_CV 6242mW/6242mW VDD_SOC 1980mW/1980mW
+22:24 flagship paused
+22:24 START_NOW: orchestrator go; GPU state at start is logged above
+22:24 starting slot 2 on orchestrator go
+other job running: 606877 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96

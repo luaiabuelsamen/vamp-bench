@@ -38,6 +38,14 @@ for g in S["groups"]:
     for k in ("vamp", "curobo_v1", "curobo_v2"):
         if g.get(k) and g[k].get("failures", {}).get("time_to_failure_ms"):
             times += [x for kk, x in g[k]["failures"]["time_to_failure_ms"].items() if kk != "n"]
+vc = S.get("v2_collision_check")
+if vc:
+    for a, b in ((vc["flagged_confirmed_by_v2_checker"], vc["flagged"]), (vc["flagged_same_samples_as_vamp"], vc["flagged"]),
+                 (vc["controls_clean_both"], vc["controls"]), (vc["fresh_flagged_again"], vc["fresh_replans"]),
+                 (vc["over_1mm"], vc["flagged"]), (vc["over_2p5mm"], vc["flagged"])):
+        pairs.add((a, b))
+    n2 = sum(v["n"] for v in vc["random_config_agreement"].values()); pairs.add((n2, n2))
+    times += [dt * 1000 for dt in vc.get("interpolation_dt_s", [])]  # settings quoted in docs (ms)
 agree = S.get("collision_model_agreement", {})
 n = sum(v["n"] for v in agree.values()); pairs.add((n, n))
 # successes checked by the segment check with zero flagged (e.g. v1 0 of 638)

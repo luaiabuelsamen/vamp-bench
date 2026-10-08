@@ -1,0 +1,1080 @@
+{
+ "settings": {
+  "ik_optimizer_configs": [
+   "ik/particle_ik.yml",
+   "ik/lbfgs_ik.yml"
+  ],
+  "trajopt_optimizer_configs": [
+   "trajopt/particle_trajopt.yml",
+   "trajopt/lbfgs_bspline_trajopt.yml"
+  ],
+  "num_trajopt_seeds": 4,
+  "optimizer_collision_activation_distance": 0.0025,
+  "use_cuda_graph": true,
+  "collision_cache": {
+   "obb": 50,
+   "mesh": 20
+  }
+ },
+ "cases": {
+  "mbm": {
+   "flagged": 4,
+   "controls": 5,
+   "interpolation_dt": 0.025,
+   "queries": [
+    {
+     "kind": "flagged",
+     "scene": "bookshelf_thin",
+     "index": 20,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 57,
+      "v2_colliding_act0": 57,
+      "both": 57,
+      "v2_max_penetration_m": 0.0002840086817741394,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.29979968070983887,
+      "n_interp": 81,
+      "n_dense": 722,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 15,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0009270068258047104
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "bookshelf_tall",
+     "index": 20,
+     "A_stored": {
+      "chord_samples": 20100,
+      "vamp_colliding": 122,
+      "v2_colliding_act0": 122,
+      "both": 122,
+      "v2_max_penetration_m": 0.0014418950304389,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": false
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "box",
+     "index": 70,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 101,
+      "v2_colliding_act0": 101,
+      "both": 101,
+      "v2_max_penetration_m": 0.001963624730706215,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.0,
+      "n_interp": 81,
+      "n_dense": 802,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 36,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0010377168655395508
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "bookshelf_small",
+     "index": 70,
+     "A_stored": {
+      "chord_samples": 20100,
+      "vamp_colliding": 92,
+      "v2_colliding_act0": 92,
+      "both": 92,
+      "v2_max_penetration_m": 0.0006805052980780602,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": false
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "bookshelf_thin",
+     "index": 0,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.44240301847457886,
+      "n_interp": 81,
+      "n_dense": 682,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 12,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0007730722427368164
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "box",
+     "index": 0,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.5479251146316528,
+      "n_interp": 81,
+      "n_dense": 642,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 10,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0010300278663635254
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "bookshelf_tall",
+     "index": 0,
+     "A_stored": {
+      "chord_samples": 24120,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 1.0132789611816406e-06,
+      "n_interp": 141,
+      "n_dense": 1402,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 24,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0010423660278320312
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "table_under_pick",
+     "index": 0,
+     "A_stored": {
+      "chord_samples": 20100,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.48903948068618774,
+      "n_interp": 101,
+      "n_dense": 862,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 4,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008539557456970215
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "table_pick",
+     "index": 0,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.5821123123168945,
+      "n_interp": 81,
+      "n_dense": 642,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 11,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008868970908224583
+     }
+    }
+   ],
+   "random_config_agreement_v2_vs_vamp": {
+    "n": 4000,
+    "agree": 1.0,
+    "vamp_only_valid": 0,
+    "v2_only_valid": 0
+   }
+  },
+  "gantry_pillars": {
+   "flagged": 16,
+   "controls": 5,
+   "interpolation_dt": 0.025,
+   "queries": [
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 14,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 79,
+      "v2_colliding_act0": 79,
+      "both": 79,
+      "v2_max_penetration_m": 0.0006410069763660431,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.11194038391113281,
+      "n_interp": 81,
+      "n_dense": 762,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 7,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0005726814270019531
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 18,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 115,
+      "v2_colliding_act0": 115,
+      "both": 115,
+      "v2_max_penetration_m": 0.0013699159026145935,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.41177481412887573,
+      "n_interp": 81,
+      "n_dense": 642,
+      "vamp_interp_segments_failing": 1,
+      "vamp_dense_colliding": 5,
+      "v2_dense_colliding_act0": 5,
+      "v2_dense_within_margin_act0.0025": 8,
+      "v2_dense_max_penetration_m": 0.001499135047197342,
+      "spline_vs_chord_max_dev_rad": 0.0005771517753601074
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 26,
+     "A_stored": {
+      "chord_samples": 24120,
+      "vamp_colliding": 113,
+      "v2_colliding_act0": 113,
+      "both": 113,
+      "v2_max_penetration_m": 0.0010009780526161194,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.589954137802124,
+      "n_interp": 121,
+      "n_dense": 1082,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 0,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008264780044555664
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 27,
+     "A_stored": {
+      "chord_samples": 12060,
+      "vamp_colliding": 76,
+      "v2_colliding_act0": 76,
+      "both": 76,
+      "v2_max_penetration_m": 0.0009977743029594421,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.49687811732292175,
+      "n_interp": 81,
+      "n_dense": 622,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 6,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0007584691047668457
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 30,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 149,
+      "v2_colliding_act0": 149,
+      "both": 149,
+      "v2_max_penetration_m": 0.003504350781440735,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.0,
+      "n_interp": 81,
+      "n_dense": 802,
+      "vamp_interp_segments_failing": 1,
+      "vamp_dense_colliding": 7,
+      "v2_dense_colliding_act0": 7,
+      "v2_dense_within_margin_act0.0025": 19,
+      "v2_dense_max_penetration_m": 0.0035740546882152557,
+      "spline_vs_chord_max_dev_rad": 0.0005997419357299805
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 38,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 69,
+      "v2_colliding_act0": 69,
+      "both": 69,
+      "v2_max_penetration_m": 0.000428222119808197,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.4243321418762207,
+      "n_interp": 81,
+      "n_dense": 662,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 4,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0006979107856750488
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 45,
+     "A_stored": {
+      "chord_samples": 32160,
+      "vamp_colliding": 41,
+      "v2_colliding_act0": 41,
+      "both": 41,
+      "v2_max_penetration_m": 8.432567119598389e-05,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 2.682209014892578e-07,
+      "n_interp": 121,
+      "n_dense": 1202,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 0,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0003415346145629883
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 57,
+     "A_stored": {
+      "chord_samples": 20100,
+      "vamp_colliding": 136,
+      "v2_colliding_act0": 136,
+      "both": 136,
+      "v2_max_penetration_m": 0.002635527402162552,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.13618239760398865,
+      "n_interp": 101,
+      "n_dense": 962,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 7,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0006074309349060059
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 63,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 108,
+      "v2_colliding_act0": 108,
+      "both": 108,
+      "v2_max_penetration_m": 0.0012561716139316559,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.08419954776763916,
+      "n_interp": 81,
+      "n_dense": 782,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 0,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0007680654525756836
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 66,
+     "A_stored": {
+      "chord_samples": 28140,
+      "vamp_colliding": 47,
+      "v2_colliding_act0": 47,
+      "both": 47,
+      "v2_max_penetration_m": 0.00010466203093528748,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.44759950041770935,
+      "n_interp": 141,
+      "n_dense": 1222,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 7,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.00035196542739868164
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 68,
+     "A_stored": {
+      "chord_samples": 20100,
+      "vamp_colliding": 76,
+      "v2_colliding_act0": 76,
+      "both": 76,
+      "v2_max_penetration_m": 0.00042818859219551086,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.18335914611816406,
+      "n_interp": 101,
+      "n_dense": 922,
+      "vamp_interp_segments_failing": 1,
+      "vamp_dense_colliding": 6,
+      "v2_dense_colliding_act0": 6,
+      "v2_dense_within_margin_act0.0025": 12,
+      "v2_dense_max_penetration_m": 0.0015376582741737366,
+      "spline_vs_chord_max_dev_rad": 0.0003952980041503906
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 70,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 146,
+      "v2_colliding_act0": 146,
+      "both": 146,
+      "v2_max_penetration_m": 0.0030647963285446167,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.24438083171844482,
+      "n_interp": 81,
+      "n_dense": 722,
+      "vamp_interp_segments_failing": 1,
+      "vamp_dense_colliding": 6,
+      "v2_dense_colliding_act0": 6,
+      "v2_dense_within_margin_act0.0025": 9,
+      "v2_dense_max_penetration_m": 0.0026109889149665833,
+      "spline_vs_chord_max_dev_rad": 0.0006021857261657715
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 83,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 106,
+      "v2_colliding_act0": 106,
+      "both": 106,
+      "v2_max_penetration_m": 0.0010067149996757507,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.40101808309555054,
+      "n_interp": 81,
+      "n_dense": 662,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 3,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0006508231163024902
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 90,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 66,
+      "v2_colliding_act0": 66,
+      "both": 66,
+      "v2_max_penetration_m": 0.0004314593970775604,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.3990141451358795,
+      "n_interp": 81,
+      "n_dense": 702,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 14,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008706450462341309
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 92,
+     "A_stored": {
+      "chord_samples": 28140,
+      "vamp_colliding": 185,
+      "v2_colliding_act0": 185,
+      "both": 185,
+      "v2_max_penetration_m": 0.0019033774733543396,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": false
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "gantry_pillars",
+     "index": 97,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 111,
+      "v2_colliding_act0": 111,
+      "both": 111,
+      "v2_max_penetration_m": 0.0014133341610431671,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.3339206576347351,
+      "n_interp": 81,
+      "n_dense": 702,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 6,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.000682532787322998
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "gantry_pillars",
+     "index": 0,
+     "A_stored": {
+      "chord_samples": 20100,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.3802407383918762,
+      "n_interp": 101,
+      "n_dense": 922,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 0,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008821487426757812
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "gantry_pillars",
+     "index": 1,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.4930765628814697,
+      "n_interp": 81,
+      "n_dense": 682,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 0,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008141398429870605
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "gantry_pillars",
+     "index": 2,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.4930734634399414,
+      "n_interp": 81,
+      "n_dense": 682,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 0,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008140206336975098
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "gantry_pillars",
+     "index": 3,
+     "A_stored": {
+      "chord_samples": 28140,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.33531588315963745,
+      "n_interp": 141,
+      "n_dense": 1242,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 7,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0002910494804382324
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "gantry_pillars",
+     "index": 4,
+     "A_stored": {
+      "chord_samples": 20100,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.16379040479660034,
+      "n_interp": 101,
+      "n_dense": 962,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 27,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008975863456726074
+     }
+    }
+   ],
+   "random_config_agreement_v2_vs_vamp": {
+    "n": 4000,
+    "agree": 1.0,
+    "vamp_only_valid": 0,
+    "v2_only_valid": 0
+   }
+  },
+  "ur5e_pillars": {
+   "flagged": 4,
+   "controls": 5,
+   "interpolation_dt": 0.025,
+   "queries": [
+    {
+     "kind": "flagged",
+     "scene": "ur5e_pillars",
+     "index": 5,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 32,
+      "v2_colliding_act0": 32,
+      "both": 32,
+      "v2_max_penetration_m": 7.66068696975708e-05,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.07928872108459473,
+      "n_interp": 81,
+      "n_dense": 782,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 6,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008390992879867554
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "ur5e_pillars",
+     "index": 7,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 38,
+      "v2_colliding_act0": 38,
+      "both": 38,
+      "v2_max_penetration_m": 0.00013241171836853027,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.0,
+      "n_interp": 81,
+      "n_dense": 802,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 5,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.000843346118927002
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "ur5e_pillars",
+     "index": 20,
+     "A_stored": {
+      "chord_samples": 20100,
+      "vamp_colliding": 152,
+      "v2_colliding_act0": 152,
+      "both": 152,
+      "v2_max_penetration_m": 0.0015802569687366486,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.4877011775970459,
+      "n_interp": 101,
+      "n_dense": 862,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 9,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008757114410400391
+     }
+    },
+    {
+     "kind": "flagged",
+     "scene": "ur5e_pillars",
+     "index": 63,
+     "A_stored": {
+      "chord_samples": 20100,
+      "vamp_colliding": 49,
+      "v2_colliding_act0": 49,
+      "both": 49,
+      "v2_max_penetration_m": 0.0001063421368598938,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.07923281192779541,
+      "n_interp": 81,
+      "n_dense": 782,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 2,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008374303579330444
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "ur5e_pillars",
+     "index": 0,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.24014467000961304,
+      "n_interp": 81,
+      "n_dense": 742,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 0,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.000884711742401123
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "ur5e_pillars",
+     "index": 1,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.0,
+      "n_interp": 81,
+      "n_dense": 802,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 8,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008573234081268311
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "ur5e_pillars",
+     "index": 2,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.09519615769386292,
+      "n_interp": 81,
+      "n_dense": 782,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 0,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008105337619781494
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "ur5e_pillars",
+     "index": 3,
+     "A_stored": {
+      "chord_samples": 16080,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.49305617809295654,
+      "n_interp": 81,
+      "n_dense": 682,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 0,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0008140206336975098
+     }
+    },
+    {
+     "kind": "control",
+     "scene": "ur5e_pillars",
+     "index": 4,
+     "A_stored": {
+      "chord_samples": 20100,
+      "vamp_colliding": 0,
+      "v2_colliding_act0": 0,
+      "both": 0,
+      "v2_max_penetration_m": 0.0,
+      "v2_colliding_at_waypoints_act0": 0
+     },
+     "B_fresh": {
+      "replan_success": true,
+      "same_as_stored": false,
+      "selfcheck_interp_vs_base_max_diff": 0.0,
+      "selfcheck_dense_vs_base_max_diff": 0.5443333983421326,
+      "n_interp": 101,
+      "n_dense": 842,
+      "vamp_interp_segments_failing": 0,
+      "vamp_dense_colliding": 0,
+      "v2_dense_colliding_act0": 0,
+      "v2_dense_within_margin_act0.0025": 9,
+      "v2_dense_max_penetration_m": 0.0,
+      "spline_vs_chord_max_dev_rad": 0.0009061098098754883
+     }
+    }
+   ],
+   "random_config_agreement_v2_vs_vamp": {
+    "n": 4000,
+    "agree": 1.0,
+    "vamp_only_valid": 0,
+    "v2_only_valid": 0
+   }
+  }
+ }
+}

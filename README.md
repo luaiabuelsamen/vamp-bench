@@ -46,12 +46,17 @@ Wall-clock time per query; median, with p95 in parentheses. **Solved** means the
 
 ³ **cuRoboV2 success rates** were measured with `max_attempts` 20 (the same cap as v1). NVIDIA's own V2 benchmark uses 100, so these rates are a lower bound.
 
-**Provisional, not yet verified: collisions between waypoints.** VAMP's segment check flags some cuRoboV2 successes:
+**Provisional: small penetrations between waypoints.** VAMP's segment check flags some cuRoboV2 successes:
 - 4 of 59 on Panda
 - 16 of 100 on rail/pillars
 - 4 of 102 on UR5e/pillars
 
-Each flagged trajectory has every waypoint collision-free, but one step between waypoints intersects an obstacle. If the finding is confirmed, V2's Panda count would drop from 59 to 55 (59 − 4). An earlier draft of this README used that 55. cuRobo v1 had 0 of 638 flagged on Panda. This may still be a measurement artifact. The checks under way and their status are in [docs/V2_COLLISION_CHECK.md](docs/V2_COLLISION_CHECK.md).
+What the verification found ([docs/V2_COLLISION_CHECK.md](docs/V2_COLLISION_CHECK.md)):
+- **Not a model artifact.** V2's own collision checker agrees with VAMP on 12,000/12,000 random configurations. It also confirms all 24 flagged trajectories, at exactly the same samples, while all 15 unflagged controls are clean.
+- **Small.** The penetration is on the straight line between V2's returned 25 ms waypoints, never at a waypoint. The median is 1.0 mm and the maximum 3.5 mm (12 of 24 over 1 mm, 3 of 24 over V2's 2.5 mm planning margin).
+- **Unresolved:** whether V2's continuous spline itself penetrates. Our dense re-sampling of it failed its self-check.
+
+cuRobo v1 had 0 of 638 flagged on Panda. These counts do not change the solved numbers above. If they were subtracted, V2's Panda count would be 55/69 (59 − 4).
 
 **VAMP's one failure.** VAMP's only failures are a single rail/pillars query (problem 64). It fails on all 10 seeds, each after about 4.2 s at the default iteration cap.
 
