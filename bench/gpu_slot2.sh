@@ -8,9 +8,14 @@
 # ~/projects/_ops/GPU_RELEASED is touched on exit only if the slot actually started.
 cd "$(dirname "$0")/.."
 log(){ echo "$(date +%H:%M) $*"; }
-while pgrep -f "train_local[.]py" >/dev/null; do sleep 60; done
-paused=$(date +%s); log "flagship paused (no train_local.py)"
+# START_NOW=1: orchestrator has paused the flagship queue; start immediately (GPU state is logged, not waited on).
+# Without it: wait for no python train_local.py process (match the interpreter, not shells that mention the name).
+if [ -z "$START_NOW" ]; then
+  while pgrep -f "python[^ ]* scripts/train_local[.]py" >/dev/null; do sleep 60; done
+fi
+paused=$(date +%s); log "flagship paused"
 idle=0
+[ -n "$START_NOW" ] && idle=10
 while [ $idle -lt 10 ] && [ $(( $(date +%s) - paused )) -lt 1800 ]; do
   g=$(timeout 5 tegrastats --interval 1000 | head -3 | grep -oE "GR3D_FREQ [0-9]+" | awk '{s+=$2} END {print int(s/NR)}')
   if [ "${g:-100}" -le 5 ]; then idle=$((idle+1)); else idle=0; fi
