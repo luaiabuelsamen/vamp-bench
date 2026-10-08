@@ -24,9 +24,9 @@ GROUPS = [  # (label, tag, vamp module, curobo robot)
     ("UR5e · pillars (paper)", "ur5e_pillars", "ur5e", "ur5e"),
 ]
 # key, file prefix, which robot name the file uses, display name, colour (validated categorical slots 1-3)
-PLANNERS = [("vamp", "vamp", 2, "VAMP, 1 CPU core (Cortex-A78AE, NEON)", "#2a78d6"),
-            ("curobo_v1", "curobo", 3, "cuRobo v1 (paper's version), Orin NX GPU", "#eb6834"),
-            ("curobo_v2", "curobo2", 3, "cuRoboV2 (current), Orin NX GPU", "#1baf7a")]
+PLANNERS = [("vamp", "vamp", 2, "VAMP · 1 CPU core", "#2a78d6"),
+            ("curobo_v1", "curobo", 3, "cuRobo v1 (paper's version) · GPU", "#eb6834"),
+            ("curobo_v2", "curobo2", 3, "cuRoboV2 (current) · GPU", "#1baf7a")]
 SHORT = {"vamp": "VAMP", "curobo_v1": "cuRobo v1", "curobo_v2": "cuRoboV2"}
 
 
@@ -106,6 +106,11 @@ for g in GROUPS:
                 "vamp_on_same_queries": vamp_sub,
                 "median_wall_ratio": out[key]["wall_ms"]["median"] / vamp_sub["wall_ms"]["median"],
                 "paired_wall_ratio": stats([wall_ms(key, first[key][k]) / wall_ms("vamp", first["vamp"][k]) for k in both])}
+    if out["curobo_v1"] and out["curobo_v2"]:  # v1 restricted to exactly the queries v2 ran
+        sub = [r for r in allrec["curobo_v1"] if r["valid"] and (r["scene"], r["index"]) in ran["curobo_v2"]]
+        ok1 = [r for r in sub if r["success"] and r.get("vamp_validated")]
+        out["curobo_v1_on_v2_queries"] = {"queries": len(sub), "success": len(ok1),
+                                          "wall_ms": stats([wall_ms("curobo_v1", r) for r in ok1])}
     summary["groups"].append(out)
     cell = lambda s: f"{s['success']}/{s['queries']} med {s['wall_ms']['median']:.3g} ms" if s else "pending"
     print(f"{g[0]:34s} " + " | ".join(f"{SHORT[k]} {cell(out[k])}" for k, *_ in PLANNERS))
@@ -133,7 +138,7 @@ for i, (g, s) in enumerate(list(zip(GROUPS, summary["groups"]))[::-1]):
     for (key, prefix, rix, _, col), dy in zip(PLANNERS, offs):
         y = i + dy
         if not s[key]:
-            ax.text(1.0, y, f"{SHORT[key]}: pending clean GPU run", va="center", fontsize=7.5, color=INK2, style="italic")
+            ax.text(1.0, y, f"{SHORT[key]}: pending rerun", va="center", fontsize=7.5, color=INK2, style="italic")
             continue
         D, _ = load(fname(prefix, rix, g))
         vals = [wall_ms(key, r) for r in D["records"] if r.get("success") and (key == "vamp" or r.get("vamp_validated"))]
@@ -142,7 +147,8 @@ for i, (g, s) in enumerate(list(zip(GROUPS, summary["groups"]))[::-1]):
         st = s[key]["wall_ms"]
         ax.plot([st["p25"], st["p75"]], [y, y], color=col, lw=4, solid_capstyle="round")
         ax.plot([st["median"]], [y], marker="|", ms=10, mew=2, color=INK)
-        ax.text(max(vals) * 1.5, y, f"{SHORT[key]} {st['median']:.3g} ms · {s[key]['success']}/{s[key]['queries']}",
+        med = f"{st['median'] / 1e3:.3g} s" if st["median"] >= 1000 else f"{st['median']:.3g} ms"
+        ax.text(max(vals) * 1.5, y, f"{SHORT[key]} {med} · {s[key]['success']}/{s[key]['queries']}",
                 va="center", fontsize=7.5, color=INK2)
     yt.append(i)
 ax.set_xscale("log"); ax.set_yticks(yt); ax.set_yticklabels([g[0] for g in GROUPS][::-1])
@@ -155,7 +161,7 @@ for sp in ("top", "right", "left"):
     ax.spines[sp].set_visible(False)
 ax.tick_params(axis="y", length=0)
 ax.legend(handles=[Line2D([], [], color=c, lw=4, label=n) for _, _, _, n, c in PLANNERS],
-          loc="lower left", bbox_to_anchor=(0, 1.0), ncol=3, frameon=False, fontsize=8)
+          loc="lower left", bbox_to_anchor=(-0.02, 1.0), ncol=3, frameon=False, fontsize=7.5, handlelength=1.5, columnspacing=1.0)
 ax.set_title("Same Jetson Orin NX 16GB · identical sphere models, obstacles and joint-space queries",
              loc="left", fontsize=10, color=INK, pad=26)
 fig.tight_layout()

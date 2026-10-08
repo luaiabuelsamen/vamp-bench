@@ -52,3 +52,16 @@
 - **Each scene has two kinds of query:**
   - 3 exact queries (home → pick, pick → place, place → pick).
   - 100 randomized pick → place transfers: ±0.10–0.15 m position jitter and ±90° yaw around the paper's poses.
+
+## cuRoboV2 (added 2026-10-07)
+- **Build:** the existing editable install in `~/projects/clean_env/venv` (torch 2.7.1), pointing at `~/projects/curobo_berkeley/curobo` at `ac5f931` (v0.8.0.post1.dev33). Not rebuilt.
+- **Robot configs:** `bench/v1cfg_to_v2.py` renames keys only (`ee_link` → `tool_frames`, `retract_config` → `default_joint_position`, `format_version: 2.0`). Geometry is unchanged.
+- **Obstacles:** built by the same `bench/mbm_world.py`. Obstacle names are made unique per problem, because V2 caches meshes by name.
+- **Settings:** NVIDIA's `benchmark/motion_plan_benchmark.py` (see README), with `plan_cspace(max_attempts=20, enable_graph_attempt=1)`.
+- **Subset:** every 10th MBM problem, interleaved across scenes, with a 25-minute budget per robot. Paper scenes: all 103 problems, one trial each, with a 15-minute budget. Whether the budget cut a run short is recorded in each results file (`subset.budget_cut`).
+
+## Success criterion for cuRobo
+A cuRobo success counts only if every consecutive pair of waypoints in its interpolated trajectory passes VAMP's `validate_motion` on the shared model (`bench/crossval.py`). Planner-reported success is kept as `success_reported_by_planner`.
+
+## UR5 velocity limits (cuRobo only)
+VAMP's `ur5_spherized.urdf` has `velocity="0.5"` on every joint. A copy with `velocity="3.14159265"` (the real UR5's 180°/s), which is otherwise byte-identical apart from the `<limit>` lines, is used for both cuRobo versions: `configs/ur5_spherized_vel_pi.urdf`. VAMP does not use velocity limits.

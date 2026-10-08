@@ -194,8 +194,8 @@
     "success_reported_by_planner": 638,
     "success_in_collision_under_shared_model": 0,
     "failure_status": {
-     "MotionGenStatus.FINETUNE_TRAJOPT_FAIL": 1,
-     "MotionGenStatus.TRAJOPT_FAIL": 60
+     "MotionGenStatus.TRAJOPT_FAIL": 60,
+     "MotionGenStatus.FINETUNE_TRAJOPT_FAIL": 1
     }
    },
    "curobo_v2": {
@@ -367,6 +367,20 @@
      "p95": 12131.369711293659,
      "max": 14749.423066180261
     }
+   },
+   "curobo_v1_on_v2_queries": {
+    "queries": 69,
+    "success": 64,
+    "wall_ms": {
+     "n": 64,
+     "mean": 1214.505882060621,
+     "p5": 196.0507939569652,
+     "p25": 710.6740589952096,
+     "median": 868.6144750099629,
+     "p75": 1313.6994348606095,
+     "p95": 2880.256417510098,
+     "max": 11052.722480148077
+    }
    }
   },
   {
@@ -458,284 +472,8 @@
     "plan_config": null,
     "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults"
    },
-   "curobo_v1": {
-    "source": "results/records/curobo_mbm_ur5.json",
-    "queries": 689,
-    "success": 4,
-    "success_rate": 0.005805515239477504,
-    "wall_ms": {
-     "n": 4,
-     "mean": 4822.171147796325,
-     "p5": 2112.5653045950457,
-     "p25": 2945.9474192699417,
-     "median": 3613.3497445844114,
-     "p75": 5489.573473110795,
-     "p95": 9224.126955494283,
-     "max": 10157.765326090157
-    },
-    "internal_ms": {
-     "n": 4,
-     "mean": 3996.090531349182,
-     "p5": 1788.9456629753113,
-     "p25": 2455.462872982025,
-     "median": 3031.276226043701,
-     "p75": 4571.903884410858,
-     "p95": 7553.9754271507245,
-     "max": 8299.493312835693
-    },
-    "path_length_rad": {
-     "n": 4,
-     "mean": 2.5926389694213867,
-     "p5": 2.383905589580536,
-     "p25": 2.512638032436371,
-     "median": 2.578434109687805,
-     "p75": 2.658435046672821,
-     "p95": 2.8212591528892514,
-     "max": 2.8619651794433594
-    },
-    "power": {
-     "cmd": [
-      "/home/jetson3/projects/curobo_berkeley/venv/bin/python",
-      "bench/curobo_mbm.py",
-      "--robot",
-      "ur5",
-      "--out",
-      "results/raw/curobo_mbm_ur5.json"
-     ],
-     "returncode": 0,
-     "wall_s": 6061.748695373535,
-     "n_samples": 23644,
-     "VDD_IN_mW": {
-      "mean": 15071.838817458975,
-      "median": 14433.0,
-      "max": 20222.0
-     },
-     "VDD_CPU_GPU_CV_mW": {
-      "mean": 8681.387413297243,
-      "median": 8204.0,
-      "max": 12223.0
-     },
-     "GR3D_pct": {
-      "mean": 76.03751480290983,
-      "median": 99.0,
-      "max": 100.0
-     },
-     "cpu_temp_C": {
-      "mean": 75.15763724412113,
-      "median": 73.968,
-      "max": 79.468
-     },
-     "gpu_temp_C": {
-      "mean": 72.70811410928778,
-      "median": 71.718,
-      "max": 77.031
-     },
-     "top_processes_at_start": [
-      "72.2 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "72.0 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "72.0 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "72.0 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "72.0 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "70.0 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork",
-      "69.7 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork"
-     ]
-    },
-    "settings": {
-     "collision_checker_type": "MESH",
-     "collision_cache": {
-      "obb": 50,
-      "mesh": 20
-     },
-     "use_cuda_graph": true,
-     "interpolation_dt": 0.025,
-     "num_trajopt_seeds": 12,
-     "num_graph_seeds": 12
-    },
-    "plan_config": {
-     "max_attempts": 20,
-     "enable_graph_attempt": 1,
-     "disable_graph_attempt": 10,
-     "enable_finetune_trajopt": true,
-     "timeout": 60.0
-    },
-    "planner": "cuRobo v1 (NVlabs/curobo ebb7170, v0.7.7-5) MotionGen.plan_single_js",
-    "success_reported_by_planner": 4,
-    "success_in_collision_under_shared_model": 0,
-    "failure_status": {
-     "MotionGenStatus.TRAJOPT_FAIL": 679,
-     "MotionGenStatus.DT_EXCEPTION": 6
-    }
-   },
-   "curobo_v2": {
-    "source": "results/records/curobo2_mbm_ur5.json",
-    "queries": 64,
-    "success": 31,
-    "success_rate": 0.484375,
-    "wall_ms": {
-     "n": 31,
-     "mean": 4338.15880406708,
-     "p5": 1552.7375608216971,
-     "p25": 2065.453050658107,
-     "median": 3523.158213123679,
-     "p75": 5119.217122439295,
-     "p95": 9610.597029328346,
-     "max": 15761.362561024725
-    },
-    "internal_ms": {
-     "n": 31,
-     "mean": 3329.3553988549015,
-     "p5": 1399.9662322998047,
-     "p25": 1861.6463165283203,
-     "median": 3043.720520019531,
-     "p75": 4457.046173095703,
-     "p95": 6100.997253417969,
-     "max": 8580.747192382812
-    },
-    "path_length_rad": {
-     "n": 31,
-     "mean": 5.176993416201684,
-     "p5": 3.928824782371521,
-     "p25": 4.2211151123046875,
-     "median": 5.07481575012207,
-     "p75": 5.88293194770813,
-     "p95": 7.172569751739502,
-     "max": 8.501594543457031
-    },
-    "power": {
-     "cmd": [
-      "/home/jetson3/projects/clean_env/venv/bin/python",
-      "bench/curobo2_mbm.py",
-      "--robot",
-      "ur5",
-      "--stride",
-      "10",
-      "--max-attempts",
-      "20",
-      "--budget-s",
-      "1500",
-      "--out",
-      "results/raw/curobo2_mbm_ur5.json"
-     ],
-     "returncode": 0,
-     "wall_s": 1680.6794700622559,
-     "n_samples": 6562,
-     "VDD_IN_mW": {
-      "mean": 15707.326729655593,
-      "median": 15919.0,
-      "max": 18601.0
-     },
-     "VDD_CPU_GPU_CV_mW": {
-      "mean": 9597.45062480951,
-      "median": 9707.0,
-      "max": 11947.0
-     },
-     "GR3D_pct": {
-      "mean": 85.48079853703139,
-      "median": 99.0,
-      "max": 99.0
-     },
-     "cpu_temp_C": {
-      "mean": 76.3138515696434,
-      "median": 76.9525,
-      "max": 79.75
-     },
-     "gpu_temp_C": {
-      "mean": 74.85309920755867,
-      "median": 75.312,
-      "max": 78.031
-     },
-     "top_processes_at_start": [
-      "84.6 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "84.6 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "84.6 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "84.6 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "84.5 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "47.1 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
-      "46.3 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
-     ]
-    },
-    "settings": {
-     "ik_optimizer_configs": [
-      "ik/particle_ik.yml",
-      "ik/lbfgs_ik.yml"
-     ],
-     "trajopt_optimizer_configs": [
-      "trajopt/particle_trajopt.yml",
-      "trajopt/lbfgs_bspline_trajopt.yml"
-     ],
-     "num_trajopt_seeds": 4,
-     "optimizer_collision_activation_distance": 0.0025,
-     "use_cuda_graph": true,
-     "collision_cache": {
-      "obb": 50,
-      "mesh": 20
-     }
-    },
-    "plan_config": {
-     "max_attempts": 20,
-     "enable_graph_attempt": 1
-    },
-    "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
-    "success_reported_by_planner": 33,
-    "success_in_collision_under_shared_model": 2,
-    "failure_status": {
-     "fail": 31
-    }
-   },
-   "curobo_v1_vs_vamp_same_queries": {
-    "vamp_on_same_queries": {
-     "queries": 689,
-     "success": 689,
-     "wall_ms": {
-      "n": 689,
-      "mean": 2.4333542017416545,
-      "p5": 1.1606604,
-      "p25": 1.572766,
-      "median": 2.021839,
-      "p75": 2.58103,
-      "p95": 4.801002800000001,
-      "max": 32.654601
-     }
-    },
-    "median_wall_ratio": 1787.159978902579,
-    "paired_wall_ratio": {
-     "n": 4,
-     "mean": 6366.025288202917,
-     "p5": 1362.7549525427949,
-     "p25": 2355.838401713556,
-     "median": 3129.5067773082046,
-     "p75": 7139.693663797565,
-     "p95": 15900.421539115632,
-     "max": 18090.603507945154
-    }
-   },
-   "curobo_v2_vs_vamp_same_queries": {
-    "vamp_on_same_queries": {
-     "queries": 64,
-     "success": 64,
-     "wall_ms": {
-      "n": 64,
-      "mean": 2.350173234375,
-      "p5": 1.27334295,
-      "p25": 1.5199797499999999,
-      "median": 2.031472,
-      "p75": 2.6526085,
-      "p95": 4.916921849999993,
-      "max": 7.040566
-     }
-    },
-    "median_wall_ratio": 1734.2883451623647,
-    "paired_wall_ratio": {
-     "n": 31,
-     "mean": 2487.5505350029816,
-     "p5": 554.6231161718501,
-     "p25": 1093.127361473019,
-     "median": 1631.8463458678893,
-     "p75": 2648.6687131824174,
-     "p95": 7745.809231732508,
-     "max": 12336.821336648483
-    }
-   }
+   "curobo_v1": null,
+   "curobo_v2": null
   },
   {
    "label": "UR5e+rail \u00b7 pillars (paper)",
