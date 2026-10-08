@@ -67,19 +67,25 @@ def depth(vmod, sdf, traj):
     return float((r - sdf(P)).max())
 
 
-out = {}
-for stem, vm, pk in SETS:
-    probs = pickle.load(open(pk, "rb"))["problems"]; vmod = getattr(vamp, vm)
-    for planner in ("curobo", "curobo2"):
-        f = ROOT / f"results/raw/{planner}_{stem}.json"
-        if not f.exists():
-            continue
-        recs = [r for r in json.load(open(f))["records"] if r.get("success") and r.get("vamp_validated") is False]
-        d = [depth(vmod, obstacle_sdf(probs[r["scene"]][r["index"]]), np.asarray(r["path"], np.float64)) for r in recs]
-        out[f"{planner}_{stem}"] = {"flagged": len(recs), "depth_mm": [x * 1e3 for x in d],
-                                    "keys": [[r["scene"], r["index"], r.get("trial", 0)] for r in recs]}
-        if d:
-            print(f"{planner}_{stem}: flagged {len(d)}  depth mm median {np.median(d)*1e3:.2f} max {max(d)*1e3:.2f}  "
-                  f"self-collision-only (depth<=0) {sum(x <= 0 for x in d)}", flush=True)
-json.dump(out, open(ROOT / "results/penetration_depth.json", "w"), indent=1)
-print("wrote results/penetration_depth.json")
+
+def main():
+    out = {}
+    for stem, vm, pk in SETS:
+        probs = pickle.load(open(pk, "rb"))["problems"]; vmod = getattr(vamp, vm)
+        for planner in ("curobo", "curobo2"):
+            f = ROOT / f"results/raw/{planner}_{stem}.json"
+            if not f.exists():
+                continue
+            recs = [r for r in json.load(open(f))["records"] if r.get("success") and r.get("vamp_validated") is False]
+            d = [depth(vmod, obstacle_sdf(probs[r["scene"]][r["index"]]), np.asarray(r["path"], np.float64)) for r in recs]
+            out[f"{planner}_{stem}"] = {"flagged": len(recs), "depth_mm": [x * 1e3 for x in d],
+                                        "keys": [[r["scene"], r["index"], r.get("trial", 0)] for r in recs]}
+            if d:
+                print(f"{planner}_{stem}: flagged {len(d)}  depth mm median {np.median(d)*1e3:.2f} max {max(d)*1e3:.2f}  "
+                      f"self-collision-only (depth<=0) {sum(x <= 0 for x in d)}", flush=True)
+    json.dump(out, open(ROOT / "results/penetration_depth.json", "w"), indent=1)
+    print("wrote results/penetration_depth.json")
+
+
+if __name__ == "__main__":
+    main()

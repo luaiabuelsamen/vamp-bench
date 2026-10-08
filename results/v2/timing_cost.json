@@ -1,0 +1,23 @@
+{
+ "host": "ubuntu",
+ "paths": 200,
+ "p1_ruckig_ms_p50_p95": [
+  0.359,
+  0.569
+ ],
+ "p2_toppra_ms_p50_p95": [
+  17.678,
+  28.423
+ ],
+ "p1_duration_s_p50_p95": [
+  2.749,
+  5.018
+ ],
+ "p2_duration_s_p50_p95": [
+  1.679,
+  2.965
+ ],
+ "p2_failures": 0,
+ "p1_1khz_sampling_ms_per_traj": 23.5,
+ "samples": 3012
+}

@@ -1,0 +1,17 @@
+# Benchmark v2 shared joint limits. Every planner and every post-processor uses exactly these values.
+# Units: rad/s, rad/s^2, rad/s^3 (rail: m/s, m/s^2, m/s^3).
+panda:
+  joints: [panda_joint1, panda_joint2, panda_joint3, panda_joint4, panda_joint5, panda_joint6, panda_joint7]
+  velocity: [2.1750, 2.1750, 2.1750, 2.1750, 2.6100, 2.6100, 2.6100]
+  acceleration: [15.0, 7.5, 10.0, 12.5, 15.0, 20.0, 20.0]
+  jerk: [7500.0, 3750.0, 5000.0, 6250.0, 7500.0, 10000.0, 10000.0]
+  source: "libfranka include/franka/rate_limiting.h @ e88d08f (kMaxJointVelocity/Acceleration/Jerk without the kLimitEps/packet-loss margins)"
+ur5e_rail:
+  joints: [base_x, shoulder_pan_joint, shoulder_lift_joint, elbow_joint, wrist_1_joint, wrist_2_joint, wrist_3_joint]
+  velocity: [1.0, 3.14159265, 3.14159265, 3.14159265, 3.14159265, 3.14159265, 3.14159265]
+  acceleration: [12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0]
+  jerk: [500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0]
+  source:
+    arm_velocity: "UR5e datasheet (universal-robots.com/manuals/latest/en/datasheets/ur5e): every joint +-180 deg/s"
+    arm_acceleration_jerk: "not published in the UR5e datasheet; cuRobo's shipped ur5e.yml values (max_acceleration 12.0, max_jerk 500.0) used for all planners"
+    rail: "no datasheet for the rail; velocity 1.0 m/s from ur5e_x.urdf / MuJoCo gantry model, acc/jerk as cuRobo ur5e_x.yml (12.0 / 500.0)"

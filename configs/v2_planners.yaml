@@ -1,0 +1,31 @@
+# Benchmark v2 frozen planner and post-processing settings. Changing anything here after the freeze invalidates the run.
+vamp:
+  version: "KavrakiLab/vamp 27cb9b6 (+ cricket fb2d081 robot modules ur5erail)"
+  planner: rrtc            # vamp.configure_robot_and_planner_with_kwargs defaults (as scripts/evaluate_mbm.py)
+  simplify: default
+  sampler: halton
+  seed_to_rng: "sampler.reset(); sampler.skip(seed % 100000)  (xorshift is x86-only)"
+curobo_v1:
+  version: "NVlabs/curobo ebb7170 (v0.7.7-5)"
+  call: plan_single_js
+  settings: {collision_checker_type: MESH, use_cuda_graph: true, interpolation_dt: 0.001, interpolation_steps: 20000, num_trajopt_seeds: 12, num_graph_seeds: 12}
+  plan_config: {max_attempts: 20, enable_graph_attempt: 1, disable_graph_attempt: 10, enable_finetune_trajopt: true, timeout: 60.0}
+  seed_to_rng: "MotionGenConfig.load_from_robot_config(ik_seed=seed, graph_seed=seed); mg.reset(reset_seed=True) per query (trajopt particle seeds are internal; not exposed)"
+curobo_v2:
+  version: "NVlabs/curobo ac5f931 (v0.8.0.post1.dev33)"
+  call: plan_cspace
+  settings: {ik_optimizer_configs: [ik/particle_ik.yml, ik/lbfgs_ik.yml], trajopt_optimizer_configs: [trajopt/particle_trajopt.yml, trajopt/lbfgs_bspline_trajopt.yml],
+             num_trajopt_seeds: 4, optimizer_collision_activation_distance: 0.0025, use_cuda_graph: true}
+  output_interpolation: "trajopt_solver.config.interpolation_dt = 0.001 (buffer 20000), set before warmup"
+  plan_config: {max_attempts: 100, enable_graph_attempt: 1}   # NVIDIA motion_plan_benchmark.py value
+  seed_to_rng: "MotionPlannerCfg random_seed = seed; reset_seed() per query; one planner instance per (robot, seed)"
+post_processing:
+  P1_primary: "Ruckig 0.19.4, Synchronization.Phase, rest-to-rest per waypoint segment (bench/v2_timing.py ruckig_p1); applied to VAMP paths"
+  P2_secondary: "TOPP-RA 0.6.3 on cubic spline through waypoints, velocity+acceleration constraints, ParametrizeConstAccel (toppra_p2); applied to VAMP paths"
+  curobo: "cuRobo's own time-parameterized output, requested at interpolation_dt = 0.001 s so the 1 kHz validation runs on the planner's own samples (not chords between 25 ms samples); limits checked independently"
+validation:
+  rate_hz: 1000
+  collision: "VAMP <robot>.validate at every sample (shared sphere model), joint-limit tolerance 1e-5 rad"
+  limits: "velocity/acceleration from the sampler; jerk by finite differences of acceleration at 1 kHz; violation tolerance 1%"
+  clearance_rate_hz: 100
+timeout_for_worst_case_tables_s: 60
