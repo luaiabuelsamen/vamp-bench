@@ -61,13 +61,10 @@ def seg_dist(P, a, b):
 
 def depth(vmod, sdf, traj):
     t = np.linspace(0, 1, 201)[:, None]
-    worst = -np.inf
-    for j in range(len(traj) - 1):
-        for q in traj[j] + (traj[j + 1] - traj[j]) * t:
-            sp = vmod.fk(q.astype(np.float32).tolist())
-            P = np.array([[s.x, s.y, s.z] for s in sp]); r = np.array([s.r for s in sp])
-            worst = max(worst, float((r - sdf(P)).max()))
-    return worst
+    Q = np.concatenate([traj[j] + (traj[j + 1] - traj[j]) * t for j in range(len(traj) - 1)]).astype(np.float32)
+    sph = [vmod.fk(q.tolist()) for q in Q]
+    P = np.array([[s.x, s.y, s.z] for sp in sph for s in sp]); r = np.array([s.r for sp in sph for s in sp])
+    return float((r - sdf(P)).max())
 
 
 out = {}

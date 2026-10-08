@@ -149,6 +149,23 @@ if vc.exists():
         "interpolation_dt_s": sorted({c["interpolation_dt"] for c in d["cases"].values()}),
         "dense_resampling_selfcheck_passed": all(b["selfcheck_dense_vs_base_max_diff"] < 1e-3 for b in fresh)}
 
+pd_ = ROOT / "results/penetration_depth.json"
+if pd_.exists():
+    D = json.load(open(pd_))
+    summary["penetration_depth"] = {k: {"flagged": v["flagged"],
+                                        "obstacle_penetration": sum(x > 0 for x in v["depth_mm"]),
+                                        "no_obstacle_penetration": sum(x <= 0 for x in v["depth_mm"]),
+                                        "depth_mm_of_penetrating": stats([x for x in v["depth_mm"] if x > 0])}
+                                    for k, v in D.items() if v["flagged"]}
+    if vc.exists():  # CPU signed distance vs V2's own checker on the same stored trajectories
+        m = {"mbm": "curobo2_mbm_panda", "gantry_pillars": "curobo2_gantry_pillars_ur5e_rail", "ur5e_pillars": "curobo2_ur5e_pillars_ur5e"}
+        V = json.load(open(vc)); diffs = []
+        for tag, c in V["cases"].items():
+            cpu = dict(zip([tuple(k[:2]) for k in D[m[tag]]["keys"]], D[m[tag]]["depth_mm"]))
+            diffs += [abs(cpu[(q["scene"], q["index"])] - q["A_stored"]["v2_max_penetration_m"] * 1e3)
+                      for q in c["queries"] if q["kind"] == "flagged"]
+        summary["penetration_depth_vs_v2_checker"] = {"trajectories": len(diffs), "max_abs_diff_mm": max(diffs)}
+
 agree = ROOT / "results/collision_model_agreement.json"
 if agree.exists():
     summary["collision_model_agreement"] = json.load(open(agree))
@@ -189,7 +206,7 @@ for i, (g, s) in enumerate(list(zip(GROUPS, summary["groups"]))[::-1]):
 ax.set_xscale("log"); ax.set_yticks(yt); ax.set_yticklabels([g[0] for g in GROUPS][::-1])
 ax.set_ylim(-0.6, len(GROUPS) - 0.4)
 ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:,.0f}" if v >= 1 else f"{v:g}"))
-ax.set_xlim(min(xs) / 2, max(10000, max(xs) * 120))
+ax.set_xlim(min(xs) / 2, max(10000, max(xs) * 250))
 ax.set_xticks([t for t in (0.1, 1, 10, 100, 1000, 10000, 100000) if min(xs) / 2 <= t <= max(xs) * 120])
 ax.set_xlabel("wall-clock time per query, ms (log scale)\ndots = solved queries (solved = planner-reported success) · bar = IQR · tick = median")
 ax.grid(axis="x", color=GRID, lw=0.8); ax.set_axisbelow(True)

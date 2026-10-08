@@ -10,9 +10,9 @@ These are facts to use, not a draft. Each one traces to `results/summary.json` o
 4. **Availability.** The code, the problem sets and the per-query results are in one repository, so her group can reproduce or extend the comparison (for example, to an x86 CPU or a desktop GPU).
 
 ## Provisional: do not use until verified
-- **Small penetrations between cuRoboV2 waypoints (provisional).** VAMP's segment check flags 4/59 Panda, 16/100 rail-with-pillars and 4/102 UR5e-with-pillars cuRoboV2 successes.
-  - **Not an artifact of the collision model:** V2's own checker confirms all 24 at the same samples, and agrees with VAMP on 12,000/12,000 random configurations.
-  - **Size:** a median of 1.0 mm and a maximum of 3.5 mm, on the straight line between returned waypoints, never at a waypoint.
-  - **Why it stays out of the email:** whether V2's continuous spline itself penetrates is unverified. A millimetre-scale graze is not a meaningful claim to make to her.
-  - If subtracted, V2's Panda count would be 55/69 (59 − 4).
-  - Details: `docs/V2_COLLISION_CHECK.md`.
+- **Millimetre penetrations between waypoints, both cuRobo versions (provisional).** VAMP's straight-line check between returned waypoints flags some successes of both versions:
+  - **Counts:** v1 0/638 Panda, 39/367 UR5, 44/823 rail-with-pillars, 3/985 UR5e-with-pillars. V2 4/59, 6/35, 16/100, 4/102.
+  - **Not an artifact of the collision model:** V2's own checker confirms its flagged trajectories at the same samples, and agrees with VAMP on 12,000/12,000 random configurations.
+  - **Size:** median 0.12–2.30 mm per set, maximum 5.08 mm, never at a waypoint. 35 of v1's 39 UR5 flags are self-collision, with depth not yet measured.
+  - **Why it stays out of the email:** it is millimetre-scale, it affects both versions (so it is not a V2-specific defect), and the continuous trajectories are unverified.
+  - Details: `docs/V2_COLLISION_CHECK.md`, `results/penetration_depth.json`.

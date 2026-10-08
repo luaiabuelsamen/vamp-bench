@@ -53,17 +53,22 @@ Ratio of median wall time to VAMP's, on the same queries:
 
 ³ **cuRoboV2 success rates** were measured with `max_attempts` 20 (the same cap as v1). NVIDIA's own V2 benchmark uses 100, so these rates are a lower bound.
 
-**Provisional: small penetrations between waypoints.** VAMP's segment check flags some cuRoboV2 successes:
-- 4 of 59 on Panda
-- 16 of 100 on rail/pillars
-- 4 of 102 on UR5e/pillars
+**Provisional: small penetrations between waypoints, in both cuRobo versions.** VAMP's segment check runs on the straight line between consecutive returned waypoints (`bench/crossval.py`). It flags some successes of both versions:
 
-What the verification found ([docs/V2_COLLISION_CHECK.md](docs/V2_COLLISION_CHECK.md)):
-- **Not a model artifact.** V2's own collision checker agrees with VAMP on 12,000/12,000 random configurations. It also confirms all 24 flagged trajectories, at exactly the same samples, while all 15 unflagged controls are clean.
-- **Small.** The penetration is on the straight line between V2's returned 25 ms waypoints, never at a waypoint. The median is 1.0 mm and the maximum 3.5 mm (12 of 24 over 1 mm, 3 of 24 over V2's 2.5 mm planning margin).
-- **Unresolved:** whether V2's continuous spline itself penetrates. Our dense re-sampling of it failed its self-check.
+| | Panda | UR5 | rail/pillars | rail/free | UR5e/pillars |
+|---|---|---|---|---|---|
+| cuRobo v1 flagged | 0 of 638 | 39 of 367 | 44 of 823 | 0 of 1030 | 3 of 985 |
+| cuRoboV2 flagged | 4 of 59 | 6 of 35 | 16 of 100 | 0 of 103 | 4 of 102 |
 
-cuRobo v1 had 0 of 638 flagged on Panda. These counts do not change the solved numbers above. If they were subtracted, V2's Panda count would be 55/69 (59 − 4).
+What the checks found:
+- **Not a model artifact.** V2's own collision checker agrees with VAMP on 12,000/12,000 random configurations. It also confirms all 24 flagged V2 trajectories it was run on (Panda, rail/pillars, UR5e/pillars), at exactly the same samples ([docs/V2_COLLISION_CHECK.md](docs/V2_COLLISION_CHECK.md)).
+- **Millimetre-scale.** Exact signed distances on the shared model (`bench/penetration_depth.py`, which matches V2's own checker within 0.001 mm on each of the 24 flagged V2 trajectories) give:
+  - median penetration 0.12–2.30 mm per set, maximum 5.08 mm across all sets;
+  - always between waypoints, never at one.
+  - 35 of the 39 flagged v1 UR5 trajectories have no robot–obstacle penetration, so they must be self-collision flags; their depth is not yet measured.
+- **Unresolved:** whether cuRobo's continuous trajectory itself penetrates. Our dense re-sampling of V2's spline failed its self-check.
+
+None of this changes the solved counts above.
 
 **VAMP's one failure.** VAMP's only failures are a single rail/pillars query (problem 64). It fails on all 10 seeds, each after about 4.2 s at the default iteration cap.
 

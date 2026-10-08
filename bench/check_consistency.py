@@ -47,6 +47,8 @@ if vc:
         pairs.add((a, b))
     n2 = sum(v["n"] for v in vc["random_config_agreement"].values()); pairs.add((n2, n2))
     times += [dt * 1000 for dt in vc.get("interpolation_dt_s", [])]  # settings quoted in docs (ms)
+for v in S.get("penetration_depth", {}).values():
+    pairs |= {(v["obstacle_penetration"], v["flagged"]), (v["no_obstacle_penetration"], v["flagged"])}
 agree = S.get("collision_model_agreement", {})
 n = sum(v["n"] for v in agree.values()); pairs.add((n, n))
 # successes checked by the segment check with zero flagged (e.g. v1 0 of 638)

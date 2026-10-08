@@ -2,8 +2,8 @@
 Goal: Honest, reproducible VAMP vs cuRobo comparison on the cuRobo paper's problems (UR5e, 7th-axis gantry) plus VAMP's standard benchmarks; discharges the 2025-09-03 promise to Prof. Kavraki.
 Finish line: results/*.json + one figure + README headline numbers + docs/EMAIL_NOTES.md + speedup-number (62x/50x/12x) reconciliation, all committed locally.
 Deadline: none set (brief: $0, highest relationship value)
-Milestone: M7 — GPU slot 2 running since 22:24 (orchestrator go): v1 paper scenes, then UR5 v1+V2; V2 collision check done (docs/V2_COLLISION_CHECK.md)
-Last result: V2 between-waypoint finding: not a model artifact (V2 own checker confirms 24/24, agrees 12,000/12,000 random configs), but penetration only median 1.0 mm / max 3.5 mm on waypoint chords; continuous-spline check inconclusive -> stays provisional, out of EMAIL_NOTES facts
-Blocked: none while slot 2 runs (~1.5–2 h); GPU_RELEASED is touched when it exits. 62x/50x/12x source: not on jetson3
-Next: slot 2 done -> fill v1 paper + UR5 cells, run check_consistency, final commit
-Updated: 2026-10-07 22:25
+Milestone: M8 — all cells filled (VAMP, cuRobo v1, cuRoboV2 × 5 problem sets); README/figure/EMAIL_NOTES consistent (bench/check_consistency.py passes)
+Last result: same Orin NX — VAMP 0.55–2.02 ms median; cuRobo v1 145–849 ms (169–483x VAMP); cuRoboV2 0.38–6.55 s; between-waypoint mm-scale penetrations in BOTH cuRobo versions (provisional, out of email facts) (results/summary.json)
+Blocked: none. Optional: ~5 min GPU to measure self-collision depth of 35 v1 UR5 flags; 62x/50x/12x source not on jetson3 (Luai)
+Next: orchestrator/Luai review of EMAIL_NOTES; nothing pushed
+Updated: 2026-10-08 00:39

@@ -4332,6 +4332,117 @@
   ],
   "dense_resampling_selfcheck_passed": false
  },
+ "penetration_depth": {
+  "curobo2_mbm_panda": {
+   "flagged": 4,
+   "obstacle_penetration": 4,
+   "no_obstacle_penetration": 0,
+   "depth_mm_of_penetrating": {
+    "n": 4,
+    "mean": 1.0924904485344271,
+    "p5": 0.3434638824595966,
+    "p25": 0.5812993789143452,
+    "median": 1.0611545698225529,
+    "p75": 1.5723456394426347,
+    "p95": 1.885387244805882,
+    "max": 1.963647646146694
+   }
+  },
+  "curobo_mbm_ur5": {
+   "flagged": 39,
+   "obstacle_penetration": 4,
+   "no_obstacle_penetration": 35,
+   "depth_mm_of_penetrating": {
+    "n": 4,
+    "mean": 2.023827762396719,
+    "p5": 0.4513192491401372,
+    "p25": 0.87751574484556,
+    "median": 1.335672902401365,
+    "p75": 2.4819849199525237,
+    "p95": 4.559753079646795,
+    "max": 5.079195119570364
+   }
+  },
+  "curobo2_mbm_ur5": {
+   "flagged": 6,
+   "obstacle_penetration": 6,
+   "no_obstacle_penetration": 0,
+   "depth_mm_of_penetrating": {
+    "n": 6,
+    "mean": 1.7758631851546838,
+    "p5": 0.012450507301682654,
+    "p25": 0.3931477919155357,
+    "median": 1.799186061945097,
+    "p75": 2.663742472441793,
+    "p95": 3.841956577386896,
+    "max": 4.169691850170485
+   }
+  },
+  "curobo_gantry_pillars_ur5e_rail": {
+   "flagged": 44,
+   "obstacle_penetration": 44,
+   "no_obstacle_penetration": 0,
+   "depth_mm_of_penetrating": {
+    "n": 44,
+    "mean": 1.9821030334085925,
+    "p5": 0.5476335130816457,
+    "p25": 0.9886514011044969,
+    "median": 2.2972018289590252,
+    "p75": 2.776451412505501,
+    "p95": 2.843410736967415,
+    "max": 2.940716411839302
+   }
+  },
+  "curobo2_gantry_pillars_ur5e_rail": {
+   "flagged": 16,
+   "obstacle_penetration": 16,
+   "no_obstacle_penetration": 0,
+   "depth_mm_of_penetrating": {
+    "n": 16,
+    "mean": 1.2669344436778327,
+    "p5": 0.09959867648444247,
+    "p25": 0.4306494116484549,
+    "median": 1.0038513532058675,
+    "p75": 1.535841004810837,
+    "p95": 3.1746811597140896,
+    "max": 3.504250268586147
+   }
+  },
+  "curobo_ur5e_pillars_ur5e": {
+   "flagged": 3,
+   "obstacle_penetration": 3,
+   "no_obstacle_penetration": 0,
+   "depth_mm_of_penetrating": {
+    "n": 3,
+    "mean": 0.5058980046728062,
+    "p5": 0.1443064086883064,
+    "p25": 0.18853486401452374,
+    "median": 0.2438204331722954,
+    "p75": 0.6922223595808332,
+    "p95": 1.0509439007076633,
+    "max": 1.140624285989371
+   }
+  },
+  "curobo2_ur5e_pillars_ur5e": {
+   "flagged": 4,
+   "obstacle_penetration": 4,
+   "no_obstacle_penetration": 0,
+   "depth_mm_of_penetrating": {
+    "n": 4,
+    "mean": 0.4739213787892209,
+    "p5": 0.08109416804185365,
+    "p25": 0.09891176974370641,
+    "median": 0.11940207508204584,
+    "p75": 0.4944116841275603,
+    "p95": 1.3630756147266327,
+    "max": 1.5802415973764015
+   }
+  }
+ },
+ "penetration_depth_vs_v2_checker": {
+  "trajectories": 24,
+  "max_abs_diff_mm": 0.00010779564090301896
+ },
  "collision_model_agreement": {
   "panda": {
    "n": 4000,

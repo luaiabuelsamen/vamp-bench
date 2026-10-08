@@ -1,13 +1,13 @@
 # Is the cuRoboV2 between-waypoint collision finding real?
 
-**Verdict (2026-10-07).** Partly settled:
+**Verdict (2026-10-08).** Partly settled. Both cuRobo versions show it, so it is not a V2 regression (see (c)).
 - **Not a model artifact.** cuRoboV2's own collision checker confirms the penetration.
 - **It is small:** a median of 1.0 mm and a maximum of 3.5 mm, on the straight line between V2's returned 25 ms waypoints.
 - **Still open:** whether V2's actual continuous B-spline penetrates. Our dense re-sampling of V2's spline failed its self-check, so we can't say.
 
 The finding stays out of the email facts. Its wording changes from "cuts through an obstacle" to "grazes obstacles by up to 3.5 mm between returned waypoints".
 
-All numbers are from `results/v2_collision_check.json`, summarized in `results/summary.json` under `v2_collision_check`. The script is `bench/verify_v2_collisions.py`, run on 2026-10-07 at 22:1x in GPU slot 2.
+All numbers are from `results/v2_collision_check.json`, summarized in `results/summary.json` under `v2_collision_check`. The script is `bench/verify_v2_collisions.py`, run on 2026-10-07 from 22:14 to 22:24, in GPU slot 2.
 
 ## What was flagged
 `bench/crossval.py` runs VAMP's `validate_motion` on each consecutive pair of a cuRobo success's interpolated waypoints (dt = 0.025 s). For cuRoboV2 it flagged:
@@ -44,9 +44,16 @@ The robot spheres are themselves a conservative approximation of the robot's geo
 
 So the evidence covers the straight line between V2's returned waypoints, not V2's continuous spline. A controller that linearly interpolates the returned waypoints would follow those straight lines.
 
-**(c) v1 counted the same way.** The same `bench/crossval.py` check ran on cuRobo v1:
-- 0 of its 638 Panda successes are flagged.
-- The v1 paper scenes and UR5 are being checked identically in GPU slot 2. Results go to `results/summary.json` under `success_flagged_by_vamp_segment_check_PROVISIONAL`.
+**(c) v1 counted the same way: v1 is flagged too, at a similar scale.** The same `bench/crossval.py` check on cuRobo v1 flags:
+- 0/638 on Panda
+- 39/367 on UR5
+- 44/823 on rail/pillars
+- 0/1030 on rail/free
+- 3/985 on UR5e/pillars
+
+`bench/penetration_depth.py` computes exact signed distances on the shared model. On each of V2's 24 flagged trajectories it matches V2's own checker within 0.001 mm (`summary.json` → `penetration_depth_vs_v2_checker`). On v1 it gives a rail/pillars median of 2.30 mm (max 2.94 mm) and a UR5e/pillars max of 1.14 mm. On UR5, 4 of the 39 flagged v1 trajectories penetrate obstacles (max 5.08 mm); the other 35 have no obstacle penetration and are therefore self-collision flags, with depth not measured.
+
+So this is a property of discretely-checked trajectory optimization in both versions, not a V2 regression.
 
 ## What it would take to close (a)
 Either of these would settle it:
