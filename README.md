@@ -19,32 +19,39 @@ All three planners check the same collision spheres against the same obstacles, 
 |---|---|---|---|
 | **VAMP**, 1 CPU core | 699/699 | **1.76 ms** (1.44–2.25) | 4.90 rad |
 | **cuRobo v1**, GPU | 638/699 | **849 ms** (616–1147) | 4.32 rad |
-| **cuRoboV2**, GPU, every 10th problem | 55/69 | **6.55 s** (3.23–9.44) | 4.49 rad |
+| **cuRoboV2**, GPU, every 10th problem | 59/69 (`max_attempts` 20, not NVIDIA's 100) | **6.55 s** (3.23–9.44) | 4.51 rad |
 
 Same-query comparisons:
 - **VAMP vs cuRobo v1:** on all 699 queries, v1's median time is **483x** VAMP's (ratio of medians).
-- **VAMP vs cuRoboV2:** on the 69 queries V2 ran, VAMP's median is 1.72 ms, and V2's median is **3817x** that.
+- **VAMP vs cuRoboV2:** on the 69 queries V2 ran, VAMP's median is 1.72 ms, and V2's median is **3817x** that. V2 solved 59/69 with `max_attempts` 20; NVIDIA's own benchmark uses 100, so V2's success rate is a lower bound.
 - **v1 vs V2:** on those same 69 queries, v1 solves 64 with a median of 869 ms.
 
 So on this board, VAMP on one of the 8 CPU cores is about 500x faster than cuRobo v1 on the whole GPU, and cuRoboV2 is slower than v1. The GPU does not give cuRobo a speed advantage here. All three run on the same board, so per-dollar is the same for all of them.
 
 ## All problem sets
 
-Wall-clock time per query; median, with p95 in parentheses. A cuRobo success counts only if VAMP's checker finds every segment of the returned trajectory collision-free.
+Wall-clock time per query; median, with p95 in parentheses. Success is what each planner reports. A provisional cross-check with VAMP's checker is described below.
 
 | Problem set | VAMP | cuRobo v1 | cuRoboV2 |
 |---|---|---|---|
-| Panda · MBM (7 scenes) | 699/699 · 1.76 ms (3.89) | 638/699 · 849 ms (2694) | 55/69 · 6.55 s (13.8 s) |
+| Panda · MBM (7 scenes) | 699/699 · 1.76 ms (3.89) | 638/699 · 849 ms (2694) | 59/69³ · 6.55 s (13.9 s) |
 | UR5 · MBM (7 scenes) | 689/689 · 2.02 ms (4.80) | rerun pending¹ | rerun pending¹ |
-| UR5e + rail · pillars (paper) | 1020/1030 · 0.95 ms (1.35) | rerun pending² | 84/103 · 1.06 s (2.35 s) |
-| UR5e + rail · no obstacles (paper) | 1030/1030 · 0.55 ms (0.68) | rerun pending² | 103/103 · 379 ms (727) |
-| UR5e · pillars (paper) | 1030/1030 · 0.97 ms (1.43) | rerun pending² | 98/103 · 1.05 s (2.33 s) |
+| UR5e + rail · pillars (paper) | 1020/1030 · 0.95 ms (1.35) | rerun pending² | 100/103³ · 1.06 s (2.28 s) |
+| UR5e + rail · no obstacles (paper) | 1030/1030 · 0.55 ms (0.68) | rerun pending² | 103/103³ · 379 ms (727) |
+| UR5e · pillars (paper) | 1030/1030 · 0.97 ms (1.43) | rerun pending² | 102/103³ · 1.05 s (2.32 s) |
 
 ¹ **UR5 rows:** VAMP's `ur5_spherized.urdf` caps every joint at 0.5 rad/s. VAMP ignores velocity limits, but cuRobo's time-parameterized optimizer then cannot fit long UR5 motions in time: v1 solved 4/689, almost all `TRAJOPT_FAIL`. The rerun gives cuRobo the same geometry with the real UR5 limit of π rad/s (`configs/ur5_spherized_vel_pi.urdf`). The superseded runs are kept in `results/raw/superseded/`.
 
 ² **v1 paper rows:** the v1 runs finished, but the results file wasn't written because of a path bug in our script (since fixed). They are rerun in the next GPU slot.
 
-**cuRoboV2 collisions between waypoints.** cuRoboV2 reported more successes than counted above: 59 on Panda, 100 on rail/pillars and 102 on UR5e/pillars. The 4, 16 and 4 extra trajectories have every waypoint collision-free, but one 0.05–0.09 rad step between two waypoints cuts through an obstacle (usually a 14 cm pillar). cuRobo v1 had none of these: all 638 of its Panda successes passed the check.
+³ **cuRoboV2 success rates** were measured with `max_attempts` 20 (the same cap as v1). NVIDIA's own V2 benchmark uses 100, so these rates are a lower bound.
+
+**Provisional, not yet verified: collisions between waypoints.** VAMP's segment check flags some cuRoboV2 successes:
+- 4 of 59 on Panda
+- 16 of 100 on rail/pillars
+- 4 of 102 on UR5e/pillars
+
+Each flagged trajectory has every waypoint collision-free, but one step between waypoints intersects an obstacle. cuRobo v1 had 0 of 638 flagged on Panda. This may still be a measurement artifact. The checks under way and their status are in [docs/V2_COLLISION_CHECK.md](docs/V2_COLLISION_CHECK.md).
 
 **VAMP's one failure.** VAMP's only failures are a single rail/pillars query (problem 64). It fails on all 10 seeds, each after about 4.2 s at the default iteration cap.
 

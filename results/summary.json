@@ -1,5 +1,5 @@
 {
- "notes": "Aggregate raw runs into committed results: results/summary.json, results/records/*.json, results/figure.png.\n\nPrimary timing metric (apples to apples): wall-clock per query on the same Jetson, measured from Python.\n  VAMP:      env construction + RRT-Connect + simplification            (wall_us)\n  cuRobo v1: update_world + plan_single_js incl. CUDA sync              (world_update_us + plan_wall_us)\n  cuRoboV2:  clear cache + update_world + reset_seed + plan_cspace, sync (world_update_us + plan_wall_us)\nPlanner-internal times are reported too (VAMP total_us; cuRobo solve_time_us).\nTime distributions are over successful queries; success rate is reported separately.\nA cuRobo success counts only if every segment of its returned trajectory passes VAMP's validate_motion\n(bench/crossval.py); planner-reported successes are kept as success_reported_by_planner.\nA planner's cells are null (\"pending\") until its raw file exists in results/raw.\n",
+ "notes": "Aggregate raw runs into committed results: results/summary.json, results/records/*.json, results/figure.png.\n\nPrimary timing metric (apples to apples): wall-clock per query on the same Jetson, measured from Python.\n  VAMP:      env construction + RRT-Connect + simplification            (wall_us)\n  cuRobo v1: update_world + plan_single_js incl. CUDA sync              (world_update_us + plan_wall_us)\n  cuRoboV2:  clear cache + update_world + reset_seed + plan_cspace, sync (world_update_us + plan_wall_us)\nPlanner-internal times are reported too (VAMP total_us; cuRobo solve_time_us).\nTime distributions are over successful queries; success rate is reported separately.\nSuccess = planner-reported. The VAMP segment check of cuRobo trajectories is reported separately and is provisional.\nA planner's cells are null (\"pending\") until its raw file exists in results/raw.\n",
  "groups": [
   {
    "label": "Panda \u00b7 MBM",
@@ -191,46 +191,46 @@
      "timeout": 60.0
     },
     "planner": "cuRobo v1 (NVlabs/curobo ebb7170, v0.7.7-5) MotionGen.plan_single_js",
-    "success_reported_by_planner": 638,
-    "success_in_collision_under_shared_model": 0,
+    "success_passing_vamp_segment_check_PROVISIONAL": 638,
+    "success_flagged_by_vamp_segment_check_PROVISIONAL": 0,
     "failure_status": {
-     "MotionGenStatus.TRAJOPT_FAIL": 60,
-     "MotionGenStatus.FINETUNE_TRAJOPT_FAIL": 1
+     "MotionGenStatus.FINETUNE_TRAJOPT_FAIL": 1,
+     "MotionGenStatus.TRAJOPT_FAIL": 60
     }
    },
    "curobo_v2": {
     "source": "results/records/curobo2_mbm_panda.json",
     "queries": 69,
-    "success": 55,
-    "success_rate": 0.7971014492753623,
+    "success": 59,
+    "success_rate": 0.855072463768116,
     "wall_ms": {
-     "n": 55,
-     "mean": 7048.716469125991,
-     "p5": 2331.274003116414,
+     "n": 59,
+     "mean": 7087.115454519073,
+     "p5": 2331.7196485120803,
      "p25": 3230.8931606821716,
      "median": 6553.981156088412,
      "p75": 9435.197985032573,
-     "p95": 13785.319993598387,
+     "p95": 13902.614431548862,
      "max": 19716.394529677927
     },
     "internal_ms": {
-     "n": 55,
-     "mean": 5700.578829678622,
-     "p5": 2136.268389892578,
+     "n": 59,
+     "mean": 5728.247443764897,
+     "p5": 2137.561346435547,
      "p25": 2876.445770263672,
      "median": 5288.350341796875,
      "p75": 7781.825500488281,
-     "p95": 11404.962976074217,
+     "p95": 11364.975207519528,
      "max": 12042.46484375
     },
     "path_length_rad": {
-     "n": 55,
-     "mean": 4.509613240848888,
-     "p5": 3.56788911819458,
-     "p25": 3.9227097034454346,
-     "median": 4.487677574157715,
-     "p75": 4.838532209396362,
-     "p95": 5.820513963699341,
+     "n": 59,
+     "mean": 4.536453889588178,
+     "p5": 3.5989535331726077,
+     "p25": 3.938443422317505,
+     "median": 4.5054931640625,
+     "p75": 4.865691184997559,
+     "p95": 5.812716245651245,
      "max": 7.046502590179443
     },
     "power": {
@@ -308,8 +308,8 @@
      "enable_graph_attempt": 1
     },
     "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
-    "success_reported_by_planner": 59,
-    "success_in_collision_under_shared_model": 4,
+    "success_passing_vamp_segment_check_PROVISIONAL": 55,
+    "success_flagged_by_vamp_segment_check_PROVISIONAL": 4,
     "failure_status": {
      "fail": 10
     }
@@ -358,13 +358,13 @@
     },
     "median_wall_ratio": 3816.907396976057,
     "paired_wall_ratio": {
-     "n": 55,
-     "mean": 4622.882238174373,
-     "p5": 664.541847398805,
+     "n": 59,
+     "mean": 4555.829611162869,
+     "p5": 681.1106328742667,
      "p25": 1967.8085297830057,
      "median": 3493.551387246553,
-     "p75": 6476.203976015166,
-     "p95": 12131.369711293659,
+     "p75": 6313.22067743605,
+     "p95": 11875.180831764214,
      "max": 14749.423066180261
     }
    },
@@ -574,36 +574,36 @@
    "curobo_v2": {
     "source": "results/records/curobo2_gantry_pillars_ur5e_rail.json",
     "queries": 103,
-    "success": 84,
-    "success_rate": 0.8155339805825242,
+    "success": 100,
+    "success_rate": 0.970873786407767,
     "wall_ms": {
-     "n": 84,
-     "mean": 1174.2856722557917,
-     "p5": 718.1235391413793,
+     "n": 100,
+     "mean": 1201.2303914595395,
+     "p5": 718.2854391401634,
      "p25": 723.5594969242811,
-     "median": 1056.7159710917622,
-     "p75": 1417.916074511595,
-     "p95": 2345.5474894959475,
+     "median": 1062.0500673539937,
+     "p75": 1431.9946854375303,
+     "p95": 2281.8410326261073,
      "max": 2556.641752831638
     },
     "internal_ms": {
-     "n": 84,
-     "mean": 925.8719333467029,
-     "p5": 632.311799621582,
+     "n": 100,
+     "mean": 945.0112506103516,
+     "p5": 632.3014251708985,
      "p25": 635.0173568725586,
-     "median": 939.017578125,
+     "median": 942.1296234130859,
      "p75": 1247.9089813232422,
-     "p95": 1576.0176971435546,
+     "p95": 1576.3547821044922,
      "max": 1590.8957519531252
     },
     "path_length_rad": {
-     "n": 84,
-     "mean": 4.684806764125824,
-     "p5": 2.7274261593818667,
-     "p25": 3.9233673214912415,
-     "median": 4.842053174972534,
-     "p75": 5.299953937530518,
-     "p95": 6.496438598632812,
+     "n": 100,
+     "mean": 4.601041345596314,
+     "p5": 2.8019800186157227,
+     "p25": 3.7326854467391968,
+     "median": 4.801125526428223,
+     "p75": 5.250196695327759,
+     "p95": 6.520612120628357,
      "max": 7.647613048553467
     },
     "power": {
@@ -687,8 +687,8 @@
      "enable_graph_attempt": 1
     },
     "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
-    "success_reported_by_planner": 100,
-    "success_in_collision_under_shared_model": 16,
+    "success_passing_vamp_segment_check_PROVISIONAL": 84,
+    "success_flagged_by_vamp_segment_check_PROVISIONAL": 16,
     "failure_status": {
      "fail": 3
     }
@@ -708,15 +708,15 @@
       "max": 4.375917
      }
     },
-    "median_wall_ratio": 1111.5398976958666,
+    "median_wall_ratio": 1117.1507344541062,
     "paired_wall_ratio": {
-     "n": 84,
-     "mean": 1269.4696353971665,
-     "p5": 696.1439325809455,
-     "p25": 805.9623800521066,
-     "median": 1212.5865472591595,
-     "p75": 1592.4296489945878,
-     "p95": 2306.9907616727605,
+     "n": 100,
+     "mean": 1301.518595699241,
+     "p5": 703.722017783438,
+     "p25": 810.7375889271251,
+     "median": 1229.7376837219522,
+     "p75": 1604.5530788663511,
+     "p95": 2408.759263390546,
      "max": 2810.4229447418243
     }
    }
@@ -933,8 +933,8 @@
      "enable_graph_attempt": 1
     },
     "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
-    "success_reported_by_planner": 103,
-    "success_in_collision_under_shared_model": 0,
+    "success_passing_vamp_segment_check_PROVISIONAL": 103,
+    "success_flagged_by_vamp_segment_check_PROVISIONAL": 0,
     "failure_status": {}
    },
    "curobo_v2_vs_vamp_same_queries": {
@@ -1064,36 +1064,36 @@
    "curobo_v2": {
     "source": "results/records/curobo2_ur5e_pillars_ur5e.json",
     "queries": 103,
-    "success": 98,
-    "success_rate": 0.9514563106796117,
+    "success": 102,
+    "success_rate": 0.9902912621359223,
     "wall_ms": {
-     "n": 98,
-     "mean": 1148.0757492233297,
-     "p5": 713.6941800592467,
-     "p25": 716.7815052671358,
-     "median": 1048.4178280457854,
+     "n": 102,
+     "mean": 1154.3507595528283,
+     "p5": 713.714198069647,
+     "p25": 716.8000409146771,
+     "median": 1049.2065474390984,
      "p75": 1400.2733448287472,
-     "p95": 2328.2952728448436,
+     "p95": 2324.462206196039,
      "max": 2608.6437557823956
     },
     "internal_ms": {
-     "n": 98,
-     "mean": 881.6305875194316,
-     "p5": 628.4276794433594,
-     "p25": 630.2384719848632,
-     "median": 932.9236602783203,
-     "p75": 1164.5518264770508,
-     "p95": 1264.6088577270507,
+     "n": 102,
+     "mean": 887.118211035635,
+     "p5": 628.4543670654297,
+     "p25": 630.2744445800781,
+     "median": 933.1334228515625,
+     "p75": 1235.5902786254883,
+     "p95": 1265.5416458129882,
      "max": 1577.2019958496094
     },
     "path_length_rad": {
-     "n": 98,
-     "mean": 5.336839836470935,
-     "p5": 3.958002471923828,
-     "p25": 4.8416091203689575,
+     "n": 102,
+     "mean": 5.326936768550499,
+     "p5": 3.9641123533248903,
+     "p25": 4.864400267601013,
      "median": 5.1312947273254395,
-     "p75": 5.759654521942139,
-     "p95": 7.402792167663574,
+     "p75": 5.755380392074585,
+     "p95": 7.398744678497314,
      "max": 8.171785354614258
     },
     "power": {
@@ -1177,8 +1177,8 @@
      "enable_graph_attempt": 1
     },
     "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
-    "success_reported_by_planner": 102,
-    "success_in_collision_under_shared_model": 4,
+    "success_passing_vamp_segment_check_PROVISIONAL": 98,
+    "success_flagged_by_vamp_segment_check_PROVISIONAL": 4,
     "failure_status": {
      "fail": 1
     }
@@ -1198,15 +1198,15 @@
       "max": 5.0005180000000005
      }
     },
-    "median_wall_ratio": 1078.3107589041256,
+    "median_wall_ratio": 1079.1219665971032,
     "paired_wall_ratio": {
-     "n": 98,
-     "mean": 1239.0243957156313,
-     "p5": 515.5599245898028,
+     "n": 102,
+     "mean": 1236.9635843466622,
+     "p5": 516.5919847920643,
      "p25": 777.2640706505014,
-     "median": 1221.6217174713966,
+     "median": 1217.8565739959013,
      "p75": 1576.9246935648807,
-     "p95": 2287.6706392916362,
+     "p95": 2275.6355517060447,
      "max": 2434.3623074944094
     }
    }

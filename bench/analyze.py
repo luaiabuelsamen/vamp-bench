@@ -6,8 +6,7 @@ Primary timing metric (apples to apples): wall-clock per query on the same Jetso
   cuRoboV2:  clear cache + update_world + reset_seed + plan_cspace, sync (world_update_us + plan_wall_us)
 Planner-internal times are reported too (VAMP total_us; cuRobo solve_time_us).
 Time distributions are over successful queries; success rate is reported separately.
-A cuRobo success counts only if every segment of its returned trajectory passes VAMP's validate_motion
-(bench/crossval.py); planner-reported successes are kept as success_reported_by_planner.
+Success = planner-reported. The VAMP segment check of cuRobo trajectories is reported separately and is provisional.
 A planner's cells are null ("pending") until its raw file exists in results/raw.
 """
 import json
@@ -79,16 +78,17 @@ for g in GROUPS:
         slim(name, D)
         val = [r for r in D["records"] if r["valid"]]
         raw_ok = [r for r in val if r["success"]]
-        # cuRobo successes count only if VAMP's checker (same model) finds the returned trajectory collision-free
-        ok = raw_ok if key == "vamp" else [r for r in raw_ok if r.get("vamp_validated")]
+        # Primary: planner-reported success. The VAMP segment check (bench/crossval.py) is reported alongside and is
+        # PROVISIONAL until docs/V2_COLLISION_CHECK.md rules it in or out as a measurement artifact.
+        ok = raw_ok
         s = {"source": f"results/records/{name}.json", "queries": len(val), "success": len(ok),
              "success_rate": len(ok) / len(val), "wall_ms": stats([wall_ms(key, r) for r in ok]),
              "internal_ms": stats([internal_ms(key, r) for r in ok]),
              "path_length_rad": stats([r["path_length_l2"] for r in ok]), "power": P,
              "settings": D.get("settings"), "plan_config": D.get("plan_config"), "planner": D.get("planner")}
         if key != "vamp":
-            s["success_reported_by_planner"] = len(raw_ok)
-            s["success_in_collision_under_shared_model"] = len(raw_ok) - len(ok)
+            s["success_passing_vamp_segment_check_PROVISIONAL"] = sum(bool(r.get("vamp_validated")) for r in raw_ok)
+            s["success_flagged_by_vamp_segment_check_PROVISIONAL"] = sum(not r.get("vamp_validated") for r in raw_ok)
             s["failure_status"] = {st: sum(r["status"] == st for r in val if not r["success"])
                                    for st in {r["status"] for r in val if not r["success"]}}
         out[key] = s
@@ -108,7 +108,7 @@ for g in GROUPS:
                 "paired_wall_ratio": stats([wall_ms(key, first[key][k]) / wall_ms("vamp", first["vamp"][k]) for k in both])}
     if out["curobo_v1"] and out["curobo_v2"]:  # v1 restricted to exactly the queries v2 ran
         sub = [r for r in allrec["curobo_v1"] if r["valid"] and (r["scene"], r["index"]) in ran["curobo_v2"]]
-        ok1 = [r for r in sub if r["success"] and r.get("vamp_validated")]
+        ok1 = [r for r in sub if r["success"]]
         out["curobo_v1_on_v2_queries"] = {"queries": len(sub), "success": len(ok1),
                                           "wall_ms": stats([wall_ms("curobo_v1", r) for r in ok1])}
     summary["groups"].append(out)
@@ -141,14 +141,15 @@ for i, (g, s) in enumerate(list(zip(GROUPS, summary["groups"]))[::-1]):
             ax.text(1.0, y, f"{SHORT[key]}: pending rerun", va="center", fontsize=7.5, color=INK2, style="italic")
             continue
         D, _ = load(fname(prefix, rix, g))
-        vals = [wall_ms(key, r) for r in D["records"] if r.get("success") and (key == "vamp" or r.get("vamp_validated"))]
+        vals = [wall_ms(key, r) for r in D["records"] if r.get("success")]
         xs += vals
         ax.scatter(vals, y + rng.uniform(-0.07, 0.07, len(vals)), s=3, color=col, alpha=0.3, linewidths=0)
         st = s[key]["wall_ms"]
         ax.plot([st["p25"], st["p75"]], [y, y], color=col, lw=4, solid_capstyle="round")
         ax.plot([st["median"]], [y], marker="|", ms=10, mew=2, color=INK)
         med = f"{st['median'] / 1e3:.3g} s" if st["median"] >= 1000 else f"{st['median']:.3g} ms"
-        ax.text(max(vals) * 1.5, y, f"{SHORT[key]} {med} · {s[key]['success']}/{s[key]['queries']}",
+        cav = " (max_attempts 20)" if key == "curobo_v2" else ""
+        ax.text(max(vals) * 1.5, y, f"{SHORT[key]} {med} · {s[key]['success']}/{s[key]['queries']}{cav}",
                 va="center", fontsize=7.5, color=INK2)
     yt.append(i)
 ax.set_xscale("log"); ax.set_yticks(yt); ax.set_yticklabels([g[0] for g in GROUPS][::-1])
