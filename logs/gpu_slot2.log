@@ -1,0 +1,12 @@
+start-state: 10-07-2026 22:13:48 RAM 8907/15656MB (lfb 23x4MB) SWAP 4673/7828MB (cached 1MB) CPU [74%@1984,87%@1984,85%@1984,60%@1984,80%@1984,69%@1984,61%@1984,68%@1984] GR3D_FREQ 0% cv0@68.656C cpu@69.812C soc2@67.812C soc0@67.156C cv1@67.437C gpu@66.937C tj@70C soc1@68.75C cv2@66.75C VDD_IN 12484mW/12484mW VDD_CPU_GPU_CV 6394mW/6394mW VDD_SOC 1980mW/1980mW
+start-state: 10-07-2026 22:13:49 RAM 8909/15656MB (lfb 23x4MB) SWAP 4673/7828MB (cached 1MB) CPU [67%@1984,94%@1984,41%@1984,87%@1984,60%@1984,89%@1984,31%@1984,92%@1984] GR3D_FREQ 0% cv0@68.156C cpu@69.656C soc2@67.937C soc0@67.187C cv1@67.312C gpu@66.875C tj@69.656C soc1@68.937C cv2@66.625C VDD_IN 12028mW/12256mW VDD_CPU_GPU_CV 6090mW/6242mW VDD_SOC 1980mW/1980mW
+22:13 flagship paused
+22:13 GPU idle 10 min; starting slot 2
+other job running: 606877 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96
+Traceback (most recent call last):
+  File "/home/jetson3/projects/vamp-bench/bench/verify_v2_collisions.py", line 78, in <module>
+    v_ok = np.array([vmod.validate(x.tolist(), env0) for x in qr]); c_ok = v2_check(chk0, qr)[0]
+  File "/home/jetson3/projects/vamp-bench/bench/verify_v2_collisions.py", line 53, in v2_check
+    return (d_scene <= 0) & (d_self <= 0), d_scene, d_self
+ValueError: operands could not be broadcast together with shapes (236000,) (4000,) 
+22:14 FAILED verify

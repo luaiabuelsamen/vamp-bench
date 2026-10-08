@@ -15,19 +15,19 @@ if [ -z "$START_NOW" ]; then
 fi
 paused=$(date +%s); log "flagship paused"
 idle=0
-[ -n "$START_NOW" ] && idle=10
+[ -n "$START_NOW" ] && idle=10 && log "START_NOW: orchestrator go; GPU state at start is logged above"
 while [ $idle -lt 10 ] && [ $(( $(date +%s) - paused )) -lt 1800 ]; do
   g=$(timeout 5 tegrastats --interval 1000 | head -3 | grep -oE "GR3D_FREQ [0-9]+" | awk '{s+=$2} END {print int(s/NR)}')
   if [ "${g:-100}" -le 5 ]; then idle=$((idle+1)); else idle=0; fi
   log "GR3D=${g}% idle_min=$idle"; sleep 55
 done
 trap 'touch ~/projects/_ops/GPU_RELEASED; echo "$(date +%H:%M) touched GPU_RELEASED"' EXIT
-if [ $idle -ge 10 ]; then log "GPU idle 10 min; starting slot 2"; else log "30 min after pause; starting slot 2 (GPU not confirmed idle)"; fi
+if [ -n "$START_NOW" ]; then log "starting slot 2 on orchestrator go"; elif [ $idle -ge 10 ]; then log "GPU idle 10 min; starting slot 2"; else log "30 min after pause; starting slot 2 (GPU not confirmed idle)"; fi
 pgrep -af "collect_local[.]py" | head -1 | sed 's/^/other job running: /'
 unset PYTHONPATH
 OUT=results/raw; PL="python3 bench/powerlog.py"; CP=~/projects/curobo_berkeley/venv/bin/python; C2=~/projects/clean_env/venv/bin/python; VP=.venv/bin/python
 
-PYTHONPATH=bench:.vamp_only $C2 bench/verify_v2_collisions.py 5 || log "FAILED verify"
+[ -z "$SKIP_VERIFY" ] && { PYTHONPATH=bench:.vamp_only $C2 bench/verify_v2_collisions.py 5 || log "FAILED verify"; }
 
 for s in gantry_pillars:ur5e_rail:ur5erail gantry_free:ur5e_rail:ur5erail ur5e_pillars:ur5e:ur5e; do
   IFS=: read -r sc c m <<<"$s"

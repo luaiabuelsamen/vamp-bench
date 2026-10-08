@@ -49,7 +49,10 @@ def v2_check(chk, q):
     """Return (valid mask, scene distance, self distance) for configs q (n, dof). Positive distance = penetration."""
     x = dev(q).view(-1, 1, q.shape[1])
     d_scene, d_self = chk.get_scene_self_collision_distance_from_joints(x)
-    d_scene, d_self = d_scene.view(-1).cpu().numpy(), d_self.view(-1).cpu().numpy()
+    # V2 returns per-sphere distances; a configuration collides if any sphere penetrates (max over spheres > 0)
+    n = q.shape[0]
+    d_scene = d_scene.reshape(n, -1).max(dim=1).values.cpu().numpy()
+    d_self = d_self.reshape(n, -1).max(dim=1).values.cpu().numpy()
     return (d_scene <= 0) & (d_self <= 0), d_scene, d_self
 
 
