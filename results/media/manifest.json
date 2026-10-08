@@ -1,0 +1,88 @@
+{
+ "display": "480x360, 12 fps, 1.0s hold + 6.0s motion + 1.0s hold; paths replayed at constant joint speed",
+ "gifs": {
+  "panda_mbm.gif": {
+   "set": "Panda \u00b7 MotionBenchMaker",
+   "planner": "VAMP",
+   "scene": "bookshelf_thin",
+   "index": 28,
+   "trial": 0,
+   "plan_wall_ms": 1.7562929999999999,
+   "set_median_ms": 1.7562929999999999,
+   "frames": 96,
+   "seconds": 8.0,
+   "bytes": 590531,
+   "fk_check_max_pos_m": 1.0623739341276887e-07,
+   "fk_check_max_rot_rad": 0.0003943412433590479
+  },
+  "ur5_mbm.gif": {
+   "set": "UR5 \u00b7 MotionBenchMaker",
+   "planner": "VAMP",
+   "scene": "table_pick",
+   "index": 35,
+   "trial": 0,
+   "plan_wall_ms": 2.021839,
+   "set_median_ms": 2.021839,
+   "frames": 96,
+   "seconds": 8.0,
+   "bytes": 551198,
+   "fk_check_max_pos_m": 9.945095720559262e-08,
+   "fk_check_max_rot_rad": 0.0005389461637133635
+  },
+  "ur5e_rail_pillars.gif": {
+   "set": "UR5e + 7th-axis rail \u00b7 pillars (paper)",
+   "planner": "VAMP",
+   "scene": "gantry_pillars",
+   "index": 31,
+   "trial": 0,
+   "plan_wall_ms": 0.932389,
+   "set_median_ms": 0.930005,
+   "frames": 96,
+   "seconds": 8.0,
+   "bytes": 635306,
+   "fk_check_max_pos_m": 0.0014889615684013082,
+   "fk_check_max_rot_rad": 0.00046867218179458254
+  },
+  "ur5e_rail_free.gif": {
+   "set": "UR5e + 7th-axis rail \u00b7 no obstacles (paper)",
+   "planner": "VAMP",
+   "scene": "gantry_free",
+   "index": 58,
+   "trial": 0,
+   "plan_wall_ms": 0.551446,
+   "set_median_ms": 0.551446,
+   "frames": 96,
+   "seconds": 8.0,
+   "bytes": 677254,
+   "fk_check_max_pos_m": 0.0014852871638626711,
+   "fk_check_max_rot_rad": 0.000503716320569199
+  },
+  "ur5e_pillars.gif": {
+   "set": "UR5e \u00b7 pillars (paper)",
+   "planner": "VAMP",
+   "scene": "ur5e_pillars",
+   "index": 30,
+   "trial": 0,
+   "plan_wall_ms": 1.041993,
+   "set_median_ms": 1.041993,
+   "frames": 96,
+   "seconds": 8.0,
+   "bytes": 574223,
+   "fk_check_max_pos_m": 0.0014593666314492734,
+   "fk_check_max_rot_rad": 0.000461515922293751
+  },
+  "side_by_side_ur5e_rail_pillars.gif": {
+   "set": "UR5e + 7th-axis rail \u00b7 pillars (paper)",
+   "scene": "gantry_pillars",
+   "index": 76,
+   "trial": 0,
+   "vamp_plan_wall_ms": 0.915556,
+   "curobo_v1_plan_wall_ms": 169.70232967287302,
+   "curobo_v1_query_is_median_time_of_queries_both_solved": true,
+   "note": "both motions replayed over the same display duration; cuRobo's own trajectory duration is 1.4929211139678955 s",
+   "frames": 96,
+   "seconds": 8.0,
+   "bytes": 1122754
+  }
+ }
+}

@@ -13,6 +13,30 @@ All three planners check the same collision spheres against the same obstacles, 
 
 ![results](results/figure.png)
 
+## The benchmark tasks
+
+Same query, same scene: VAMP (left) and cuRobo v1 (right) on the paper's UR5e + rail scene with pillars. Each title shows that planner's measured planning time for this query.
+
+![VAMP vs cuRobo v1, rail with pillars](results/media/side_by_side_ur5e_rail_pillars.gif)
+
+One representative query per problem set, executed with VAMP's solution. The query is the one whose VAMP time is closest to its set's median (first trial).
+
+| | |
+|---|---|
+| ![Panda MBM](results/media/panda_mbm.gif) | ![UR5 MBM](results/media/ur5_mbm.gif) |
+| ![UR5e rail pillars](results/media/ur5e_rail_pillars.gif) | ![UR5e rail free](results/media/ur5e_rail_free.gif) |
+| ![UR5e pillars](results/media/ur5e_pillars.gif) | |
+
+How the GIFs are made:
+- **Rendering:** MuJoCo offscreen rendering (`bench/render_gifs.py`).
+- **Obstacles:** drawn exactly as the planners model them.
+- **Robot models:**
+  - UR5e: `curobo_berkeley`'s `ur5e.xml` and rail meshes, with the Vention pedestal removed because no planner models it.
+  - Panda and UR5: VAMP's URDFs. The UR5 is drawn with its collision meshes.
+- **Kinematics check:** each MuJoCo model's end-effector pose is checked against VAMP's forward kinematics. Panda and UR5 match to below 0.001 mm. The UR5e meshes come from a different model than the planning URDF and differ by up to 1.5 mm.
+- **Timing:** paths are replayed at constant joint speed over 6 s, with 1 s holds at start and end. Display time is not planning time.
+- **Per-GIF details** (query, measured time, file size): `results/media/manifest.json`.
+
 ## Headline (Panda, MotionBenchMaker, this Orin NX)
 
 | | Solved | Median wall time per query (IQR) | Median path length |
