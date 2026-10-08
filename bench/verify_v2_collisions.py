@@ -83,45 +83,75 @@ for tag, robot, vm, cfg, pk in CASES:
                                                   "vamp_only_valid": int((v_ok & ~c_ok).sum()), "v2_only_valid": int((~v_ok & c_ok).sum())}
     print(tag, "agreement", case["random_config_agreement_v2_vs_vamp"], flush=True)
 
+    def dense_interp(js, factor):
+        """V2's own interpolator at interpolation_dt / factor. The best solution is tiled across the seed batch so
+        the solver's goal-buffer layout is unchanged; row 0 is returned."""
+        nb = ts.core._goal_buffer.idxs_current_js.shape[0]
+        t = js.clone()
+        for f in ("position", "velocity", "acceleration", "jerk", "knot"):
+            v = getattr(t, f, None)
+            if v is not None:
+                setattr(t, f, v.reshape(1, v.shape[-2], v.shape[-1]).repeat(nb, 1, 1))
+        for f in ("dt", "knot_dt"):
+            v = getattr(t, f, None)
+            if v is not None:
+                setattr(t, f, v.reshape(1).repeat(nb))
+        ts.config.interpolation_dt = dt0 / factor; ts.config.interpolation_buffer_size = 5000 * factor
+        ts._interpolation_dt_buffer = None; ts._interpolated_traj_buffer = None
+        st, last, _ = ts.get_interpolated_trajectory(t)
+        ts.config.interpolation_dt = dt0; ts.config.interpolation_buffer_size = 5000
+        ts._interpolation_dt_buffer = None; ts._interpolated_traj_buffer = None
+        n_ = int(last.view(-1)[0].item()) + 1
+        return st.position[0, :n_].cpu().numpy()
+
+    chk_act0 = None
     for kind, r in [("flagged", x) for x in flagged] + [("control", x) for x in controls]:
         p = probs[r["scene"]][r["index"]]
         world = problem_to_world(p); env = vamp.problem_dict_to_vamp(p)
+        q = {"kind": kind, "scene": r["scene"], "index": r["index"]}
+        chk0p = checker(rdict, world, 0.0); chkm = checker(rdict, world, 0.0025)
+        # Part A: the stored trajectory (as benchmarked). Configs on the straight chord between consecutive
+        # stored waypoints, sampled at 1/200, checked by VAMP and by V2's own checker.
+        stored = np.asarray(r["path"], np.float32)
+        chord = np.concatenate([stored[j] + (stored[j + 1] - stored[j]) * np.linspace(0, 1, 201)[:, None]
+                                for j in range(len(stored) - 1)]).astype(np.float32)
+        v_bad = ~np.array([vmod.validate(x.tolist(), env) for x in chord])
+        ok0, ds0, dss0 = v2_check(chk0p, chord)
+        q["A_stored"] = {"chord_samples": int(len(chord)), "vamp_colliding": int(v_bad.sum()),
+                         "v2_colliding_act0": int((~ok0).sum()), "both": int((v_bad & ~ok0).sum()),
+                         "v2_max_penetration_m": float(max(ds0.max(), dss0.max())),
+                         "v2_colliding_at_waypoints_act0": int((~v2_check(chk0p, stored)[0]).sum())}
+        # Part B: fresh plan of the same query, V2's own spline re-sampled 10x denser
         mp.clear_scene_cache(); mp.update_world(world); mp.reset_seed()
         res = mp.plan_cspace(JointState.from_position(dev([p["start"]]), joint_names=mp.joint_names),
                              JointState.from_position(dev([p["goals"][0]]), joint_names=mp.joint_names),
                              max_attempts=20, enable_graph_attempt=1)
-        q = {"kind": kind, "scene": r["scene"], "index": r["index"]}
         if res is None or not bool(res.success.view(-1)[0].item()):
-            q["replan_success"] = False; case["queries"].append(q); print(q, flush=True); continue
-        dof = len(p["start"])
-        interp = res.get_interpolated_plan().position.view(-1, dof).cpu().numpy()
-        stored = np.asarray(r["path"], np.float32)
-        q["reproduced"] = bool(interp.shape == stored.shape and np.abs(interp - stored).max() < 1e-3)
-        # (a) same optimized spline, 10x denser, V2's own interpolator
-        ts.config.interpolation_dt = dt0 / 10
-        ts.config.interpolation_buffer_size = 50000
-        ts._interpolation_dt_buffer = None; ts._interpolated_traj_buffer = None
-        dense_js, last, _ = ts.get_interpolated_trajectory(res.js_solution.clone())
-        ts.config.interpolation_dt = dt0; ts._interpolation_dt_buffer = None; ts._interpolated_traj_buffer = None
-        n_d = int(last.view(-1)[0].item()) + 1
-        dense = dense_js.position[0, :n_d].cpu().numpy()
-        k = min(len(interp), (len(dense) - 1) // 10 + 1)
-        q["dense_selfcheck_max_abs_diff"] = float(np.abs(dense[::10][:k] - interp[:k]).max())
-        q["n_interp"], q["n_dense"] = int(len(interp)), int(len(dense))
-        # (b) V2's own checker at activation 0 and at 0.0025, and VAMP, on the interpolated and dense samples
-        for act in (0.0, 0.0025):
-            chk = checker(rdict, world, act)
-            ok_i, ds_i, dss_i = v2_check(chk, interp)
-            ok_d, ds_d, dss_d = v2_check(chk, dense)
-            q[f"v2_act{act}"] = {"interp_colliding": int((~ok_i).sum()), "dense_colliding": int((~ok_d).sum()),
-                                 "dense_max_scene_dist": float(ds_d.max()), "dense_max_self_dist": float(dss_d.max())}
-        vd = np.array([vmod.validate(x.tolist(), env) for x in dense.astype(np.float32)])
-        vi = np.array([vmod.validate(x.tolist(), env) for x in interp.astype(np.float32)])
-        segs = sum(not vmod.validate_motion(interp[j].tolist(), interp[j + 1].tolist(), env) for j in range(len(interp) - 1))
-        q["vamp"] = {"interp_colliding": int((~vi).sum()), "dense_colliding": int((~vd).sum()), "interp_segments_failing": int(segs)}
+            q["B_fresh"] = {"replan_success": False}
+        else:
+            dof = len(p["start"])
+            interp = res.get_interpolated_plan().position.view(-1, dof).cpu().numpy()
+            base = dense_interp(res.js_solution, 1); dense = dense_interp(res.js_solution, 10)
+            k = min(len(base), (len(dense) - 1) // 10 + 1)
+            segs = sum(not vmod.validate_motion(interp[j].tolist(), interp[j + 1].tolist(), env) for j in range(len(interp) - 1))
+            # how far the spline leaves the chord between dt0 samples (joint space, rad)
+            dev_max = 0.0
+            for j in range(k - 1):
+                seg = dense[10 * j:10 * j + 11]; a_, b_ = seg[0], seg[-1]
+                lin = a_ + (b_ - a_) * np.linspace(0, 1, len(seg))[:, None]
+                dev_max = max(dev_max, float(np.abs(seg - lin).max()))
+            okd0, dsd, dssd = v2_check(chk0p, dense); okdm = v2_check(chkm, dense)[0]
+            vd = ~np.array([vmod.validate(x.tolist(), env) for x in dense.astype(np.float32)])
+            q["B_fresh"] = {"replan_success": True, "same_as_stored": bool(interp.shape == stored.shape and np.abs(interp - stored).max() < 1e-3),
+                            "selfcheck_interp_vs_base_max_diff": float(np.abs(interp[:len(base)] - base[:len(interp)]).max()),
+                            "selfcheck_dense_vs_base_max_diff": float(np.abs(dense[::10][:k] - base[:k]).max()),
+                            "n_interp": int(len(interp)), "n_dense": int(len(dense)),
+                            "vamp_interp_segments_failing": int(segs), "vamp_dense_colliding": int(vd.sum()),
+                            "v2_dense_colliding_act0": int((~okd0).sum()), "v2_dense_within_margin_act0.0025": int((~okdm).sum()),
+                            "v2_dense_max_penetration_m": float(max(dsd.max(), dssd.max())),
+                            "spline_vs_chord_max_dev_rad": dev_max}
         case["queries"].append(q)
-        print(tag, kind, r["index"], {k2: q[k2] for k2 in ("reproduced", "dense_selfcheck_max_abs_diff")},
-              q["v2_act0.0"], q["vamp"], flush=True)
+        print(tag, kind, r["index"], "A", q["A_stored"], "B", q["B_fresh"], flush=True)
     out["cases"][tag] = case
     del mp; torch.cuda.empty_cache()
 

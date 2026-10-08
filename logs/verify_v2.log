@@ -1,0 +1,19 @@
+mbm agreement {'n': 4000, 'agree': 1.0, 'vamp_only_valid': 0, 'v2_only_valid': 0}
+Mesh already in cache, reusing existing instance: bookshelf_thin_21_Can1
+Mesh already in cache, reusing existing instance: bookshelf_thin_21_Can10
+Mesh already in cache, reusing existing instance: bookshelf_thin_21_Can2
+Mesh already in cache, reusing existing instance: bookshelf_thin_21_Can3
+Mesh already in cache, reusing existing instance: bookshelf_thin_21_Can4
+Mesh already in cache, reusing existing instance: bookshelf_thin_21_Can5
+Mesh already in cache, reusing existing instance: bookshelf_thin_21_Can6
+Mesh already in cache, reusing existing instance: bookshelf_thin_21_Can7
+Mesh already in cache, reusing existing instance: bookshelf_thin_21_Can8
+Mesh already in cache, reusing existing instance: bookshelf_thin_21_Can9
+Traceback (most recent call last):
+  File "/home/jetson3/projects/vamp-bench/bench/verify_v2_collisions.py", line 104, in <module>
+    dense_js, last, _ = ts.get_interpolated_trajectory(res.js_solution.clone())
+  File "/usr/lib/python3.10/contextlib.py", line 79, in inner
+    return func(*args, **kwds)
+  File "/home/jetson3/projects/curobo_berkeley/curobo/curobo/_src/solver/solver_trajopt.py", line 583, in get_interpolated_trajectory
+    batch_size, _, _ = js_optimized.shape
+ValueError: too many values to unpack (expected 3)
