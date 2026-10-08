@@ -89,6 +89,36 @@
     "settings": null,
     "plan_config": null,
     "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults",
+    "per_scene": {
+     "bookshelf_small": {
+      "success": 100,
+      "queries": 100
+     },
+     "bookshelf_tall": {
+      "success": 100,
+      "queries": 100
+     },
+     "bookshelf_thin": {
+      "success": 100,
+      "queries": 100
+     },
+     "box": {
+      "success": 100,
+      "queries": 100
+     },
+     "cage": {
+      "success": 100,
+      "queries": 100
+     },
+     "table_pick": {
+      "success": 99,
+      "queries": 99
+     },
+     "table_under_pick": {
+      "success": 100,
+      "queries": 100
+     }
+    },
     "failures": {
      "n": 0,
      "queries": [],
@@ -196,6 +226,36 @@
      "timeout": 60.0
     },
     "planner": "cuRobo v1 (NVlabs/curobo ebb7170, v0.7.7-5) MotionGen.plan_single_js",
+    "per_scene": {
+     "bookshelf_small": {
+      "success": 90,
+      "queries": 100
+     },
+     "bookshelf_tall": {
+      "success": 94,
+      "queries": 100
+     },
+     "bookshelf_thin": {
+      "success": 94,
+      "queries": 100
+     },
+     "box": {
+      "success": 95,
+      "queries": 100
+     },
+     "cage": {
+      "success": 72,
+      "queries": 100
+     },
+     "table_pick": {
+      "success": 97,
+      "queries": 99
+     },
+     "table_under_pick": {
+      "success": 96,
+      "queries": 100
+     }
+    },
     "failures": {
      "n": 61,
      "queries": [
@@ -458,8 +518,8 @@
     "success_passing_vamp_segment_check_PROVISIONAL": 638,
     "success_flagged_by_vamp_segment_check_PROVISIONAL": 0,
     "failure_status": {
-     "MotionGenStatus.TRAJOPT_FAIL": 60,
-     "MotionGenStatus.FINETUNE_TRAJOPT_FAIL": 1
+     "MotionGenStatus.FINETUNE_TRAJOPT_FAIL": 1,
+     "MotionGenStatus.TRAJOPT_FAIL": 60
     }
    },
    "curobo_v2": {
@@ -572,6 +632,36 @@
      "enable_graph_attempt": 1
     },
     "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
+    "per_scene": {
+     "bookshelf_small": {
+      "success": 8,
+      "queries": 10
+     },
+     "bookshelf_tall": {
+      "success": 8,
+      "queries": 10
+     },
+     "bookshelf_thin": {
+      "success": 10,
+      "queries": 10
+     },
+     "box": {
+      "success": 10,
+      "queries": 10
+     },
+     "cage": {
+      "success": 9,
+      "queries": 10
+     },
+     "table_pick": {
+      "success": 9,
+      "queries": 9
+     },
+     "table_under_pick": {
+      "success": 5,
+      "queries": 10
+     }
+    },
     "failures": {
      "n": 10,
      "queries": [
@@ -790,14 +880,1828 @@
     "settings": null,
     "plan_config": null,
     "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults",
+    "per_scene": {
+     "bookshelf_small": {
+      "success": 96,
+      "queries": 96
+     },
+     "bookshelf_tall": {
+      "success": 95,
+      "queries": 95
+     },
+     "bookshelf_thin": {
+      "success": 99,
+      "queries": 99
+     },
+     "box": {
+      "success": 100,
+      "queries": 100
+     },
+     "cage": {
+      "success": 100,
+      "queries": 100
+     },
+     "table_pick": {
+      "success": 100,
+      "queries": 100
+     },
+     "table_under_pick": {
+      "success": 99,
+      "queries": 99
+     }
+    },
     "failures": {
      "n": 0,
      "queries": [],
      "time_to_failure_ms": null
     }
    },
-   "curobo_v1": null,
-   "curobo_v2": null
+   "curobo_v1": {
+    "source": "results/records/curobo_mbm_ur5.json",
+    "queries": 689,
+    "success": 367,
+    "success_rate": 0.532656023222061,
+    "wall_ms": {
+     "n": 367,
+     "mean": 991.3158842200053,
+     "p5": 169.1620787139982,
+     "p25": 421.18264199234545,
+     "median": 826.732031069696,
+     "p75": 1174.101660726592,
+     "p95": 2177.907260786741,
+     "max": 6725.972604006529
+    },
+    "internal_ms": {
+     "n": 367,
+     "mean": 814.0218420314529,
+     "p5": 103.03034782409668,
+     "p25": 314.6921396255493,
+     "median": 671.3368892669678,
+     "p75": 926.3235330581665,
+     "p95": 1844.0105676650999,
+     "max": 6021.363019943237
+    },
+    "path_length_rad": {
+     "n": 367,
+     "mean": 5.1828618510867335,
+     "p5": 2.9151378154754637,
+     "p25": 4.049743413925171,
+     "median": 4.701164245605469,
+     "p75": 6.659359693527222,
+     "p95": 7.890022850036621,
+     "max": 9.024503707885742
+    },
+    "power": {
+     "cmd": [
+      "/home/jetson3/projects/curobo_berkeley/venv/bin/python",
+      "bench/curobo_mbm.py",
+      "--robot",
+      "ur5",
+      "--out",
+      "results/raw/curobo_mbm_ur5.json"
+     ],
+     "returncode": 0,
+     "wall_s": 3123.433906555176,
+     "n_samples": 12189,
+     "VDD_IN_mW": {
+      "mean": 14816.231438181967,
+      "median": 14579.0,
+      "max": 16966.0
+     },
+     "VDD_CPU_GPU_CV_mW": {
+      "mean": 8435.084912626138,
+      "median": 8352.0,
+      "max": 10002.0
+     },
+     "GR3D_pct": {
+      "mean": 74.32291410287965,
+      "median": 99.0,
+      "max": 99.0
+     },
+     "cpu_temp_C": {
+      "mean": 73.38705742882928,
+      "median": 73.375,
+      "max": 75.0
+     },
+     "gpu_temp_C": {
+      "mean": 71.17120190335548,
+      "median": 71.156,
+      "max": 73.031
+     },
+     "top_processes_at_start": [
+      "99.8 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "99.7 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "99.7 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "99.7 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "99.7 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "32.4 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
+      "31.9 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
+     ]
+    },
+    "settings": {
+     "collision_checker_type": "MESH",
+     "collision_cache": {
+      "obb": 50,
+      "mesh": 20
+     },
+     "use_cuda_graph": true,
+     "interpolation_dt": 0.025,
+     "num_trajopt_seeds": 12,
+     "num_graph_seeds": 12
+    },
+    "plan_config": {
+     "max_attempts": 20,
+     "enable_graph_attempt": 1,
+     "disable_graph_attempt": 10,
+     "enable_finetune_trajopt": true,
+     "timeout": 60.0
+    },
+    "planner": "cuRobo v1 (NVlabs/curobo ebb7170, v0.7.7-5) MotionGen.plan_single_js",
+    "per_scene": {
+     "bookshelf_small": {
+      "success": 42,
+      "queries": 96
+     },
+     "bookshelf_tall": {
+      "success": 24,
+      "queries": 95
+     },
+     "bookshelf_thin": {
+      "success": 43,
+      "queries": 99
+     },
+     "box": {
+      "success": 98,
+      "queries": 100
+     },
+     "cage": {
+      "success": 2,
+      "queries": 100
+     },
+     "table_pick": {
+      "success": 87,
+      "queries": 100
+     },
+     "table_under_pick": {
+      "success": 71,
+      "queries": 99
+     }
+    },
+    "failures": {
+     "n": 322,
+     "queries": [
+      [
+       "bookshelf_small",
+       1
+      ],
+      [
+       "bookshelf_small",
+       2
+      ],
+      [
+       "bookshelf_small",
+       3
+      ],
+      [
+       "bookshelf_small",
+       4
+      ],
+      [
+       "bookshelf_small",
+       5
+      ],
+      [
+       "bookshelf_small",
+       6
+      ],
+      [
+       "bookshelf_small",
+       7
+      ],
+      [
+       "bookshelf_small",
+       11
+      ],
+      [
+       "bookshelf_small",
+       12
+      ],
+      [
+       "bookshelf_small",
+       15
+      ],
+      [
+       "bookshelf_small",
+       19
+      ],
+      [
+       "bookshelf_small",
+       23
+      ],
+      [
+       "bookshelf_small",
+       24
+      ],
+      [
+       "bookshelf_small",
+       25
+      ],
+      [
+       "bookshelf_small",
+       26
+      ],
+      [
+       "bookshelf_small",
+       27
+      ],
+      [
+       "bookshelf_small",
+       28
+      ],
+      [
+       "bookshelf_small",
+       30
+      ],
+      [
+       "bookshelf_small",
+       31
+      ],
+      [
+       "bookshelf_small",
+       32
+      ],
+      [
+       "bookshelf_small",
+       35
+      ],
+      [
+       "bookshelf_small",
+       36
+      ],
+      [
+       "bookshelf_small",
+       37
+      ],
+      [
+       "bookshelf_small",
+       38
+      ],
+      [
+       "bookshelf_small",
+       39
+      ],
+      [
+       "bookshelf_small",
+       41
+      ],
+      [
+       "bookshelf_small",
+       42
+      ],
+      [
+       "bookshelf_small",
+       44
+      ],
+      [
+       "bookshelf_small",
+       45
+      ],
+      [
+       "bookshelf_small",
+       48
+      ],
+      [
+       "bookshelf_small",
+       51
+      ],
+      [
+       "bookshelf_small",
+       52
+      ],
+      [
+       "bookshelf_small",
+       53
+      ],
+      [
+       "bookshelf_small",
+       56
+      ],
+      [
+       "bookshelf_small",
+       57
+      ],
+      [
+       "bookshelf_small",
+       61
+      ],
+      [
+       "bookshelf_small",
+       63
+      ],
+      [
+       "bookshelf_small",
+       67
+      ],
+      [
+       "bookshelf_small",
+       68
+      ],
+      [
+       "bookshelf_small",
+       70
+      ],
+      [
+       "bookshelf_small",
+       71
+      ],
+      [
+       "bookshelf_small",
+       73
+      ],
+      [
+       "bookshelf_small",
+       74
+      ],
+      [
+       "bookshelf_small",
+       76
+      ],
+      [
+       "bookshelf_small",
+       77
+      ],
+      [
+       "bookshelf_small",
+       79
+      ],
+      [
+       "bookshelf_small",
+       80
+      ],
+      [
+       "bookshelf_small",
+       81
+      ],
+      [
+       "bookshelf_small",
+       84
+      ],
+      [
+       "bookshelf_small",
+       85
+      ],
+      [
+       "bookshelf_small",
+       88
+      ],
+      [
+       "bookshelf_small",
+       89
+      ],
+      [
+       "bookshelf_small",
+       93
+      ],
+      [
+       "bookshelf_small",
+       97
+      ],
+      [
+       "bookshelf_tall",
+       1
+      ],
+      [
+       "bookshelf_tall",
+       2
+      ],
+      [
+       "bookshelf_tall",
+       3
+      ],
+      [
+       "bookshelf_tall",
+       4
+      ],
+      [
+       "bookshelf_tall",
+       7
+      ],
+      [
+       "bookshelf_tall",
+       8
+      ],
+      [
+       "bookshelf_tall",
+       10
+      ],
+      [
+       "bookshelf_tall",
+       11
+      ],
+      [
+       "bookshelf_tall",
+       12
+      ],
+      [
+       "bookshelf_tall",
+       13
+      ],
+      [
+       "bookshelf_tall",
+       15
+      ],
+      [
+       "bookshelf_tall",
+       16
+      ],
+      [
+       "bookshelf_tall",
+       18
+      ],
+      [
+       "bookshelf_tall",
+       19
+      ],
+      [
+       "bookshelf_tall",
+       20
+      ],
+      [
+       "bookshelf_tall",
+       22
+      ],
+      [
+       "bookshelf_tall",
+       24
+      ],
+      [
+       "bookshelf_tall",
+       25
+      ],
+      [
+       "bookshelf_tall",
+       26
+      ],
+      [
+       "bookshelf_tall",
+       27
+      ],
+      [
+       "bookshelf_tall",
+       29
+      ],
+      [
+       "bookshelf_tall",
+       30
+      ],
+      [
+       "bookshelf_tall",
+       31
+      ],
+      [
+       "bookshelf_tall",
+       32
+      ],
+      [
+       "bookshelf_tall",
+       33
+      ],
+      [
+       "bookshelf_tall",
+       34
+      ],
+      [
+       "bookshelf_tall",
+       36
+      ],
+      [
+       "bookshelf_tall",
+       37
+      ],
+      [
+       "bookshelf_tall",
+       39
+      ],
+      [
+       "bookshelf_tall",
+       41
+      ],
+      [
+       "bookshelf_tall",
+       42
+      ],
+      [
+       "bookshelf_tall",
+       43
+      ],
+      [
+       "bookshelf_tall",
+       44
+      ],
+      [
+       "bookshelf_tall",
+       45
+      ],
+      [
+       "bookshelf_tall",
+       46
+      ],
+      [
+       "bookshelf_tall",
+       48
+      ],
+      [
+       "bookshelf_tall",
+       49
+      ],
+      [
+       "bookshelf_tall",
+       50
+      ],
+      [
+       "bookshelf_tall",
+       51
+      ],
+      [
+       "bookshelf_tall",
+       52
+      ],
+      [
+       "bookshelf_tall",
+       54
+      ],
+      [
+       "bookshelf_tall",
+       57
+      ],
+      [
+       "bookshelf_tall",
+       58
+      ],
+      [
+       "bookshelf_tall",
+       59
+      ],
+      [
+       "bookshelf_tall",
+       60
+      ],
+      [
+       "bookshelf_tall",
+       61
+      ],
+      [
+       "bookshelf_tall",
+       62
+      ],
+      [
+       "bookshelf_tall",
+       63
+      ],
+      [
+       "bookshelf_tall",
+       65
+      ],
+      [
+       "bookshelf_tall",
+       68
+      ],
+      [
+       "bookshelf_tall",
+       69
+      ],
+      [
+       "bookshelf_tall",
+       70
+      ],
+      [
+       "bookshelf_tall",
+       72
+      ],
+      [
+       "bookshelf_tall",
+       73
+      ],
+      [
+       "bookshelf_tall",
+       74
+      ],
+      [
+       "bookshelf_tall",
+       75
+      ],
+      [
+       "bookshelf_tall",
+       76
+      ],
+      [
+       "bookshelf_tall",
+       77
+      ],
+      [
+       "bookshelf_tall",
+       79
+      ],
+      [
+       "bookshelf_tall",
+       80
+      ],
+      [
+       "bookshelf_tall",
+       81
+      ],
+      [
+       "bookshelf_tall",
+       82
+      ],
+      [
+       "bookshelf_tall",
+       83
+      ],
+      [
+       "bookshelf_tall",
+       89
+      ],
+      [
+       "bookshelf_tall",
+       90
+      ],
+      [
+       "bookshelf_tall",
+       92
+      ],
+      [
+       "bookshelf_tall",
+       93
+      ],
+      [
+       "bookshelf_tall",
+       94
+      ],
+      [
+       "bookshelf_tall",
+       95
+      ],
+      [
+       "bookshelf_tall",
+       97
+      ],
+      [
+       "bookshelf_tall",
+       99
+      ],
+      [
+       "bookshelf_thin",
+       0
+      ],
+      [
+       "bookshelf_thin",
+       1
+      ],
+      [
+       "bookshelf_thin",
+       3
+      ],
+      [
+       "bookshelf_thin",
+       4
+      ],
+      [
+       "bookshelf_thin",
+       6
+      ],
+      [
+       "bookshelf_thin",
+       7
+      ],
+      [
+       "bookshelf_thin",
+       8
+      ],
+      [
+       "bookshelf_thin",
+       9
+      ],
+      [
+       "bookshelf_thin",
+       10
+      ],
+      [
+       "bookshelf_thin",
+       12
+      ],
+      [
+       "bookshelf_thin",
+       14
+      ],
+      [
+       "bookshelf_thin",
+       18
+      ],
+      [
+       "bookshelf_thin",
+       19
+      ],
+      [
+       "bookshelf_thin",
+       22
+      ],
+      [
+       "bookshelf_thin",
+       24
+      ],
+      [
+       "bookshelf_thin",
+       25
+      ],
+      [
+       "bookshelf_thin",
+       27
+      ],
+      [
+       "bookshelf_thin",
+       31
+      ],
+      [
+       "bookshelf_thin",
+       35
+      ],
+      [
+       "bookshelf_thin",
+       36
+      ],
+      [
+       "bookshelf_thin",
+       38
+      ],
+      [
+       "bookshelf_thin",
+       39
+      ],
+      [
+       "bookshelf_thin",
+       40
+      ],
+      [
+       "bookshelf_thin",
+       41
+      ],
+      [
+       "bookshelf_thin",
+       43
+      ],
+      [
+       "bookshelf_thin",
+       44
+      ],
+      [
+       "bookshelf_thin",
+       45
+      ],
+      [
+       "bookshelf_thin",
+       46
+      ],
+      [
+       "bookshelf_thin",
+       47
+      ],
+      [
+       "bookshelf_thin",
+       48
+      ],
+      [
+       "bookshelf_thin",
+       51
+      ],
+      [
+       "bookshelf_thin",
+       52
+      ],
+      [
+       "bookshelf_thin",
+       53
+      ],
+      [
+       "bookshelf_thin",
+       55
+      ],
+      [
+       "bookshelf_thin",
+       56
+      ],
+      [
+       "bookshelf_thin",
+       59
+      ],
+      [
+       "bookshelf_thin",
+       61
+      ],
+      [
+       "bookshelf_thin",
+       64
+      ],
+      [
+       "bookshelf_thin",
+       65
+      ],
+      [
+       "bookshelf_thin",
+       66
+      ],
+      [
+       "bookshelf_thin",
+       67
+      ],
+      [
+       "bookshelf_thin",
+       71
+      ],
+      [
+       "bookshelf_thin",
+       76
+      ],
+      [
+       "bookshelf_thin",
+       79
+      ],
+      [
+       "bookshelf_thin",
+       80
+      ],
+      [
+       "bookshelf_thin",
+       81
+      ],
+      [
+       "bookshelf_thin",
+       82
+      ],
+      [
+       "bookshelf_thin",
+       84
+      ],
+      [
+       "bookshelf_thin",
+       86
+      ],
+      [
+       "bookshelf_thin",
+       88
+      ],
+      [
+       "bookshelf_thin",
+       89
+      ],
+      [
+       "bookshelf_thin",
+       92
+      ],
+      [
+       "bookshelf_thin",
+       93
+      ],
+      [
+       "bookshelf_thin",
+       95
+      ],
+      [
+       "bookshelf_thin",
+       96
+      ],
+      [
+       "bookshelf_thin",
+       98
+      ],
+      [
+       "box",
+       2
+      ],
+      [
+       "box",
+       67
+      ],
+      [
+       "cage",
+       0
+      ],
+      [
+       "cage",
+       1
+      ],
+      [
+       "cage",
+       3
+      ],
+      [
+       "cage",
+       4
+      ],
+      [
+       "cage",
+       5
+      ],
+      [
+       "cage",
+       6
+      ],
+      [
+       "cage",
+       7
+      ],
+      [
+       "cage",
+       8
+      ],
+      [
+       "cage",
+       9
+      ],
+      [
+       "cage",
+       10
+      ],
+      [
+       "cage",
+       11
+      ],
+      [
+       "cage",
+       12
+      ],
+      [
+       "cage",
+       13
+      ],
+      [
+       "cage",
+       14
+      ],
+      [
+       "cage",
+       15
+      ],
+      [
+       "cage",
+       16
+      ],
+      [
+       "cage",
+       17
+      ],
+      [
+       "cage",
+       18
+      ],
+      [
+       "cage",
+       19
+      ],
+      [
+       "cage",
+       20
+      ],
+      [
+       "cage",
+       21
+      ],
+      [
+       "cage",
+       22
+      ],
+      [
+       "cage",
+       23
+      ],
+      [
+       "cage",
+       24
+      ],
+      [
+       "cage",
+       25
+      ],
+      [
+       "cage",
+       26
+      ],
+      [
+       "cage",
+       27
+      ],
+      [
+       "cage",
+       28
+      ],
+      [
+       "cage",
+       29
+      ],
+      [
+       "cage",
+       30
+      ],
+      [
+       "cage",
+       31
+      ],
+      [
+       "cage",
+       32
+      ],
+      [
+       "cage",
+       33
+      ],
+      [
+       "cage",
+       34
+      ],
+      [
+       "cage",
+       35
+      ],
+      [
+       "cage",
+       36
+      ],
+      [
+       "cage",
+       37
+      ],
+      [
+       "cage",
+       38
+      ],
+      [
+       "cage",
+       39
+      ],
+      [
+       "cage",
+       40
+      ],
+      [
+       "cage",
+       41
+      ],
+      [
+       "cage",
+       42
+      ],
+      [
+       "cage",
+       43
+      ],
+      [
+       "cage",
+       44
+      ],
+      [
+       "cage",
+       45
+      ],
+      [
+       "cage",
+       46
+      ],
+      [
+       "cage",
+       47
+      ],
+      [
+       "cage",
+       48
+      ],
+      [
+       "cage",
+       49
+      ],
+      [
+       "cage",
+       50
+      ],
+      [
+       "cage",
+       51
+      ],
+      [
+       "cage",
+       52
+      ],
+      [
+       "cage",
+       53
+      ],
+      [
+       "cage",
+       54
+      ],
+      [
+       "cage",
+       55
+      ],
+      [
+       "cage",
+       56
+      ],
+      [
+       "cage",
+       57
+      ],
+      [
+       "cage",
+       58
+      ],
+      [
+       "cage",
+       59
+      ],
+      [
+       "cage",
+       60
+      ],
+      [
+       "cage",
+       61
+      ],
+      [
+       "cage",
+       62
+      ],
+      [
+       "cage",
+       63
+      ],
+      [
+       "cage",
+       64
+      ],
+      [
+       "cage",
+       65
+      ],
+      [
+       "cage",
+       66
+      ],
+      [
+       "cage",
+       67
+      ],
+      [
+       "cage",
+       68
+      ],
+      [
+       "cage",
+       69
+      ],
+      [
+       "cage",
+       70
+      ],
+      [
+       "cage",
+       71
+      ],
+      [
+       "cage",
+       72
+      ],
+      [
+       "cage",
+       73
+      ],
+      [
+       "cage",
+       74
+      ],
+      [
+       "cage",
+       75
+      ],
+      [
+       "cage",
+       76
+      ],
+      [
+       "cage",
+       77
+      ],
+      [
+       "cage",
+       78
+      ],
+      [
+       "cage",
+       79
+      ],
+      [
+       "cage",
+       80
+      ],
+      [
+       "cage",
+       81
+      ],
+      [
+       "cage",
+       82
+      ],
+      [
+       "cage",
+       83
+      ],
+      [
+       "cage",
+       84
+      ],
+      [
+       "cage",
+       85
+      ],
+      [
+       "cage",
+       86
+      ],
+      [
+       "cage",
+       87
+      ],
+      [
+       "cage",
+       88
+      ],
+      [
+       "cage",
+       89
+      ],
+      [
+       "cage",
+       91
+      ],
+      [
+       "cage",
+       92
+      ],
+      [
+       "cage",
+       93
+      ],
+      [
+       "cage",
+       94
+      ],
+      [
+       "cage",
+       95
+      ],
+      [
+       "cage",
+       96
+      ],
+      [
+       "cage",
+       97
+      ],
+      [
+       "cage",
+       98
+      ],
+      [
+       "cage",
+       99
+      ],
+      [
+       "table_pick",
+       1
+      ],
+      [
+       "table_pick",
+       13
+      ],
+      [
+       "table_pick",
+       41
+      ],
+      [
+       "table_pick",
+       53
+      ],
+      [
+       "table_pick",
+       56
+      ],
+      [
+       "table_pick",
+       67
+      ],
+      [
+       "table_pick",
+       75
+      ],
+      [
+       "table_pick",
+       77
+      ],
+      [
+       "table_pick",
+       80
+      ],
+      [
+       "table_pick",
+       85
+      ],
+      [
+       "table_pick",
+       89
+      ],
+      [
+       "table_pick",
+       94
+      ],
+      [
+       "table_pick",
+       96
+      ],
+      [
+       "table_under_pick",
+       0
+      ],
+      [
+       "table_under_pick",
+       4
+      ],
+      [
+       "table_under_pick",
+       11
+      ],
+      [
+       "table_under_pick",
+       13
+      ],
+      [
+       "table_under_pick",
+       18
+      ],
+      [
+       "table_under_pick",
+       20
+      ],
+      [
+       "table_under_pick",
+       26
+      ],
+      [
+       "table_under_pick",
+       27
+      ],
+      [
+       "table_under_pick",
+       37
+      ],
+      [
+       "table_under_pick",
+       41
+      ],
+      [
+       "table_under_pick",
+       44
+      ],
+      [
+       "table_under_pick",
+       52
+      ],
+      [
+       "table_under_pick",
+       56
+      ],
+      [
+       "table_under_pick",
+       57
+      ],
+      [
+       "table_under_pick",
+       64
+      ],
+      [
+       "table_under_pick",
+       65
+      ],
+      [
+       "table_under_pick",
+       70
+      ],
+      [
+       "table_under_pick",
+       71
+      ],
+      [
+       "table_under_pick",
+       72
+      ],
+      [
+       "table_under_pick",
+       75
+      ],
+      [
+       "table_under_pick",
+       78
+      ],
+      [
+       "table_under_pick",
+       80
+      ],
+      [
+       "table_under_pick",
+       82
+      ],
+      [
+       "table_under_pick",
+       84
+      ],
+      [
+       "table_under_pick",
+       90
+      ],
+      [
+       "table_under_pick",
+       92
+      ],
+      [
+       "table_under_pick",
+       95
+      ],
+      [
+       "table_under_pick",
+       96
+      ]
+     ],
+     "time_to_failure_ms": {
+      "n": 322,
+      "mean": 8451.613977943367,
+      "p5": 5891.742488602176,
+      "p25": 6494.962795404717,
+      "median": 8196.933533530682,
+      "p75": 9182.334325276315,
+      "p95": 11685.5219369987,
+      "max": 28173.614904284477
+     }
+    },
+    "success_passing_vamp_segment_check_PROVISIONAL": 328,
+    "success_flagged_by_vamp_segment_check_PROVISIONAL": 39,
+    "failure_status": {
+     "MotionGenStatus.FINETUNE_TRAJOPT_FAIL": 9,
+     "MotionGenStatus.TRAJOPT_FAIL": 313
+    }
+   },
+   "curobo_v2": {
+    "source": "results/records/curobo2_mbm_ur5.json",
+    "queries": 64,
+    "success": 35,
+    "success_rate": 0.546875,
+    "wall_ms": {
+     "n": 35,
+     "mean": 5784.125341195613,
+     "p5": 1411.9362907949835,
+     "p25": 2066.540219588205,
+     "median": 4519.1064812242985,
+     "p75": 7363.947285106406,
+     "p95": 16552.91898031718,
+     "max": 23161.23911179602
+    },
+    "internal_ms": {
+     "n": 35,
+     "mean": 3848.882026890346,
+     "p5": 1265.2006896972657,
+     "p25": 1857.2650451660156,
+     "median": 3587.60302734375,
+     "p75": 4662.034729003906,
+     "p95": 8271.26208496093,
+     "max": 11908.5107421875
+    },
+    "path_length_rad": {
+     "n": 35,
+     "mean": 5.61702653339931,
+     "p5": 3.910637950897217,
+     "p25": 4.248602867126465,
+     "median": 5.225256443023682,
+     "p75": 6.820702075958252,
+     "p95": 8.902228164672852,
+     "max": 9.284957885742188
+    },
+    "power": {
+     "cmd": [
+      "/home/jetson3/projects/clean_env/venv/bin/python",
+      "bench/curobo2_mbm.py",
+      "--robot",
+      "ur5",
+      "--stride",
+      "10",
+      "--max-attempts",
+      "20",
+      "--budget-s",
+      "1500",
+      "--out",
+      "results/raw/curobo2_mbm_ur5.json"
+     ],
+     "returncode": 0,
+     "wall_s": 1617.0521438121796,
+     "n_samples": 6311,
+     "VDD_IN_mW": {
+      "mean": 16558.79717952781,
+      "median": 16519.0,
+      "max": 18306.0
+     },
+     "VDD_CPU_GPU_CV_mW": {
+      "mean": 10370.193154809063,
+      "median": 10452.0,
+      "max": 11796.0
+     },
+     "GR3D_pct": {
+      "mean": 88.65425447631121,
+      "median": 99.0,
+      "max": 100.0
+     },
+     "cpu_temp_C": {
+      "mean": 76.4472389478688,
+      "median": 76.593,
+      "max": 77.656
+     },
+     "gpu_temp_C": {
+      "mean": 74.74958960545081,
+      "median": 74.906,
+      "max": 76.093
+     },
+     "top_processes_at_start": [
+      " 101 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      " 101 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      " 101 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      " 100 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      " 100 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "29.1 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
+      "28.7 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
+     ]
+    },
+    "settings": {
+     "ik_optimizer_configs": [
+      "ik/particle_ik.yml",
+      "ik/lbfgs_ik.yml"
+     ],
+     "trajopt_optimizer_configs": [
+      "trajopt/particle_trajopt.yml",
+      "trajopt/lbfgs_bspline_trajopt.yml"
+     ],
+     "num_trajopt_seeds": 4,
+     "optimizer_collision_activation_distance": 0.0025,
+     "use_cuda_graph": true,
+     "collision_cache": {
+      "obb": 50,
+      "mesh": 20
+     }
+    },
+    "plan_config": {
+     "max_attempts": 20,
+     "enable_graph_attempt": 1
+    },
+    "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
+    "per_scene": {
+     "bookshelf_small": {
+      "success": 5,
+      "queries": 9
+     },
+     "bookshelf_tall": {
+      "success": 4,
+      "queries": 10
+     },
+     "bookshelf_thin": {
+      "success": 5,
+      "queries": 9
+     },
+     "box": {
+      "success": 9,
+      "queries": 9
+     },
+     "cage": {
+      "success": 3,
+      "queries": 9
+     },
+     "table_pick": {
+      "success": 4,
+      "queries": 9
+     },
+     "table_under_pick": {
+      "success": 5,
+      "queries": 9
+     }
+    },
+    "failures": {
+     "n": 29,
+     "queries": [
+      [
+       "bookshelf_small",
+       0
+      ],
+      [
+       "bookshelf_small",
+       30
+      ],
+      [
+       "bookshelf_small",
+       50
+      ],
+      [
+       "bookshelf_small",
+       80
+      ],
+      [
+       "bookshelf_tall",
+       30
+      ],
+      [
+       "bookshelf_tall",
+       40
+      ],
+      [
+       "bookshelf_tall",
+       50
+      ],
+      [
+       "bookshelf_tall",
+       60
+      ],
+      [
+       "bookshelf_tall",
+       70
+      ],
+      [
+       "bookshelf_tall",
+       90
+      ],
+      [
+       "bookshelf_thin",
+       0
+      ],
+      [
+       "bookshelf_thin",
+       10
+      ],
+      [
+       "bookshelf_thin",
+       40
+      ],
+      [
+       "bookshelf_thin",
+       80
+      ],
+      [
+       "cage",
+       0
+      ],
+      [
+       "cage",
+       30
+      ],
+      [
+       "cage",
+       40
+      ],
+      [
+       "cage",
+       50
+      ],
+      [
+       "cage",
+       70
+      ],
+      [
+       "cage",
+       80
+      ],
+      [
+       "table_pick",
+       0
+      ],
+      [
+       "table_pick",
+       10
+      ],
+      [
+       "table_pick",
+       40
+      ],
+      [
+       "table_pick",
+       50
+      ],
+      [
+       "table_pick",
+       70
+      ],
+      [
+       "table_under_pick",
+       0
+      ],
+      [
+       "table_under_pick",
+       50
+      ],
+      [
+       "table_under_pick",
+       60
+      ],
+      [
+       "table_under_pick",
+       80
+      ]
+     ],
+     "time_to_failure_ms": {
+      "n": 29,
+      "mean": 46214.6556583747,
+      "p5": 14544.174027256668,
+      "p25": 38187.315633986145,
+      "median": 49739.10480225459,
+      "p75": 53584.044138900936,
+      "p95": 73912.36126869917,
+      "max": 86242.63482401147
+     }
+    },
+    "success_passing_vamp_segment_check_PROVISIONAL": 29,
+    "success_flagged_by_vamp_segment_check_PROVISIONAL": 6,
+    "failure_status": {
+     "fail": 29
+    }
+   },
+   "curobo_v1_vs_vamp_same_queries": {
+    "vamp_on_same_queries": {
+     "queries": 689,
+     "success": 689,
+     "wall_ms": {
+      "n": 689,
+      "mean": 2.4333542017416545,
+      "p5": 1.1606604,
+      "p25": 1.572766,
+      "median": 2.021839,
+      "p75": 2.58103,
+      "p95": 4.801002800000001,
+      "max": 32.654601
+     }
+    },
+    "median_wall_ratio": 408.90102083780954,
+    "paired_wall_ratio": {
+     "n": 367,
+     "mean": 565.8040458781547,
+     "p5": 102.36840277232022,
+     "p25": 276.19586918851326,
+     "median": 443.1624865014684,
+     "p75": 761.1414583853023,
+     "p95": 1328.3827054904905,
+     "max": 3096.4747902726717
+    }
+   },
+   "curobo_v2_vs_vamp_same_queries": {
+    "vamp_on_same_queries": {
+     "queries": 64,
+     "success": 64,
+     "wall_ms": {
+      "n": 64,
+      "mean": 2.350173234375,
+      "p5": 1.27334295,
+      "p25": 1.5199797499999999,
+      "median": 2.031472,
+      "p75": 2.6526085,
+      "p95": 4.916921849999993,
+      "max": 7.040566
+     }
+    },
+    "median_wall_ratio": 2224.5477571063243,
+    "paired_wall_ratio": {
+     "n": 35,
+     "mean": 3043.3321781819227,
+     "p5": 687.2441746378812,
+     "p25": 1302.1931163353042,
+     "median": 2404.926141100891,
+     "p75": 3414.456214897328,
+     "p95": 8435.348984445807,
+     "max": 11937.982858306597
+    }
+   },
+   "curobo_v1_on_v2_queries": {
+    "queries": 64,
+    "success": 35,
+    "wall_ms": {
+     "n": 35,
+     "mean": 765.2010481006333,
+     "p5": 169.8055318556726,
+     "p25": 498.12045809812844,
+     "median": 720.7249831408262,
+     "p75": 992.8106495644897,
+     "p95": 1515.1042231824247,
+     "max": 1705.7498190551996
+    }
+   }
   },
   {
    "label": "UR5e+rail \u00b7 pillars (paper)",
@@ -893,6 +2797,12 @@
     "settings": null,
     "plan_config": null,
     "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults",
+    "per_scene": {
+     "gantry_pillars": {
+      "success": 1020,
+      "queries": 1030
+     }
+    },
     "failures": {
      "n": 10,
      "queries": [
@@ -913,7 +2823,271 @@
      }
     }
    },
-   "curobo_v1": null,
+   "curobo_v1": {
+    "source": "results/records/curobo_gantry_pillars_ur5e_rail.json",
+    "queries": 1030,
+    "success": 823,
+    "success_rate": 0.7990291262135922,
+    "wall_ms": {
+     "n": 823,
+     "mean": 243.09959639495244,
+     "p5": 150.0039279460907,
+     "p25": 154.22465256415308,
+     "median": 160.59477999806404,
+     "p75": 183.4339878987521,
+     "p95": 433.38429224677384,
+     "max": 5719.218418933451
+    },
+    "internal_ms": {
+     "n": 823,
+     "mean": 154.6732455238537,
+     "p5": 83.36937427520752,
+     "p25": 86.17377281188965,
+     "median": 92.10515022277832,
+     "p75": 107.42437839508057,
+     "p95": 329.0760040283203,
+     "max": 3743.785858154297
+    },
+    "path_length_rad": {
+     "n": 823,
+     "mean": 4.595515760442611,
+     "p5": 2.723641872406006,
+     "p25": 3.6597509384155273,
+     "median": 4.804189682006836,
+     "p75": 5.281228065490723,
+     "p95": 6.507863521575928,
+     "max": 7.646017551422119
+    },
+    "power": {
+     "cmd": [
+      "/home/jetson3/projects/curobo_berkeley/venv/bin/python",
+      "bench/curobo_mbm.py",
+      "--robot",
+      "ur5e_rail",
+      "--robot-cfg",
+      "configs/ur5e_rail_shared.yml",
+      "--problems",
+      "problems/gantry_pillars.pkl",
+      "--tag",
+      "gantry_pillars",
+      "--trials",
+      "10",
+      "--out",
+      "results/raw/curobo_gantry_pillars_ur5e_rail.json"
+     ],
+     "returncode": 0,
+     "wall_s": 1213.961490869522,
+     "n_samples": 4736,
+     "VDD_IN_mW": {
+      "mean": 13869.741131756757,
+      "median": 13832.0,
+      "max": 18004.0
+     },
+     "VDD_CPU_GPU_CV_mW": {
+      "mean": 7577.623733108108,
+      "median": 7600.0,
+      "max": 9531.0
+     },
+     "GR3D_pct": {
+      "mean": 51.945101351351354,
+      "median": 45.0,
+      "max": 99.0
+     },
+     "cpu_temp_C": {
+      "mean": 72.2687734375,
+      "median": 72.187,
+      "max": 74.5
+     },
+     "gpu_temp_C": {
+      "mean": 69.61790646114865,
+      "median": 69.562,
+      "max": 72.0
+     },
+     "top_processes_at_start": [
+      "98.3 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "98.2 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "98.2 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "98.2 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "98.2 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "34.7 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
+      "34.2 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
+     ]
+    },
+    "settings": {
+     "collision_checker_type": "MESH",
+     "collision_cache": {
+      "obb": 50,
+      "mesh": 20
+     },
+     "use_cuda_graph": true,
+     "interpolation_dt": 0.025,
+     "num_trajopt_seeds": 12,
+     "num_graph_seeds": 12
+    },
+    "plan_config": {
+     "max_attempts": 20,
+     "enable_graph_attempt": 1,
+     "disable_graph_attempt": 10,
+     "enable_finetune_trajopt": true,
+     "timeout": 60.0
+    },
+    "planner": "cuRobo v1 (NVlabs/curobo ebb7170, v0.7.7-5) MotionGen.plan_single_js",
+    "per_scene": {
+     "gantry_pillars": {
+      "success": 823,
+      "queries": 1030
+     }
+    },
+    "failures": {
+     "n": 207,
+     "queries": [
+      [
+       "gantry_pillars",
+       3
+      ],
+      [
+       "gantry_pillars",
+       4
+      ],
+      [
+       "gantry_pillars",
+       6
+      ],
+      [
+       "gantry_pillars",
+       7
+      ],
+      [
+       "gantry_pillars",
+       15
+      ],
+      [
+       "gantry_pillars",
+       17
+      ],
+      [
+       "gantry_pillars",
+       22
+      ],
+      [
+       "gantry_pillars",
+       26
+      ],
+      [
+       "gantry_pillars",
+       28
+      ],
+      [
+       "gantry_pillars",
+       29
+      ],
+      [
+       "gantry_pillars",
+       36
+      ],
+      [
+       "gantry_pillars",
+       43
+      ],
+      [
+       "gantry_pillars",
+       45
+      ],
+      [
+       "gantry_pillars",
+       48
+      ],
+      [
+       "gantry_pillars",
+       51
+      ],
+      [
+       "gantry_pillars",
+       55
+      ],
+      [
+       "gantry_pillars",
+       61
+      ],
+      [
+       "gantry_pillars",
+       62
+      ],
+      [
+       "gantry_pillars",
+       63
+      ],
+      [
+       "gantry_pillars",
+       64
+      ],
+      [
+       "gantry_pillars",
+       66
+      ],
+      [
+       "gantry_pillars",
+       67
+      ],
+      [
+       "gantry_pillars",
+       72
+      ],
+      [
+       "gantry_pillars",
+       75
+      ],
+      [
+       "gantry_pillars",
+       79
+      ],
+      [
+       "gantry_pillars",
+       80
+      ],
+      [
+       "gantry_pillars",
+       82
+      ],
+      [
+       "gantry_pillars",
+       83
+      ],
+      [
+       "gantry_pillars",
+       86
+      ],
+      [
+       "gantry_pillars",
+       90
+      ],
+      [
+       "gantry_pillars",
+       92
+      ],
+      [
+       "gantry_pillars",
+       101
+      ]
+     ],
+     "time_to_failure_ms": {
+      "n": 207,
+      "mean": 4761.777741364361,
+      "p5": 2764.331401605159,
+      "p25": 2893.912073923275,
+      "median": 3187.682406976819,
+      "p75": 6443.7468440737575,
+      "p95": 7493.597132246941,
+      "max": 9571.742563974112
+     }
+    },
+    "success_passing_vamp_segment_check_PROVISIONAL": 779,
+    "success_flagged_by_vamp_segment_check_PROVISIONAL": 44,
+    "failure_status": {
+     "MotionGenStatus.FINETUNE_TRAJOPT_FAIL": 83,
+     "MotionGenStatus.TRAJOPT_FAIL": 124
+    }
+   },
    "curobo_v2": {
     "source": "results/records/curobo2_gantry_pillars_ur5e_rail.json",
     "queries": 103,
@@ -1030,6 +3204,12 @@
      "enable_graph_attempt": 1
     },
     "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
+    "per_scene": {
+     "gantry_pillars": {
+      "success": 100,
+      "queries": 103
+     }
+    },
     "failures": {
      "n": 3,
      "queries": [
@@ -1063,6 +3243,33 @@
      "fail": 3
     }
    },
+   "curobo_v1_vs_vamp_same_queries": {
+    "vamp_on_same_queries": {
+     "queries": 1030,
+     "success": 1020,
+     "wall_ms": {
+      "n": 1020,
+      "mean": 0.9677763294117647,
+      "p5": 0.5811366000000001,
+      "p25": 0.8387530000000001,
+      "median": 0.9506775000000001,
+      "p75": 1.090091,
+      "p95": 1.3463106499999995,
+      "max": 4.375917
+     }
+    },
+    "median_wall_ratio": 168.9266654549666,
+    "paired_wall_ratio": {
+     "n": 81,
+     "mean": 254.93716851363718,
+     "p5": 144.02558833789163,
+     "p25": 168.5722482279692,
+     "median": 211.36587589225238,
+     "p75": 301.2620259898025,
+     "p95": 455.3970955755489,
+     "max": 1072.4062224815195
+    }
+   },
    "curobo_v2_vs_vamp_same_queries": {
     "vamp_on_same_queries": {
      "queries": 1030,
@@ -1088,6 +3295,20 @@
      "p75": 1604.5530788663511,
      "p95": 2408.759263390546,
      "max": 2810.4229447418243
+    }
+   },
+   "curobo_v1_on_v2_queries": {
+    "queries": 1030,
+    "success": 823,
+    "wall_ms": {
+     "n": 823,
+     "mean": 243.09959639495244,
+     "p5": 150.0039279460907,
+     "p25": 154.22465256415308,
+     "median": 160.59477999806404,
+     "p75": 183.4339878987521,
+     "p95": 433.38429224677384,
+     "max": 5719.218418933451
     }
    }
   },
@@ -1185,13 +3406,142 @@
     "settings": null,
     "plan_config": null,
     "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults",
+    "per_scene": {
+     "gantry_free": {
+      "success": 1030,
+      "queries": 1030
+     }
+    },
     "failures": {
      "n": 0,
      "queries": [],
      "time_to_failure_ms": null
     }
    },
-   "curobo_v1": null,
+   "curobo_v1": {
+    "source": "results/records/curobo_gantry_free_ur5e_rail.json",
+    "queries": 1030,
+    "success": 1030,
+    "success_rate": 1.0,
+    "wall_ms": {
+     "n": 1030,
+     "mean": 145.56163254248213,
+     "p5": 140.45957634225488,
+     "p25": 142.46058405842632,
+     "median": 144.65524163097143,
+     "p75": 147.10890024434775,
+     "p95": 154.1514080716297,
+     "max": 187.2501359321177
+    },
+    "internal_ms": {
+     "n": 1030,
+     "mean": 80.45215629836888,
+     "p5": 78.21496725082397,
+     "p25": 78.71222496032715,
+     "median": 80.69121837615967,
+     "p75": 81.56532049179077,
+     "p95": 83.21821689605713,
+     "max": 91.46451950073242
+    },
+    "path_length_rad": {
+     "n": 1030,
+     "mean": 4.641914308418348,
+     "p5": 2.8083255290985107,
+     "p25": 3.9880950450897217,
+     "median": 4.5649003982543945,
+     "p75": 5.123097896575928,
+     "p95": 7.028185844421387,
+     "max": 7.665832996368408
+    },
+    "power": {
+     "cmd": [
+      "/home/jetson3/projects/curobo_berkeley/venv/bin/python",
+      "bench/curobo_mbm.py",
+      "--robot",
+      "ur5e_rail",
+      "--robot-cfg",
+      "configs/ur5e_rail_shared.yml",
+      "--problems",
+      "problems/gantry_free.pkl",
+      "--tag",
+      "gantry_free",
+      "--trials",
+      "10",
+      "--out",
+      "results/raw/curobo_gantry_free_ur5e_rail.json"
+     ],
+     "returncode": 0,
+     "wall_s": 176.5483570098877,
+     "n_samples": 688,
+     "VDD_IN_mW": {
+      "mean": 13937.341569767443,
+      "median": 13984.0,
+      "max": 17406.0
+     },
+     "VDD_CPU_GPU_CV_mW": {
+      "mean": 7683.238372093023,
+      "median": 7752.0,
+      "max": 9232.0
+     },
+     "GR3D_pct": {
+      "mean": 50.57848837209303,
+      "median": 48.0,
+      "max": 99.0
+     },
+     "cpu_temp_C": {
+      "mean": 72.03062209302325,
+      "median": 72.031,
+      "max": 72.906
+     },
+     "gpu_temp_C": {
+      "mean": 69.48646511627908,
+      "median": 69.531,
+      "max": 70.281
+     },
+     "top_processes_at_start": [
+      "99.4 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "99.3 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "99.3 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "99.3 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "99.3 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "33.1 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
+      "32.6 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
+     ]
+    },
+    "settings": {
+     "collision_checker_type": "MESH",
+     "collision_cache": {
+      "obb": 50,
+      "mesh": 20
+     },
+     "use_cuda_graph": true,
+     "interpolation_dt": 0.025,
+     "num_trajopt_seeds": 12,
+     "num_graph_seeds": 12
+    },
+    "plan_config": {
+     "max_attempts": 20,
+     "enable_graph_attempt": 1,
+     "disable_graph_attempt": 10,
+     "enable_finetune_trajopt": true,
+     "timeout": 60.0
+    },
+    "planner": "cuRobo v1 (NVlabs/curobo ebb7170, v0.7.7-5) MotionGen.plan_single_js",
+    "per_scene": {
+     "gantry_free": {
+      "success": 1030,
+      "queries": 1030
+     }
+    },
+    "failures": {
+     "n": 0,
+     "queries": [],
+     "time_to_failure_ms": null
+    },
+    "success_passing_vamp_segment_check_PROVISIONAL": 1030,
+    "success_flagged_by_vamp_segment_check_PROVISIONAL": 0,
+    "failure_status": {}
+   },
    "curobo_v2": {
     "source": "results/records/curobo2_gantry_free_ur5e_rail.json",
     "queries": 103,
@@ -1308,6 +3658,12 @@
      "enable_graph_attempt": 1
     },
     "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
+    "per_scene": {
+     "gantry_free": {
+      "success": 103,
+      "queries": 103
+     }
+    },
     "failures": {
      "n": 0,
      "queries": [],
@@ -1316,6 +3672,33 @@
     "success_passing_vamp_segment_check_PROVISIONAL": 103,
     "success_flagged_by_vamp_segment_check_PROVISIONAL": 0,
     "failure_status": {}
+   },
+   "curobo_v1_vs_vamp_same_queries": {
+    "vamp_on_same_queries": {
+     "queries": 1030,
+     "success": 1030,
+     "wall_ms": {
+      "n": 1030,
+      "mean": 0.5808230902912621,
+      "p5": 0.51870205,
+      "p25": 0.5353490000000001,
+      "median": 0.553366,
+      "p75": 0.5891270000000001,
+      "p95": 0.6763661999999999,
+      "max": 4.122659
+     }
+    },
+    "median_wall_ratio": 261.4097028566472,
+    "paired_wall_ratio": {
+     "n": 103,
+     "mean": 254.82427309443733,
+     "p5": 211.1037104887968,
+     "p25": 245.10543130235743,
+     "median": 263.67406671319674,
+     "p75": 271.30520976001907,
+     "p95": 283.81133991783116,
+     "max": 290.4871752997152
+    }
    },
    "curobo_v2_vs_vamp_same_queries": {
     "vamp_on_same_queries": {
@@ -1342,6 +3725,20 @@
      "p75": 1022.6531519253681,
      "p95": 1365.3879767880533,
      "max": 1401.157029625661
+    }
+   },
+   "curobo_v1_on_v2_queries": {
+    "queries": 1030,
+    "success": 1030,
+    "wall_ms": {
+     "n": 1030,
+     "mean": 145.56163254248213,
+     "p5": 140.45957634225488,
+     "p25": 142.46058405842632,
+     "median": 144.65524163097143,
+     "p75": 147.10890024434775,
+     "p95": 154.1514080716297,
+     "max": 187.2501359321177
     }
    }
   },
@@ -1439,13 +3836,226 @@
     "settings": null,
     "plan_config": null,
     "planner": "VAMP rrtc + simplify (KavrakiLab/vamp 27cb9b6, v0.6.4), halton sampler, defaults",
+    "per_scene": {
+     "ur5e_pillars": {
+      "success": 1030,
+      "queries": 1030
+     }
+    },
     "failures": {
      "n": 0,
      "queries": [],
      "time_to_failure_ms": null
     }
    },
-   "curobo_v1": null,
+   "curobo_v1": {
+    "source": "results/records/curobo_ur5e_pillars_ur5e.json",
+    "queries": 1030,
+    "success": 985,
+    "success_rate": 0.9563106796116505,
+    "wall_ms": {
+     "n": 985,
+     "mean": 319.40790353446897,
+     "p5": 149.707614723593,
+     "p25": 159.682456869632,
+     "median": 376.92858884111047,
+     "p75": 393.17894307896495,
+     "p95": 612.6261067576706,
+     "max": 2380.9916828759015
+    },
+    "internal_ms": {
+     "n": 985,
+     "mean": 226.27983069056788,
+     "p5": 82.10997581481934,
+     "p25": 91.61758422851562,
+     "median": 273.47278594970703,
+     "p75": 288.7756824493408,
+     "p95": 478.02910804748535,
+     "max": 2005.262851715088
+    },
+    "path_length_rad": {
+     "n": 985,
+     "mean": 5.282185420651121,
+     "p5": 3.933811807632446,
+     "p25": 4.815314769744873,
+     "median": 5.078685760498047,
+     "p75": 5.660363674163818,
+     "p95": 7.404728698730469,
+     "max": 8.153142929077148
+    },
+    "power": {
+     "cmd": [
+      "/home/jetson3/projects/curobo_berkeley/venv/bin/python",
+      "bench/curobo_mbm.py",
+      "--robot",
+      "ur5e",
+      "--robot-cfg",
+      "configs/ur5e_shared.yml",
+      "--problems",
+      "problems/ur5e_pillars.pkl",
+      "--tag",
+      "ur5e_pillars",
+      "--trials",
+      "10",
+      "--out",
+      "results/raw/curobo_ur5e_pillars_ur5e.json"
+     ],
+     "returncode": 0,
+     "wall_s": 467.13064408302307,
+     "n_samples": 1822,
+     "VDD_IN_mW": {
+      "mean": 13781.823819978046,
+      "median": 13832.0,
+      "max": 17110.0
+     },
+     "VDD_CPU_GPU_CV_mW": {
+      "mean": 7535.159714599341,
+      "median": 7600.0,
+      "max": 9089.0
+     },
+     "GR3D_pct": {
+      "mean": 48.55927552140505,
+      "median": 37.0,
+      "max": 99.0
+     },
+     "cpu_temp_C": {
+      "mean": 71.83641547749725,
+      "median": 71.843,
+      "max": 72.562
+     },
+     "gpu_temp_C": {
+      "mean": 69.24028046103183,
+      "median": 69.25,
+      "max": 70.312
+     },
+     "top_processes_at_start": [
+      "99.5 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "99.4 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "99.4 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "99.4 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "99.4 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
+      "32.9 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
+      "32.4 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
+     ]
+    },
+    "settings": {
+     "collision_checker_type": "MESH",
+     "collision_cache": {
+      "obb": 50,
+      "mesh": 20
+     },
+     "use_cuda_graph": true,
+     "interpolation_dt": 0.025,
+     "num_trajopt_seeds": 12,
+     "num_graph_seeds": 12
+    },
+    "plan_config": {
+     "max_attempts": 20,
+     "enable_graph_attempt": 1,
+     "disable_graph_attempt": 10,
+     "enable_finetune_trajopt": true,
+     "timeout": 60.0
+    },
+    "planner": "cuRobo v1 (NVlabs/curobo ebb7170, v0.7.7-5) MotionGen.plan_single_js",
+    "per_scene": {
+     "ur5e_pillars": {
+      "success": 985,
+      "queries": 1030
+     }
+    },
+    "failures": {
+     "n": 45,
+     "queries": [
+      [
+       "ur5e_pillars",
+       12
+      ],
+      [
+       "ur5e_pillars",
+       25
+      ],
+      [
+       "ur5e_pillars",
+       27
+      ],
+      [
+       "ur5e_pillars",
+       34
+      ],
+      [
+       "ur5e_pillars",
+       37
+      ],
+      [
+       "ur5e_pillars",
+       44
+      ],
+      [
+       "ur5e_pillars",
+       56
+      ],
+      [
+       "ur5e_pillars",
+       57
+      ],
+      [
+       "ur5e_pillars",
+       59
+      ],
+      [
+       "ur5e_pillars",
+       65
+      ],
+      [
+       "ur5e_pillars",
+       70
+      ],
+      [
+       "ur5e_pillars",
+       71
+      ],
+      [
+       "ur5e_pillars",
+       77
+      ],
+      [
+       "ur5e_pillars",
+       81
+      ],
+      [
+       "ur5e_pillars",
+       84
+      ],
+      [
+       "ur5e_pillars",
+       89
+      ],
+      [
+       "ur5e_pillars",
+       95
+      ],
+      [
+       "ur5e_pillars",
+       100
+      ]
+     ],
+     "time_to_failure_ms": {
+      "n": 45,
+      "mean": 2792.7235920396115,
+      "p5": 2620.139459706843,
+      "p25": 2671.5088742785156,
+      "median": 2754.9619101919234,
+      "p75": 2899.7574308887124,
+      "p95": 3010.1361681707203,
+      "max": 3410.591220948845
+     }
+    },
+    "success_passing_vamp_segment_check_PROVISIONAL": 982,
+    "success_flagged_by_vamp_segment_check_PROVISIONAL": 3,
+    "failure_status": {
+     "MotionGenStatus.TRAJOPT_FAIL": 45
+    }
+   },
    "curobo_v2": {
     "source": "results/records/curobo2_ur5e_pillars_ur5e.json",
     "queries": 103,
@@ -1562,6 +4172,12 @@
      "enable_graph_attempt": 1
     },
     "planner": "cuRoboV2 0.8.0.post1.dev33 (NVlabs/curobo ac5f931) MotionPlanner.plan_cspace",
+    "per_scene": {
+     "ur5e_pillars": {
+      "success": 102,
+      "queries": 103
+     }
+    },
     "failures": {
      "n": 1,
      "queries": [
@@ -1585,6 +4201,33 @@
     "success_flagged_by_vamp_segment_check_PROVISIONAL": 4,
     "failure_status": {
      "fail": 1
+    }
+   },
+   "curobo_v1_vs_vamp_same_queries": {
+    "vamp_on_same_queries": {
+     "queries": 1030,
+     "success": 1030,
+     "wall_ms": {
+      "n": 1030,
+      "mean": 0.9412006398058252,
+      "p5": 0.553638,
+      "p25": 0.61084,
+      "median": 0.972278,
+      "p75": 1.11720475,
+      "p95": 1.4257529999999998,
+      "max": 5.0005180000000005
+     }
+    },
+    "median_wall_ratio": 387.6757355829408,
+    "paired_wall_ratio": {
+     "n": 99,
+     "mean": 310.50183619232894,
+     "p5": 150.56938975684923,
+     "p25": 266.09210798399283,
+     "median": 295.7996500346676,
+     "p75": 357.8791808816751,
+     "p95": 435.56436204485385,
+     "max": 563.7140865700749
     }
    },
    "curobo_v2_vs_vamp_same_queries": {
@@ -1612,6 +4255,20 @@
      "p75": 1576.9246935648807,
      "p95": 2275.6355517060447,
      "max": 2434.3623074944094
+    }
+   },
+   "curobo_v1_on_v2_queries": {
+    "queries": 1030,
+    "success": 985,
+    "wall_ms": {
+     "n": 985,
+     "mean": 319.40790353446897,
+     "p5": 149.707614723593,
+     "p25": 159.682456869632,
+     "median": 376.92858884111047,
+     "p75": 393.17894307896495,
+     "p95": 612.6261067576706,
+     "max": 2380.9916828759015
     }
    }
   }

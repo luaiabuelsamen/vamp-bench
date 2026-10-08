@@ -86,6 +86,9 @@ for g in GROUPS:
              "internal_ms": stats([internal_ms(key, r) for r in ok]),
              "path_length_rad": stats([r["path_length_l2"] for r in ok]), "power": P,
              "settings": D.get("settings"), "plan_config": D.get("plan_config"), "planner": D.get("planner")}
+        scenes = sorted({r["scene"] for r in val})
+        s["per_scene"] = {sc: {"success": sum(r["success"] for r in val if r["scene"] == sc),
+                               "queries": sum(r["scene"] == sc for r in val)} for sc in scenes}
         fails = [r for r in val if not r["success"]]
         s["failures"] = {"n": len(fails), "queries": sorted({(r["scene"], r["index"]) for r in fails}),
                          "time_to_failure_ms": stats([wall_ms(key, r) if key != "vamp" else r["plan_us"] / 1e3 for r in fails])}

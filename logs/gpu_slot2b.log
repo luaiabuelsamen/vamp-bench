@@ -3,3 +3,368 @@ start-state: 10-07-2026 22:24:34 RAM 8988/15656MB (lfb 18x4MB) SWAP 4663/7828MB 
 22:24 START_NOW: orchestrator go; GPU state at start is logged above
 22:24 starting slot 2 on orchestrator go
 other job running: 606877 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96
+gantry_pillars 823/1030 median plan ms 162.4
+wrote results/raw/curobo_gantry_pillars_ur5e_rail.json
+powerlog results/raw/curobo_gantry_pillars_ur5e_rail.power.json VDD_IN mean mW 13870 GR3D mean 52
+results/raw/curobo_gantry_pillars_ur5e_rail.json cuRobo successes checked by VAMP: 823, in collision under shared model: 44
+gantry_free 1030/1030 median plan ms 144.1
+wrote results/raw/curobo_gantry_free_ur5e_rail.json
+powerlog results/raw/curobo_gantry_free_ur5e_rail.power.json VDD_IN mean mW 13937 GR3D mean 51
+results/raw/curobo_gantry_free_ur5e_rail.json cuRobo successes checked by VAMP: 1030, in collision under shared model: 0
+ur5e_pillars 985/1030 median plan ms 375.7
+wrote results/raw/curobo_ur5e_pillars_ur5e.json
+powerlog results/raw/curobo_ur5e_pillars_ur5e.power.json VDD_IN mean mW 13782 GR3D mean 49
+results/raw/curobo_ur5e_pillars_ur5e.json cuRobo successes checked by VAMP: 985, in collision under shared model: 3
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+bookshelf_tall 24/95 median plan ms 8254.8
+bookshelf_thin 43/99 median plan ms 7057.5
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+table_under_pick 71/99 median plan ms 1673.3
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+bookshelf_small 42/96 median plan ms 6782.7
+box 98/100 median plan ms 173.4
+table_pick 87/100 median plan ms 924.4
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+Bias node is not valid, not using bias node
+cage 2/100 median plan ms 6291.0
+wrote results/raw/curobo_mbm_ur5.json
+powerlog results/raw/curobo_mbm_ur5.power.json VDD_IN mean mW 14816 GR3D mean 74
+results/raw/curobo_mbm_ur5.json cuRobo successes checked by VAMP: 367, in collision under shared model: 39
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can1
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can2
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can3
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can4
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can5
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can6
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can7
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can8
+Mesh already in cache, reusing existing instance: bookshelf_tall_1_Can9
+bookshelf_tall 0 0 True 3980 ms
+bookshelf_thin 0 0 False 49682 ms
+table_under_pick 0 0 False 52880 ms
+bookshelf_small 0 0 False 50927 ms
+box 0 0 True 4262 ms
+table_pick 0 0 False 64442 ms
+cage 0 0 False 15547 ms
+bookshelf_tall 10 0 True 4567 ms
+bookshelf_thin 10 0 False 52308 ms
+table_under_pick 10 0 True 4521 ms
+bookshelf_small 10 0 True 4541 ms
+box 10 0 True 1044 ms
+table_pick 10 0 False 70040 ms
+cage 10 0 True 1038 ms
+bookshelf_tall 20 0 True 19497 ms
+bookshelf_thin 20 0 True 4019 ms
+table_under_pick 20 0 True 7250 ms
+bookshelf_small 20 0 True 10149 ms
+box 20 0 True 1540 ms
+table_pick 20 0 True 3511 ms
+cage 20 0 True 8059 ms
+bookshelf_tall 30 0 False 53491 ms
+bookshelf_thin 30 0 True 4808 ms
+table_under_pick 30 0 True 7390 ms
+bookshelf_small 30 0 False 45524 ms
+box 30 0 True 2039 ms
+table_pick 30 0 True 4838 ms
+cage 30 0 False 14354 ms
+bookshelf_tall 40 0 False 86135 ms
+bookshelf_thin 40 0 False 51183 ms
+table_under_pick 40 0 True 2479 ms
+bookshelf_small 40 0 True 6483 ms
+box 40 0 True 2042 ms
+table_pick 40 0 False 46069 ms
+cage 40 0 False 15896 ms
+bookshelf_tall 50 0 False 75037 ms
+bookshelf_thin 50 0 True 7753 ms
+table_under_pick 50 0 False 46585 ms
+bookshelf_small 50 0 False 47905 ms
+box 50 0 True 2041 ms
+table_pick 50 0 False 38148 ms
+cage 50 0 False 14773 ms
+bookshelf_tall 60 0 False 45965 ms
+bookshelf_thin 60 0 True 15134 ms
+table_under_pick 60 0 False 44702 ms
+bookshelf_small 60 0 True 4477 ms
+box 60 0 True 2036 ms
+table_pick 60 0 True 9255 ms
+cage 60 0 True 2032 ms
+bookshelf_tall 70 0 False 69289 ms
+bookshelf_thin 70 0 True 3938 ms
+table_under_pick 70 0 True 2544 ms
+bookshelf_small 70 0 True 4659 ms
+box 70 0 True 2035 ms
+table_pick 70 0 False 62817 ms
+cage 70 0 False 15694 ms
+bookshelf_tall 80 0 True 23028 ms
+bookshelf_thin 80 0 False 50916 ms
+table_under_pick 80 0 False 13318 ms
+bookshelf_small 80 0 False 71992 ms
+box 80 0 True 2027 ms
+table_pick 80 0 True 11587 ms
+cage 80 0 False 23139 ms
+bookshelf_tall 90 0 False 49628 ms
+done: 35/64 solved, budget cut: True
+wrote results/raw/curobo2_mbm_ur5.json
+powerlog results/raw/curobo2_mbm_ur5.power.json VDD_IN mean mW 16559 GR3D mean 89
+results/raw/curobo2_mbm_ur5.json cuRobo successes checked by VAMP: 35, in collision under shared model: 6
+Panda · MBM                        VAMP 699/699 med 1.76 ms | cuRobo v1 638/699 med 849 ms | cuRoboV2 59/69 med 6.55e+03 ms
+UR5 · MBM                          VAMP 689/689 med 2.02 ms | cuRobo v1 367/689 med 827 ms | cuRoboV2 35/64 med 4.52e+03 ms
+UR5e+rail · pillars (paper)        VAMP 1020/1030 med 0.951 ms | cuRobo v1 823/1030 med 161 ms | cuRoboV2 100/103 med 1.06e+03 ms
+UR5e+rail · no obstacles (paper)   VAMP 1030/1030 med 0.553 ms | cuRobo v1 1030/1030 med 145 ms | cuRoboV2 103/103 med 379 ms
+UR5e · pillars (paper)             VAMP 1030/1030 med 0.972 ms | cuRobo v1 985/1030 med 377 ms | cuRoboV2 102/103 med 1.05e+03 ms
+wrote results/summary.json results/records/ results/figure.png
+00:14 SLOT DONE
+00:14 touched GPU_RELEASED

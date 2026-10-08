@@ -35,14 +35,21 @@ Wall-clock time per query; median, with p95 in parentheses. **Solved** means the
 | Problem set | VAMP | cuRobo v1 | cuRoboV2 |
 |---|---|---|---|
 | Panda · MBM (7 scenes) | 699/699 · 1.76 ms (3.89) | 638/699 · 849 ms (2694) | 59/69³ · 6.55 s (13.9 s) |
-| UR5 · MBM (7 scenes) | 689/689 · 2.02 ms (4.80) | rerun pending¹ | rerun pending¹ |
-| UR5e + rail · pillars (paper) | 1020/1030 · 0.95 ms (1.35) | rerun pending² | 100/103³ · 1.06 s (2.28 s) |
-| UR5e + rail · no obstacles (paper) | 1030/1030 · 0.55 ms (0.68) | rerun pending² | 103/103³ · 379 ms (727) |
-| UR5e · pillars (paper) | 1030/1030 · 0.97 ms (1.43) | rerun pending² | 102/103³ · 1.05 s (2.32 s) |
+| UR5 · MBM (7 scenes) | 689/689 · 2.02 ms (4.80) | 367/689¹ · 827 ms (2.18 s) | 35/64¹ ³ · 4.52 s (16.6 s) |
+| UR5e + rail · pillars (paper) | 1020/1030 · 0.95 ms (1.35) | 823/1030 · 161 ms (433) | 100/103³ · 1.06 s (2.28 s) |
+| UR5e + rail · no obstacles (paper) | 1030/1030 · 0.55 ms (0.68) | 1030/1030 · 145 ms (154) | 103/103³ · 379 ms (727) |
+| UR5e · pillars (paper) | 1030/1030 · 0.97 ms (1.43) | 985/1030 · 377 ms (613) | 102/103³ · 1.05 s (2.32 s) |
 
-¹ **UR5 rows:** VAMP's `ur5_spherized.urdf` caps every joint at 0.5 rad/s. VAMP ignores velocity limits, but cuRobo's time-parameterized optimizer then cannot fit long UR5 motions in time: v1 solved 4/689, almost all `TRAJOPT_FAIL`. The rerun gives cuRobo the same geometry with the real UR5 limit of π rad/s (`configs/ur5_spherized_vel_pi.urdf`). The superseded runs are kept in `results/raw/superseded/`.
+Ratio of median wall time to VAMP's, on the same queries:
 
-² **v1 paper rows:** the v1 runs finished, but the results file wasn't written because of a path bug in our script (since fixed). They are rerun in the next GPU slot.
+| | Panda | UR5 | rail/pillars | rail/free | UR5e/pillars |
+|---|---|---|---|---|---|
+| cuRobo v1 | 483x | 409x | 169x | 261x | 388x |
+| cuRoboV2 | 3817x | 2225x | 1117x | 684x | 1079x |
+
+¹ **UR5 velocity limit.** VAMP's `ur5_spherized.urdf` caps every joint at 0.5 rad/s. VAMP ignores velocity limits, but cuRobo's time-parameterized optimizer cannot fit long motions under that cap: with it, v1 solved 4/689 and V2 33/64. Both cuRobo versions therefore get a copy of the URDF with identical geometry and the real UR5 limit of π rad/s (`configs/ur5_spherized_vel_pi.urdf`).
+- Even with that fix, v1 fails 322 UR5 queries. Almost all are `TRAJOPT_FAIL`, mostly in `cage` (2/100 solved) and the bookshelves.
+- The superseded runs are in `results/raw/superseded/` and in `summary.json` → `superseded`.
 
 ³ **cuRoboV2 success rates** were measured with `max_attempts` 20 (the same cap as v1). NVIDIA's own V2 benchmark uses 100, so these rates are a lower bound.
 

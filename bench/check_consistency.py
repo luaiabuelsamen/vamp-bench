@@ -19,6 +19,7 @@ for g in S["groups"]:
         if not v:
             continue
         pairs.add((v["success"], v["queries"]))
+        pairs |= {(x["success"], x["queries"]) for x in v.get("per_scene", {}).values()}
         f = v.get("success_flagged_by_vamp_segment_check_PROVISIONAL")
         if f is not None:
             pairs.add((f, v["success"])); pairs.add((v["success"] - f, v["queries"]))
@@ -58,6 +59,11 @@ def matches_time(val, unit, digits):
     return any(abs(ms - t) <= tol + 1e-9 for t in times)
 
 
+ratios = set()
+for g in S["groups"]:
+    for k in ("curobo_v1_vs_vamp_same_queries", "curobo_v2_vs_vamp_same_queries"):
+        if g.get(k):
+            ratios.add(round(g[k]["median_wall_ratio"]))
 bad = []
 for doc in ("README.md", "docs/EMAIL_NOTES.md"):
     text = (ROOT / doc).read_text()
@@ -68,6 +74,10 @@ for doc in ("README.md", "docs/EMAIL_NOTES.md"):
             a, b = int(a.replace(",", "")), int(b.replace(",", ""))
             if (a, b) not in pairs:
                 bad.append(f"{doc}:{ln}: count {a}/{b} not in summary.json")
+        if line.startswith(("| cuRobo v1 |", "| cuRoboV2 |")) or "times VAMP's" in line or "x VAMP" in line:
+            for x in re.findall(r"(\d+)x\b", line):
+                if int(x) not in ratios:
+                    bad.append(f"{doc}:{ln}: ratio {x}x not in summary.json")
         for m in re.finditer(r"(?<![\w.])(\d+(?:\.(\d+))?)\s*(ms|s)\b", line):
             val, dec, unit = float(m.group(1)), m.group(2), m.group(3)
             if "rad/s" in line[m.start():m.end() + 4] or "°/s" in line:
