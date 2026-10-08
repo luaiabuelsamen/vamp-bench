@@ -1,0 +1,357 @@
+{
+ "source": "results/raw/curobo_mbm_ur5.json",
+ "model": "configs/ur5_vamp_spheres.yml",
+ "rows": [
+  {
+   "scene": "table_under_pick",
+   "index": 33,
+   "obstacle_depth_mm_cpu": -1.703225645426857,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_under_pick",
+   "index": 35,
+   "obstacle_depth_mm_cpu": 5.079195119570364,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 5.079081282019615,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_under_pick",
+   "index": 74,
+   "obstacle_depth_mm_cpu": 0.3447701252137815,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.3448985517024994,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_under_pick",
+   "index": 93,
+   "obstacle_depth_mm_cpu": -8.009796449723265,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 0,
+   "obstacle_depth_mm_cpu": -7.598244647315753,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 2,
+   "obstacle_depth_mm_cpu": -7.564109379379014,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 5,
+   "obstacle_depth_mm_cpu": -6.750785708950873,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 10,
+   "obstacle_depth_mm_cpu": -7.063391400422309,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 17,
+   "obstacle_depth_mm_cpu": -6.855066327090445,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 29,
+   "obstacle_depth_mm_cpu": -7.5728903269227725,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 33,
+   "obstacle_depth_mm_cpu": -7.377353651127294,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 34,
+   "obstacle_depth_mm_cpu": -7.975859871437244,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 39,
+   "obstacle_depth_mm_cpu": -8.178230186431454,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 40,
+   "obstacle_depth_mm_cpu": -6.0415082683267505,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 45,
+   "obstacle_depth_mm_cpu": -5.909172654740898,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 46,
+   "obstacle_depth_mm_cpu": -4.644557480190901,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 47,
+   "obstacle_depth_mm_cpu": -6.157324875829671,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 48,
+   "obstacle_depth_mm_cpu": -7.844282590481838,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 50,
+   "obstacle_depth_mm_cpu": -8.208352083875797,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 52,
+   "obstacle_depth_mm_cpu": -8.107150888960982,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 54,
+   "obstacle_depth_mm_cpu": -6.149714965014333,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 55,
+   "obstacle_depth_mm_cpu": -7.437480941395562,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 57,
+   "obstacle_depth_mm_cpu": -5.951907464489093,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 59,
+   "obstacle_depth_mm_cpu": -4.172075052979222,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 61,
+   "obstacle_depth_mm_cpu": -5.002611173803961,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 63,
+   "obstacle_depth_mm_cpu": -5.630902173375141,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 64,
+   "obstacle_depth_mm_cpu": -3.2344350729245077,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 65,
+   "obstacle_depth_mm_cpu": -7.790567173020499,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 66,
+   "obstacle_depth_mm_cpu": -5.884656496262318,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 69,
+   "obstacle_depth_mm_cpu": -8.054351360274826,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 71,
+   "obstacle_depth_mm_cpu": -8.038487140559713,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 72,
+   "obstacle_depth_mm_cpu": -4.662825041729178,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 76,
+   "obstacle_depth_mm_cpu": -5.561230932361841,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 78,
+   "obstacle_depth_mm_cpu": -6.696263595784561,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 79,
+   "obstacle_depth_mm_cpu": 1.6162481867465772,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 1.6161762177944183,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 88,
+   "obstacle_depth_mm_cpu": -8.009706332933817,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 90,
+   "obstacle_depth_mm_cpu": -7.2642382258876825,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "table_pick",
+   "index": 98,
+   "obstacle_depth_mm_cpu": -5.6631811394271745,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 0.0,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  },
+  {
+   "scene": "cage",
+   "index": 2,
+   "obstacle_depth_mm_cpu": 1.0550976180561529,
+   "self_depth_mm": 0.0,
+   "world_depth_mm_v1": 1.0550692677497864,
+   "self_colliding_samples": 0,
+   "self_colliding_waypoints": 0
+  }
+ ]
+}

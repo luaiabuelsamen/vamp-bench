@@ -57,7 +57,7 @@ Ratio of median wall time to VAMP's, on the same queries:
 
 | | Panda | UR5 | rail/pillars | rail/free | UR5e/pillars |
 |---|---|---|---|---|---|
-| cuRobo v1 flagged | 0 of 638 | 39 of 367 | 44 of 823 | 0 of 1030 | 3 of 985 |
+| cuRobo v1 flagged | 0 of 638 | 4 of 367 | 44 of 823 | 0 of 1030 | 3 of 985 |
 | cuRoboV2 flagged | 4 of 59 | 6 of 35 | 16 of 100 | 0 of 103 | 4 of 102 |
 
 What the checks found:
@@ -65,7 +65,7 @@ What the checks found:
 - **Millimetre-scale.** Exact signed distances on the shared model (`bench/penetration_depth.py`, which matches V2's own checker within 0.001 mm on each of the 24 flagged V2 trajectories) give:
   - median penetration 0.12–2.30 mm per set, maximum 5.08 mm across all sets;
   - always between waypoints, never at one.
-  - 35 of the 39 flagged v1 UR5 trajectories have no robot–obstacle penetration, so they must be self-collision flags; their depth is not yet measured.
+  - Joint limits are checked with 1e-5 rad of tolerance for float rounding.
 - **Unresolved:** whether cuRobo's continuous trajectory itself penetrates. Our dense re-sampling of V2's spline failed its self-check.
 
 None of this changes the solved counts above.
@@ -117,5 +117,6 @@ bench/run_all.sh --curobo-only    # GPU (v1, then V2, then the VAMP cross-check)
 
 ## Also in this repo
 - [docs/SPEEDUP_CLAIMS.md](docs/SPEEDUP_CLAIMS.md): which cuRobo speedup numbers (62x / 50x / 12x, and the paper's 15–25x and 8x) a results file supports. None of them is.
+- [docs/PAPER_CLAIMS_AUDIT.md](docs/PAPER_CLAIMS_AUDIT.md): each quantitative claim in arXiv 2508.04146 checked against the committed experiments.
 - [docs/CUROBO_JETSON_FIX.md](docs/CUROBO_JETSON_FIX.md): why cuRobo v1 was broken on this machine, and the non-destructive fix.
 - [docs/VEGA_CUROBO_NOTE.md](docs/VEGA_CUROBO_NOTE.md): how vega_curobo's cuRoboV2 config differs from ours, on this board.

@@ -46,12 +46,14 @@ So the evidence covers the straight line between V2's returned waypoints, not V2
 
 **(c) v1 counted the same way: v1 is flagged too, at a similar scale.** The same `bench/crossval.py` check on cuRobo v1 flags:
 - 0/638 on Panda
-- 39/367 on UR5
+- 4/367 on UR5
 - 44/823 on rail/pillars
 - 0/1030 on rail/free
 - 3/985 on UR5e/pillars
 
-`bench/penetration_depth.py` computes exact signed distances on the shared model. On each of V2's 24 flagged trajectories it matches V2's own checker within 0.001 mm (`summary.json` → `penetration_depth_vs_v2_checker`). On v1 it gives a rail/pillars median of 2.30 mm (max 2.94 mm) and a UR5e/pillars max of 1.14 mm. On UR5, 4 of the 39 flagged v1 trajectories penetrate obstacles (max 5.08 mm); the other 35 have no obstacle penetration and are therefore self-collision flags, with depth not measured.
+`bench/penetration_depth.py` computes exact signed distances on the shared model. On each of V2's 24 flagged trajectories it matches V2's own checker within 0.001 mm (`summary.json` → `penetration_depth_vs_v2_checker`). On v1 it gives a rail/pillars median of 2.30 mm (max 2.94 mm) and a UR5e/pillars max of 1.14 mm. On UR5, the 4 flagged v1 trajectories penetrate obstacles (max 5.08 mm).
+
+**Correction (2026-10-08): 35 UR5 flags were an artifact of our check.** An earlier run flagged 39 v1 UR5 trajectories. 35 of them came from float32 rounding at the ±π joint limit: each trajectory sat 2.4e-7 rad outside VAMP's bounds, and VAMP's `validate_motion` checks bounds. cuRobo v1's own `RobotWorld` found no world or self collision on those chords (`results/selfcollision_depth_v1_ur5.json`), and all 35 pass with bounds unchecked. `bench/crossval.py` now allows 1e-5 rad of rounding at joint limits, and records larger violations as `bounds_violation_rad`. No other set changed.
 
 So this is a property of discretely-checked trajectory optimization in both versions, not a V2 regression.
 

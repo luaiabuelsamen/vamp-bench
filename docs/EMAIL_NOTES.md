@@ -9,10 +9,13 @@ These are facts to use, not a draft. Each one traces to `results/summary.json` o
    - **cuRoboV2:** median 0.38–1.06 s, with `max_attempts=20`, not NVIDIA's 100.
 4. **Availability.** The code, the problem sets and the per-query results are in one repository, so her group can reproduce or extend the comparison (for example, to an x86 CPU or a desktop GPU).
 
+## Before writing
+- She read arXiv 2508.04146. `docs/PAPER_CLAIMS_AUDIT.md` lists which of its numbers a committed experiment supports. The 60× is cited from NVIDIA; the 15–25× vs OMPL, 8× vs TrajOpt, CHOMP 92% vs 78% and ABB 40% have no supporting experiment. The 3× matches only a cycle-time ratio against MoveIt/OMPL (3.02 s vs 9.90 s, different poses). The facts above come from this repo's same-board benchmark, not from the paper.
+
 ## Provisional: do not use until verified
 - **Millimetre penetrations between waypoints, both cuRobo versions (provisional).** VAMP's straight-line check between returned waypoints flags some successes of both versions:
-  - **Counts:** v1 0/638 Panda, 39/367 UR5, 44/823 rail-with-pillars, 3/985 UR5e-with-pillars. V2 4/59, 6/35, 16/100, 4/102.
+  - **Counts:** v1 0/638 Panda, 4/367 UR5, 44/823 rail-with-pillars, 3/985 UR5e-with-pillars. V2 4/59, 6/35, 16/100, 4/102.
   - **Not an artifact of the collision model:** V2's own checker confirms its flagged trajectories at the same samples, and agrees with VAMP on 12,000/12,000 random configurations.
-  - **Size:** median 0.12–2.30 mm per set, maximum 5.08 mm, never at a waypoint. 35 of v1's 39 UR5 flags are self-collision, with depth not yet measured.
+  - **Size:** median 0.12–2.30 mm per set, maximum 5.08 mm, never at a waypoint.
   - **Why it stays out of the email:** it is millimetre-scale, it affects both versions (so it is not a V2-specific defect), and the continuous trajectories are unverified.
   - Details: `docs/V2_COLLISION_CHECK.md`, `results/penetration_depth.json`.

@@ -14,13 +14,19 @@ ROOT = Path(__file__).resolve().parents[1]
 res = json.load(open(sys.argv[1])); vmod = getattr(vamp, sys.argv[2])
 pk = sys.argv[3] if len(sys.argv) > 3 and sys.argv[3] else ROOT / f"third_party/vamp/resources/{res['robot']}/problems.pkl"
 probs = pickle.load(open(pk, "rb"))["problems"]
+# Joint limits: allow float rounding at the boundary (e.g. -pi stored as -3.1415929 in float32). Violations beyond
+# BOUND_TOL are recorded separately (bounds_violation_rad) and fail the check.
+BOUND_TOL = 1e-5
+lo, hi = np.array(vmod.lower_bounds()), np.array(vmod.upper_bounds())
 n = bad = 0
 for r in res["records"]:
     if not r.get("success"):
         continue
     env = vamp.problem_dict_to_vamp(probs[r["scene"]][r["index"]])
-    q = np.asarray(r["path"], dtype=np.float32)
-    ok = all(vmod.validate_motion(q[k].tolist(), q[k + 1].tolist(), env) for k in range(len(q) - 1))
-    r["vamp_validated"] = bool(ok); n += 1; bad += (not ok)
+    q = np.asarray(r["path"], dtype=np.float64)
+    viol = float(np.max(np.maximum(lo - q, 0) + np.maximum(q - hi, 0)))
+    qc = np.clip(q, lo, hi).astype(np.float32)
+    ok = viol <= BOUND_TOL and all(vmod.validate_motion(qc[k].tolist(), qc[k + 1].tolist(), env) for k in range(len(qc) - 1))
+    r["vamp_validated"] = bool(ok); r["bounds_violation_rad"] = viol; n += 1; bad += (not ok)
 json.dump(res, open(sys.argv[1], "w"))
 print(sys.argv[1], f"cuRobo successes checked by VAMP: {n}, in collision under shared model: {bad}")

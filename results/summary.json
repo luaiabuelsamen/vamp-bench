@@ -2350,8 +2350,8 @@
       "max": 28173.614904284477
      }
     },
-    "success_passing_vamp_segment_check_PROVISIONAL": 328,
-    "success_flagged_by_vamp_segment_check_PROVISIONAL": 39,
+    "success_passing_vamp_segment_check_PROVISIONAL": 363,
+    "success_flagged_by_vamp_segment_check_PROVISIONAL": 4,
     "failure_status": {
      "MotionGenStatus.FINETUNE_TRAJOPT_FAIL": 9,
      "MotionGenStatus.TRAJOPT_FAIL": 313
@@ -4349,9 +4349,9 @@
    }
   },
   "curobo_mbm_ur5": {
-   "flagged": 39,
+   "flagged": 4,
    "obstacle_penetration": 4,
-   "no_obstacle_penetration": 35,
+   "no_obstacle_penetration": 0,
    "depth_mm_of_penetrating": {
     "n": 4,
     "mean": 2.023827762396719,
@@ -4442,6 +4442,34 @@
  "penetration_depth_vs_v2_checker": {
   "trajectories": 24,
   "max_abs_diff_mm": 0.00010779564090301896
+ },
+ "paper_evidence": {
+  "note": "Values from ~/projects/curobo_berkeley committed files, quoted in docs/PAPER_CLAIMS_AUDIT.md. Plot values are the averages printed in each plot's legend.",
+  "curobo_cycle_time_avg_s": {
+   "value": 3.02,
+   "source": "curobo_berkeley mujoco_scripts/plots/cycle_times.png @ 9cebb2f (legend 'Average: 3.02s')"
+  },
+  "moveit_cycle_time_avg_s": {
+   "value": 9.9,
+   "source": "curobo_berkeley src/vention_curobo/vention_curobo/data/cycle_times.png @ 9cebb2f (legend 'Average: 9.90s'); performance_statistics.txt @ 9cebb2f: 9.8986 +- 4.3701 s"
+  },
+  "moveit_planning_time_avg_s_9bbbbb7": {
+   "value": 10.865,
+   "source": "performance_statistics.txt @ 9bbbbb7 ('Average Planning Time: 10.8650 +- 13.2778 seconds'; timer includes execution)"
+  },
+  "moveit_planning_time_avg_s_9cebb2f": {
+   "value": 0.0031,
+   "source": "performance_statistics.txt @ 9cebb2f (times goal acceptance only)"
+  },
+  "curobo_planning_time_avg_s": {
+   "pick": 0.63,
+   "place": 0.62,
+   "source": "curobo_berkeley mujoco_scripts/plots/planning_times.png @ 9cebb2f"
+  },
+  "curobo_logs_total_time_median_s": {
+   "value": 0.683,
+   "source": "curobo_berkeley logs/results_*.json (gitignored, local only), 154 plans, obstacle-free"
+  }
  },
  "collision_model_agreement": {
   "panda": {

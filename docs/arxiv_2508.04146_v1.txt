@@ -1,0 +1,589 @@
+arXiv:2508.04146v2 [cs.RO] 11 Aug 2025
+
+Industrial Robot Motion Planning with GPUs:
+Integration of cuRobo for Extended DOF Systems
+Luai Abuelsamen*
+
+Harsh Rana
+
+M.Eng. Student, Department of Mechanical Engineering
+University of California, Berkeley
+luai abuelsamen@berkeley.edu
+Berkeley, CA, USA
+
+M.Eng. Student, Department of Mechanical Engineering
+University of California, Berkeley
+harsh.ajay@berkeley.edu
+Berkeley, CA, USA
+
+Ho-Wei Lu
+
+Wenhan Tang
+
+M.Eng. Student, Department of Mechanical Engineering
+University of California, Berkeley
+howei lu@berkeley.edu
+Berkeley, CA, USA
+
+M.Eng. Student, Department of Mechanical Engineering
+University of California, Berkeley
+200227wenhant@berkeley.edu
+Berkeley, CA, USA
+
+Swati Priyadarshini
+
+Gabriel Gomes
+
+M.Eng. Student, Department of Mechanical Engineering
+University of California, Berkeley
+swati2005@berkeley.edu
+Berkeley, CA, USA
+
+Faculty, Department of Mechanical Engineering
+University of California, Berkeley
+gomes@berkeley.edu
+Berkeley, CA, USA
+
+Abstract—Efficient motion planning remains a key challenge
+in industrial robotics, especially for multi-axis systems operating
+in complex environments. This paper addresses that challenge by
+integrating GPU-accelerated motion planning through NVIDIA’s
+cuRobo library into Vention’s modular automation platform.
+By leveraging accurate CAD-based digital twins and realtime parallel optimization, our system enables rapid trajectory
+generation and dynamic collision avoidance for pick-and-place
+tasks. We demonstrate this capability on robots equipped with
+additional degrees of freedom, including a 7th-axis gantry, and
+benchmark performance across various scenarios. The results
+show significant improvements in planning speed and robustness,
+highlighting the potential of GPU-based planning pipelines for
+scalable, adaptable deployment in modern industrial workflows.
+Index Terms—industrial robotics, motion planning, GPU acceleration, collision avoidance, trajectory optimization, extended
+DOF systems
+
+I. I NTRODUCTION
+Industrial automation represents the most common robotics
+application globally, with over three million robots deployed
+across manufacturing, logistics, and assembly lines. The global
+robotics market is projected to grow from approximately $46
+billion in 2024 to $73 billion by 2030 [1]. Post-pandemic
+challenges such as labor shortages and rising labor costs have
+led manufacturers to seek more reliable solutions to maintain
+productivity while reducing operational costs.
+Despite this growth, most programming for industrial palletizing still requires the manual programming of specific
+waypoints and trajectories to achieve motion or avoid obstacles
+
+robustly. This approach is time-consuming and difficult to
+adapt to varying environments. On the other hand, AI and endto-end learning-based methods are data-hungry and not ready
+for the zero-downtime requirements of industrial automation
+at this time.
+Vention, the industrial partner for this project, is a leader in
+providing modular and quickly deployable solutions to manufacturers. Vention’s MachineBuilder is a modular automation
+platform that allows users to design, simulate, and deploy
+robotic cells through a browser-based 3D CAD environment
+[3]. Its tightly integrated software and hardware stack provides
+a streamlined path from mechanical design to automation
+logic. The existence of CAD-based digital twins for industrial
+workcells provides a unique advantage for integrating predefined objects in the scene into the motion planning pipeline.
+The advantages of this platform are amplified through GPUaccelerated motion planning. As modern industrial robots
+feature six or more axes and operate in dynamic, cluttered
+environments, trajectory planning becomes highly complex.
+Traditional CPU-based planners struggle to deliver optimal
+solutions within tight production timelines, and safety becomes
+a growing concern due to possible collisions. GPU-based
+planning solves this by leveraging parallel computation to
+evaluate thousands of trajectories or collision checks in real
+time. NVIDIA’s cuRobo library achieves an average of 60×
+faster trajectory generation under 100 milliseconds compared
+to leading CPU-based methods [2].
+We present a comprehensive pipeline for GPU-accelerated
+motion planning using cuRobo tailored specifically for in-
+
+dustrial robotic applications. Our contributions include: (1)
+integration of cuRobo with extended DOF systems including 7th-axis gantries, (2) development of a comprehensive
+benchmarking framework for industrial pick-and-place tasks,
+(3) implementation of Model Predictive Control (MPC) for
+dynamic replanning, and (4) systematic optimization of cost
+function parameters for industrial deployment.
+II. BACKGROUND AND R ELATED W ORK
+A. Motion Planning Algorithms
+Motion planning algorithms are essential for generating
+collision-free paths and optimized robot trajectories. The
+kinematic model of a 6-DOF industrial robot arm consists
+of forward kinematics (calculating end-effector position from
+joint angles) and inverse kinematics (determining joint angles
+for desired pose), typically based on Denavit-Hartenberg parameters.
+TABLE I
+C OMPARISON OF M OTION P LANNING A PPROACHES
+Planner
+PILZ
+
+Method
+Piecewise linear zones
+solver
+
+CHOMP
+
+Gradient-based
+trajectory refinement
+
+STOMP
+
+Stochastic trajectory optimization
+
+GOMP
+
+Graph optimized motion
+planner
+
+OMPL
+
+Modular
+framework
+(RRT, PRM)
+
+cuRobo
+
+Hybrid particle + gradient optimization
+
+Characteristics
+High speed for real-time
+control; accuracy loss in
+complex environments
+Handles
+highdimensional
+spaces;
+sensitive to initial guess
+quality
+Robust
+for
+nondifferentiable
+costs;
+slower due to sampling
+Optimized for rapid
+planning under tight
+constraints
+Flexible for diverse
+robots; requires external
+collision checking
+Balances
+efficiency
+and complexity via
+combined approaches
+
+B. Related GPU-Accelerated Planning Approaches
+Recent advances in GPU-accelerated motion planning include NVIDIA’s Isaac Sim integration [2], Intel’s trajectory
+optimization libraries, and custom CUDA implementations
+for specific robot platforms. Compared to these approaches,
+cuRobo offers superior modularity and integration capabilities
+with existing ROS2 ecosystems.
+Other GPU-based methods like parallel RRT implementations achieve 5-10× speedups but lack the hybrid optimization approach that enables cuRobo’s 60× performance gains.
+Traditional trajectory optimization methods using GPMP2 or
+TrajOpt require significant manual tuning and fail to achieve
+real-time performance in cluttered environments.
+C. cuRobo Architecture
+cuRobo combines particle-based and gradient-based optimization methods tailored for CUDA parallelization. The
+particle-based approach samples multiple trajectory candidates
+
+to explore the solution space and escape local minima, providing better initializations for the gradient-based method.
+The gradient-based optimizer uses Limited-memory BroydenFletcher-Goldfarb-Shanno (L-BFGS), a quasi-Newton method
+that approximates the Hessian matrix using gradient history.
+The computational complexity scales as O(N×T×K) where
+N is the number of parallel seeds, T is the trajectory timesteps,
+and K represents collision check operations. On the Jetson
+Orin NX, this enables processing 512 parallel trajectories with
+64 timesteps each at 500Hz, compared to traditional CPU
+planners limited to 10-50 trajectory evaluations per second.
+The motion planner follows three main stages: (1) collisionfree inverse kinematic solutions generation, (2) seed generation
+for trajectory optimization, and (3) parallel trajectory optimization with timestep re-optimization. The optimization problem
+is formulated as:
+arg min Ctask (Xg , ΘT ) +
+Θ[1,T ]
+
+T
+X
+
+Csmooth (Θt )
+
+(1)
+
+t=1
+
+where Ctask represents the goal-reaching cost and Csmooth
+represents path smoothness cost, subject to joint limits and
+collision avoidance constraints.
+The goal-reaching cost ensures accurate end-effector positioning:
+Cgoal (Xg , ΘT ) = ∥Xg − F K(ΘT )∥2
+
+(2)
+
+The smoothness cost penalizes velocity, acceleration, and
+jerk:
+...
+Csmooth (Θt ) = wv ∥Θ̇t ∥2 + wa ∥Θ̈t ∥2 + wj ∥ Θ t ∥2 (3)
+III. M ETHODOLOGY
+A. Development Environment and Architecture
+The system was developed on the NVIDIA Jetson Orin NX
+platform, chosen for its powerful GPU capabilities suitable
+for robotics applications. The software stack included Ubuntu
+22.04 LTS, ROS 2 Humble for robotic middleware, CUDA
+and cuDNN for GPU-accelerated computation, PyTorch as the
+computation backend, cuRobo as the motion planning engine,
+and MuJoCo as the physics simulator.
+B. Hardware Platform Analysis
+The NVIDIA Jetson Orin NX platform provides 1024
+CUDA cores with 8GB unified memory, enabling efficient
+GPU-CPU data transfer for real-time planning. Benchmark
+testing revealed cuRobo utilizes approximately 60-70% GPU
+utilization during peak planning phases, with memory usage
+scaling linearly with obstacle complexity (2-6GB for typical
+industrial scenes).
+Compared to desktop RTX 4090 implementations, the Jetson platform achieves 75% of desktop performance while
+consuming 25W versus 400W power, making it suitable
+for embedded industrial deployment. Thermal management
+maintains consistent performance across 8-hour continuous
+operation cycles typical in manufacturing environments.
+
+This modular setup was designed to increase portability
+and simulation speed while enabling evaluation of cuRobo
+compared to other motion planning frameworks under identical
+task conditions, without dependency on Isaac Sim.
+C. Implementation Challenges and Solutions
+Several technical challenges emerged during integration.
+CUDA memory management required careful optimization to
+prevent memory fragmentation during continuous planning cycles. We implemented a circular buffer approach for trajectory
+storage, reducing allocation overhead by 40%.
+ROS2 integration posed timing challenges due to middleware latency. Custom shared memory interfaces bypassed
+standard ROS2 messaging for time-critical trajectory data,
+achieving sub-5ms communication latency between cuRobo
+and MuJoCo simulation.
+The collision sphere generation process initially required
+manual tuning for optimal coverage versus computational efficiency. We developed an automated sphere packing algorithm
+that reduces sphere count by 25% while maintaining 99.9%
+collision detection accuracy.
+D. Extended DOF Integration: 7th-Axis Gantry System
+A critical contribution of this work is the integration of
+cuRobo with extended DOF systems, specifically a 7th-axis
+linear gantry. This configuration is common in industrial applications where workspace extension is required in constrained
+environments.
+For self-collision avoidance, cuRobo generates collision
+spheres to approximate 3D meshes of robot parts. These
+spheres are stored as coordinate points and radius values in
+YAML files. When adding a seventh axis, we explored two
+approaches:
+Method 1: Integrated Robot Model - The gantry is
+included as part of the robot’s kinematic chain. A new URDF
+file was created combining the UR5e robot with the linear
+gantry, then imported into Isaac Sim to generate collision
+spheres for the complete system.
+Method 2: World Obstacle Model - The gantry is treated
+as a static world obstacle. cuRobo automatically uses the
+gantry meshes as obstacles for trajectory planning without
+requiring collision sphere generation.
+Both methods successfully generated collision-free trajectories, but Method 1 provides better integration for coordinated
+gantry-arm motion with 15% faster planning times, while
+Method 2 offers simpler configuration for fixed gantry setups
+with 30% reduced memory usage.
+The collision avoidance algorithm performs iterative collision checking along trajectory segments. For timestep S1 ,
+the system first checks collision status, computes distance to
+closest obstacle, then sweeps backward and forward along the
+trajectory using binary search until convergence.
+E. MuJoCo Integration and Simulation Architecture
+The simulation environment was constructed using MuJoCo’s XML format to define robot kinematics, environmental
+
+Fig. 1. Simulation Architecture
+
+meshes, and gripper interactions. The motion planning implementation requires two models: the robot model and the world
+model containing all potential collision objects.
+A cache of world objects is maintained with continuous updates throughout simulation. A ROS2 publisher sends states of
+selected objects from the MuJoCo environment into cuRobo’s
+world model, enabling dynamic obstacle avoidance. This architecture supports real-time scene updates and replanning
+capabilities essential for industrial deployment.
+F. Pick-and-Place Benchmark Framework
+Pick-and-place operations were selected as the core evaluation framework because they represent fundamental industrial
+workflows involving coordinated arm and gripper motion.
+The benchmark framework evaluates multiple performance
+metrics:
+Success Rate: Consistency of completing full pick-andplace cycles without collisions or constraint violations.
+Cycle Time: Total duration from initial approach through
+grasping, lifting, transferring, and releasing at target location.
+Trajectory Smoothness: Joint-level analysis of peak velocity and jerk, indicating mechanical compatibility and natural
+motion characteristics.
+Collision Safety: Minimum distance to obstacles throughout trajectories and identification of safety margin violations.
+Adaptability: Response to dynamic scene changes using
+MPC-based trajectory updates.
+The implementation defines key waypoints in Cartesian
+space (pre-grasp, grasp, lift, place) with specified endeffector orientations. ROS2 action commands execute trajectories through cuRobo’s GPU-accelerated planner operating
+
+at 500Hz, with synchronized gripper actuation through joint
+position commands.
+
+self-collision model with path constraints ensuring adherence
+to fixed poses.
+
+Fig. 3. Cycle time comparison showing cuRobo’s consistent 3-second
+performance versus MoveIt’s variable 4-16 second range
+Fig. 2. Palletizing Setup for Pick and Place Benchmarking in Mujoco
+
+G. Model Predictive Control Integration
+To address dynamic environments with moving obstacles
+or updated object poses, we implemented Model Predictive
+Control (MPC) layered on cuRobo’s motion planning output.
+MPC continuously re-optimizes robot motion over a finite
+prediction horizon, accounting for current environment state
+including moving objects and updated goals.
+This approach enables two critical capabilities:
+• Obstacle-aware adaptation: When unmodeled obstacles
+enter the workspace, MPC steers trajectories around
+obstacles without full replanning.
+• Vision-driven updates: Object pose estimates from camera feedback trigger mid-execution trajectory updates for
+precise interaction with moving targets.
+H. Constrained Motion Implementation
+For industrial tasks requiring consistent end-effector orientation (liquid transport, fragile component handling), we
+implemented constrained motion using cuRobo’s pose cost
+metric. The configuration hold_vec_weight = [1, 1,
+1, 0, 0, 0] imposes costs on all three rotational DOF, effectively maintaining fixed orientation throughout trajectories.
+These constraints are implemented as soft costs during
+optimization across all timesteps, balancing constraint enforcement with obstacle navigation feasibility.
+
+The performance comparison revealed significant differences. cuRobo demonstrated superior performance with average cycle time of approximately 3.1 ± 0.15 seconds and
+remarkable consistency across all test cycles (98.5% success
+rate). MoveIt exhibited considerably longer execution times,
+averaging 9.9 ± 2.3 seconds per cycle with substantial variability ranging from 4 to 16 seconds and lower success rate
+(87.2% due to planning failures in cluttered scenes).
+Detailed performance metrics include:
+• Planning Time: cuRobo: 45 ± 8ms, MoveIt: 1,200 ±
+400ms
+• Trajectory Smoothness: cuRobo peak jerk: 2.1 rad/s³,
+MoveIt: 5.8 rad/s³
+• Path Efficiency: cuRobo paths 12% shorter on average
+• Safety Margins: cuRobo maintained > 50mm clearance,
+MoveIt varied 20-80mm
+This 3× performance improvement highlights cuRobo’s
+computational efficiency and trajectory planning reliability.
+The mesh-based collision checking approach offers more
+dependable obstacle avoidance compared to MoveIt’s selfcollision model approach.
+B. Cost Function Weight Optimization
+cuRobo’s trajectory optimization framework exposes tunable weights that significantly impact planning performance.
+We conducted systematic experiments varying position and
+orientation cost weights to identify optimal parameter ranges.
+TABLE II
+C OST F UNCTION PARAMETER O PTIMIZATION R ESULTS
+
+IV. E XPERIMENTAL R ESULTS
+A. Performance Benchmarking: cuRobo vs MoveIt
+Comprehensive performance evaluation compared cuRobo
+with MoveIt using identical pick-and-place tasks. The setup
+involved a UR5e robotic arm operating within a gantry system,
+with two fixed target positions specified as 7-DOF goals.
+cuRobo Setup: Motion planning utilized cuRobo’s API
+with mesh-based collision checking against both simplified
+cuboid obstacles and detailed gantry meshes. Trajectory interpolation used fixed 0.01-second timesteps with direct joint
+commands to the environment.
+MoveIt Setup: Planning was performed in ROS2 environment with RViz visualization using OMPL’s RRTConnect
+planner. The gantry structure was integrated into the robot’s
+
+Case
+
+Parameter Varied
+
+1
+
+YAML
+(Position)
+
+2
+
+Orientation (Rotation Error)
+
+Weight
+
+Fixed Parameters
+Orientation
+=
+2000, Rotation
+Error = 8.53E-07
+Position
+=
+50,000, Rotation
+Error = 6.48E-06
+
+Optimal
+Range
+12,000 –
+25,000
+1600
+2000
+
+–
+
+Position Weight Analysis: Varying position weights from
+2,000 to 50,000 revealed non-linear performance characteristics. Planning time initially decreased as weights increased
+to approximately 25,000, then showed performance degradation at higher values. This suggests moderate weight values
+
+(12,000-25,000) optimize the balance between stability and
+computational efficiency.
+Orientation Weight Analysis: With position weight fixed
+at 50,000, higher orientation values (1,600-2,000) consistently
+produced faster planning times. Increased orientation precision
+reduces corrective adjustments during execution, resulting in
+more efficient motion paths.
+These findings align with cuRobo’s systematic tuning
+methodology, where moderate weights yield optimal performance and generally transfer well across different environments and robot platforms.
+C. Industrial Deployment Results
+Preliminary deployment with Vention’s industrial partners
+revealed promising real-world performance. Testing on three
+manufacturing lines (automotive assembly, electronics packaging, food processing) showed:
+Cycle Time Improvement: 28-35% reduction compared
+to existing waypoint-based programming
+• Adaptability: 95% success rate when objects shifted
+±10mm from programmed positions
+• Setup Time: 60% reduction in robot programming time
+for new part configurations
+• Maintenance: Zero trajectory-related failures over 240
+hours of operation
+
+•
+
+Most significantly, the vision integration enabled dynamic
+replanning when parts were misaligned on conveyors, reducing
+scrap rates by 18% compared to fixed-trajectory systems.
+D. Extended DOF System Performance
+Testing with the 7th-axis gantry system demonstrated
+cuRobo’s capability to handle extended workspace scenarios.
+The integrated robot model approach enabled coordinated
+gantry-arm motion planning, while the world obstacle approach provided simpler configuration for fixed gantry setups.
+Both collision modeling approaches successfully generated smooth, collision-free trajectories across the extended
+workspace. The system maintained planning times under 100
+milliseconds even with the additional DOF, demonstrating
+scalability for complex industrial setups with up to 12 DOF
+tested (dual-arm + gantry configurations).
+
+F. System Limitations and Boundary Conditions
+Despite strong performance, several limitations emerged
+during testing:
+Narrow Passage Navigation: Extremely constrained spaces
+(¡2× robot width) occasionally required manual waypoint
+assistance, affecting 3% of complex scenarios.
+Highly Dynamic Environments: Objects moving faster
+than 0.5 m/s challenged the MPC replanning cycle, requiring
+conservative safety margins.
+Memory Scalability: Complex scenes with ¿500 collision
+objects approached the Jetson’s 8GB memory limit, requiring
+scene simplification.
+Singularity Handling: Near-singular configurations sometimes produced suboptimal solutions, though safety was maintained through joint limit enforcement.
+V. D ISCUSSION
+The experimental results demonstrate cuRobo’s significant
+advantages for industrial motion planning applications. The 3×
+improvement in cycle time compared to traditional planners
+directly translates to productivity gains in manufacturing environments. The consistency of cuRobo’s performance (tight
+clustering around 3-second cycle times) indicates reliability
+suitable for industrial deployment.
+The systematic cost function optimization reveals practical
+strategies for balancing accuracy and efficiency. Moderate
+position weights combined with higher orientation values
+produce optimal performance, providing guidelines for practitioners deploying cuRobo in industrial settings.
+The successful integration with extended DOF systems
+addresses a critical need in industrial automation, where
+workspace extension through gantries or mobile bases is increasingly common. The dual approach for collision modeling
+provides flexibility for different deployment scenarios.
+MPC integration bridges the gap between static planning
+and dynamic industrial environments, enabling adaptation to
+unexpected changes without sacrificing safety or performance.
+This capability is crucial for future industrial systems incorporating vision feedback and human collaboration.
+The modular architecture built on ROS2 and MuJoCo
+provides a foundation for further development and deployment
+on various hardware platforms, supporting the transition from
+research to industrial implementation.
+
+E. Dynamic Replanning Capabilities
+
+A. Comparative Analysis with State-of-the-Art
+
+MPC integration enabled real-time trajectory adaptation to
+dynamic obstacles and updated object poses. Testing scenarios included moving obstacles entering the workspace midexecution and vision-based object pose updates requiring
+trajectory corrections.
+The system successfully maintained collision-free motion
+while adapting to scene changes, with replanning latencies
+under 50 milliseconds. This capability is essential for visionintegrated manufacturing systems and shared human-robot
+workspaces.
+
+Benchmarking against recent motion planning approaches
+reveals cuRobo’s competitive advantages:
+• vs. OMPL-RRT variants: 15-25× faster planning with
+higher success rates
+• vs. TrajOpt: 8× speedup with comparable trajectory
+quality
+• vs. CHOMP: Superior convergence in cluttered environments (92% vs 78%)
+• vs. Commercial solutions (ABB RobotStudio): 40%
+faster cycle times with better adaptability
+
+The hybrid optimization approach proves particularly effective in industrial scenarios combining precision requirements
+with obstacle complexity.
+VI. C ONCLUSIONS AND F UTURE W ORK
+This work demonstrates the effectiveness of GPUaccelerated motion planning for industrial robotics through
+comprehensive integration of cuRobo with extended DOF
+systems. Key contributions include successful 7th-axis gantry
+integration, development of a robust benchmarking framework,
+and systematic cost function optimization yielding 3× performance improvements over traditional planners.
+The system produces smooth, collision-free trajectories
+suitable for industrial deployment while maintaining computational efficiency. Integration with MPC provides dynamic
+replanning capabilities essential for modern manufacturing
+environments.
+Future work should focus on several key areas:
+Real-time Vision Integration: Developing closed-loop systems incorporating camera feedback for dynamic object tracking and pose estimation.
+Multi-robot Coordination: Extending the framework to
+handle multiple robots sharing workspace and resources, with
+distributed planning algorithms for conflict resolution.
+Hardware Deployment: Validating performance on physical systems to address real-world complexities including
+actuator latency, mechanical wear, and sensor noise.
+Learned Optimization: Implementing reinforcement learning or gradient-based approaches for autonomous cost function
+tuning, reducing manual setup time for diverse applications.
+Safety Certification: Developing formal verification methods for trajectory safety in human-robot collaborative environments.
+These extensions will transform the current system into a
+comprehensive platform capable of addressing the full complexity of modern industrial automation requirements.
+ACKNOWLEDGMENT
+The authors thank Vention Inc. for providing the
+industrial automation platform and Gabriel Gomes
+for project supervision. We acknowledge NVIDIA for
+cuRobo library access and the UC Berkeley Mechanical
+Engineering Department for computational resources.
+Code and supplementary materials are available at:
+https://github.com/luaiabuelsamen/VentionMotionPlanner
+R EFERENCES
+[1] International Federation of Robotics, “World Robotics Report 2023,”
+2023. [Online]. Available: https://ifr.org
+[2] B. Sundaralingam, S. K. S. Hari, A. Fishman, C. Garrett, K. Van Wyk, V.
+Blukis, A. Millane, H. Oleynikova, A. Handa, F. Ramos, N. Ratliff, and
+D. Fox, “cuRobo: Parallelized collision-free robot motion generation,”
+in Proc. IEEE Int. Conf. Robot. Autom. (ICRA), 2023, pp. 8112–8119.
+[3] Vention Inc., “Self-Serve Automation: Complete Projects 3× Faster,”
+2023. [Online]. Available: https://vention.io/resources/white-papers
+[4] N. Ratliff, M. Zucker, J. A. Bagnell, and S. Sriniviva, “CHOMP:
+Gradient optimization techniques for efficient motion planning,” in Proc.
+IEEE Int. Conf. Robot. Autom. (ICRA), 2009, pp. 489–494.
+
+[5] M. Kalakrishnan, S. Chitta, E. Theodorou, P. Pastor, and S. Schaal,
+“STOMP: Stochastic trajectory optimization for motion planning,” in
+Proc. IEEE Int. Conf. Robot. Autom. (ICRA), 2011, pp. 4569–4574.
+[6] J. Ichnowski, M. Danielczuk, J. Xu, V. Satish, and K. Goldberg, “GOMP:
+Grasp-optimized motion planning for bin picking,” in Proc. IEEE Int.
+Conf. Robot. Autom. (ICRA), 2020, pp. 5270–5277.
+[7] I. A. Sucan, M. Moll, and L. E. Kavraki, “The Open Motion Planning
+Library,” IEEE Robot. Autom. Mag., vol. 19, no. 4, pp. 72–82, 2012.
+[8] D. Coleman, I. Sucan, S. Chitta, and N. Correll, “Reducing the barrier
+to entry of complex robotic software: A MoveIt! case study,” J. Software
+Eng. Robot., vol. 5, no. 1, pp. 3–16, 2014.
+[9] J. Schulman, Y. Duan, J. Ho, A. Lee, I. Awwal, H. Bradlow, J. Pan,
+S. Patil, K. Goldberg, and P. Abbeel, “Motion planning with sequential
+convex optimization and convex collision checking,” Int. J. Robot. Res.,
+vol. 33, no. 9, pp. 1251–1270, 2014.
+[10] S. M. LaValle, “Rapidly-exploring random trees: A new tool for path
+planning,” Research Report 9811, Iowa State University, 1998.
+[11] M. Zucker, N. Ratliff, A. D. Dragan, M. Pivtoraiko, M. Klingensmith,
+C. M. Dellin, J. A. Bagnell, and S. S. Srinivasa, “CHOMP: Covariant
+Hamiltonian optimization for motion planning,” Int. J. Robot. Res., vol.
+32, no. 9-10, pp. 1164–1193, 2013.
+[12] J. J. Craig, Introduction to Robotics: Mechanics and Control, 3rd ed.
+Pearson Prentice Hall, 2005.
+
+

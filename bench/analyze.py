@@ -166,6 +166,10 @@ if pd_.exists():
                       for q in c["queries"] if q["kind"] == "flagged"]
         summary["penetration_depth_vs_v2_checker"] = {"trajectories": len(diffs), "max_abs_diff_mm": max(diffs)}
 
+pe = ROOT / "results/paper_evidence.json"
+if pe.exists():
+    summary["paper_evidence"] = json.load(open(pe))
+
 agree = ROOT / "results/collision_model_agreement.json"
 if agree.exists():
     summary["collision_model_agreement"] = json.load(open(agree))
