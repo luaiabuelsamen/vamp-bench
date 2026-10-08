@@ -141,6 +141,7 @@ bench/run_all.sh --curobo-only    # GPU (v1, then V2, then the VAMP cross-check)
 
 ## Also in this repo
 - [docs/SPEEDUP_CLAIMS.md](docs/SPEEDUP_CLAIMS.md): which cuRobo speedup numbers (62x / 50x / 12x, and the paper's 15–25x and 8x) a results file supports. None of them is.
+- [docs/BENCHMARK_V2.md](docs/BENCHMARK_V2.md): the design for a broader benchmark (held-out problems, time to an executable trajectory, quality, variance, industrial motion types). Not yet run.
 - [docs/PAPER_CLAIMS_AUDIT.md](docs/PAPER_CLAIMS_AUDIT.md): each quantitative claim in arXiv 2508.04146 checked against the committed experiments.
 - [docs/CUROBO_JETSON_FIX.md](docs/CUROBO_JETSON_FIX.md): why cuRobo v1 was broken on this machine, and the non-destructive fix.
 - [docs/VEGA_CUROBO_NOTE.md](docs/VEGA_CUROBO_NOTE.md): how vega_curobo's cuRoboV2 config differs from ours, on this board.
