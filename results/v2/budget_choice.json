@@ -1,0 +1,49 @@
+{
+ "T_s": 30,
+ "inputs": {
+  "v2_panda_mbm": {
+   "fail_rate": 0.14492753623188404,
+   "ok_mean_s": 7.087115454519073,
+   "ok_p95_s": 13.902614431548862,
+   "ok_max_s": 19.716394529677927
+  },
+  "v2_rail_pillars": {
+   "fail_rate": 0.029126213592232997,
+   "ok_mean_s": 1.2012303914595395,
+   "ok_p95_s": 2.281841032626107,
+   "ok_max_s": 2.556641752831638
+  },
+  "pessimistic_fail": {
+   "panda": 0.28985507246376807,
+   "heldout": 0.7
+  }
+ },
+ "gpu_hours_by_T": {
+  "15": {
+   "expected_h": 2.116876829624824,
+   "pessimistic_h": 2.618481622760968,
+   "all_timeout_h": 3.9
+  },
+  "20": {
+   "expected_h": 2.4168164431513945,
+   "pessimistic_h": 3.151694183147441,
+   "all_timeout_h": 5.15
+  },
+  "30": {
+   "expected_h": 3.0166956702045344,
+   "pessimistic_h": 4.218119303920388,
+   "all_timeout_h": 7.65
+  },
+  "45": {
+   "expected_h": 3.9165145107842445,
+   "pessimistic_h": 5.817756985079807,
+   "all_timeout_h": 11.4
+  },
+  "60": {
+   "expected_h": 4.816333351363954,
+   "pessimistic_h": 7.417394666239229,
+   "all_timeout_h": 15.15
+  }
+ },
+ "rationale": "largest round T whose pessimistic estimate is <= ~5 GPU-h (T=30 -> 4.2 h; T=45 -> 5.8 h); T exceeds the max observed V2 success time (19.7 s), so the budget cuts failures, not successes"
+}

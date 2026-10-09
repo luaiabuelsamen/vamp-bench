@@ -78,3 +78,8 @@ The hash is recorded in `docs/V2_FREEZE.md` in the next commit. Nothing listed a
   - Obstacles whose axis-aligned box overlaps the fixed base region (|x|, |y| < 0.15 m, z < 0.05 m) are removed, for all planners, before validity filtering (`bench/v2_select.py: touches_fixed_base`).
   - The removed names are recorded per problem (`removed_base_obstacles`).
   - On the first 40 problems per family, 27–40 of 40 become valid. Tabletop families are lowest, consistent with VAMP's note on finger separation.
+- **A2 (2026-10-08, decided by the orchestrator, before any GPU run): one uniform per-query wall budget T = 30 s for every planner.**
+  - Success means a valid trajectory with T_ready ≤ T; a timeout is a failure and enters worst-case tables at T, replacing the 60 s above.
+  - cuRoboV2 keeps NVIDIA's `max_attempts=100`. Its attempt loop is unrolled so the budget can be checked before each attempt. cuRobo v1 uses its native `timeout = T`. VAMP is censored at T, which is exact because its runs within T are unaffected.
+  - T was chosen from measured slot data so the V2 subsample fits ~5 GPU-h pessimistically: 4.2 h, with 3.0 h expected and 7.65 h if every run timed out. T is above the slowest observed V2 success (19.7 s). Details: `results/v2/budget_choice.json`, `bench/v2_budget.py`.
+  - **Added metric:** success-vs-budget curves, the share of runs solved with T_ready ≤ t for t from 1 ms to T, per planner and set. These remove the dependence on any single T.

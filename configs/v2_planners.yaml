@@ -28,4 +28,10 @@ validation:
   collision: "VAMP <robot>.validate at every sample (shared sphere model), joint-limit tolerance 1e-5 rad"
   limits: "velocity/acceleration from the sampler; jerk by finite differences of acceleration at 1 kHz; violation tolerance 1%"
   clearance_rate_hz: 100
-timeout_for_worst_case_tables_s: 60
+budget:  # amendment A2 (2026-10-08), logged before any GPU run
+  T_s: 30
+  rule: "one per-query wall-clock budget for every planner; success = valid trajectory with T_ready <= T; a timeout is a failure"
+  vamp: "no native time limit: runs to its 1M-iteration default, censored at T (exact, runs within T are unaffected)"
+  curobo_v1: "MotionGenPlanConfig.timeout = T (native, checked per attempt)"
+  curobo_v2: "plan_cspace unrolled one attempt at a time (graph seeding from attempt 1 as NVIDIA's loop), budget checked before each attempt; max_attempts 100"
+timeout_for_worst_case_tables_s: 30

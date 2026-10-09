@@ -27,11 +27,13 @@ ap.add_argument("--set", required=True, choices=["heldout", "mbm", "mpinets"]); 
 ap.add_argument("--subset", default=None, help="json list of query indices (V2 stratified subsample)")
 ap.add_argument("--limit", type=int, default=0); ap.add_argument("--max-attempts", type=int, default=None)
 ap.add_argument("--out", default=None)
+ap.add_argument("--budget-s", type=float, default=None, help="uniform per-query wall budget T (amendment A2; default from configs/v2_planners.yaml)")
 a = ap.parse_args()
 VM, PK, KEY, RB = {"heldout": ("ur5erail", "problems/v2_heldout.pkl", "v2_heldout", "ur5e_rail"),
                    "mbm": ("panda", "problems/v2_mbm_panda.pkl", "v2_mbm", "panda"),
                    "mpinets": ("panda", "problems/v2_mpinets_panda.pkl", "v2_mpinets", "panda")}[a.set]
 P = yaml.safe_load(open(ROOT / "configs/v2_planners.yaml"))
+T_BUDGET = a.budget_s or float(P["budget"]["T_s"])
 probs = pickle.load(open(ROOT / PK, "rb"))["problems"][KEY]
 idx = json.load(open(a.subset))[a.set] if a.subset else list(range(len(probs)))
 idx = idx[: a.limit or None]
@@ -51,7 +53,7 @@ def build_v1(seed):
         interpolation_dt=S["interpolation_dt"], interpolation_steps=S["interpolation_steps"],
         num_trajopt_seeds=S["num_trajopt_seeds"], num_graph_seeds=S["num_graph_seeds"], ik_seed=seed % (2 ** 31), graph_seed=seed % (2 ** 31))
     mg = MotionGen(cfg); mg.warmup(enable_graph=True, warmup_js_trajopt=True)
-    pc = dict(P["curobo_v1"]["plan_config"])
+    pc = dict(P["curobo_v1"]["plan_config"]); pc["timeout"] = T_BUDGET  # A2: v1's native per-query timeout = T
     if a.max_attempts:
         pc["max_attempts"] = a.max_attempts
     return mg, MotionGenPlanConfig(**pc), pc
@@ -88,8 +90,17 @@ def plan_v2(mp, pc, p):
     from curobo.types import JointState
     dev = lambda x: torch.as_tensor(np.asarray(x, np.float32), device="cuda:0")
     sync(); t0 = time.perf_counter(); mp.clear_scene_cache(); mp.update_world(problem_to_world(p)); mp.reset_seed()
-    res = mp.plan_cspace(JointState.from_position(dev([p["goals"][0]]), joint_names=mp.joint_names),
-                         JointState.from_position(dev([p["start"]]), joint_names=mp.joint_names), **pc)
+    goal = JointState.from_position(dev([p["goals"][0]]), joint_names=mp.joint_names)
+    start = JointState.from_position(dev([p["start"]]), joint_names=mp.joint_names)
+    # A2: NVIDIA's plan_cspace loop (max_attempts, graph seeding from attempt enable_graph_attempt) unrolled one
+    # attempt at a time so the uniform wall budget T can be checked before each attempt.
+    res = None
+    for att in range(pc["max_attempts"]):
+        if time.perf_counter() - t0 > T_BUDGET:
+            break
+        res = mp.plan_cspace(goal, start, max_attempts=1, enable_graph_attempt=0 if att >= pc["enable_graph_attempt"] else 1)
+        if res is not None and bool(res.success.view(-1)[0].item()):
+            break
     sync(); t1 = time.perf_counter()
     ok = res is not None and bool(res.success.view(-1)[0].item())
     if not ok:
@@ -115,12 +126,13 @@ for k, sd in enumerate(seeds):
             v = validate(VM, p, q, qd, qdd); v["t_exec_s"] = float((len(q) - 1) * dt)
             rec["traj"] = v; rec["t_ready_ms"] = rec["t_plan_ms"]; rec["t_cycle_s"] = rec["t_plan_ms"] / 1e3 + v["t_exec_s"]
             rec["path_waypoints"] = q[:: max(1, len(q) // 50)].round(5).tolist()
-        rec["solved"] = bool(ok and rec["traj"]["valid"])
+        rec["solved_any_time"] = bool(ok and rec["traj"]["valid"])
+        rec["solved"] = bool(rec["solved_any_time"] and rec["t_plan_ms"] <= T_BUDGET * 1e3)  # A2: success within T
         recs.append(rec)
     print(f"curobo{a.version} {a.set} seed {k}: solved {sum(r['solved'] for r in recs if r['seed_k'] == k)}/{len(idx)} warmup {warm:.0f}s", flush=True)
     del solver; torch.cuda.empty_cache()
 
 out = Path(a.out or ROOT / f"results/v2/raw/curobo{a.version[1]}_{a.set}.json"); out.parent.mkdir(parents=True, exist_ok=True)
 json.dump({"freeze": a.freeze, "set": a.set, "version": a.version, "plan_config": pcd, "settings": P[f"curobo_{a.version}"],
-           "seeds": seeds, "subset": a.subset, "host": platform.node(), "gpu": torch.cuda.get_device_name(0), "records": recs}, open(out, "w"))
+           "seeds": seeds, "subset": a.subset, "budget_T_s": T_BUDGET, "host": platform.node(), "gpu": torch.cuda.get_device_name(0), "records": recs}, open(out, "w"))
 print("wrote", out)

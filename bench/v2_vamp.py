@@ -57,7 +57,8 @@ for qi, p in enumerate(probs):
                 rec["t_cycle_s"] = rec["t_ready_ms"] / 1e3 + rec["p1"]["t_exec_s"]
         else:
             rec["t_plan_ms"] = (time.perf_counter_ns() - t0) / 1e6
-        rec["solved"] = bool(res.solved and rec.get("p1", {}).get("valid", False))
+        rec["solved_any_time"] = bool(res.solved and rec.get("p1", {}).get("valid", False))
+        rec["solved"] = rec["solved_any_time"]  # A2 censoring at T is applied in bench/v2_analyze.py
         recs.append(rec)
     if qi % 25 == 0:
         print(f"{a.set} {qi + 1}/{len(probs)} solved {sum(r['solved'] for r in recs)}/{len(recs)}", flush=True)

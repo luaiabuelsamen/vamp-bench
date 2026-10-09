@@ -1,6 +1,8 @@
 """Benchmark v2 analysis (pre-registered statistics, docs/V2_PREREGISTRATION.md).
 
-Per planner and set: per query over 10 seeds -> success fraction, median / p95 / worst T_cycle (failures = 60 s),
+Success = valid trajectory with T_ready <= T (amendment A2, T from configs/v2_planners.yaml), for every planner.
+Per planner and set: per query over its seeds -> success fraction, median / p95 / worst T_cycle (failures = T),
+success-vs-budget curve (share of runs solved with T_ready <= t, t from 1 ms to T),
 median T_ready, T_exec. Per bin (each of the 4 axes): median of per-query medians with a 95% bootstrap CI over
 queries (2000 resamples, seed 0); bins with < 30 queries marked underpowered. Quality metrics: medians over solved runs.
 Writes results/v2/summary.json.
@@ -10,7 +12,9 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-TIMEOUT = 60.0
+import yaml
+TIMEOUT = float(yaml.safe_load(open(ROOT / "configs/v2_planners.yaml"))["budget"]["T_s"])  # A2: uniform budget T
+CURVE_T = np.logspace(-3, np.log10(TIMEOUT), 61)
 AXES = ("reach", "clearance", "passage", "limits")
 QUAL = ("joint_length_rad", "tcp_length_m", "rms_jerk_norm", "peak_jerk_norm", "integrated_sq_jerk", "min_clearance_m",
         "time_within_1cm_s", "min_limit_margin_rad", "max_tcp_tilt_deg")
@@ -40,8 +44,21 @@ def per_query(recs, key_traj):
     return out
 
 
+def censor(recs):
+    """A2: success = valid trajectory with T_ready <= T, identically for every planner."""
+    for r in recs:
+        valid = r.get("solved_any_time", r["solved"])
+        r["solved"] = bool(valid and r.get("t_ready_ms", np.inf) <= TIMEOUT * 1e3)
+    return recs
+
+
+def curve(recs):
+    t = np.array([r["t_ready_ms"] / 1e3 if r["solved"] else np.inf for r in recs])
+    return {"t_s": CURVE_T.round(6).tolist(), "success": [float((t <= x).mean()) for x in CURVE_T]}
+
+
 def summarize(path, key_traj):
-    D = json.load(open(path)); recs = D["records"]; pq = per_query(recs, key_traj); rng = np.random.default_rng(0)
+    D = json.load(open(path)); recs = censor(D["records"]); pq = per_query(recs, key_traj); rng = np.random.default_rng(0)
     solved = [r for r in recs if r["solved"]]
     s = {"source": str(Path(path).relative_to(ROOT)), "runs": len(recs), "queries": len(pq),
          "success_rate_runs": sum(r["solved"] for r in recs) / len(recs),
@@ -52,6 +69,7 @@ def summarize(path, key_traj):
          "t_ready_ms_median_runs": float(np.median([r["t_ready_ms"] for r in solved])) if solved else None,
          "t_exec_s_median_runs": float(np.median([r[key_traj]["t_exec_s"] for r in solved])) if solved else None,
          "quality_median": {m: float(np.median([r[key_traj][m] for r in solved])) for m in QUAL} if solved else {},
+         "budget_T_s": TIMEOUT, "success_vs_budget": curve(recs),
          "per_bin": {}}
     if key_traj == "p1":  # VAMP secondary: P2 (TOPP-RA)
         p2 = [r for r in recs if r.get("p2", {}).get("valid")]
