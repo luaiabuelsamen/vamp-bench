@@ -111,3 +111,8 @@ The hash is recorded in `docs/V2_FREEZE.md` in the next commit. Nothing listed a
     - The pass (a) runner checkpoints every run (`results/v2/raw/vamp_pass1_<set>.jsonl`).
     - Cores: 2 until the other CPU jobs end, then 6.
     - Pass 2a re-timing runs at the start of the GPU slot, on a quiet CPU, before cuRoboV2.
+  - **A3 execution (2026-10-09):** Luai declined using his Mac, so the reference runs run on the Orin only.
+    - They start after pass (a), on free cores (`bench/v2_feasibility_par.py`), for queries no timed run has solved by then: VAMP pass (a) or cuRobo v1.
+    - A query that cuRoboV2 later solves is certified by that solution, so starting before V2 changes no verdict.
+    - Reference caps are iteration counts (6e6), not wall time, so CPU contention cannot change a verdict.
+    - The earlier 15-query sample produced no verdicts before it was stopped: each rrtc+PRM pair took over 20 min on the contended CPU.
