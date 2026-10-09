@@ -93,7 +93,7 @@ The hash is recorded in `docs/V2_FREEZE.md` in the next commit. Nothing listed a
     - Raw rates over all queries are also reported.
     - The count of unresolved queries is reported per set and per bin.
   - **Status of reference runs:** they run for every query that no timed run solved, once every planner's v2 runs are complete, so a query is never removed because one planner failed it. A sample is already running (`bench/v2_feasibility.py`).
-- **A4 (proposed 2026-10-09, awaiting approval): two-pass VAMP execution.**
+- **A4 (proposed and APPROVED by the orchestrator 2026-10-09, logged before it was applied): two-pass VAMP execution.**
   - **Profile** (`results/v2/profile.json`, 20 held-out queries x 2 seeds):
     - 98.1 percent of CPU time is failed planning (mean 54.7 s per failure: VAMP runs to its 1M-iteration default although results are censored at T = 30 s);
     - successful plans take 8 ms;
@@ -106,3 +106,8 @@ The hash is recorded in `docs/V2_FREEZE.md` in the next commit. Nothing listed a
     - A run that hit the 60 s kill in pass 1 is a failure. Under the measured contention slowdown, it would also exceed 30 s alone.
     - The slowdown is verified on a sample (each run alone vs in parallel); if it exceeds 2x, the kill is raised accordingly.
   - **Pass 2b, validation and metrics (parallel, untimed).**
+  - **A4 execution notes:**
+    - The serial run was stopped at held-out query ~151/300. Its records lived only in memory (no checkpointing), and ptrace is restricted on this machine, so they could not be recovered. Because the runs are seeded and deterministic, pass (a) redoes them with identical outcomes; the loss is compute time only.
+    - The pass (a) runner checkpoints every run (`results/v2/raw/vamp_pass1_<set>.jsonl`).
+    - Cores: 2 until the other CPU jobs end, then 6.
+    - Pass 2a re-timing runs at the start of the GPU slot, on a quiet CPU, before cuRoboV2.
