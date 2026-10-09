@@ -3,3 +3,4 @@ third_party/
 __pycache__/
 .vamp_only/
 results/raw/
+results/v2/raw/
