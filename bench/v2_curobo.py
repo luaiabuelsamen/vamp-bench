@@ -27,6 +27,7 @@ ap.add_argument("--set", required=True, choices=["heldout", "mbm", "mpinets"]); 
 ap.add_argument("--subset", default=None, help="json list of query indices (V2 stratified subsample)")
 ap.add_argument("--limit", type=int, default=0); ap.add_argument("--max-attempts", type=int, default=None)
 ap.add_argument("--out", default=None)
+ap.add_argument("--deadline", type=float, default=0, help="unix time; stop starting new queries after it (partial results kept)")
 ap.add_argument("--budget-s", type=float, default=None, help="uniform per-query wall budget T (amendment A2; default from configs/v2_planners.yaml)")
 a = ap.parse_args()
 VM, PK, KEY, RB = {"heldout": ("ur5erail", "problems/v2_heldout.pkl", "v2_heldout", "ur5e_rail"),
@@ -111,10 +112,22 @@ def plan_v2(mp, pc, p):
 
 
 build, plan = (build_v1, plan_v1) if a.version == "v1" else (build_v2, plan_v2)
-recs = []
+out = Path(a.out or ROOT / f"results/v2/raw/curobo{a.version[1]}_{a.set}.json"); out.parent.mkdir(parents=True, exist_ok=True)
+ckpt = out.with_suffix(".jsonl")  # one record per line; resume skips (seed_k, q) already present
+recs = [json.loads(l) for l in open(ckpt)] if ckpt.exists() else []
+done = {(r["seed_k"], r["q"]) for r in recs}
+stopped = False
+pcd = None
 for k, sd in enumerate(seeds):
+    todo = [qi for qi in idx if (k, qi) not in done]
+    if not todo or stopped:
+        continue
+    if a.deadline and time.time() > a.deadline:
+        stopped = True; break
     tb = time.perf_counter(); solver, pc, pcd = build(sd); warm = time.perf_counter() - tb
-    for qi in idx:
+    for qi in todo:
+        if a.deadline and time.time() > a.deadline:
+            stopped = True; break
         p = probs[qi]
         t, ok, status, tr = plan(solver, pc, p)
         rec = {"q": qi, "index": p["index"], "family": p["problem"], "seed_k": k, "seed": sd, "status": status,
@@ -129,10 +142,13 @@ for k, sd in enumerate(seeds):
         rec["solved_any_time"] = bool(ok and rec["traj"]["valid"])
         rec["solved"] = bool(rec["solved_any_time"] and rec["t_plan_ms"] <= T_BUDGET * 1e3)  # A2: success within T
         recs.append(rec)
+        with open(ckpt, "a") as f:
+            f.write(json.dumps(rec) + "\n")
     print(f"curobo{a.version} {a.set} seed {k}: solved {sum(r['solved'] for r in recs if r['seed_k'] == k)}/{len(idx)} warmup {warm:.0f}s", flush=True)
     del solver; torch.cuda.empty_cache()
 
-out = Path(a.out or ROOT / f"results/v2/raw/curobo{a.version[1]}_{a.set}.json"); out.parent.mkdir(parents=True, exist_ok=True)
-json.dump({"freeze": a.freeze, "set": a.set, "version": a.version, "plan_config": pcd, "settings": P[f"curobo_{a.version}"],
+complete = len({(r["seed_k"], r["q"]) for r in recs}) == len(seeds) * len(idx)
+json.dump({"freeze": a.freeze, "complete": complete, "stopped_at_deadline": stopped, "set": a.set, "version": a.version, "plan_config": pcd, "settings": P[f"curobo_{a.version}"],
            "seeds": seeds, "subset": a.subset, "budget_T_s": T_BUDGET, "host": platform.node(), "gpu": torch.cuda.get_device_name(0), "records": recs}, open(out, "w"))
-print("wrote", out)
+print("wrote", out, "complete" if complete else "PARTIAL", len(recs), "records")
+sys.exit(0 if complete else 3)
