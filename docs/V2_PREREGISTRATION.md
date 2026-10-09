@@ -83,3 +83,26 @@ The hash is recorded in `docs/V2_FREEZE.md` in the next commit. Nothing listed a
   - cuRoboV2 keeps NVIDIA's `max_attempts=100`. Its attempt loop is unrolled so the budget can be checked before each attempt. cuRobo v1 uses its native `timeout = T`. VAMP is censored at T, which is exact because its runs within T are unaffected.
   - T was chosen from measured slot data so the V2 subsample fits ~5 GPU-h pessimistically: 4.2 h, with 3.0 h expected and 7.65 h if every run timed out. T is above the slowest observed V2 success (19.7 s). Details: `results/v2/budget_choice.json`, `bench/v2_budget.py`.
   - **Added metric:** success-vs-budget curves, the share of runs solved with T_ready ≤ t for t from 1 ms to T, per planner and set. These remove the dependence on any single T.
+- **A3 (2026-10-09, requested by the orchestrator; logged before any feasibility rule was applied to results): infeasible queries.**
+  - **Problem:** start/goal validity only shows the endpoints are collision-free, not that a path exists. Held-out success is low for every planner so far (VAMP ~52 percent of runs; cuRobo v1 solves 57/300 queries in at least 1 seed).
+  - **Rule, applied identically to all planners and all sets:**
+    - **Certified feasible:** a valid trajectory was found by any timed v2 run of any planner (any seed, any time), or by a long-budget reference run. The reference is VAMP rrtc with `max_iterations = max_samples = 6e6` (~300 s), then VAMP PRM with the same caps, seed0, untimed.
+    - **Unresolved (presumed infeasible):** all of the above failed.
+  - **Reporting:**
+    - Primary success rates use certified-feasible queries as the denominator.
+    - Raw rates over all queries are also reported.
+    - The count of unresolved queries is reported per set and per bin.
+  - **Status of reference runs:** they run for every query that no timed run solved, once every planner's v2 runs are complete, so a query is never removed because one planner failed it. A sample is already running (`bench/v2_feasibility.py`).
+- **A4 (proposed 2026-10-09, awaiting approval): two-pass VAMP execution.**
+  - **Profile** (`results/v2/profile.json`, 20 held-out queries x 2 seeds):
+    - 98.1 percent of CPU time is failed planning (mean 54.7 s per failure: VAMP runs to its 1M-iteration default although results are censored at T = 30 s);
+    - successful plans take 8 ms;
+    - validation is 1.6 percent;
+    - TOPP-RA is 0.1 percent.
+    - The current run is also timed under heavy CPU contention from other jobs (~7 of 8 cores busy).
+  - **Pass 1, classification (parallel):** every run in a worker process killed at 2T = 60 s; records which runs succeed and their paths. Deterministic: a fixed Halton skip gives the same path.
+  - **Pass 2a, timing (sequential, one process, quiet machine):**
+    - Every run that succeeded in pass 1 is re-run and timed. Its timed result is what counts, so success still means T_ready <= T measured without contention.
+    - A run that hit the 60 s kill in pass 1 is a failure. Under the measured contention slowdown, it would also exceed 30 s alone.
+    - The slowdown is verified on a sample (each run alone vs in parallel); if it exceeds 2x, the kill is raised accordingly.
+  - **Pass 2b, validation and metrics (parallel, untimed).**
