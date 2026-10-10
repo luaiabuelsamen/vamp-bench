@@ -5,9 +5,14 @@ cuRoboV2 successes certify feasibility on their own when they arrive, so they ne
 Reference (untimed, deterministic): VAMP rrtc with max_iterations = max_samples = 6e6, then VAMP PRM with the same
 caps, seed0. Caps are iteration counts, not wall time, so CPU contention changes duration but never the verdict.
 Checkpoint: results/v2/raw/feasibility_<set>.jsonl (resume skips finished queries).
-Usage: python bench/v2_feasibility_par.py --freeze H --workers N [--sets heldout mbm mpinets]
+Memory gate (the board is shared; the flagship must never be OOM-killed): at most --workers (2) references run while
+MemAvailable <= --mem-gate-gb (4 GB); up to --max-workers (6) above it. Workers beyond --workers are never started at or below the
+gate; no worker at all is started while MemAvailable < floor + 0.5 GB; every worker sets oom_score_adj = 1000 so the kernel picks it before anything else. If MemAvailable falls
+under --mem-floor-gb (0.6 GB), the largest worker is killed and its query requeued (relaunched only above the gate;
+the reference is deterministic, so a rerun gives the same verdict).
+Usage: python bench/v2_feasibility_par.py --freeze H [--workers 2 --max-workers 6 --mem-gate-gb 4] [--sets heldout mbm mpinets]
 """
-import argparse, json, multiprocessing as mp, pickle, sys, time
+import argparse, json, multiprocessing as mp, os, pickle, signal, sys, time
 from pathlib import Path
 
 import vamp
@@ -36,6 +41,63 @@ def reference(args):
     return rec
 
 
+def mem_available_gb():
+    for line in open("/proc/meminfo"):
+        if line.startswith("MemAvailable:"):
+            return int(line.split()[1]) / 2**20
+    return 0.0
+
+
+def rss_gb(pid):
+    try:
+        return int(open(f"/proc/{pid}/statm").read().split()[1]) * os.sysconf("SC_PAGE_SIZE") / 2**30
+    except OSError:
+        return 0.0
+
+
+def child(job, conn):
+    open("/proc/self/oom_score_adj", "w").write("1000")
+    conn.send(reference(job)); conn.close()
+
+
+def run_gated(jobs, ck, a):
+    """Run jobs with a memory-dependent worker count; append each result to the checkpoint as it finishes."""
+    ctx = mp.get_context("fork"); queue = list(jobs); deferred = []; running = {}  # pid -> (proc, conn, job)
+    last_log = 0
+    while queue or deferred or running:
+        avail = mem_available_gb()
+        if avail < a.mem_floor_gb and running:
+            pid = max(running, key=rss_gb); proc, conn, job = running.pop(pid)
+            print(f"{time.strftime('%H:%M:%S')} MemAvailable {avail:.2f} GB < floor: killed worker for q {job[1]} "
+                  f"(rss {rss_gb(pid):.2f} GB), requeued above the gate", flush=True)
+            proc.kill(); proc.join(); deferred.append(job); continue
+        for pid in list(running):
+            proc, conn, job = running[pid]
+            if conn.poll():
+                rec = conn.recv(); proc.join(); running.pop(pid)
+                with open(ck, "a") as f:
+                    f.write(json.dumps(rec) + "\n")
+                print(rec, flush=True)
+            elif not proc.is_alive():
+                proc.join(); running.pop(pid); deferred.append(job)
+                print(f"{time.strftime('%H:%M:%S')} worker for q {job[1]} died (exit {proc.exitcode}); requeued above the gate", flush=True)
+        above = avail > a.mem_gate_gb
+        cap = a.max_workers if above else a.workers
+        while len(running) < cap and (queue or (above and deferred)):
+            m = mem_available_gb()
+            if m < a.mem_floor_gb + 0.5 or (len(running) >= a.workers and m <= a.mem_gate_gb):
+                break
+            job = deferred.pop(0) if (above and deferred) else queue.pop(0)
+            r, w = ctx.Pipe(duplex=False); proc = ctx.Process(target=child, args=(job, w)); proc.start(); w.close()
+            running[proc.pid] = (proc, r, job)
+            time.sleep(5 if len(running) > a.workers else 0)  # let a new worker's memory show before adding another
+        if not running and deferred and not queue:
+            if time.time() - last_log > 600:
+                print(f"{time.strftime('%H:%M:%S')} {len(deferred)} requeued queries wait for MemAvailable > {a.mem_gate_gb} GB "
+                      f"(now {avail:.2f})", flush=True); last_log = time.time()
+        time.sleep(10)
+
+
 def solved_by_timed_runs(s):
     ok = set()
     f = ROOT / f"results/v2/raw/vamp_pass1_{s}.jsonl"
@@ -50,6 +112,8 @@ def solved_by_timed_runs(s):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--freeze", required=True); ap.add_argument("--workers", type=int, default=2)
+    ap.add_argument("--max-workers", type=int, default=6); ap.add_argument("--mem-gate-gb", type=float, default=4.0)
+    ap.add_argument("--mem-floor-gb", type=float, default=0.6)
     ap.add_argument("--sets", nargs="+", default=["heldout", "mbm", "mpinets"]); a = ap.parse_args()
     seed = seed_from(a.freeze, "seed0")
     for s in a.sets:
@@ -62,11 +126,7 @@ def main():
         ok = solved_by_timed_runs(s)
         todo = [q for q in range(len(probs)) if q not in ok and q not in done]
         print(f"{s}: {len(ok)} queries already solved by a timed run, {len(done)} references done, {len(todo)} to run", flush=True)
-        with mp.get_context("fork").Pool(a.workers) as pool:
-            for rec in pool.imap_unordered(reference, [(s, q, vm, probs[q], seed) for q in todo]):
-                with open(ck, "a") as f:
-                    f.write(json.dumps(rec) + "\n")
-                print(rec, flush=True)
+        run_gated([(s, q, vm, probs[q], seed) for q in todo], ck, a)
 
 
 if __name__ == "__main__":
