@@ -58,9 +58,9 @@ def curve(recs):
 
 
 def summarize(path, key_traj):
-    D = json.load(open(path)); recs = censor(D["records"]); pq = per_query(recs, key_traj); rng = np.random.default_rng(0)
+    D = json.load(open(path)); recs = D["records"]; pq = per_query(recs, key_traj); rng = np.random.default_rng(0)
     solved = [r for r in recs if r["solved"]]
-    s = {"source": str(Path(path).relative_to(ROOT)), "runs": len(recs), "queries": len(pq),
+    s = {"runs": len(recs), "queries": len(pq),
          "success_rate_runs": sum(r["solved"] for r in recs) / len(recs),
          "queries_failing_some_seed": sum(v["success"] < 1 for v in pq.values()),
          "queries_failing_all_seeds": sum(v["success"] == 0 for v in pq.values()),
@@ -88,9 +88,53 @@ def summarize(path, key_traj):
     return s
 
 
-summary = {}
-for f in sorted(glob.glob(str(ROOT / "results/v2/raw/*.json"))):
-    name = Path(f).stem
-    summary[name] = summarize(f, "p1" if name.startswith("vamp") else "traj")
-    print(name, {k: summary[name][k] for k in ("queries", "success_rate_runs", "t_cycle_med_of_query_meds", "t_ready_ms_median_runs", "t_exec_s_median_runs")})
+def feasibility(s):
+    """A3: certified feasible = any valid trajectory from any planner run (any time) or a reference run path."""
+    cert = set()
+    for pref in ("vamp", "curobo1", "curobo2"):
+        f = ROOT / f"results/v2/raw/{pref}_{s}.json"
+        if f.exists():
+            cert |= {r["q"] for r in json.load(open(f))["records"] if r.get("solved_any_time")}
+    ref = {}
+    f = ROOT / f"results/v2/raw/feasibility_{s}.jsonl"
+    if f.exists():
+        for r in map(json.loads, open(f)):
+            ref[r["q"]] = r["path_exists"]
+    cert |= {q for q, e in ref.items() if e}
+    unresolved = {q for q, e in ref.items() if not e and q not in cert}
+    return cert, unresolved, set(ref)
+
+
+def restrict(recs, qs=None, seeds=None):
+    return [r for r in recs if (qs is None or r["q"] in qs) and (seeds is None or r["seed_k"] in seeds)]
+
+
+summary = {"budget_T_s": TIMEOUT, "sets": {}}
+subset = json.load(open(ROOT / "results/v2/v2_subsample.json"))
+NQ = {"heldout": 300, "mbm": 300, "mpinets": 300}
+for s in ("heldout", "mbm", "mpinets"):
+    cert, unres, refd = feasibility(s)
+    pending = set(range(NQ[s])) - cert - unres
+    S = {"feasibility": {"certified": len(cert), "unresolved": len(unres), "pending_reference": len(pending),
+                         "status": "complete" if not pending else "partial (reference runs still running)"}, "planners": {}}
+    for pref, key in (("vamp", "p1"), ("curobo1", "traj"), ("curobo2", "traj")):
+        f = ROOT / f"results/v2/raw/{pref}_{s}.json"
+        if not f.exists():
+            continue
+        D = json.load(open(f)); recs = censor(D["records"])
+        out = {}
+        for label, sel in (("all_queries", None), ("certified_feasible", cert)):
+            tmp = Path("/tmp") / f"_v2_{pref}_{s}_{label}.json"
+            json.dump({"records": restrict(recs, sel)}, open(tmp, "w"))
+            out[label] = summarize(tmp, key); out[label]["source"] = str(f.relative_to(ROOT))
+        if pref != "curobo2":  # same queries and seeds as the V2 subsample
+            tmp = Path("/tmp") / f"_v2_{pref}_{s}_v2sub.json"
+            json.dump({"records": restrict(recs, set(subset[s]), {0, 1, 2})}, open(tmp, "w"))
+            out["v2_subsample_seeds012"] = summarize(tmp, key); out["v2_subsample_seeds012"]["source"] = str(f.relative_to(ROOT))
+        S["planners"][pref] = out
+        a_, c_ = out["all_queries"], out["certified_feasible"]
+        print(f"{s:8s} {pref:8s} runs {a_['runs']:5d} success all {a_['success_rate_runs']:.3f} certified {c_['success_rate_runs']:.3f} "
+              f"T_ready med {a_['t_ready_ms_median_runs']} ms  T_exec med {a_['t_exec_s_median_runs']} s  T_cycle med-of-q {a_['t_cycle_med_of_query_meds']:.2f} s")
+    summary["sets"][s] = S
 json.dump(summary, open(ROOT / "results/v2/summary.json", "w"), indent=1)
+print("feasibility:", {s: summary["sets"][s]["feasibility"] for s in summary["sets"]})

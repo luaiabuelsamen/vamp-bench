@@ -1,0 +1,29 @@
+{
+ "heldout": {
+  "rejected": 62,
+  "sampled": 30,
+  "depth_mm_median": 0.017159421967963273,
+  "depth_mm_p95": 0.30158495447290784,
+  "depth_mm_max": 0.6597910110141061,
+  "n_over_5mm": 0,
+  "n_le_0": 6
+ },
+ "mbm": {
+  "rejected": 575,
+  "sampled": 30,
+  "depth_mm_median": -0.16867782074139576,
+  "depth_mm_p95": 2.4076370115486383,
+  "depth_mm_max": 3.029927511080402,
+  "n_over_5mm": 0,
+  "n_le_0": 18
+ },
+ "mpinets": {
+  "rejected": 347,
+  "sampled": 30,
+  "depth_mm_median": -0.8078050056314059,
+  "depth_mm_p95": 0.6331190921280342,
+  "depth_mm_max": 1.1865765785663493,
+  "n_over_5mm": 0,
+  "n_le_0": 21
+ }
+}
