@@ -41,9 +41,10 @@ def solved_by_timed_runs(s):
     f = ROOT / f"results/v2/raw/vamp_pass1_{s}.jsonl"
     if f.exists():
         ok |= {r["q"] for r in map(json.loads, open(f)) if r["plan_success"]}
-    f = ROOT / f"results/v2/raw/curobo1_{s}.json"
-    if f.exists():
-        ok |= {r["q"] for r in json.load(open(f))["records"] if r.get("solved_any_time")}
+    for v in ("curobo1", "curobo2"):
+        f = ROOT / f"results/v2/raw/{v}_{s}.json"
+        if f.exists():
+            ok |= {r["q"] for r in json.load(open(f))["records"] if r.get("solved_any_time")}
     return ok
 
 
