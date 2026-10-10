@@ -1,0 +1,154 @@
+{
+ "top_processes_at_start": [
+  " 203 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=8, pipe_handle=14) --multiprocessing-fork",
+  " 195 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=8, pipe_handle=12) --multiprocessing-fork",
+  "95.0 .venv/bin/python bench/v2_vamp_pass2a.py --freeze 6aea6eecf76a173d7ebdf548104aaec854b6b6c7 --deadline 1791643800",
+  " 2.7 claude --dangerously-skip-permissions",
+  " 2.5 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  " 2.1 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  " 1.9 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
+ ],
+ "slowdown": {
+  "heldout": {
+   "n": 1540,
+   "median": 2.7095734097420685,
+   "p95": 9.320595595665212,
+   "max": 46.41143291337513
+  },
+  "mbm": {
+   "n": 3000,
+   "median": 3.023499468093969,
+   "p95": 7.094721402909709,
+   "max": 28.553439083821896
+  },
+  "mpinets": {
+   "n": 2990,
+   "median": 4.975712724892444,
+   "p95": 12.892810836655917,
+   "max": 67.58473276224869
+  }
+ },
+ "killed_sample": [
+  {
+   "q": 233,
+   "seed_k": 8,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 92,
+   "seed_k": 7,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 89,
+   "seed_k": 0,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 256,
+   "seed_k": 3,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 133,
+   "seed_k": 5,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 155,
+   "seed_k": 9,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 137,
+   "seed_k": 9,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 273,
+   "seed_k": 6,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 171,
+   "seed_k": 3,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 186,
+   "seed_k": 0,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 49,
+   "seed_k": 7,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 206,
+   "seed_k": 4,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 178,
+   "seed_k": 1,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 6,
+   "seed_k": 0,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 136,
+   "seed_k": 6,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 30,
+   "seed_k": 2,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 210,
+   "seed_k": 3,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 296,
+   "seed_k": 2,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 197,
+   "seed_k": 0,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  },
+  {
+   "q": 10,
+   "seed_k": 7,
+   "solved_alone_within_T": false,
+   "alone_t_plan_ms": null
+  }
+ ],
+ "killed_sample_solved_within_T": 0
+}
