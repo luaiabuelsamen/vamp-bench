@@ -46,3 +46,22 @@ Home is a fixed configuration per cell.
 ## Cost
 - **CPU, VAMP:** 30 × 4 × 5 = 600 pick sequences; estimated < 30 min.
 - **GPU:** cuRobo v1 600 sequences × 6 calls × ~0.5–1 s ≈ 0.5–1 h. cuRoboV2: the same count at ~1–7 s per call ≈ 1–7 h. V2 is run only if the GPU slot allows; otherwise it is reported as not run.
+
+## Execution notes (logged 2026-10-10, before any run)
+- **Frame:** every planner targets `tool0`; VAMP's `eefk` equals the URDF's tool0 to 1e-5 (checked on random configurations).
+- **Segment chaining:**
+  - cuRobo segments start from the last sample of the previous segment's own trajectory.
+  - VAMP's MoveL-up segment is the reversed MoveL-down line, so it ends at the shared pre-grasp/pre-place configuration.
+  - A failed segment ends that pick; its remaining segments are recorded as not attempted. The next pick starts from that pick's pre-place configuration, so one failure does not cascade.
+- **Budget:** T = 30 s applies per planner call (segment). cuRoboV2's attempt loop is unrolled with a clock check before each attempt, as in the main run.
+- **Timing scope:**
+  - The per-cell world update (cuRobo) and environment construction (VAMP) are not counted in T_cycle; cuRobo's world update is recorded separately.
+  - VAMP's MoveL time includes line IK, spline, Ruckig and the 1 kHz limit check that drives the speed-halving retry. That check runs the full validation, collision included, so it slightly overstates VAMP's MoveL time.
+- **Speed:** the TCP cruise speed is computed from FK of the 1 kHz trajectory (5 ms finite differences) for every planner.
+  - With v = 0.25 m/s, a = 1 m/s² and j = 10 m/s³ over 0.10 m, VAMP's 1-D profile barely reaches cruise, so the "middle 60%" includes ramps.
+  - The speed deviation is reported as defined, with this caveat.
+- **Order in the GPU slot:**
+  1. pass 2a repeat (quiet CPU);
+  2. VAMP pick-place, timed (quiet CPU);
+  3. cuRobo v1 pick-place;
+  4. cuRoboV2 pick-place until the slot deadline (seed-major order, so partial V2 results cover all cells for the first seeds and are reported as partial).

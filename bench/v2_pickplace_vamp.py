@@ -10,7 +10,7 @@ Every segment is validated at 1 kHz (bench/v2_validate.py). The per-segment plan
 Timed: plan / line IK / parameterization, measured in this process. Writes results/v2/raw/vamp_pickplace.jsonl.
 Usage: python bench/v2_pickplace_vamp.py --freeze H [--seeds 5]
 """
-import argparse, json, math, pickle, sys, time
+import argparse, json, pickle, sys, time
 from pathlib import Path
 
 import numpy as np
@@ -21,6 +21,7 @@ from scipy.interpolate import CubicSpline
 sys.path.insert(0, str(Path(__file__).parent))
 from v2_common import ROOT, limits, seed_from
 from v2_pickplace_gen import LIFT, line_ik
+from v2_pickplace_metrics import moveL_metrics
 from v2_timing import ruckig_p1
 from v2_validate import validate
 
@@ -46,27 +47,18 @@ def tcp_time_scale(qs, v):
     st = np.array([tr.at_time(t) for t in ts])  # (n, 3, 1): s, sdot, sddot
     sv, sd, sdd = st[:, 0, 0], st[:, 1, 0], st[:, 2, 0]
     q = sp(sv); dq = sp(sv, 1); ddq = sp(sv, 2)
-    return q, dq * sd[:, None], ddq * (sd ** 2)[:, None] + dq * sdd[:, None], float(tr.duration), sd
-
-
-def moveL_metrics(q, p0, p1, R, sdot):
-    T = [np.asarray(vmod.eefk(x.astype(np.float32).tolist())) for x in q[::5]]
-    P = np.array([t[:3, 3] for t in T]); d = (np.asarray(p1) - p0); d = d / np.linalg.norm(d)
-    rel = P - p0; perp = rel - np.outer(rel @ d, d)
-    ang = [math.degrees(math.acos(max(-1.0, min(1.0, (np.trace(np.asarray(R).T @ t[:3, :3]) - 1) / 2)))) for t in T]
-    n = len(sdot); cruise = sdot[int(0.2 * n): int(0.8 * n)]
-    vbar = float(np.mean(cruise)) if len(cruise) else 0.0
-    return {"max_tcp_dev_mm": float(np.linalg.norm(perp, axis=1).max() * 1e3), "max_orient_dev_deg": float(max(ang)),
-            "cruise_speed_mean_mps": vbar, "cruise_speed_dev_pct": float(np.abs(cruise - vbar).max() / vbar * 100) if vbar > 0 else None}
+    return q, dq * sd[:, None], ddq * (sd ** 2)[:, None] + dq * sdd[:, None], float(tr.duration)
 
 
 def free_segment(p, env, q0, q1, sampler, planner, ps, ss, seed):
     sampler.reset(); sampler.skip(seed % 100000)
     t0 = time.perf_counter(); res = planner(list(q0), [list(q1)], env, ps, sampler)
     if not res.solved:
-        return {"kind": "free", "ok": False, "t_plan_s": time.perf_counter() - t0}
+        return {"kind": "free", "ok": False, "reason": "not solved", "t_ready_s": time.perf_counter() - t0}
     simple = vmod.simplify(res.path, env, ss, sampler); path = np.array(simple.path.numpy(), float)
     T1 = ruckig_p1(path, VMAX, AMAX, JMAX); t1 = time.perf_counter()
+    if T1 is None:
+        return {"kind": "free", "ok": False, "reason": "ruckig", "t_ready_s": t1 - t0}
     q, qd, qdd = T1.sample(np.arange(0, T1.duration + 1e-9, 1e-3)); v = validate(VM, p, q, qd, qdd)
     ok = v["valid"] and (t1 - t0) <= T_BUDGET
     return {"kind": "free", "ok": bool(ok), "t_ready_s": t1 - t0, "t_exec_s": T1.duration, "valid": v["valid"]}
@@ -82,7 +74,7 @@ def moveL_segment(p, env, q_from, p_from, p_to, R, reuse=None):
         out = tcp_time_scale(qs, v)
         if out is None:
             return {"kind": "moveL", "ok": False, "reason": "ruckig", "t_ready_s": time.perf_counter() - t0}, qs
-        q, qd, qdd, dur, sdot = out
+        q, qd, qdd, dur = out
         val = validate(VM, p, q, qd, qdd)
         lim_ok = val["max_vel_ratio"] <= 1.01 and val["max_acc_ratio"] <= 1.01 and val["max_jerk_ratio"] <= 1.01
         if lim_ok or retries == 3:
@@ -91,16 +83,17 @@ def moveL_segment(p, env, q_from, p_from, p_to, R, reuse=None):
     t1 = time.perf_counter()
     rec = {"kind": "moveL", "ok": bool(val["valid"]), "t_ready_s": t1 - t0, "t_exec_s": dur, "tcp_speed_cmd": v,
            "speed_retries": retries, "valid": val["valid"], "colliding_samples": val["colliding_samples"]}
-    rec.update(moveL_metrics(q, p_from, p_to, R, sdot))
+    rec.update(moveL_metrics(q, p_from, p_to, R))
     return rec, qs
 
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--freeze", required=True); ap.add_argument("--seeds", type=int, default=5)
-    ap.add_argument("--limit", type=int, default=0); a = ap.parse_args()
-    D = pickle.load(open(ROOT / "problems/v2_pickplace.pkl", "rb")); cells = D["cells"][: a.limit or None]
+    ap.add_argument("--limit", type=int, default=0); ap.add_argument("--out", default=None)
+    ap.add_argument("--problems", default=str(ROOT / "problems/v2_pickplace.pkl")); a = ap.parse_args()
+    D = pickle.load(open(a.problems, "rb")); cells = D["cells"][: a.limit or None]
     _, planner, ps, ss = vamp.configure_robot_and_planner_with_kwargs(VM, "rrtc"); sampler = vmod.halton()
-    out = ROOT / "results/v2/raw/vamp_pickplace.jsonl"; out.parent.mkdir(parents=True, exist_ok=True)
+    out = Path(a.out) if a.out else ROOT / "results/v2/raw/vamp_pickplace.jsonl"; out.parent.mkdir(parents=True, exist_ok=True)
     done = {(r["cell"], r["pick"], r["seed_k"]) for r in map(json.loads, open(out))} if out.exists() else set()
     for k in range(a.seeds):
         seed = seed_from(a.freeze, f"pickplace_seed{k}")
@@ -108,20 +101,33 @@ def main():
             env = vamp.problem_dict_to_vamp(c); cur = np.asarray(c["home"])
             for i, pk in enumerate(c["picks"]):
                 g, pl = pk["grasp"], pk["place"]
+                if (c["index"], i, k) in done:
+                    cur = np.asarray(pl["q_above"]); continue
                 above_g = np.asarray(g["pos"]) + [0, 0, LIFT]; above_p = np.asarray(pl["pos"]) + [0, 0, LIFT]
-                segs = [free_segment(c, env, cur, g["q_above"], sampler, planner, ps, ss, seed)]
-                s2, line_g = moveL_segment(c, env, g["q_above"], above_g, g["pos"], g["R"]); segs.append(s2)
-                s3, _ = moveL_segment(c, env, None, g["pos"], above_g, g["R"], reuse=line_g[::-1] if line_g else None); segs.append(s3)
-                segs.append(free_segment(c, env, g["q_above"], pl["q_above"], sampler, planner, ps, ss, seed))
-                s5, line_p = moveL_segment(c, env, pl["q_above"], above_p, pl["pos"], pl["R"]); segs.append(s5)
-                s6, _ = moveL_segment(c, env, None, pl["pos"], above_p, pl["R"], reuse=line_p[::-1] if line_p else None); segs.append(s6)
+                # A failed segment ends the pick (remaining segments "not attempted"); every pick starts from the
+                # previous pick's pre-place configuration, so picks are independent of earlier failures.
+                steps = [lambda: free_segment(c, env, cur, g["q_above"], sampler, planner, ps, ss, seed),
+                         lambda: moveL_segment(c, env, g["q_above"], above_g, g["pos"], g["R"]),
+                         lambda: moveL_segment(c, env, None, g["pos"], above_g, g["R"], reuse=lines[-1][::-1]),
+                         lambda: free_segment(c, env, g["q_above"], pl["q_above"], sampler, planner, ps, ss, seed),
+                         lambda: moveL_segment(c, env, pl["q_above"], above_p, pl["pos"], pl["R"]),
+                         lambda: moveL_segment(c, env, None, pl["pos"], above_p, pl["R"], reuse=lines[-1][::-1])]
+                segs, lines = [], []
+                for step in steps:
+                    r = step()
+                    seg, line = r if isinstance(r, tuple) else (r, None)
+                    segs.append(seg)
+                    if line is not None:
+                        lines.append(line)
+                    if not seg["ok"]:
+                        break
+                segs += [{"kind": "not_attempted", "ok": False}] * (6 - len(segs))
                 ok = all(s["ok"] for s in segs)
                 rec = {"cell": c["index"], "pick": i, "seed_k": k, "seed": seed, "planner": "vamp", "success": bool(ok), "segments": segs,
                        "t_ready_s": float(sum(s.get("t_ready_s", 0) for s in segs)), "t_exec_s": float(sum(s.get("t_exec_s", 0) for s in segs))}
                 rec["t_cycle_s"] = rec["t_ready_s"] + rec["t_exec_s"] if ok else None
-                if (c["index"], i, k) not in done:
-                    with open(out, "a") as f:
-                        f.write(json.dumps(rec) + "\n")
+                with open(out, "a") as f:
+                    f.write(json.dumps(rec) + "\n")
                 cur = np.asarray(pl["q_above"])
             print(f"seed {k} cell {c['index']} done", flush=True)
 
