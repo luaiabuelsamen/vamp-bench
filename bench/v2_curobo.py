@@ -107,8 +107,10 @@ def plan_v2(mp, pc, p):
     if not ok:
         return t1 - t0, False, "no_result" if res is None else "fail", None
     tr = res.get_interpolated_plan(); dof = len(p["start"])
+    dt = getattr(tr, "dt", None)
+    dt = float(dt.view(-1)[0].item()) if dt is not None and hasattr(dt, "view") else float(mp.trajopt_solver.config.interpolation_dt)
     return t1 - t0, True, "ok", (tr.position.view(-1, dof).cpu().numpy(), tr.velocity.view(-1, dof).cpu().numpy(),
-                                 tr.acceleration.view(-1, dof).cpu().numpy(), 0.001)
+                                 tr.acceleration.view(-1, dof).cpu().numpy(), dt)
 
 
 build, plan = (build_v1, plan_v1) if a.version == "v1" else (build_v2, plan_v2)
