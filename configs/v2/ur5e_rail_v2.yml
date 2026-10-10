@@ -1,10 +1,5 @@
 robot_cfg:
   kinematics:
-    usd_path: null
-    usd_robot_root: /robot
-    isaac_usd_path: ''
-    usd_flip_joints: {}
-    usd_flip_joint_limits: []
     urdf_path: /home/jetson3/projects/vamp-bench/configs/v2/ur5e_rail.urdf
     asset_root_path: /home/jetson3/projects/vamp-bench/configs
     base_link: world

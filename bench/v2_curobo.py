@@ -9,7 +9,7 @@ bench/v2_validate.py (same gate as VAMP). Timed: update_world + plan (CUDA-synch
 Usage: PYTHONPATH=... <python> bench/v2_curobo.py --version v1|v2 --freeze H --set heldout|mbm|mpinets [--subset v2]
 Writes results/v2/raw/curobo<1|2>_<set>.json
 """
-import argparse, json, pickle, platform, sys, time
+import argparse, json, os, pickle, platform, sys, time
 from pathlib import Path
 
 import numpy as np
@@ -153,4 +153,12 @@ complete = len({(r["seed_k"], r["q"]) for r in recs}) == len(seeds) * len(idx)
 json.dump({"freeze": a.freeze, "complete": complete, "stopped_at_deadline": stopped, "set": a.set, "version": a.version, "plan_config": pcd, "settings": P[f"curobo_{a.version}"],
            "seeds": seeds, "subset": a.subset, "budget_T_s": T_BUDGET, "host": platform.node(), "gpu": torch.cuda.get_device_name(0), "records": recs}, open(out, "w"))
 print("wrote", out, "complete" if complete else "PARTIAL", len(recs), "records")
+# Night-2 recovery (2026-10-10): the held-out V2 run crashed on a config key; if this flag exists, the mpinets run
+# hands over to a held-out run with identical arguments (same deadline/subset/seeds), inside the same GPU slot.
+FLAG = ROOT / "results/v2/CHAIN_HELDOUT"
+if a.set == "mpinets" and FLAG.exists():
+    FLAG.unlink()
+    args = [x if x != "mpinets" else "heldout" for x in sys.argv]
+    print("chaining to held-out:", args, flush=True); sys.stdout.flush()
+    os.execv(sys.executable, [sys.executable] + args)
 sys.exit(0 if complete else 3)

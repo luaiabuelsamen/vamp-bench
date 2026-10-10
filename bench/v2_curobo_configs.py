@@ -31,7 +31,8 @@ for name, src in SRC.items():
     c2 = copy.deepcopy(cfg); k2 = c2["robot_cfg"]["kinematics"]
     k2["format_version"] = 2.0; k2["tool_frames"] = [k2.pop("ee_link")]
     k2["cspace"]["default_joint_position"] = k2["cspace"].pop("retract_config")
-    for drop in ("use_usd_kinematics", "use_global_cumul", "link_names"):
+    for drop in ("use_usd_kinematics", "use_global_cumul", "link_names", "usd_path", "usd_robot_root", "isaac_usd_path",
+                 "usd_flip_joints", "usd_flip_joint_limits"):
         k2.pop(drop, None)
     yaml.safe_dump(c2, open(OUT / f"{name}_v2.yml", "w"), sort_keys=False)
     print(name, "velocity", lim["velocity"], "acc", lim["acceleration"], "jerk", lim["jerk"])
