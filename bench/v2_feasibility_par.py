@@ -6,7 +6,9 @@ Reference (untimed, deterministic): VAMP rrtc with max_iterations = max_samples 
 caps, seed0. Caps are iteration counts, not wall time, so CPU contention changes duration but never the verdict.
 Checkpoint: results/v2/raw/feasibility_<set>.jsonl (resume skips finished queries).
 Memory gate (the board is shared; the flagship must never be OOM-killed): at most --workers (2) references run while
-MemAvailable <= --mem-gate-gb (4 GB); up to --max-workers (6) above it. Workers beyond --workers are never started at or below the
+MemAvailable (/proc/meminfo) has not stayed above --mem-gate-gb (4 GB) for --gate-hold-min (10) minutes; up to
+--max-workers (6) once it has. Extra workers (beyond --workers) are killed and requeued, newest first, when MemAvailable
+falls under --shed-gb (1.5 GB). Workers beyond --workers are never started at or below the
 gate; no worker at all is started while MemAvailable < floor + 0.5 GB; every worker sets oom_score_adj = 1000 so the kernel picks it before anything else. If MemAvailable falls
 under --mem-floor-gb (0.6 GB), the largest worker is killed and its query requeued (relaunched only above the gate;
 the reference is deterministic, so a rerun gives the same verdict).
@@ -63,9 +65,14 @@ def child(job, conn):
 def run_gated(jobs, ck, a):
     """Run jobs with a memory-dependent worker count; append each result to the checkpoint as it finishes."""
     ctx = mp.get_context("fork"); queue = list(jobs); deferred = []; running = {}  # pid -> (proc, conn, job)
-    last_log = 0
+    last_log = 0; above_since = None
     while queue or deferred or running:
         avail = mem_available_gb()
+        above_since = (above_since or time.time()) if avail > a.mem_gate_gb else None
+        if avail < a.shed_gb and len(running) > a.workers:
+            pid = max(running); proc, conn, job = running.pop(pid)
+            print(f"{time.strftime('%H:%M:%S')} MemAvailable {avail:.2f} GB < {a.shed_gb} GB: shed extra worker for q {job[1]}, requeued", flush=True)
+            proc.kill(); proc.join(); queue.insert(0, job); continue
         if avail < a.mem_floor_gb and running:
             pid = max(running, key=rss_gb); proc, conn, job = running.pop(pid)
             print(f"{time.strftime('%H:%M:%S')} MemAvailable {avail:.2f} GB < floor: killed worker for q {job[1]} "
@@ -81,11 +88,11 @@ def run_gated(jobs, ck, a):
             elif not proc.is_alive():
                 proc.join(); running.pop(pid); deferred.append(job)
                 print(f"{time.strftime('%H:%M:%S')} worker for q {job[1]} died (exit {proc.exitcode}); requeued above the gate", flush=True)
-        above = avail > a.mem_gate_gb
+        above = above_since is not None and time.time() - above_since >= 60 * a.gate_hold_min
         cap = a.max_workers if above else a.workers
         while len(running) < cap and (queue or (above and deferred)):
             m = mem_available_gb()
-            if m < a.mem_floor_gb + 0.5 or (len(running) >= a.workers and m <= a.mem_gate_gb):
+            if m < a.mem_floor_gb + 0.5 or (len(running) >= a.workers and (m <= a.mem_gate_gb or not above)):
                 break
             job = deferred.pop(0) if (above and deferred) else queue.pop(0)
             r, w = ctx.Pipe(duplex=False); proc = ctx.Process(target=child, args=(job, w)); proc.start(); w.close()
@@ -113,7 +120,8 @@ def solved_by_timed_runs(s):
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--freeze", required=True); ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--max-workers", type=int, default=6); ap.add_argument("--mem-gate-gb", type=float, default=4.0)
-    ap.add_argument("--mem-floor-gb", type=float, default=0.6)
+    ap.add_argument("--mem-floor-gb", type=float, default=0.6); ap.add_argument("--shed-gb", type=float, default=1.5)
+    ap.add_argument("--gate-hold-min", type=float, default=10.0)
     ap.add_argument("--sets", nargs="+", default=["heldout", "mbm", "mpinets"]); a = ap.parse_args()
     seed = seed_from(a.freeze, "seed0")
     for s in a.sets:
