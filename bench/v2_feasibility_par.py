@@ -12,9 +12,12 @@ falls under --shed-gb (1.5 GB). Workers beyond --workers are never started at or
 gate; no worker at all is started while MemAvailable < floor + 0.5 GB; every worker sets oom_score_adj = 1000 so the kernel picks it before anything else. If MemAvailable falls
 under --mem-floor-gb (0.6 GB), the largest worker is killed and its query requeued (relaunched only above the gate;
 the reference is deterministic, so a rerun gives the same verdict).
+Standing rule while the flagship runs a SmolVLA evaluation (a python train_local.py process with --skip-train and
+"smolvla" in its arguments): at most 1 worker, and no new reference starts unless MemAvailable > --eval-gate-gb (2.5).
+Running references are not killed by this rule (only by the floor); the cap applies as they finish.
 Usage: python bench/v2_feasibility_par.py --freeze H [--workers 2 --max-workers 6 --mem-gate-gb 4] [--sets heldout mbm mpinets]
 """
-import argparse, json, multiprocessing as mp, os, pickle, signal, sys, time
+import argparse, json, multiprocessing as mp, os, pickle, re, signal, sys, time
 from pathlib import Path
 
 import vamp
@@ -57,6 +60,21 @@ def rss_gb(pid):
         return 0.0
 
 
+EVAL_RE = re.compile(r"^\S*python[0-9.]* \S*train_local\.py .*--skip-train")
+
+
+def smolvla_eval_running():
+    for d in os.listdir("/proc"):
+        if d.isdigit():
+            try:
+                args = open(f"/proc/{d}/cmdline", "rb").read().replace(b"\0", b" ").decode(errors="replace")
+            except OSError:
+                continue
+            if EVAL_RE.search(args) and "smolvla" in args.lower():
+                return True
+    return False
+
+
 def child(job, conn):
     open("/proc/self/oom_score_adj", "w").write("1000")
     conn.send(reference(job)); conn.close()
@@ -65,7 +83,7 @@ def child(job, conn):
 def run_gated(jobs, ck, a):
     """Run jobs with a memory-dependent worker count; append each result to the checkpoint as it finishes."""
     ctx = mp.get_context("fork"); queue = list(jobs); deferred = []; running = {}  # pid -> (proc, conn, job)
-    last_log = 0; above_since = None
+    last_log = 0; above_since = None; last_ev = None
     while queue or deferred or running:
         avail = mem_available_gb()
         above_since = (above_since or time.time()) if avail > a.mem_gate_gb else None
@@ -89,9 +107,15 @@ def run_gated(jobs, ck, a):
                 proc.join(); running.pop(pid); deferred.append(job)
                 print(f"{time.strftime('%H:%M:%S')} worker for q {job[1]} died (exit {proc.exitcode}); requeued above the gate", flush=True)
         above = above_since is not None and time.time() - above_since >= 60 * a.gate_hold_min
-        cap = a.max_workers if above else a.workers
+        ev = smolvla_eval_running()
+        cap = 1 if ev else (a.max_workers if above else a.workers)
+        if ev != last_ev:
+            print(f"{time.strftime('%H:%M:%S')} flagship SmolVLA eval {'running: cap 1 worker, new start only above ' + str(a.eval_gate_gb) + ' GB' if ev else 'not running'}", flush=True)
+            last_ev = ev
         while len(running) < cap and (queue or (above and deferred)):
             m = mem_available_gb()
+            if ev and m <= a.eval_gate_gb:
+                break
             if m < a.mem_floor_gb + 0.5 or (len(running) >= a.workers and (m <= a.mem_gate_gb or not above)):
                 break
             job = deferred.pop(0) if (above and deferred) else queue.pop(0)
@@ -121,7 +145,7 @@ def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--freeze", required=True); ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--max-workers", type=int, default=6); ap.add_argument("--mem-gate-gb", type=float, default=4.0)
     ap.add_argument("--mem-floor-gb", type=float, default=0.6); ap.add_argument("--shed-gb", type=float, default=1.5)
-    ap.add_argument("--gate-hold-min", type=float, default=10.0)
+    ap.add_argument("--gate-hold-min", type=float, default=10.0); ap.add_argument("--eval-gate-gb", type=float, default=2.5)
     ap.add_argument("--sets", nargs="+", default=["heldout", "mbm", "mpinets"]); a = ap.parse_args()
     seed = seed_from(a.freeze, "seed0")
     for s in a.sets:
