@@ -1,0 +1,14 @@
+{
+ "queries": 300,
+ "goals_changed": 289,
+ "max_joint_move_rad_median": [
+  7.672717964692547,
+  3.6862842453502127
+ ],
+ "share_over_4p5_rad": [
+  0.95,
+  0.2833333333333333
+ ],
+ "queries_whose_bins_changed": 218,
+ "fk_max_abs_diff": 5.960464477539062e-07
+}

@@ -23,7 +23,7 @@ from scipy.spatial.transform import Rotation
 
 sys.path.insert(0, str(Path(__file__).parent))
 from mbm_world import problem_to_world
-from v2_common import ROOT, seed_from
+from v2_common import ROOT, limits, seed_from
 from v2_pickplace_metrics import moveL_metrics
 from v2_validate import validate
 
@@ -66,7 +66,41 @@ def world_v1(mg, c):
     mg.reset(reset_seed=True); mg.world_coll_checker.clear_cache(); mg.update_world(problem_to_world(c))
 
 
+LAST = {}  # A6 diagnostics: the last planner result, read after timing
+
+
+def diag(lim_j):
+    """A6 diagnostics (labelled, not part of the results): planner status on failure (v1; V2's plan_cspace/plan_pose
+    return None on failure), and on success the jerk of the optimizer-level trajectory (finite differences of its
+    acceleration at its own dt) as a ratio to the limit, next to the 1 kHz interpolated value the gate uses."""
+    out = {}
+    try:
+        res = LAST.get("res")
+        if res is None:
+            return {"diag_status": "no result object" if a.version == "v2" else None}
+        st = getattr(res, "status", None)
+        if st is not None:
+            out["diag_status"] = str(getattr(st, "name", st))
+        js = getattr(res, "optimized_plan", None) or getattr(res, "js_solution", None)
+        dt = getattr(res, "optimized_dt", None)
+        if dt is None and js is not None:
+            dt = getattr(js, "dt", None)
+        if js is not None and dt is not None and getattr(js, "acceleration", None) is not None:
+            dtv = float(dt.reshape(-1)[0].item()) if hasattr(dt, "reshape") else float(dt)
+            acc = js.acceleration.reshape(-1, js.acceleration.shape[-1])[:, :7].cpu().numpy()
+            out["diag_opt_dt"] = dtv; out["diag_opt_n"] = int(len(acc))
+            if len(acc) > 2:
+                out["diag_opt_jerk_ratio_fd"] = float((np.abs(np.diff(acc, axis=0)) / dtv / lim_j).max())
+            jk = getattr(js, "jerk", None)
+            if jk is not None:
+                out["diag_opt_jerk_ratio_reported"] = float((np.abs(jk.reshape(-1, jk.shape[-1])[:, :7].cpu().numpy()) / lim_j).max())
+    except Exception as e:  # diagnostics must never break the run
+        out["diag_error"] = repr(e)[:200]
+    return out
+
+
 def traj_v1(res):
+    LAST["res"] = res
     if not bool(res.success.item()):
         return None
     tr = res.get_interpolated_plan(); dt = float(res.interpolation_dt)
@@ -114,7 +148,7 @@ def unrolled_v2(mp, pc, call):
     for att in range(pc["max_attempts"]):
         if time.perf_counter() - t0 > T_BUDGET:
             break
-        res = call(0 if att >= pc["enable_graph_attempt"] else 1)
+        res = call(0 if att >= pc["enable_graph_attempt"] else 1); LAST["res"] = res
         if res is not None and bool(res.success.view(-1)[0].item()):
             break
     if res is None or not bool(res.success.view(-1)[0].item()):
@@ -147,8 +181,9 @@ build, world, free, moveL = {"v1": (build_v1, world_v1, free_v1, moveL_v1), "v2"
 
 def segment(kind, c, fn, line=None):
     """Run one planner call, time it, validate the returned trajectory at 1 kHz (same gate as VAMP)."""
-    sync(); t0 = time.perf_counter(); tr = fn(); sync(); t = time.perf_counter() - t0
+    LAST.clear(); sync(); t0 = time.perf_counter(); tr = fn(); sync(); t = time.perf_counter() - t0
     rec = {"kind": kind, "t_ready_s": t}
+    rec.update(diag(limits(VM)[2]))
     if tr is None:
         rec.update(ok=False, reason="planner failed"); return rec, None
     q, qd, qdd, dt = tr

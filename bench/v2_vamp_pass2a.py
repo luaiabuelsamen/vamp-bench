@@ -6,7 +6,7 @@ recorded. These quiet timings are the ones that count (success = T_ready <= T).
 A4 check: (i) contention slowdown = pass (a) contended time / quiet time, over successes; (ii) a sample of 20 runs
 killed at 60 s in pass (a) is re-run alone with a 30 s kill to confirm that they also fail within T alone.
 CPU load (top processes) is recorded at start. Writes results/v2/raw/vamp_pass2a_<set>.jsonl and
-results/v2/pass2a_check.json. Usage: python bench/v2_vamp_pass2a.py --freeze H
+results/v2/pass2a_check.json. Usage: python bench/v2_vamp_pass2a.py --freeze H [--sets heldout_a6 --check-out results/v2/pass2a_check_a6.json]
 """
 import argparse, json, multiprocessing as mp, os, pickle, signal, subprocess, sys, time
 from pathlib import Path
@@ -20,10 +20,11 @@ from v2_timing import ruckig_p1, toppra_p2
 from v2_vamp_pass1 import SETS, run_one
 
 ap = argparse.ArgumentParser(); ap.add_argument("--freeze", required=True); ap.add_argument("--deadline", type=float, default=0)
+ap.add_argument("--sets", nargs="+", default=["heldout", "mbm", "mpinets"]); ap.add_argument("--check-out", default="results/v2/pass2a_check.json")
 a = ap.parse_args()
 load = subprocess.run(["ps", "-eo", "pcpu,args", "--sort=-pcpu"], capture_output=True, text=True).stdout.splitlines()[1:8]
 check = {"top_processes_at_start": load, "slowdown": {}, "killed_sample": []}
-for s in ("heldout", "mbm", "mpinets"):
+for s in a.sets:
     vm, pk, key = SETS[s]; probs = pickle.load(open(ROOT / pk, "rb"))["problems"][key]
     vmod, planner, ps, ss = vamp.configure_robot_and_planner_with_kwargs(vm, "rrtc"); sampler = vmod.halton()
     vmax, amax, jmax = limits(vm)
@@ -59,9 +60,10 @@ for s in ("heldout", "mbm", "mpinets"):
     print(s, "re-timed", len(ratios), check["slowdown"].get(s), flush=True)
 
 # (ii) killed-at-60 s sample re-run alone with a 30 s kill (A4 assumption: they fail within T alone too)
-vm, pk, key = SETS["heldout"]; probs = pickle.load(open(ROOT / pk, "rb"))["problems"][key]
-killed = [r for r in map(json.loads, open(ROOT / "results/v2/raw/vamp_pass1_heldout.jsonl")) if "killed_at_s" in r]
-rng = np.random.default_rng(0); sample = [killed[i] for i in rng.choice(len(killed), size=min(20, len(killed)), replace=False)]
+HS = next((s for s in a.sets if s.startswith("heldout")), None)
+vm, pk, key = SETS[HS or "heldout"]; probs = pickle.load(open(ROOT / pk, "rb"))["problems"][key]
+killed = [r for r in map(json.loads, open(ROOT / f"results/v2/raw/vamp_pass1_{HS}.jsonl")) if "killed_at_s" in r] if HS else []
+rng = np.random.default_rng(0); sample = [killed[i] for i in rng.choice(len(killed), size=min(20, len(killed)), replace=False)] if killed else []
 ctx = mp.get_context("fork")
 for r in sample:
     if a.deadline and time.time() > a.deadline:
@@ -79,5 +81,5 @@ for r in sample:
                                    "alone_t_plan_ms": res["contended_t_plan_ms"] if res else None})
     print("killed sample", r["q"], r["seed_k"], "solved alone within T:", ok, flush=True)
 check["killed_sample_solved_within_T"] = sum(x["solved_alone_within_T"] for x in check["killed_sample"])
-json.dump(check, open(ROOT / "results/v2/pass2a_check.json", "w"), indent=1)
-print("wrote results/v2/pass2a_check.json", check["slowdown"], "killed sample solved within T:", check["killed_sample_solved_within_T"])
+json.dump(check, open(ROOT / a.check_out, "w"), indent=1)
+print("wrote", a.check_out, check["slowdown"], "killed sample solved within T:", check["killed_sample_solved_within_T"])

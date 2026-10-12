@@ -27,6 +27,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from v2_common import ROOT, seed_from
 
 SETS = {"heldout": ("ur5erail", "problems/v2_heldout.pkl", "v2_heldout"),
+        "heldout_a6": ("ur5erail", "problems/v2_heldout_a6.pkl", "v2_heldout_a6"),  # amendment A6
         "mbm": ("panda", "problems/v2_mbm_panda.pkl", "v2_mbm"),
         "mpinets": ("panda", "problems/v2_mpinets_panda.pkl", "v2_mpinets")}
 CAP = 6_000_000

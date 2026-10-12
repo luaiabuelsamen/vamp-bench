@@ -23,7 +23,7 @@ from v2_validate import validate
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--version", required=True, choices=["v1", "v2"]); ap.add_argument("--freeze", required=True)
-ap.add_argument("--set", required=True, choices=["heldout", "mbm", "mpinets"]); ap.add_argument("--seeds", type=int, default=10)
+ap.add_argument("--set", required=True, choices=["heldout", "heldout_a6", "mbm", "mpinets"]); ap.add_argument("--seeds", type=int, default=10)
 ap.add_argument("--subset", default=None, help="json list of query indices (V2 stratified subsample)")
 ap.add_argument("--limit", type=int, default=0); ap.add_argument("--max-attempts", type=int, default=None)
 ap.add_argument("--out", default=None)
@@ -31,12 +31,13 @@ ap.add_argument("--deadline", type=float, default=0, help="unix time; stop start
 ap.add_argument("--budget-s", type=float, default=None, help="uniform per-query wall budget T (amendment A2; default from configs/v2_planners.yaml)")
 a = ap.parse_args()
 VM, PK, KEY, RB = {"heldout": ("ur5erail", "problems/v2_heldout.pkl", "v2_heldout", "ur5e_rail"),
+                   "heldout_a6": ("ur5erail", "problems/v2_heldout_a6.pkl", "v2_heldout_a6", "ur5e_rail"),  # A6
                    "mbm": ("panda", "problems/v2_mbm_panda.pkl", "v2_mbm", "panda"),
                    "mpinets": ("panda", "problems/v2_mpinets_panda.pkl", "v2_mpinets", "panda")}[a.set]
 P = yaml.safe_load(open(ROOT / "configs/v2_planners.yaml"))
 T_BUDGET = a.budget_s or float(P["budget"]["T_s"])
 probs = pickle.load(open(ROOT / PK, "rb"))["problems"][KEY]
-idx = json.load(open(a.subset))[a.set] if a.subset else list(range(len(probs)))
+idx = json.load(open(a.subset))[a.set.removesuffix("_a6")]  # A6: same query indices as the original subsample if a.subset else list(range(len(probs)))
 idx = idx[: a.limit or None]
 robot = yaml.safe_load(open(ROOT / f"configs/v2/{RB}_{a.version}.yml"))["robot_cfg"]
 seeds = [seed_from(a.freeze, f"seed{k}") for k in range(a.seeds)]

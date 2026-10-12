@@ -125,7 +125,7 @@ The hash is recorded in `docs/V2_FREEZE.md` in the next commit. Nothing listed a
 - **A6 (2026-10-12, found in a sanity check before any pick-place analysis; APPROVED by the orchestrator; logged before any data was regenerated): goals on the joint branch nearest the start.**
   - **Defect:** the held-out IK (`gen_v2.ik`) returns joint values anywhere in the ±2π range, without choosing the 2π-equivalent value nearest the start. 95% of held-out queries need some arm joint to turn more than 4.5 rad. For the same tool pose, a cell controller would pick the nearest branch. The same defect is in the pick-place cells (`docs/V2_PICKPLACE_PREREGISTRATION.md`, A6).
   - **Rule:** for every revolute joint with ±2π limits (shoulder pan, shoulder lift, wrists 1–3; the elbow is ±π and the rail is prismatic), the goal value g_j becomes g_j + 2πk. The integer k minimises |g_j + 2πk − s_j| for the start s, subject to staying within ±2π.
-    - Geometry is identical, because FK and every collision sphere are 2π-periodic in each revolute joint. `bench/v2_wrap_goals.py` asserts this for every goal (FK equal to 1e-6, same VAMP validity).
+    - Geometry is identical, because FK and every collision sphere are 2π-periodic in each revolute joint. `bench/v2_wrap_goals.py` asserts this for every goal (FK equal within float32 rounding, same VAMP validity).
   - **New set `heldout_a6`** (`problems/v2_heldout_a6.pkl`): the same 300 queries with the same starts and the wrapped goals.
     - Bins are recomputed with the same `bins()`; the limit-margin and passage bins can change.
     - Runs, as in the main run:
