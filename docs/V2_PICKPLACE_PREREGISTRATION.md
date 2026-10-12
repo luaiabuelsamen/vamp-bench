@@ -88,3 +88,25 @@ Home is a fixed configuration per cell.
 - **Main v2 held-out set:** it used the same IK for its goal configurations.
   - Its comparison is unaffected, since all planners receive the same joint-space start and goal.
   - Any description of its goals as "tool pointing down" must be checked against the actual FK; this is reported in CHANGELOG.
+
+## Amendment A6 (logged 2026-10-12, after the A5 runs and before any pick-place analysis; approved by the orchestrator)
+- **Defect:** the A5 cells' IK configurations are not on the 2π-equivalent branch nearest the configuration the robot comes from.
+  - 86% of free segments need some arm joint to turn more than 4.5 rad (median 6.7 rad, up to 13).
+  - Below 4.5 rad, cuRobo v1 solved 93–100% of free segments and cuRoboV2 100%. Above it, v1 solved 23%, V2 41% and VAMP 43% (partial run).
+- **Rule:** the same wrap as `docs/V2_PREREGISTRATION.md` A6, applied along each cell's pick order. Revolute joints with ±2π limits are shifted by multiples of 2π, staying within ±2π:
+  - pick i's pre-grasp `q_above` goes to the branch nearest the pick's start (home for pick 0, otherwise pick i−1's wrapped pre-place);
+  - the grasp configuration `q` gets the same shift, so the MoveL line is unchanged;
+  - the pre-place `q_above` goes to the branch nearest the wrapped pre-grasp, and the place `q` gets the same shift;
+  - home and all poses are unchanged.
+  - Geometry is identical; `bench/v2_wrap_goals.py` asserts FK and validity for every configuration.
+- **Files:**
+  - Problems: `problems/v2_pickplace.pkl` becomes the A6 cells; the A5 cells are kept as `problems/v2_pickplace_A5_unwrapped.pkl`.
+  - A5 results are kept as `*_pickplace.A5_unwrapped.jsonl` and reported only as a labelled appendix.
+  - The partial A5 VAMP rerun (86 picks) was stopped and is void.
+- **Reruns:**
+  - VAMP on CPU now: contended, with the load log.
+  - cuRobo v1, then cuRoboV2, in one overnight GPU slot.
+- **Diagnostics in that slot (labelled, not part of the results):**
+  - the cuRobo status of each failed free segment;
+  - for MoveL segments, the jerk of cuRobo's optimizer-level trajectory next to the 1 kHz interpolated one, to tell a real jerk excess from an interpolation artefact.
+  - The pre-registered gate (jerk included) is unchanged. The no-jerk gate stays a labelled post-hoc result.

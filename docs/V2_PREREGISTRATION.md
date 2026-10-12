@@ -122,3 +122,22 @@ The hash is recorded in `docs/V2_FREEZE.md` in the next commit. Nothing listed a
     - Night-2 timings are kept as `vamp_pass2a_<set>.night2.jsonl` and reported as a contention sensitivity.
     - The paths must again match pass (a) exactly.
     - Pass 2b is re-merged with the night-3 timings (validation results are unchanged: they do not depend on timing).
+- **A6 (2026-10-12, found in a sanity check before any pick-place analysis; APPROVED by the orchestrator; logged before any data was regenerated): goals on the joint branch nearest the start.**
+  - **Defect:** the held-out IK (`gen_v2.ik`) returns joint values anywhere in the ±2π range, without choosing the 2π-equivalent value nearest the start. 95% of held-out queries need some arm joint to turn more than 4.5 rad. For the same tool pose, a cell controller would pick the nearest branch. The same defect is in the pick-place cells (`docs/V2_PICKPLACE_PREREGISTRATION.md`, A6).
+  - **Rule:** for every revolute joint with ±2π limits (shoulder pan, shoulder lift, wrists 1–3; the elbow is ±π and the rail is prismatic), the goal value g_j becomes g_j + 2πk. The integer k minimises |g_j + 2πk − s_j| for the start s, subject to staying within ±2π.
+    - Geometry is identical, because FK and every collision sphere are 2π-periodic in each revolute joint. `bench/v2_wrap_goals.py` asserts this for every goal (FK equal to 1e-6, same VAMP validity).
+  - **New set `heldout_a6`** (`problems/v2_heldout_a6.pkl`): the same 300 queries with the same starts and the wrapped goals.
+    - Bins are recomputed with the same `bins()`; the limit-margin and passage bins can change.
+    - Runs, as in the main run:
+      - VAMP: 10 seeds under A4. Pass (a) runs on CPU now; pass 2a (timing) runs at the start of the held-out GPU slot; pass 2b follows.
+      - cuRobo v1: 10 seeds.
+      - cuRoboV2: the same query indices as the original V2 subsample, 3 seeds, so original and A6 are paired query by query.
+    - A3 references cover A6 queries that no timed run solves.
+  - **Reporting:**
+    - `heldout_a6` is the PRIMARY held-out result for H1–H5.
+    - The original held-out set is reported as a labelled appendix, "unwrapped goals, long joint moves", paired with A6 query by query.
+    - MBM and MπNets are unchanged: the Panda's joint limits are narrower than 2π, so they have no equivalent branches.
+  - **How the paired comparison will be read (pre-registered):**
+    - If a planner's success rises from original to A6 by more than the 95% CI of the paired difference, that planner is sensitive to long joint moves.
+    - The VAMP − cuRobo gap measured on the original set is "explained by move length" only if it shrinks by at least half on A6; otherwise it is not.
+    - If no planner changes beyond the CI, the defect affected the description of the set, not the comparison.
