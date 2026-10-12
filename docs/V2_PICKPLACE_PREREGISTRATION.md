@@ -65,3 +65,21 @@ Home is a fixed configuration per cell.
   2. VAMP pick-place, timed (quiet CPU);
   3. cuRobo v1 pick-place;
   4. cuRoboV2 pick-place until the slot deadline (seed-major order, so partial V2 results cover all cells for the first seeds and are reported as partial).
+
+## Amendment A5 (logged 2026-10-11 23:40, before any pick-place result was analysed and before any valid cuRobo pick-place run)
+- **Defect:**
+  - The cell generator used `gen_v2.pose_err`, whose orientation term ½ Σᵢ xᵢ × rᵢ is zero at a 180° rotation as well as at the target.
+  - In the first generation, 430 of 480 endpoint configurations had a tool orientation 180° from the intended pose, about arbitrary axes, so many tools did not point down.
+  - The "MoveL" lines also drifted in orientation by up to 21.6° (207 of 240 lines by more than 0.5°).
+  - It was found when cuRobo v1 rejected a MoveL query whose start and goal orientations differed by 180°.
+- **Fix:**
+  - The orientation error becomes the log map, i.e. the rotation vector of R_target·Rᵀ, used for both IK and line IK.
+  - Every endpoint is checked: < 0.3° from the intended R at both ends of the line, tool z pointing down (z·ẑ < −0.99), position < 1 mm.
+  - Cells are seeded per cell, `seed_from(H, "pickplace_cells_A5_<k>")`; the first 30 valid k in order are kept, so they can be built in parallel.
+- **Consequences:**
+  - The first-generation VAMP pick-place run (600 picks) is void; VAMP is rerun on the new cells.
+  - The 6 cuRobo v1 records produced before the defect was found are discarded.
+  - The first-generation file is kept as `results/v2/raw/v2_pickplace.pre_A5.pkl`.
+- **Main v2 held-out set:** it used the same IK for its goal configurations.
+  - Its comparison is unaffected, since all planners receive the same joint-space start and goal.
+  - Any description of its goals as "tool pointing down" must be checked against the actual FK; this is reported in CHANGELOG.

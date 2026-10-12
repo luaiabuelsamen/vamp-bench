@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-11
+- **Held-out and pick-place IK orientations.** The station IK in `bench/gen_v2.py` used an orientation error that is zero at a 180° rotation as well as at the target.
+  - **Held-out set:** in the v2 held-out set, 498 of 600 start/goal configurations do not have the intended tool orientation (tool down at bin, conveyor and fixture stations; horizontal at shelves). Positions are as intended. The held-out comparison stands, because every planner receives the same collision-free joint-space start and goal. But these queries are station-to-station configuration pairs, not tool-down picks, and they are described that way.
+  - **Pick-place cells:** they were regenerated with a log-map orientation error and per-endpoint checks (amendment A5 in `docs/V2_PICKPLACE_PREREGISTRATION.md`). The first pick-place generation and its VAMP run are void.
+
 ## 2026-10-08
 - **Segment check: joint-limit tolerance.** `bench/crossval.py` flagged 39 cuRobo v1 UR5 trajectories. 35 of these came from float32 rounding at the ±π joint limit: each was 2.4e-7 rad outside VAMP's bounds, and cuRobo v1's own checker found no world or self collision on them (`results/selfcollision_depth_v1_ur5.json`). The check now allows 1e-5 rad of rounding and records larger violations. The v1 UR5 flagged count is 4 of 367. No other set changed.
 - **Added `docs/PAPER_CLAIMS_AUDIT.md`.**
