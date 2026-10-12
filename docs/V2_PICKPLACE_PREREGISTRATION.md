@@ -65,6 +65,11 @@ Home is a fixed configuration per cell.
   2. VAMP pick-place, timed (quiet CPU);
   3. cuRobo v1 pick-place;
   4. cuRoboV2 pick-place until the slot deadline (seed-major order, so partial V2 results cover all cells for the first seeds and are reported as partial).
+- **As run (2026-10-11/12):** the order above was changed; VAMP no longer runs inside the slot.
+  - Slot 2026-10-11 22:38 to 2026-10-12 04:40 (6 h cap), A5 cells. Both cuRobo versions ran on a quiet GPU. The A3 reference runner was stopped; other jobs on the CPU kept running.
+  - cuRobo v1 pick-place: complete, 600 picks (30 cells x 4 picks x 5 seeds).
+  - cuRoboV2 pick-place: partial at the slot deadline, 556 of 600 picks. Seeds 0-3 are complete; seed 4 has 76 of 120 picks. V2 is reported on 556 picks, and on seeds 0-3 where all planners are compared on the same picks.
+  - VAMP pick-place (A5 cells) runs on CPU after the slot, from 2026-10-12 04:43, while other jobs share the board (1-min load average about 19 on 8 cores at start). The load is logged every 5 min next to the results (`results/v2/raw/vamp_pickplace.load.log`), and VAMP's timings are reported as contended.
 
 ## Amendment A5 (logged 2026-10-11 23:40, before any pick-place result was analysed and before any valid cuRobo pick-place run)
 - **Defect:**

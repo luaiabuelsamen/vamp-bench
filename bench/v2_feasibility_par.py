@@ -6,7 +6,8 @@ Reference (untimed, deterministic): VAMP rrtc with max_iterations = max_samples 
 caps, seed0. Caps are iteration counts, not wall time, so CPU contention changes duration but never the verdict.
 Checkpoint: results/v2/raw/feasibility_<set>.jsonl (resume skips finished queries).
 Memory gate (the board is shared; the flagship must never be OOM-killed): at most --workers (2) references run while
-MemAvailable (/proc/meminfo) has not stayed above --mem-gate-gb (4 GB) for --gate-hold-min (10) minutes; up to
+MemAvailable (/proc/meminfo) has not stayed above --mem-gate-gb (4 GB) for --gate-hold-min (10) minutes of running
+time (the hold restarts after the runner has been stopped, e.g. SIGSTOP during a GPU slot); up to
 --max-workers (6) once it has. Extra workers (beyond --workers) are killed and requeued, newest first, when MemAvailable
 falls under --shed-gb (1.5 GB). Workers beyond --workers are never started at or below the
 gate; no worker at all is started while MemAvailable < floor + 0.5 GB; every worker sets oom_score_adj = 1000 so the kernel picks it before anything else. If MemAvailable falls
@@ -83,9 +84,12 @@ def child(job, conn):
 def run_gated(jobs, ck, a):
     """Run jobs with a memory-dependent worker count; append each result to the checkpoint as it finishes."""
     ctx = mp.get_context("fork"); queue = list(jobs); deferred = []; running = {}  # pid -> (proc, conn, job)
-    last_log = 0; above_since = None; last_ev = None
+    last_log = 0; above_since = None; last_ev = None; last_tick = time.time()
     while queue or deferred or running:
         avail = mem_available_gb()
+        if time.time() - last_tick > 60:  # the runner was stopped (SIGSTOP during a GPU slot): the hold starts over
+            above_since = None
+        last_tick = time.time()
         above_since = (above_since or time.time()) if avail > a.mem_gate_gb else None
         if avail < a.shed_gb and len(running) > a.workers:
             pid = max(running); proc, conn, job = running.pop(pid)
