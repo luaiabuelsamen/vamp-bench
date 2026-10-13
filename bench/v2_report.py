@@ -53,11 +53,17 @@ def h2(s):
     rc = c["t_cycle_med_of_query_meds"] / v["t_cycle_med_of_query_meds"]
     adv_ready_s = (c["t_ready_ms_median_runs"] - v["t_ready_ms_median_runs"]) / 1e3
     adv_exec_s = v["t_exec_s_median_runs"] - c["t_exec_s_median_runs"]
-    return {"t_ready_ratio_curobo1_over_vamp": rr, "t_cycle_ratio_curobo1_over_vamp": rc,
+    ok = lambda pl: {(r["q"], r["seed_k"]): r["t_cycle_s"] for r in json.load(open(ROOT / f"results/v2/raw/{pl}_{s}.json"))["records"]
+                     if r.get("solved_any_time") and r["t_ready_ms"] <= S["budget_T_s"] * 1e3}
+    V, C = ok("vamp"), ok("curobo1"); k = V.keys() & C.keys()
+    both = {"runs": len(k), "vamp_t_cycle_s_median": float(np.median([V[i] for i in k])), "curobo1_t_cycle_s_median": float(np.median([C[i] for i in k])),
+            "share_runs_curobo1_shorter": float(np.mean([C[i] < V[i] for i in k]))}
+    return {"both_solved_runs": both, "t_ready_ratio_curobo1_over_vamp": rr, "t_cycle_ratio_curobo1_over_vamp": rc,
             "holds": bool(abs(np.log(rc)) < abs(np.log(rr))),
             "vamp_t_ready_advantage_s": adv_ready_s, "curobo1_t_exec_advantage_s": adv_exec_s,
             "curobo1_wins_cycle_by_exec": bool(adv_exec_s > adv_ready_s),
-            "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s"}
+            "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s; both_solved_runs compares "
+                    "T_cycle on the (query, seed) runs both planners solve within T"}
 
 
 def h3(s):
@@ -161,6 +167,10 @@ def tables(H):
         L.append(f"| {NAME[s]} | {'yes' if h['H1']['holds_every_bin'] else 'no'} | {'yes' if h['H2']['holds'] else 'no'} "
                  f"(T_ready x{h['H2']['t_ready_ratio_curobo1_over_vamp']:.0f}, T_cycle x{h['H2']['t_cycle_ratio_curobo1_over_vamp']:.2f}) | "
                  f"{'yes' if h['H3']['curobo1_lower_jerk'] else 'no'} / {'yes' if h['H3']['curobo1_shorter_exec'] else 'no'} | {LAB.get(h['H4']['more_robust'], 'tie')} |")
+    L += ["", "H2 on the runs both planners solve (same query and seed): median T_cycle VAMP / cuRobo v1", ""]
+    for s in ALL:
+        b = H[s]["H2"]["both_solved_runs"]
+        L.append(f"- {NAME[s]}: {b['vamp_t_cycle_s_median']:.2f} s / {b['curobo1_t_cycle_s_median']:.2f} s over {b['runs']} runs; cuRobo v1 shorter on {b['share_runs_curobo1_shorter']:.0%}")
     L += ["", f"H5 (sign the same on held-out A6, MBM and MπNets): {json.dumps(H['H5'])}", ""]
     pa = S.get("paired_A6_vs_original")
     if pa:

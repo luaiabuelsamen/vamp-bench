@@ -48,6 +48,13 @@
 | MπNets | yes | yes (T_ready x159, T_cycle x0.99) | yes / yes | cuRobo v1 |
 | Held-out, unwrapped goals (appendix) | yes | yes (T_ready x44, T_cycle x3.00) | yes / yes | VAMP |
 
+H2 on the runs both planners solve (same query and seed): median T_cycle VAMP / cuRobo v1
+
+- Held-out (A6, primary): 2.67 s / 2.36 s over 1615 runs; cuRobo v1 shorter on 57%
+- MotionBenchMaker: 2.53 s / 3.10 s over 2207 runs; cuRobo v1 shorter on 28%
+- MπNets: 1.65 s / 1.81 s over 2598 runs; cuRobo v1 shorter on 37%
+- Held-out, unwrapped goals (appendix): 3.34 s / 3.43 s over 503 runs; cuRobo v1 shorter on 47%
+
 H5 (sign the same on held-out A6, MBM and MπNets): {"H1_same_sign": true, "H2_same_sign": true, "H3_jerk_same_sign": true, "H3_exec_same_sign": true, "H4_same_sign": false}
 
 ## Appendix: original held-out goals vs A6, paired query by query

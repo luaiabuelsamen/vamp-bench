@@ -120,13 +120,19 @@
    }
   },
   "H2": {
+   "both_solved_runs": {
+    "runs": 1615,
+    "vamp_t_cycle_s_median": 2.665467964473567,
+    "curobo1_t_cycle_s_median": 2.3596892207302154,
+    "share_runs_curobo1_shorter": 0.573374613003096
+   },
    "t_ready_ratio_curobo1_over_vamp": 59.488787548295115,
    "t_cycle_ratio_curobo1_over_vamp": 1.2183227564608312,
    "holds": true,
    "vamp_t_ready_advantage_s": 0.20684594809727097,
    "curobo1_t_exec_advantage_s": 0.9699397528142257,
    "curobo1_wins_cycle_by_exec": true,
-   "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s"
+   "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s; both_solved_runs compares T_cycle on the (query, seed) runs both planners solve within T"
   },
   "H3": {
    "rms_jerk_norm": {
@@ -281,13 +287,19 @@
    }
   },
   "H2": {
+   "both_solved_runs": {
+    "runs": 2207,
+    "vamp_t_cycle_s_median": 2.5299167407550063,
+    "curobo1_t_cycle_s_median": 3.1021116599030796,
+    "share_runs_curobo1_shorter": 0.2759401903035795
+   },
    "t_ready_ratio_curobo1_over_vamp": 478.4737811783447,
    "t_cycle_ratio_curobo1_over_vamp": 1.1390619430903752,
    "holds": true,
    "vamp_t_ready_advantage_s": 1.159748003948611,
    "curobo1_t_exec_advantage_s": 0.6772174742913311,
    "curobo1_wins_cycle_by_exec": false,
-   "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s"
+   "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s; both_solved_runs compares T_cycle on the (query, seed) runs both planners solve within T"
   },
   "H3": {
    "rms_jerk_norm": {
@@ -462,13 +474,19 @@
    }
   },
   "H2": {
+   "both_solved_runs": {
+    "runs": 2598,
+    "vamp_t_cycle_s_median": 1.6525857949705618,
+    "curobo1_t_cycle_s_median": 1.807366902884096,
+    "share_runs_curobo1_shorter": 0.3683602771362587
+   },
    "t_ready_ratio_curobo1_over_vamp": 159.21323015613714,
    "t_cycle_ratio_curobo1_over_vamp": 0.9922357965210038,
    "holds": true,
    "vamp_t_ready_advantage_s": 0.2862578869464116,
    "curobo1_t_exec_advantage_s": 0.19862689961521274,
    "curobo1_wins_cycle_by_exec": false,
-   "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s"
+   "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s; both_solved_runs compares T_cycle on the (query, seed) runs both planners solve within T"
   },
   "H3": {
    "rms_jerk_norm": {
@@ -653,13 +671,19 @@
    }
   },
   "H2": {
+   "both_solved_runs": {
+    "runs": 503,
+    "vamp_t_cycle_s_median": 3.341895309298268,
+    "curobo1_t_cycle_s_median": 3.4257965848520398,
+    "share_runs_curobo1_shorter": 0.46520874751491054
+   },
    "t_ready_ratio_curobo1_over_vamp": 43.636384939107494,
    "t_cycle_ratio_curobo1_over_vamp": 3.0049750621029725,
    "holds": true,
    "vamp_t_ready_advantage_s": 0.2343888575185926,
    "curobo1_t_exec_advantage_s": 1.6503796681766656,
    "curobo1_wins_cycle_by_exec": true,
-   "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s"
+   "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s; both_solved_runs compares T_cycle on the (query, seed) runs both planners solve within T"
   },
   "H3": {
    "rms_jerk_norm": {
