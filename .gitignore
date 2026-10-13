@@ -1,5 +1,6 @@
 third_party/
 .venv/
+.venv-pyroki/
 __pycache__/
 .vamp_only/
 results/raw/

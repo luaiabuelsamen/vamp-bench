@@ -132,3 +132,83 @@ That is about 7–12 GPU-hours, which needs one overnight slot plus one evening 
 6. **Order of work:** VAMP + TOPP-RA/Ruckig on the CPU first (hours of work, minutes of compute). Then cuRobo v1. Then cuRoboV2 on the stratified subsample.
 
 Each step is useful on its own, and the CPU step can run on the Mac.
+
+## 7. v2.1: PyRoki as a trajectory optimiser (design, no runs yet)
+
+v2's results stand as published; v2.1 adds a third method and changes nothing in v2.
+
+**What PyRoki is and how it is reported.**
+- PyRoki (Kim et al., Berkeley; JAX, runs on CPU and GPU) is a kinematics and trajectory-optimisation library. It has no global planner: its trajectory optimiser refines a seed trajectory locally.
+- It is therefore reported in its own category ("trajectory optimiser"), in its own tables. It is not ranked against VAMP or cuRobo on the global-planning sets. Where the same quantity is measured for the other planners (IK, MoveL, trajopt from cuRobo's seeds), their numbers are shown alongside for reference.
+
+**Versions.**
+- PyRoki `388e43e`, jaxls `50a58be`, JAX/jaxlib 0.6.2 (the JetPack 6 version in jetson-containers).
+- Python 3.10, in its own venv (`.venv-pyroki`).
+
+**Hardware.**
+- One Jetson Orin NX 16 GB, as for v2.
+- GPU runs are primary, with no other GPU work, as for cuRobo.
+- CPU runs (`JAX_PLATFORMS=cpu`) are reported separately, with the board's load at the time.
+
+**Robot, world and gate (identical to v2).**
+- **Robot:** the same URDF (`configs/ur5e_rail_spherized.urdf`), the same collision spheres and self-collision ignore pairs (`configs/ur5e_rail_shared_v2.yml`), and the shared limits (`configs/v2_limits.yaml`).
+- **World:** obstacles are passed to PyRoki as its analytic `Box` primitives, with the same poses and extents.
+- **What decides validity:** PyRoki's own collision terms only guide its optimiser. Validity is decided by the v2 1 kHz gate: the shared VAMP collision check, joint bounds, and velocity, acceleration and jerk ≤ 1.01 × the shared limits, with jerk 500 rad/s³ for the UR5e arm joints (cuRobo's `ur5e.yml`; UR publishes none).
+- **Budget:** T = 30 s, including retries.
+- **Endpoints:** PyRoki holds its endpoints by augmented-Lagrangian constraints, which converge only to a tolerance, so a PyRoki run must also start and end within 1e-3 rad (1e-3 m on the rail) of the given configurations. v2's gate has no endpoint check: VAMP's path ends at the goal exactly, and cuRobo reports success only within its own goal tolerance.
+
+**Settings, fixed before any benchmark run.**
+- PyRoki's own example defaults are used: `01_basic_ik` for IK, and `07_trajopt` for trajectory optimisation (50 knots; smoothness and acceleration costs; self-collision margin 0.02 m; world-collision margin 0.05 m; joint-limit and velocity-limit constraints).
+- **Three changes, all from v2's fairness rules:**
+  1. Endpoints are joint configurations (the A6 start and goal), constrained exactly, because the other planners get joint goals.
+  2. The shared acceleration and jerk limits are added as constraints, using PyRoki's own `limit_acceleration_residual` and `limit_jerk_residual`. Its examples constrain velocity only, and cuRobo is given the same three limits.
+  3. Obstacles are padded to a fixed count per set with inert boxes far from the robot, so JAX compiles once per set rather than once per scene.
+- **No tuning on benchmark sets:**
+  - Any further change is decided on the v1 gantry problems (`problems/gantry_pillars.pkl`), which are not in v2.
+  - The CPU smoke test used held-out A6 query 0 to check the plumbing only. No setting was changed after it.
+
+**Horizon (the trajectory duration is fixed per solve).**
+- **Duration:** D = 1.5 × the time-optimal duration of the straight joint-space line under the shared velocity, acceleration and jerk limits (1-D Ruckig on the line parameter), computed from start and goal only. Knots are spaced D/49 apart.
+- **Retry:** if the 1 kHz gate fails, the solve is repeated with D × 1.5, until the 30 s budget is spent. Retries count toward T_ready and are recorded.
+
+**From knots to the 1 kHz trajectory.**
+- **R1 (as returned, primary):** the knots are interpolated with a C² cubic spline with zero end velocities, sampled at 1 kHz, and gated. Nothing else is done to them.
+- **R2 (post-processed, secondary):** if R1 fails only on velocity, acceleration or jerk, the same path is uniformly slowed by the smallest factor s that brings the 1 kHz peaks within limits (velocity scales as 1/s, acceleration as 1/s², jerk as 1/s³), then gated again. The time for this counts toward T_ready, and R2 is labelled as post-processed.
+
+**Timing.**
+- **Compile time:** JAX traces and compiles once per input shape. Compile time is reported separately, as the first call's time minus the warm median for that shape.
+- **Warm T_ready:** measured after one warm-up call per shape, on a query outside the measured set.
+- **Cold:** the first-query time (compile included) is reported too, since a cell controller pays it once per start-up.
+- **Timer:** wall clock around the solve, with `block_until_ready`, so asynchronous dispatch is not mistaken for speed.
+
+**Measurements.**
+
+| | Inputs | Seeds | Success | Shown alongside |
+|---|---|---|---|---|
+| **IK** | TCP (`tool0`) pose of each held-out A6 goal, 300 poses | (a) PyRoki's default initial configuration; (b) as many random initial configurations as cuRobo v1's IK solver is given (64 in this repo), solved batched, best returned | position error ≤ 1 mm, rotation error ≤ 1°, within joint bounds, collision-free under the shared check | cuRobo v1 `IKSolver` on the same poses with the same seed count (GPU) |
+| **MoveL** | the 480 MoveL segments of the 120 A6 pick slots (pre-grasp → grasp, grasp → pre-grasp, pre-place → place, place → pre-place), from the configurations in `problems/v2_pickplace.pkl` | a straight joint-space line between start and the IK end configuration | the v2 pick-place gate and P1 criterion (TCP deviation median ≤ 1 mm, p95 ≤ 5 mm), the jerk gate per segment | VAMP, cuRobo v1 as configured and v1 at max_jerk 200, cuRoboV2 (from the v2 pick-place runs, same segments) |
+| **Free-space trajopt** | held-out A6, 300 queries (MBM and MπNets subsamples if time allows) | (S1) straight joint-space line, PyRoki's own recipe; (S2) the 12 seed trajectories cuRobo v1 initialises its trajectory optimiser with on its first attempt (`num_trajopt_seeds` = 12; later attempts add graph-planner seeds), dumped during a v1 rerun at the same random seeds, solved batched, first valid returned | the v2 gate within 30 s | VAMP and cuRobo v1 success and T_ready per bin |
+
+- **MoveL horizon:** knots follow the TCP profile VAMP's MoveL used (1-D Ruckig on arc length: 0.25 m/s, 1.0 m/s², 10 m/s³), with a pose cost at each knot toward the matching point on the line.
+- **Determinism:** PyRoki's solver is deterministic given its seed. It is run once per input, with a re-run of 20 inputs to confirm bit-identical output, so "seeds" means seed trajectories, not random seeds.
+
+**What each result would mean (stated before running).**
+- **IK solve rate and warm time vs cuRobo v1:** these answer whether a JAX IK on this Jetson is a usable replacement for cuRobo's IK in these cells.
+- **MoveL:**
+  - Meeting P1 and the jerk gate on most segments would mean a trajectory optimiser with an exact per-knot pose cost expresses MoveL natively, which cuRobo v1's soft line cost did not do within the jerk limit.
+  - Failing the gate under R1 but passing under R2 would mean the knot-to-trajectory step, not the optimiser, decides the outcome.
+- **Free-space trajopt:**
+  - **S1 success** measures how often local optimisation from a straight line suffices in these cells. It is expected to be lowest in the blocked-passage bins, and that is why PyRoki is not ranked against the global planners.
+  - **S2 vs S1** measures how much cuRobo's seeds, rather than its optimiser, explain cuRobo's success.
+  - **S2 vs cuRobo v1 on the same seeds** compares the two optimisers directly.
+- **Not supported:** anything about global planning with PyRoki, or about hardware other than this Orin NX.
+
+**Order of work.**
+1. CPU smoke test (done: `bench/pyroki_smoke.py`, `results/v2_1/smoke_pyroki.json`).
+   - **What it ran:** PyRoki's example recipe with joint-space endpoints and world margin 0, without the acceleration and jerk constraints. It checks the plumbing, not the design.
+   - **FK:** PyRoki's FK matches an independent URDF parser (yourdfpy) to 2e-7.
+   - **IK:** the goal pose is reached to 0.1 µm. The first call (compile) takes 5.4 s and warm calls 1.6 ms.
+   - **Trajopt (64 knots):** compile takes 61 s and a warm solve 16.7 s on the CPU, so CPU runs may hit the 30 s budget. The knots ended 5–7 mm from the endpoints and penetrated an obstacle by 52 mm.
+2. Freeze this section and the scripts.
+3. IK and MoveL on the CPU.
+4. A GPU slot when the GPU is released: the S2 seed dump from cuRobo v1, then PyRoki IK, MoveL and trajopt on the GPU.
