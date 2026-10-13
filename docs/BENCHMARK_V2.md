@@ -239,6 +239,21 @@ v2's results stand as published; v2.1 adds a third method and changes nothing in
     - validation time is reported separately from T_ready, as for VAMP.
   - **Obstacle padding:** 40 boxes for held-out A6 (maximum 38) and 25 for pick-place (maximum 25).
   - **CPU load:** the feasibility runner (1 worker) is not paused during PyRoki runs, so the v2 references are not delayed. The 1-minute load average is recorded with each result.
+- **7d, before any held-out run (2026-10-13). Plumbing tests (5 IK targets, 4 MoveL segments, 2 trajopt queries, all discarded) showed four problems:**
+  - **Endpoint holds:**
+    - **Problem:** with one knot held at each end, the knots next to the endpoints oscillate, because PyRoki's acceleration and jerk stencils do not reach them. The result was 45,000 rad/s³ in the spline.
+    - **Fix:** endpoints are now held on two knots each, as in `07_trajopt`. For MoveL, the last two knots are constrained equal.
+  - **World-collision margin 0:**
+    - **Problem:** a margin of 0 puts the optimum on contact, and the gate's 1 kHz check finds grazing penetrations of about 0.1 mm.
+    - **Fix:** the margin is now chosen on the v1 gantry problems (`problems/gantry_pillars.pkl`, not in v2; every 5th query, 21 queries; S1 seeds; GPU) from {0, 5, 10, 20, 50} mm.
+    - **Selection rule:** the margin with the most successes under R1; ties go to the larger margin. It is used for trajopt, MoveL and IK (c) (`bench/v2_1_dev_margin.sh`).
+  - **IK without collision terms:** PyRoki's basic IK reaches the poses (error around 0.1 µm), but its solutions often collide, while cuRobo's IK is collision-aware.
+    - **Added variant (c):** PyRoki's own collision-aware IK (`04_ik_with_coll`: pose weights 5/1, rest 0.01, self-collision 0.02 m soft, world collision hard at the chosen margin), from the same 64 random starts. It returns the lowest-pose-error start among those within tolerance.
+    - (a) and (b) are kept as pre-registered.
+  - **Slow batched solves:**
+    - **Problem:** batched Cholesky also needs the batch-pointer kernel, and a loop of single solves took 5 s per 64-start IK.
+    - **Fix:** batched Cholesky and batched triangular solves now use plain-XLA Cholesky–Banachiewicz and substitution, vectorised over the batch. All eight triangular-solve variants and batched Cholesky match NumPy to within 6e-7.
+- **7e, MoveL end criterion: unchanged.** The plumbing test missed the 1 mm end criterion by 1.6–2.7 mm, but the criterion is kept: in v2, every other planner's MoveL ends within 0.2 mm of the target.
 
 **Order of work.**
 1. CPU smoke test (done: `bench/pyroki_smoke.py`, `results/v2_1/smoke_pyroki.json`).
