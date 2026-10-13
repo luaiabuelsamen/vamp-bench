@@ -187,7 +187,7 @@ v2's results stand as published; v2.1 adds a third method and changes nothing in
 |---|---|---|---|---|
 | **IK** | TCP (`tool0`) pose of each held-out A6 goal, 300 poses | (a) PyRoki's default initial configuration; (b) as many random initial configurations as cuRobo v1's IK solver is given (64 in this repo), solved batched, best returned | position error ≤ 1 mm, rotation error ≤ 1°, within joint bounds, collision-free under the shared check | cuRobo v1 `IKSolver` on the same poses with the same seed count (GPU) |
 | **MoveL** | the 480 MoveL segments of the 120 A6 pick slots (pre-grasp → grasp, grasp → pre-grasp, pre-place → place, place → pre-place), from the configurations in `problems/v2_pickplace.pkl` | a straight joint-space line between start and the IK end configuration | the v2 pick-place gate and P1 criterion (TCP deviation median ≤ 1 mm, p95 ≤ 5 mm), the jerk gate per segment | VAMP, cuRobo v1 as configured and v1 at max_jerk 200, cuRoboV2 (from the v2 pick-place runs, same segments) |
-| **Free-space trajopt** | held-out A6, 300 queries (MBM and MπNets subsamples if time allows) | (S1) straight joint-space line, PyRoki's own recipe; (S2) the 12 seed trajectories cuRobo v1 initialises its trajectory optimiser with on its first attempt (`num_trajopt_seeds` = 12; later attempts add graph-planner seeds), dumped during a v1 rerun at the same random seeds, solved batched, first valid returned | the v2 gate within 30 s | VAMP and cuRobo v1 success and T_ready per bin |
+| **Free-space trajopt** | held-out A6, 300 queries (MBM and MπNets subsamples if time allows) | (S1) straight joint-space line, PyRoki's own recipe; (S2) the seed trajectories cuRobo v1 gives its trajectory optimiser, attempt by attempt, dumped during a v1 rerun at the same random seed (see amendment 7a), tried in v1's order until one passes the gate or the budget runs out | the v2 gate within 30 s | VAMP and cuRobo v1 success and T_ready per bin |
 
 - **MoveL horizon:** knots follow the TCP profile VAMP's MoveL used (1-D Ruckig on arc length: 0.25 m/s, 1.0 m/s², 10 m/s³), with a pose cost at each knot toward the matching point on the line.
 - **Determinism:** PyRoki's solver is deterministic given its seed. It is run once per input, with a re-run of 20 inputs to confirm bit-identical output, so "seeds" means seed trajectories, not random seeds.
@@ -202,6 +202,19 @@ v2's results stand as published; v2.1 adds a third method and changes nothing in
   - **S2 vs S1** measures how much cuRobo's seeds, rather than its optimiser, explain cuRobo's success.
   - **S2 vs cuRobo v1 on the same seeds** compares the two optimisers directly.
 - **Not supported:** anything about global planning with PyRoki, or about hardware other than this Orin NX.
+
+**Amendments (logged before any PyRoki benchmark run).**
+- **7a, S2 seeds (2026-10-13):**
+  - **What the seed dump showed** (`bench/v2_curobo_seeds.py`): for joint goals, cuRobo v1's `plan_single_js` runs its trajectory optimiser with one seed per attempt, not 12. `num_trajopt_seeds` = 12 applies to pose goals; the joint-space optimiser uses its own count of 1.
+  - That seed is the straight joint-space line, except on attempts where v1's graph planner has found a path, which then becomes the seed.
+  - **New S2 definition:** the sequence of seeds v1 used, attempt by attempt, solved in the same order. It differs from S1 only on queries where v1's graph planner found a path.
+- **7b, GPU build (2026-10-13):**
+  - **Build used:** the GPU runs use the PyPI `jax-cuda12-plugin` 0.6.2, with cuDNN 9.8 from pip inside the venv (JetPack 6.2 ships 9.3) and XLA autotuning off. No source build was needed.
+  - **Kernel workarounds:** the plugin's precompiled kernels have no sm_87 image. XLA compiles everything else for the device. Two operations therefore run as pure XLA (`bench/pyroki_site/sitecustomize.py`):
+    - LU uses JAX's own partial-pivoting lowering instead of cuSOLVER;
+    - a batched triangular solve runs as a loop of unbatched cuBLAS solves.
+  - **Effect:** the numbers are unaffected to float32 precision (batched-solve residual 3e-7), and the speed may be lower than with a native build.
+  - **CPU vs GPU:** IK reaches the same pose on both (error 0.1 µm), with joint solutions up to 0.03 rad apart, since the 7-joint robot is redundant for a 6-D pose. Trajopt outputs can differ widely when the solve does not converge. CPU and GPU results are therefore reported separately, never pooled.
 
 **Order of work.**
 1. CPU smoke test (done: `bench/pyroki_smoke.py`, `results/v2_1/smoke_pyroki.json`).
