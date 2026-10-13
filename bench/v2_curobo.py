@@ -37,7 +37,8 @@ VM, PK, KEY, RB = {"heldout": ("ur5erail", "problems/v2_heldout.pkl", "v2_heldou
 P = yaml.safe_load(open(ROOT / "configs/v2_planners.yaml"))
 T_BUDGET = a.budget_s or float(P["budget"]["T_s"])
 probs = pickle.load(open(ROOT / PK, "rb"))["problems"][KEY]
-idx = json.load(open(a.subset))[a.set.removesuffix("_a6")]  # A6: same query indices as the original subsample if a.subset else list(range(len(probs)))
+# A6: a subset file is keyed by the original set name, so heldout_a6 uses the same query indices as heldout
+idx = json.load(open(a.subset))[a.set.removesuffix("_a6")] if a.subset else list(range(len(probs)))
 idx = idx[: a.limit or None]
 robot = yaml.safe_load(open(ROOT / f"configs/v2/{RB}_{a.version}.yml"))["robot_cfg"]
 seeds = [seed_from(a.freeze, f"seed{k}") for k in range(a.seeds)]

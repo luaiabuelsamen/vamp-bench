@@ -154,3 +154,10 @@ Home is a fixed configuration per cell.
     - The stencil account is therefore incomplete, as the J1 rule anticipated.
   - **Candidate cause:** v1's kernel assigns jerk 0 at step 0 and takes acceleration straight from the start state, so the step from rest into the first optimizer step is not bounded. The end of the trajectory is handled by backward differences.
   - **Next:** dump the 1 kHz trajectories of one cell at max_jerk 500 and 250 (`--dump`, diagnostics only, about 10 GPU-min) and locate the jerk peaks (start, end or interior). J1b (max_jerk 200) is on hold until then; its value or form may change, and any change is logged here before it runs.
+- **Jerk-peak diagnostic and J1b release (logged 2026-10-12 22:15, before J1b runs):**
+  - **Run:** one cell (4 picks), v1 at max_jerk 500 and 250, trajectories dumped at 1 kHz (`results/v2/diag_jerk/`; diagnostics only, not results).
+  - **Finding:** every over-limit sample on the 8 MoveL segments lies in the first or last 30 ms of the segment (12–15 samples at each end); the interior stays at or below 0.84× of 500 (median 0.18×). Free segments stay at or below 0.59×. Peak executed jerk at the ends is 1.85–2.17× the planner limit at 500 and 2.16–2.31× at 250.
+  - **Reading:** v1's jerk excess is a start/stop boundary effect, consistent with the candidate cause above (the boundary steps are not bounded by its stencil); the interior meets the limit.
+  - **J1b released unchanged** (max_jerk 200, gate unchanged, output `results/v2/raw/curobo1_pickplace.A6.jerk200.jsonl`, reading rules as logged above).
+  - **Prediction:** scaling J1's MoveL executed jerk by 200/250, 99.8% of MoveL segments fall within the gate (one J1 outlier at 1.79× would not), so ≥ 80% of picks succeed unless the tighter bound causes planning failures.
+  - **Scheduling:** J1b runs after v1 heldout_a6 in the same night session; GPU_RELEASED is touched after J1b.
