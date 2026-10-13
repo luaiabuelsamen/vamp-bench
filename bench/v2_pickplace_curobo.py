@@ -33,6 +33,7 @@ ap.add_argument("--seeds", type=int, default=5); ap.add_argument("--limit", type
 ap.add_argument("--out", default=None); ap.add_argument("--deadline", type=float, default=0)
 ap.add_argument("--problems", default=str(ROOT / "problems/v2_pickplace.pkl"))
 ap.add_argument("--max-jerk", type=float, default=None, help="A7 J1: override the planner's max_jerk (rad/s^3); the gate is unchanged")
+ap.add_argument("--dump", default=None, help="diagnostics only: save each returned trajectory (q, qd, qdd) as .npz in this directory")
 ap.add_argument("--jerk-continue", action="store_true", help="A7 J2: a segment failing only the jerk check does not end the pick")
 a = ap.parse_args()
 VM, LIFT, TOOL = "ur5erail", 0.10, "tool0"
@@ -70,6 +71,7 @@ def world_v1(mg, c):
     mg.reset(reset_seed=True); mg.world_coll_checker.clear_cache(); mg.update_world(problem_to_world(c))
 
 
+DUMP = [0]
 LAST = {}  # A6 diagnostics: the last planner result, read after timing
 
 
@@ -194,6 +196,9 @@ def segment(kind, c, fn, line=None):
     if abs(dt - 0.001) > 1e-9:
         raise SystemExit(f"interpolation dt {dt} != 0.001")
     v = validate(VM, c, q, qd, qdd)
+    if a.dump:
+        Path(a.dump).mkdir(parents=True, exist_ok=True); DUMP[0] += 1
+        np.savez(Path(a.dump) / f"{DUMP[0]:03d}_{kind}.npz", q=q, qd=qd, qdd=qdd)
     rec.update(t_exec_s=float((len(q) - 1) * dt), valid=bool(v["valid"]), colliding_samples=v["colliding_samples"],
                max_vel_ratio=v["max_vel_ratio"], max_acc_ratio=v["max_acc_ratio"], max_jerk_ratio=v["max_jerk_ratio"],
                end_speed=float(np.abs(qd[-1]).max()))

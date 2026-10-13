@@ -146,3 +146,11 @@ Home is a fixed configuration per cell.
       - If ≥ 80% of picks succeed, v1 works on these cells, and every A6 v1 failure besides 25 planner failures is the jerk-definition mismatch.
       - If MoveL segments still fail the jerk check at 200, the stencil account is wrong and nothing about v1 jerk is claimed.
   - **Scheduling:** J1b needs about 1.5 GPU-h after this session.
+- **J1 result and J1b hold (logged 2026-10-12 19:40):**
+  - **J1 result:** 0/600 picks. MoveL executed jerk is 1.10× of 500 (median; max 1.79); 12% of MoveL segments are within the gate, where the stencil account predicted 52%.
+  - **What J1 shows:**
+    - cuRobo's reported jerk is now 0.50× its limit, so jerk no longer drives its retiming.
+    - Executed jerk fell only from about 1000 to about 550 rad/s³ (median) when the limit was halved.
+    - The stencil account is therefore incomplete, as the J1 rule anticipated.
+  - **Candidate cause:** v1's kernel assigns jerk 0 at step 0 and takes acceleration straight from the start state, so the step from rest into the first optimizer step is not bounded. The end of the trajectory is handled by backward differences.
+  - **Next:** dump the 1 kHz trajectories of one cell at max_jerk 500 and 250 (`--dump`, diagnostics only, about 10 GPU-min) and locate the jerk peaks (start, end or interior). J1b (max_jerk 200) is on hold until then; its value or form may change, and any change is logged here before it runs.
