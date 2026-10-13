@@ -8,4 +8,4 @@ Blocked: nothing. CPU: flagship (EC2C) has priority — feasibility runner at 1 
   Memory (standing rule 2026-10-11): during a flagship SmolVLA eval (train_local.py --skip-train ... smolvla) the A3 runner runs at most 1 worker and starts nothing unless MemAvailable > 2.5 GB (built into bench/v2_feasibility_par.py); otherwise 2 workers, >2 only after 10 min sustained > 4 GB. PRM references grow to ~1.5 GB, so under the eval most are floor-killed and requeued (12 so far): the A3 runs effectively wait for the eval to end.
   CPU: A3 references for the original held-out (appendix) running, 2 workers, memory-gated, ~90 queries left. heldout_a6: 3 queries VAMP never solved; references after the cuRobo held-out A6 runs.
 Next: references finish -> rerun bench/v2_analyze.py + v2_report.py -> README / EMAIL_NOTES v2, held-out description fix (tool-down claim), check_consistency, CHANGELOG -> v2 final (no email before)
-Updated: 2026-10-13 12:00
+Updated: 2026-10-13 11:14
