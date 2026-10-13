@@ -1,0 +1,326 @@
+{
+ "cells": 30,
+ "picks_per_run": 600,
+ "budget_T_s": 30.0,
+ "gate_tolerance": 1.01,
+ "jerk_limit_rad_s3": 500.0,
+ "jerk_limit_source": "cuRobo's shipped ur5e.yml (configs/v2_limits.yaml); Universal Robots publishes no UR5e jerk limit",
+ "timing_conditions": {
+  "vamp": "CPU (Jetson Orin NX 16 GB), contended (1-min load average 13.6-15.6 on 8 cores); load log results/v2/raw/vamp_pickplace.A6.load.log",
+  "curobo": "GPU (same board), quiet; reference runner stopped"
+ },
+ "vamp_segments_replayed_for_jerk": 3553,
+ "runs": {
+  "vamp": {
+   "role": "primary",
+   "picks": 600,
+   "success": 587,
+   "success_share": 0.9783333333333334,
+   "first_failure": {
+    "free: collision at 1 kHz": 12,
+    "free: no trajectory (not solved)": 1
+   },
+   "P3_picks_failing_some_seed": 8,
+   "P3_pick_pairs": 120,
+   "P3_picks_failing_all_seeds": 0,
+   "P2_t_cycle_s_median": 6.083671280624853,
+   "P2_t_cycle_s_p95": 10.480423323841382,
+   "P2_t_ready_s_median": 0.3471772582270205,
+   "P2_t_exec_s_median": 5.721479835426767,
+   "P1_moveL_segments": 2360,
+   "P1_tcp_dev_mm_median": 0.03781701795350735,
+   "P1_tcp_dev_mm_p95": 0.06539524822294941,
+   "P1_tcp_dev_mm_max": 0.1159468669264499,
+   "P1_orient_dev_deg_median": 0.027821251114726823,
+   "P1_orient_dev_deg_p95": 0.03144645416126062,
+   "P1_final_pos_err_mm_p95": 0.05510189070876829,
+   "jerk_gate": {
+    "free": {
+     "segments": 1192,
+     "within_limit_share": 1.0,
+     "ratio_median": 1.0000000000000036,
+     "ratio_p95": 1.000000000000334,
+     "ratio_max": 1.0000000000012221
+    },
+    "moveL": {
+     "segments": 2360,
+     "within_limit_share": 1.0,
+     "ratio_median": 0.11367052622968665,
+     "ratio_p95": 0.26209119440902046,
+     "ratio_max": 0.521752853733362
+    }
+   },
+   "posthoc_tcp_cruise_speed_mps_median": 0.1980864405632019,
+   "posthoc_tcp_cruise_speed_max_mps_p95": 0.2500240236520767,
+   "posthoc_moveL_share_peak_over_spec": 0.0,
+   "P1_expresses_moveL": true
+  },
+  "curobo1": {
+   "role": "primary (as configured, max_jerk 500)",
+   "picks": 600,
+   "success": 0,
+   "success_share": 0.0,
+   "first_failure": {
+    "moveL: jerk only": 565,
+    "free: no trajectory (planner failed)": 25,
+    "free: jerk only": 10
+   },
+   "P3_picks_failing_some_seed": 120,
+   "P3_pick_pairs": 120,
+   "P3_picks_failing_all_seeds": 120,
+   "P2_t_cycle_s_median": null,
+   "P2_t_cycle_s_p95": null,
+   "P2_t_ready_s_median": null,
+   "P2_t_exec_s_median": null,
+   "P1_moveL_segments": 632,
+   "P1_tcp_dev_mm_median": 0.03776951845852026,
+   "P1_tcp_dev_mm_p95": 0.4881852503527026,
+   "P1_tcp_dev_mm_max": 5.27214339723915,
+   "P1_orient_dev_deg_median": 0.09931476307379902,
+   "P1_orient_dev_deg_p95": 1.8938630965601468,
+   "P1_final_pos_err_mm_p95": 0.013009398702825707,
+   "jerk_gate": {
+    "free": {
+     "segments": 592,
+     "within_limit_share": 0.9831081081081081,
+     "ratio_median": 0.3039827346801758,
+     "ratio_p95": 0.6271544933319035,
+     "ratio_max": 1.8734617233276367
+    },
+    "moveL": {
+     "segments": 632,
+     "within_limit_share": 0.1060126582278481,
+     "ratio_median": 2.003305196762085,
+     "ratio_p95": 2.1839844942092896,
+     "ratio_max": 2.3314151763916016
+    }
+   },
+   "posthoc_tcp_cruise_speed_mps_median": 0.34693872928619385,
+   "posthoc_tcp_cruise_speed_max_mps_p95": 0.466426695883274,
+   "posthoc_moveL_share_peak_over_spec": 0.8512658227848101,
+   "P1_expresses_moveL": true
+  },
+  "curobo1_J1b": {
+   "role": "pre-registered positive control (max_jerk 200)",
+   "picks": 600,
+   "success": 572,
+   "success_share": 0.9533333333333334,
+   "first_failure": {
+    "free: no trajectory (planner failed)": 27,
+    "moveL: jerk only": 1
+   },
+   "P3_picks_failing_some_seed": 11,
+   "P3_pick_pairs": 120,
+   "P3_picks_failing_all_seeds": 3,
+   "P2_t_cycle_s_median": 8.221096669513733,
+   "P2_t_cycle_s_p95": 11.747394561092369,
+   "P2_t_ready_s_median": 2.760438696015626,
+   "P2_t_exec_s_median": 5.474500000000001,
+   "P1_moveL_segments": 2303,
+   "P1_tcp_dev_mm_median": 0.029319220829934087,
+   "P1_tcp_dev_mm_p95": 0.3405657555007025,
+   "P1_tcp_dev_mm_max": 5.749055048287903,
+   "P1_orient_dev_deg_median": 0.06561060592844098,
+   "P1_orient_dev_deg_p95": 1.5070952160262994,
+   "P1_final_pos_err_mm_p95": 0.012337551351128245,
+   "jerk_gate": {
+    "free": {
+     "segments": 1152,
+     "within_limit_share": 1.0,
+     "ratio_median": 0.30071520805358887,
+     "ratio_p95": 0.5178901910781862,
+     "ratio_max": 0.9700927734375
+    },
+    "moveL": {
+     "segments": 2303,
+     "within_limit_share": 0.9995657837603127,
+     "ratio_median": 0.8870429992675781,
+     "ratio_p95": 0.9467660903930664,
+     "ratio_max": 1.217555046081543
+    }
+   },
+   "posthoc_tcp_cruise_speed_mps_median": 0.2732045352458954,
+   "posthoc_tcp_cruise_speed_max_mps_p95": 0.35687910914421084,
+   "posthoc_moveL_share_peak_over_spec": 0.8684324793747286,
+   "P1_expresses_moveL": true,
+   "posthoc_success_nojerk": 572
+  },
+  "curobo1_J1": {
+   "role": "sensitivity (max_jerk 250)",
+   "picks": 600,
+   "success": 0,
+   "success_share": 0.0,
+   "first_failure": {
+    "moveL: jerk only": 566,
+    "free: no trajectory (planner failed)": 24,
+    "free: jerk only": 10
+   },
+   "P3_picks_failing_some_seed": 120,
+   "P3_pick_pairs": 120,
+   "P3_picks_failing_all_seeds": 120,
+   "P2_t_cycle_s_median": null,
+   "P2_t_cycle_s_p95": null,
+   "P2_t_ready_s_median": null,
+   "P2_t_exec_s_median": null,
+   "P1_moveL_segments": 640,
+   "P1_tcp_dev_mm_median": 0.037230468677901515,
+   "P1_tcp_dev_mm_p95": 0.5008410943244236,
+   "P1_tcp_dev_mm_max": 4.830919180813993,
+   "P1_orient_dev_deg_median": 0.09501464087519416,
+   "P1_orient_dev_deg_p95": 1.954340103760394,
+   "P1_final_pos_err_mm_p95": 0.012412201056872352,
+   "jerk_gate": {
+    "free": {
+     "segments": 598,
+     "within_limit_share": 0.9832775919732442,
+     "ratio_median": 0.30255842208862305,
+     "ratio_p95": 0.606546473503111,
+     "ratio_max": 1.0857243537902832
+    },
+    "moveL": {
+     "segments": 640,
+     "within_limit_share": 0.115625,
+     "ratio_median": 1.101522333920002,
+     "ratio_p95": 1.1707297325134278,
+     "ratio_max": 1.7947654724121094
+    }
+   },
+   "posthoc_tcp_cruise_speed_mps_median": 0.290473535656929,
+   "posthoc_tcp_cruise_speed_max_mps_p95": 0.37640327215194697,
+   "posthoc_moveL_share_peak_over_spec": 0.83125,
+   "P1_expresses_moveL": true,
+   "posthoc_success_nojerk": 0
+  },
+  "curobo1_J2": {
+   "role": "post-hoc no-jerk count (as configured; picks continue past jerk-only failures)",
+   "picks": 600,
+   "success": 0,
+   "success_share": 0.0,
+   "first_failure": {
+    "moveL: jerk only": 565,
+    "free: no trajectory (planner failed)": 22,
+    "free: jerk only": 13
+   },
+   "P3_picks_failing_some_seed": 120,
+   "P3_pick_pairs": 120,
+   "P3_picks_failing_all_seeds": 120,
+   "P2_t_cycle_s_median": null,
+   "P2_t_cycle_s_p95": null,
+   "P2_t_ready_s_median": null,
+   "P2_t_exec_s_median": null,
+   "P1_moveL_segments": 2304,
+   "P1_tcp_dev_mm_median": 0.03814101185605496,
+   "P1_tcp_dev_mm_p95": 0.3637170546987768,
+   "P1_tcp_dev_mm_max": 6.220007396793128,
+   "P1_orient_dev_deg_median": 0.1459648670980132,
+   "P1_orient_dev_deg_p95": 1.5287351927797823,
+   "P1_final_pos_err_mm_p95": 0.012337551351128245,
+   "jerk_gate": {
+    "free": {
+     "segments": 1152,
+     "within_limit_share": 0.9887152777777778,
+     "ratio_median": 0.30095601081848145,
+     "ratio_p95": 0.5146139621734619,
+     "ratio_max": 1.8835077285766602
+    },
+    "moveL": {
+     "segments": 2304,
+     "within_limit_share": 0.08680555555555555,
+     "ratio_median": 2.019457846879959,
+     "ratio_p95": 2.1916113615036013,
+     "ratio_max": 2.333404064178467
+    }
+   },
+   "posthoc_tcp_cruise_speed_mps_median": 0.3463499993085861,
+   "posthoc_tcp_cruise_speed_max_mps_p95": 0.4664731904864311,
+   "posthoc_moveL_share_peak_over_spec": 0.8841145833333334,
+   "P1_expresses_moveL": true,
+   "posthoc_success_nojerk": 573
+  },
+  "curobo2": {
+   "role": "primary (as configured)",
+   "picks": 600,
+   "success": 585,
+   "success_share": 0.975,
+   "first_failure": {
+    "free: no trajectory (planner failed)": 15
+   },
+   "P3_picks_failing_some_seed": 3,
+   "P3_pick_pairs": 120,
+   "P3_picks_failing_all_seeds": 3,
+   "P2_t_cycle_s_median": 18.91812096349895,
+   "P2_t_cycle_s_p95": 24.992100239638237,
+   "P2_t_ready_s_median": 13.707712400704622,
+   "P2_t_exec_s_median": 5.34000025363639,
+   "P1_moveL_segments": 2350,
+   "P1_tcp_dev_mm_median": 0.6533532062767979,
+   "P1_tcp_dev_mm_p95": 0.9161074272106012,
+   "P1_tcp_dev_mm_max": 2.4878648985317438,
+   "P1_orient_dev_deg_median": 0.03416258639587273,
+   "P1_orient_dev_deg_p95": 0.0534647561186173,
+   "P1_final_pos_err_mm_p95": 0.00038167132845900927,
+   "jerk_gate": {
+    "free": {
+     "segments": 1175,
+     "within_limit_share": 1.0,
+     "ratio_median": 0.2766752243041992,
+     "ratio_p95": 0.3997926712036133,
+     "ratio_max": 0.8869714736938477
+    },
+    "moveL": {
+     "segments": 2350,
+     "within_limit_share": 1.0,
+     "ratio_median": 0.9268021583557129,
+     "ratio_p95": 0.9899520874023438,
+     "ratio_max": 0.9967727661132812
+    }
+   },
+   "posthoc_tcp_cruise_speed_mps_median": 0.3179665803909302,
+   "posthoc_tcp_cruise_speed_max_mps_p95": 0.4153282046318054,
+   "posthoc_moveL_share_peak_over_spec": 1.0,
+   "P1_expresses_moveL": true
+  }
+ },
+ "P2_paired": {
+  "vamp_vs_curobo2": {
+   "picks": 576,
+   "vamp_t_cycle_s_median": 6.067971726130883,
+   "vamp_t_ready_s_median": 0.34603796363808215,
+   "vamp_t_exec_s_median": 5.701990312713431,
+   "curobo2_t_cycle_s_median": 18.877065614797175,
+   "curobo2_t_ready_s_median": 13.690795863280073,
+   "curobo2_t_exec_s_median": 5.3300002531614155,
+   "ratio_t_cycle_median": 0.3226944967802145
+  },
+  "vamp_vs_curobo1_J1b": {
+   "picks": 566,
+   "vamp_t_cycle_s_median": 6.0631178759282545,
+   "vamp_t_ready_s_median": 0.3452232596464455,
+   "vamp_t_exec_s_median": 5.69630834247562,
+   "curobo1_J1b_t_cycle_s_median": 8.218812837423755,
+   "curobo1_J1b_t_ready_s_median": 2.7593698874115944,
+   "curobo1_J1b_t_exec_s_median": 5.471,
+   "ratio_t_cycle_median": 0.7389503776003252
+  },
+  "curobo1_J1b_vs_curobo2": {
+   "picks": 572,
+   "curobo1_J1b_t_cycle_s_median": 8.221096669513733,
+   "curobo1_J1b_t_ready_s_median": 2.760438696015626,
+   "curobo1_J1b_t_exec_s_median": 5.474500000000001,
+   "curobo2_t_cycle_s_median": 18.877065614797175,
+   "curobo2_t_ready_s_median": 13.690795863280073,
+   "curobo2_t_exec_s_median": 5.320000252686441,
+   "ratio_t_cycle_median": 0.43562194597345627
+  }
+ },
+ "appendix_A5_unwrapped": {
+  "curobo1": {
+   "picks": 600,
+   "success": 0
+  },
+  "curobo2": {
+   "picks": 556,
+   "success": 120
+  }
+ }
+}
