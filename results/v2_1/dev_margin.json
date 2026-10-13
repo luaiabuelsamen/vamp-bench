@@ -1,0 +1,37 @@
+{
+ "set": "gantry_pillars every 5th query (21), S1, GPU",
+ "rule": "most R1 successes, ties to larger margin",
+ "chosen_m": 0.005,
+ "results": {
+  "0.0": {
+   "queries": 21,
+   "R1": 7,
+   "R2": 10,
+   "median_t_ready_s": 31.052068847697228
+  },
+  "0.005": {
+   "queries": 21,
+   "R1": 15,
+   "R2": 15,
+   "median_t_ready_s": 20.187618787866086
+  },
+  "0.01": {
+   "queries": 21,
+   "R1": 14,
+   "R2": 15,
+   "median_t_ready_s": 23.999284338206053
+  },
+  "0.02": {
+   "queries": 21,
+   "R1": 5,
+   "R2": 5,
+   "median_t_ready_s": 31.147854669950902
+  },
+  "0.05": {
+   "queries": 21,
+   "R1": 1,
+   "R2": 1,
+   "median_t_ready_s": 31.732730694115162
+  }
+ }
+}

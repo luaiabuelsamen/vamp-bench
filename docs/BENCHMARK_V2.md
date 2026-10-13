@@ -253,6 +253,7 @@ v2's results stand as published; v2.1 adds a third method and changes nothing in
   - **Slow batched solves:**
     - **Problem:** batched Cholesky also needs the batch-pointer kernel, and a loop of single solves took 5 s per 64-start IK.
     - **Fix:** batched Cholesky and batched triangular solves now use plain-XLA Cholesky–Banachiewicz and substitution, vectorised over the batch. All eight triangular-solve variants and batched Cholesky match NumPy to within 6e-7.
+- **7d result, margin choice (gantry dev set):** R1 successes out of 21 were 7 at 0 mm, **15 at 5 mm**, 14 at 10 mm, 5 at 20 mm and 1 at 50 mm (`results/v2_1/dev_margin.json`). The rule picks 5 mm, which is used for every held-out run.
 - **7e, MoveL end criterion: unchanged.** The plumbing test missed the 1 mm end criterion by 1.6–2.7 mm, but the criterion is kept: in v2, every other planner's MoveL ends within 0.2 mm of the target.
 
 **Order of work.**
