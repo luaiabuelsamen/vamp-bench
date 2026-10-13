@@ -1,0 +1,43 @@
+{
+ "jax": "0.6.2",
+ "backend": "gpu",
+ "devices": [
+  "cuda:0"
+ ],
+ "host": "ubuntu",
+ "joints": [
+  "base_x",
+  "shoulder_pan_joint",
+  "shoulder_lift_joint",
+  "elbow_joint",
+  "wrist_1_joint",
+  "wrist_2_joint",
+  "wrist_3_joint"
+ ],
+ "query": "heldout_a6[0]",
+ "fk_max_abs_diff": 1.0348868162424196e-07,
+ "ik": {
+  "first_call_s": 10.506196992006153,
+  "warm_median_s": 0.019630364142358303,
+  "pos_err_mm": 0.0001228781184181571,
+  "rot_err_deg": 1.1861002349178307e-05,
+  "q": [
+   0.29608309268951416,
+   -1.465364933013916,
+   -0.9684421420097351,
+   -0.07334544509649277,
+   0.15618610382080078,
+   -0.19660532474517822,
+   0.34862107038497925
+  ]
+ },
+ "trajopt": {
+  "timesteps": 64,
+  "dt": 0.05,
+  "first_call_s": 104.18550850916654,
+  "warm_median_s": 10.98540326487273,
+  "start_err": 0.0017484761923403092,
+  "goal_err": 0.007350050987478429,
+  "min_knot_world_dist_m": -0.05699826776981354
+ }
+}

@@ -3,7 +3,9 @@
 Run in the PyRoki venv with a clean PYTHONPATH:
   env -u PYTHONPATH JAX_PLATFORMS=cpu .venv-pyroki/bin/python bench/pyroki_smoke.py
 Same URDF and sphere model as every other planner (configs/ur5e_rail_spherized.urdf, configs/ur5e_rail_shared_v2.yml).
-Writes results/v2_1/smoke_pyroki.json and the trajopt knots to results/v2_1/smoke_traj.npz.
+GPU (PyPI jax-cuda12-plugin 0.6.2; see bench/pyroki_env.sh for the cuDNN and XLA flags it needs on this board):
+  bench/pyroki_env.sh python bench/pyroki_smoke.py
+Writes results/v2_1/smoke_pyroki.json (CPU) or smoke_pyroki_gpu.json and the trajopt knots to results/v2_1/smoke_traj.npz.
 """
 import json, os, pickle, platform, time
 from pathlib import Path
@@ -124,8 +126,9 @@ def main():
     rep["trajopt"] = {"timesteps": T, "dt": dt, "first_call_s": t_first, "warm_median_s": t_warm,
                       "start_err": float(np.abs(tr[0] - q0).max()), "goal_err": float(np.abs(tr[-1] - q1).max()),
                       "min_knot_world_dist_m": float(caps_d.min())}
-    np.savez(OUT / "smoke_traj.npz", q=tr, dt=dt)
-    json.dump(rep, open(OUT / "smoke_pyroki.json", "w"), indent=1)
+    np.savez(OUT / f"smoke_traj_{jax.default_backend()}.npz", q=tr, dt=dt)
+    name = "smoke_pyroki.json" if jax.default_backend() == "cpu" else f"smoke_pyroki_{jax.default_backend()}.json"
+    json.dump(rep, open(OUT / name, "w"), indent=1)
     print(json.dumps({k: v for k, v in rep.items() if k != "joints"}, indent=1, default=str)[:3000])
 
 
