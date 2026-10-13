@@ -32,12 +32,16 @@ ap.add_argument("--version", required=True, choices=["v1", "v2"]); ap.add_argume
 ap.add_argument("--seeds", type=int, default=5); ap.add_argument("--limit", type=int, default=0)
 ap.add_argument("--out", default=None); ap.add_argument("--deadline", type=float, default=0)
 ap.add_argument("--problems", default=str(ROOT / "problems/v2_pickplace.pkl"))
+ap.add_argument("--max-jerk", type=float, default=None, help="A7 J1: override the planner's max_jerk (rad/s^3); the gate is unchanged")
+ap.add_argument("--jerk-continue", action="store_true", help="A7 J2: a segment failing only the jerk check does not end the pick")
 a = ap.parse_args()
 VM, LIFT, TOOL = "ur5erail", 0.10, "tool0"
 P = yaml.safe_load(open(ROOT / "configs/v2_planners.yaml")); T_BUDGET = float(P["budget"]["T_s"])
 D = pickle.load(open(a.problems, "rb")); cells = D["cells"][: a.limit or None]
 assert abs(D["lift_m"] - LIFT) < 1e-12
 robot = yaml.safe_load(open(ROOT / f"configs/v2/ur5e_rail_{a.version}.yml"))["robot_cfg"]
+if a.max_jerk is not None:
+    cs = robot["kinematics"]["cspace"]; cs["max_jerk"] = [a.max_jerk] * len(cs["max_jerk"]); print("A7: planner max_jerk", cs["max_jerk"], flush=True)
 sync = torch.cuda.synchronize
 dev = lambda x: torch.as_tensor(np.asarray(x, np.float32), device="cuda:0")
 
@@ -196,6 +200,8 @@ def segment(kind, c, fn, line=None):
     if line is not None:
         rec.update(moveL_metrics(q, *line))
     rec["ok"] = bool(v["valid"] and t <= T_BUDGET)
+    rec["ok_nojerk"] = bool(v["colliding_samples"] == 0 and v["bound_violation_rad"] <= 1e-5 and v["max_vel_ratio"] <= 1.01
+                            and v["max_acc_ratio"] <= 1.01 and t <= T_BUDGET)
     return rec, q[-1]
 
 
@@ -231,18 +237,20 @@ for k in range(a.seeds):
             for kind, line, fn in plan:
                 seg, q_end = segment(kind, c, lambda: fn(q), line)
                 segs.append(seg)
-                if not seg["ok"]:
+                if not seg["ok"] and not (a.jerk_continue and seg.get("ok_nojerk")):
                     break
                 q = q_end
             segs += [{"kind": "not_attempted", "ok": False}] * (6 - len(segs))
-            ok = all(s["ok"] for s in segs)
+            ok = all(s["ok"] for s in segs); ok_nj = all(s.get("ok_nojerk", False) for s in segs)
             rec = {"cell": c["index"], "pick": i, "seed_k": k, "seed": seed, "planner": f"curobo{a.version[1]}", "success": bool(ok),
                    "segments": segs, "t_world_s": t_world if i == 0 else 0.0,
                    "t_ready_s": float(sum(s.get("t_ready_s", 0) for s in segs)), "t_exec_s": float(sum(s.get("t_exec_s", 0) for s in segs))}
             rec["t_cycle_s"] = rec["t_ready_s"] + rec["t_exec_s"] if ok else None
+            if a.jerk_continue or a.max_jerk is not None:
+                rec.update(success_nojerk=bool(ok_nj), planner_max_jerk=a.max_jerk or 500.0, jerk_continue=a.jerk_continue)
             with open(out, "a") as f:
                 f.write(json.dumps(rec) + "\n")
-            cur = np.asarray(q if ok else pl["q_above"])
+            cur = np.asarray(q if (ok or (a.jerk_continue and ok_nj)) else pl["q_above"])
         print(f"curobo{a.version} pickplace seed {k} cell {c['index']} done", flush=True)
     print(f"seed {k} warmup {warm:.0f}s", flush=True)
     del solver; torch.cuda.empty_cache()
