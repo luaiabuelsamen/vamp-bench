@@ -6,3 +6,4 @@ __pycache__/
 results/raw/
 results/v2/raw/
 results/v2/diag_jerk/
+results/v2_1/*.npz
