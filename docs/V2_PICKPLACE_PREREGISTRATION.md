@@ -110,3 +110,26 @@ Home is a fixed configuration per cell.
   - the cuRobo status of each failed free segment;
   - for MoveL segments, the jerk of cuRobo's optimizer-level trajectory next to the 1 kHz interpolated one, to tell a real jerk excess from an interpolation artefact.
   - The pre-registered gate (jerk included) is unchanged. The no-jerk gate stays a labelled post-hoc result.
+
+## Amendment A7 (logged 2026-10-12 19:10, before either run; approved by the orchestrator): cuRobo v1 jerk runs
+- **Finding behind it (A6 run):**
+  - cuRobo v1 completed 0/600 picks. 575 picks stop at a segment that fails only the jerk check: velocity and acceleration ratios ≤ 1.000, no collision.
+  - v1 bounds jerk with a central stencil over four optimizer steps, (−½p₀ + p₁ − p₃ + ½p₄)/dt³ = (a[t+1] − a[t−1])/2dt (`curobolib/cpp/tensor_step_kernel.cu`), so a one-step change in acceleration counts at half its size.
+  - On its optimizer-level trajectory, the per-step jerk is 2.00× the limit (median; max 2.33). cuRobo reports 0.92×.
+- **The limit:** 500 rad/s³ per arm joint, the same for all three planners and in the gate. Universal Robots' UR5e datasheet publishes no acceleration or jerk limits, so this is cuRobo's shipped `ur5e.yml` value (`configs/v2_limits.yaml`). The write-up states it this way.
+- **Run J1, positive control:** v1 with `max_jerk` = 250 rad/s³ (half) in its robot config; everything else as in A6.
+  - The gate is unchanged (500 at 1 kHz).
+  - Output: `results/v2/raw/curobo1_pickplace.A6.jerk250.jsonl`.
+- **Run J2, no-jerk count:** v1 exactly as in A6, except that a segment failing only the jerk check does not end the pick.
+  - Such a segment is recorded with `ok` = false (pre-registered gate) and `ok_nojerk` = true, and the pick continues from its end state.
+  - Pick fields: `success` (gate, unchanged) and `success_nojerk`.
+  - Output: `results/v2/raw/curobo1_pickplace.A6.jerkcontinue.jsonl`.
+- **Order:** J1, then J2, about 1.5 h each, in one GPU slot.
+- **How each result will be read:**
+  - **J1:**
+    - If v1 completes ≥ 80% of picks under the unchanged gate, v1 works on these cells, and its 0/600 in A6 is fully explained by the jerk definition.
+    - If MoveL segments still fail the jerk check at 250, the stencil explanation is incomplete and is investigated before any claim.
+    - If picks fail for other reasons (planning failures under the tighter bound), that is reported as the cost of meeting the limit.
+    - J1 cycle times are a configuration-matched sensitivity, not the headline v1 numbers.
+  - **J2:** `success_nojerk` is labelled post hoc. It means "v1 as configured, if the 2× jerk excess were tolerated"; it is never a headline success.
+  - **The jerk gate is its own result:** the share of MoveL and free segments within 500 rad/s³ at 1 kHz is reported for every planner (VAMP, v1 in A6/J1/J2, V2 in A6), together with this limit and its source.
