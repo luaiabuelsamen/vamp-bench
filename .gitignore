@@ -4,3 +4,4 @@ __pycache__/
 .vamp_only/
 results/raw/
 results/v2/raw/
+results/v2/diag_jerk/
