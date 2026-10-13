@@ -215,6 +215,30 @@ v2's results stand as published; v2.1 adds a third method and changes nothing in
     - a batched triangular solve runs as a loop of unbatched cuBLAS solves.
   - **Effect:** the numbers are unaffected to float32 precision (batched-solve residual 3e-7), and the speed may be lower than with a native build.
   - **CPU vs GPU:** IK reaches the same pose on both (error 0.1 µm), with joint solutions up to 0.03 rad apart, since the 7-joint robot is redundant for a 6-D pose. Trajopt outputs can differ widely when the solve does not converge. CPU and GPU results are therefore reported separately, never pooled.
+- **7a, seed dump result:** across the 300 held-out A6 queries, v1's outcome at this random seed reproduces the stored v2 record on all 300, and v1 solves 168. On 111 queries at least one of its seeds is a graph-planner path.
+- **7c, implementation details (2026-10-13, decided from the inputs, before any PyRoki benchmark run):**
+  - **World-collision margin 0 instead of 0.05 m** (a hard constraint on the swept spheres between knots, distance ≥ 0, which is what the gate tests).
+    - **Why:** 29% of the MoveL segment endpoints in `problems/v2_pickplace.pkl` are closer than 0.05 m to an obstacle, and so are the held-out A6 endpoints in the clearance bins below 5 cm. With fixed endpoints, a 0.05 m hard margin would make those problems infeasible by construction.
+    - The self-collision term stays a soft cost with PyRoki's 0.02 m margin.
+  - **MoveL:**
+    - the pose cost per knot uses `01_basic_ik`'s weights (position 50, orientation 10);
+    - the start is constrained to the given configuration;
+    - the end must reach the target TCP pose within 1 mm and 1°;
+    - the seed is the straight joint-space line to the generator's end configuration.
+  - **S2 resampling and order:**
+    - v1's seeds have 28 knots and are resampled to 50 by linear interpolation in time.
+    - Consecutive identical seeds are tried once, since PyRoki is deterministic.
+    - Each seed's duration is D = 1.5 × max(time-optimal straight-line duration, max over joints of the seed's joint path length / v_max).
+    - After the sequence, it repeats with D × 1.5 until the budget is spent.
+  - **IK:**
+    - (b) returns the lowest-pose-error solution of its 64 random starts (uniform within joint limits, seeded from the freeze hash); joint bounds and collision are then checked with the shared VAMP check.
+    - Warm-up targets are pick-place grasp poses, outside the measured set.
+  - **Validation:**
+    - runs in the PyRoki venv with the same VAMP build (`vamp-planner` 0.6.4 copied from the main venv) and the same `bench/v2_validate.py`;
+    - spline derivatives are passed as the sampler's own velocity and acceleration;
+    - validation time is reported separately from T_ready, as for VAMP.
+  - **Obstacle padding:** 40 boxes for held-out A6 (maximum 38) and 25 for pick-place (maximum 25).
+  - **CPU load:** the feasibility runner (1 worker) is not paused during PyRoki runs, so the v2 references are not delayed. The 1-minute load average is recorded with each result.
 
 **Order of work.**
 1. CPU smoke test (done: `bench/pyroki_smoke.py`, `results/v2_1/smoke_pyroki.json`).
