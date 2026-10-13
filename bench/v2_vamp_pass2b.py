@@ -4,7 +4,7 @@ into final per-run records (same schema as bench/v2_vamp.py) -> results/v2/raw/v
 Per run: pass (a) gives success/failure and the path (identical to pass 2a, verified); pass 2a gives the quiet
 timings (t_plan_ms, t_p1_ms, t_p2_ms, t_ready_ms); this pass time-parameterizes the path with P1 (Ruckig) and P2
 (TOPP-RA), validates both at 1 kHz and computes the quality metrics. Failures and kills from pass (a) are failures.
-Usage: python bench/v2_vamp_pass2b.py --workers N
+Usage: python bench/v2_vamp_pass2b.py --workers N [--sets heldout_a6 ...]
 """
 import argparse, json, multiprocessing as mp, pickle, sys
 from pathlib import Path
@@ -46,10 +46,10 @@ def work(args):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--workers", type=int, default=2); ap.add_argument("--freeze", default="6aea6eecf76a173d7ebdf548104aaec854b6b6c7")
-    a = ap.parse_args()
-    for s, (vm, pk, key) in SETS.items():
-        PROBS[s] = pickle.load(open(ROOT / pk, "rb"))["problems"][key]
-    for s in SETS:
+    ap.add_argument("--sets", nargs="+", default=list(SETS)); a = ap.parse_args()
+    for s in a.sets:
+        vm, pk, key = SETS[s]; PROBS[s] = pickle.load(open(ROOT / pk, "rb"))["problems"][key]
+    for s in a.sets:
         p1 = [json.loads(l) for l in open(ROOT / f"results/v2/raw/vamp_pass1_{s}.jsonl")]
         p2a = {(r["q"], r["seed_k"]): r for r in map(json.loads, open(ROOT / f"results/v2/raw/vamp_pass2a_{s}.jsonl"))}
         missing = [(r["q"], r["seed_k"]) for r in p1 if r["plan_success"] and (r["q"], r["seed_k"]) not in p2a]

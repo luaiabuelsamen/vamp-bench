@@ -1,0 +1,733 @@
+{
+ "heldout_a6": {
+  "H1": {
+   "holds_every_bin": true,
+   "bins": [
+    {
+     "axis": "reach",
+     "bin": "<0.5",
+     "queries": 8,
+     "underpowered": true,
+     "vamp_ms": 2.08878625,
+     "curobo1_ms": 188.74765769578516,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "reach",
+     "bin": "0.5-0.8",
+     "queries": 194,
+     "underpowered": false,
+     "vamp_ms": 3.4045017499999997,
+     "curobo1_ms": 211.57905063591897,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "reach",
+     "bin": ">0.8",
+     "queries": 98,
+     "underpowered": false,
+     "vamp_ms": 4.097632,
+     "curobo1_ms": 313.3128305198625,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "clearance",
+     "bin": "<1cm",
+     "queries": 144,
+     "underpowered": false,
+     "vamp_ms": 4.268855500000001,
+     "curobo1_ms": 217.4014204647392,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "clearance",
+     "bin": "1-5cm",
+     "queries": 143,
+     "underpowered": false,
+     "vamp_ms": 3.5116735,
+     "curobo1_ms": 215.6270646955818,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "clearance",
+     "bin": ">5cm",
+     "queries": 13,
+     "underpowered": true,
+     "vamp_ms": 1.2658575,
+     "curobo1_ms": 199.88418207503855,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "passage",
+     "bin": "free",
+     "queries": 69,
+     "underpowered": false,
+     "vamp_ms": 1.2793299999999999,
+     "curobo1_ms": 201.21377089526504,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "passage",
+     "bin": "blocked-wide",
+     "queries": 206,
+     "underpowered": false,
+     "vamp_ms": 4.256807500000001,
+     "curobo1_ms": 236.98852478992194,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "passage",
+     "bin": "blocked-narrow",
+     "queries": 25,
+     "underpowered": true,
+     "vamp_ms": 5.2436615,
+     "curobo1_ms": 462.52711745910347,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "limits",
+     "bin": "<0.2rad",
+     "queries": 123,
+     "underpowered": false,
+     "vamp_ms": 3.632454,
+     "curobo1_ms": 213.36507401429117,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "limits",
+     "bin": ">=0.2rad",
+     "queries": 177,
+     "underpowered": false,
+     "vamp_ms": 3.603484,
+     "curobo1_ms": 217.3746891785413,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    }
+   ],
+   "overall_ms": {
+    "vamp": 3.536506,
+    "curobo1": 210.38245409727097
+   }
+  },
+  "H2": {
+   "t_ready_ratio_curobo1_over_vamp": 59.488787548295115,
+   "t_cycle_ratio_curobo1_over_vamp": 1.2183227564608312,
+   "holds": true,
+   "vamp_t_ready_advantage_s": 0.20684594809727097,
+   "curobo1_t_exec_advantage_s": 0.9699397528142257,
+   "curobo1_wins_cycle_by_exec": true,
+   "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s"
+  },
+  "H3": {
+   "rms_jerk_norm": {
+    "vamp_p1": 0.23189705685126,
+    "curobo1": 0.0316463310880398
+   },
+   "peak_jerk_norm": {
+    "vamp_p1": 1.0000000000001563,
+    "curobo1": 0.2352222204208374
+   },
+   "t_exec_s": {
+    "vamp_p1": 3.032939752814226,
+    "curobo1": 2.063,
+    "vamp_p2": 1.793798740411719,
+    "vamp_p1_same_runs_as_p2": 2.474517691242612
+   },
+   "p2_validity_rate_of_planned": 0.475820087926953,
+   "min_clearance_m": {
+    "vamp_p1": 0.0015844109212316965,
+    "curobo1": 0.009466595359513975
+   },
+   "curobo1_lower_jerk": true,
+   "curobo1_shorter_exec": true,
+   "p2_closes_exec_gap": true
+  },
+  "H4": {
+   "vamp": {
+    "queries_failing_some_seed": 100,
+    "queries_failing_all_seeds": 3,
+    "success_rate_runs": 0.9306666666666666,
+    "t_cycle_worst_s": 30.0,
+    "queries": 300
+   },
+   "curobo1": {
+    "queries_failing_some_seed": 160,
+    "queries_failing_all_seeds": 95,
+    "success_rate_runs": 0.5693333333333334,
+    "t_cycle_worst_s": 30.0,
+    "queries": 300
+   },
+   "v2_subsample": {
+    "vamp": {
+     "queries_failing_some_seed": 11,
+     "success_rate_runs": 0.95,
+     "t_ready_ms_median_runs": 3.271265,
+     "t_cycle_med_of_query_meds": 2.952339445964421
+    },
+    "curobo1": {
+     "queries_failing_some_seed": 41,
+     "success_rate_runs": 0.6466666666666666,
+     "t_ready_ms_median_runs": 213.49981194362044,
+     "t_cycle_med_of_query_meds": 2.938674599060789
+    },
+    "curobo2": {
+     "queries_failing_some_seed": 29,
+     "success_rate_runs": 0.71,
+     "t_ready_ms_median_runs": 1505.0229537300766,
+     "t_cycle_med_of_query_meds": 4.058697456726804
+    }
+   },
+   "more_robust": "vamp"
+  }
+ },
+ "mbm": {
+  "H1": {
+   "holds_every_bin": true,
+   "bins": [
+    {
+     "axis": "reach",
+     "bin": "0.5-0.8",
+     "queries": 10,
+     "underpowered": true,
+     "vamp_ms": 2.3025582499999997,
+     "curobo1_ms": 1639.4132657442242,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "reach",
+     "bin": ">0.8",
+     "queries": 290,
+     "underpowered": false,
+     "vamp_ms": 2.43374,
+     "curobo1_ms": 1180.392433074303,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "clearance",
+     "bin": "<1cm",
+     "queries": 32,
+     "underpowered": false,
+     "vamp_ms": 4.68001675,
+     "curobo1_ms": 1042.4274172401056,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "clearance",
+     "bin": "1-5cm",
+     "queries": 268,
+     "underpowered": false,
+     "vamp_ms": 2.416515,
+     "curobo1_ms": 1184.1002068249509,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "passage",
+     "bin": "free",
+     "queries": 35,
+     "underpowered": false,
+     "vamp_ms": 2.2139555,
+     "curobo1_ms": 1188.1508324295282,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "passage",
+     "bin": "blocked-wide",
+     "queries": 265,
+     "underpowered": false,
+     "vamp_ms": 2.471869,
+     "curobo1_ms": 1178.5171150695533,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "limits",
+     "bin": "<0.2rad",
+     "queries": 251,
+     "underpowered": false,
+     "vamp_ms": 2.5142870000000004,
+     "curobo1_ms": 1177.234445232898,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "limits",
+     "bin": ">=0.2rad",
+     "queries": 49,
+     "underpowered": false,
+     "vamp_ms": 2.203315,
+     "curobo1_ms": 1229.7529655043036,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    }
+   ],
+   "overall_ms": {
+    "vamp": 2.428925,
+    "curobo1": 1162.176928948611
+   }
+  },
+  "H2": {
+   "t_ready_ratio_curobo1_over_vamp": 478.4737811783447,
+   "t_cycle_ratio_curobo1_over_vamp": 1.1390619430903752,
+   "holds": true,
+   "vamp_t_ready_advantage_s": 1.159748003948611,
+   "curobo1_t_exec_advantage_s": 0.6772174742913311,
+   "curobo1_wins_cycle_by_exec": false,
+   "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s"
+  },
+  "H3": {
+   "rms_jerk_norm": {
+    "vamp_p1": 0.07460037645402484,
+    "curobo1": 0.0026560320743837565
+   },
+   "peak_jerk_norm": {
+    "vamp_p1": 1.0000000000001121,
+    "curobo1": 0.021454811096191406
+   },
+   "t_exec_s": {
+    "vamp_p1": 2.569217474291331,
+    "curobo1": 1.8920000000000001,
+    "vamp_p2": 1.5544918520712725,
+    "vamp_p1_same_runs_as_p2": 2.2567828610399356
+   },
+   "p2_validity_rate_of_planned": 0.557,
+   "min_clearance_m": {
+    "vamp_p1": 0.0019079757756443952,
+    "curobo1": 0.015589037025089666
+   },
+   "curobo1_lower_jerk": true,
+   "curobo1_shorter_exec": true,
+   "p2_closes_exec_gap": true
+  },
+  "H4": {
+   "vamp": {
+    "queries_failing_some_seed": 231,
+    "queries_failing_all_seeds": 2,
+    "success_rate_runs": 0.8083333333333333,
+    "t_cycle_worst_s": 30.0,
+    "queries": 300
+   },
+   "curobo1": {
+    "queries_failing_some_seed": 55,
+    "queries_failing_all_seeds": 14,
+    "success_rate_runs": 0.9003333333333333,
+    "t_cycle_worst_s": 30.0,
+    "queries": 300
+   },
+   "v2_subsample": {
+    "vamp": {
+     "queries_failing_some_seed": 42,
+     "success_rate_runs": 0.7933333333333333,
+     "t_ready_ms_median_runs": 2.299367,
+     "t_cycle_med_of_query_meds": 2.5141517325532847
+    },
+    "curobo1": {
+     "queries_failing_some_seed": 16,
+     "success_rate_runs": 0.88,
+     "t_ready_ms_median_runs": 1212.520273635164,
+     "t_cycle_med_of_query_meds": 3.2136833426132796
+    },
+    "curobo2": {
+     "queries_failing_some_seed": 17,
+     "success_rate_runs": 0.83,
+     "t_ready_ms_median_runs": 10244.631531648338,
+     "t_cycle_med_of_query_meds": 12.997097141342238
+    }
+   },
+   "more_robust": "curobo1"
+  }
+ },
+ "mpinets": {
+  "H1": {
+   "holds_every_bin": true,
+   "bins": [
+    {
+     "axis": "reach",
+     "bin": "<0.5",
+     "queries": 8,
+     "underpowered": true,
+     "vamp_ms": 1.32774575,
+     "curobo1_ms": 309.54432347789407,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "reach",
+     "bin": "0.5-0.8",
+     "queries": 138,
+     "underpowered": false,
+     "vamp_ms": 1.884639,
+     "curobo1_ms": 305.2637630607933,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "reach",
+     "bin": ">0.8",
+     "queries": 154,
+     "underpowered": false,
+     "vamp_ms": 1.905608,
+     "curobo1_ms": 270.0536805205047,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "clearance",
+     "bin": "<1cm",
+     "queries": 92,
+     "underpowered": false,
+     "vamp_ms": 2.3035115,
+     "curobo1_ms": 299.32923102751374,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "clearance",
+     "bin": "1-5cm",
+     "queries": 174,
+     "underpowered": false,
+     "vamp_ms": 1.838006,
+     "curobo1_ms": 290.5615975614637,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "clearance",
+     "bin": ">5cm",
+     "queries": 34,
+     "underpowered": false,
+     "vamp_ms": 1.3724365,
+     "curobo1_ms": 262.6730058109388,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "passage",
+     "bin": "free",
+     "queries": 130,
+     "underpowered": false,
+     "vamp_ms": 1.1857487500000001,
+     "curobo1_ms": 276.8835666356608,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "passage",
+     "bin": "blocked-wide",
+     "queries": 170,
+     "underpowered": false,
+     "vamp_ms": 2.438684,
+     "curobo1_ms": 298.5523969400674,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "limits",
+     "bin": "<0.2rad",
+     "queries": 98,
+     "underpowered": false,
+     "vamp_ms": 2.0727425000000004,
+     "curobo1_ms": 270.23762685712427,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "limits",
+     "bin": ">=0.2rad",
+     "queries": 202,
+     "underpowered": false,
+     "vamp_ms": 1.8356219999999999,
+     "curobo1_ms": 296.6525829397142,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    }
+   ],
+   "overall_ms": {
+    "vamp": 1.809317,
+    "curobo1": 288.0672039464116
+   }
+  },
+  "H2": {
+   "t_ready_ratio_curobo1_over_vamp": 159.21323015613714,
+   "t_cycle_ratio_curobo1_over_vamp": 0.9922357965210038,
+   "holds": true,
+   "vamp_t_ready_advantage_s": 0.2862578869464116,
+   "curobo1_t_exec_advantage_s": 0.19862689961521274,
+   "curobo1_wins_cycle_by_exec": false,
+   "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s"
+  },
+  "H3": {
+   "rms_jerk_norm": {
+    "vamp_p1": 0.07449406347057141,
+    "curobo1": 0.003906887486904163
+   },
+   "peak_jerk_norm": {
+    "vamp_p1": 1.0000000000000555,
+    "curobo1": 0.030513477325439454
+   },
+   "t_exec_s": {
+    "vamp_p1": 1.6716268996152128,
+    "curobo1": 1.473,
+    "vamp_p2": 1.1376333697268879,
+    "vamp_p1_same_runs_as_p2": 1.3732965517241378
+   },
+   "p2_validity_rate_of_planned": 0.7076923076923077,
+   "min_clearance_m": {
+    "vamp_p1": 0.0030842665582895296,
+    "curobo1": 0.01550767756998539
+   },
+   "curobo1_lower_jerk": true,
+   "curobo1_shorter_exec": true,
+   "p2_closes_exec_gap": true
+  },
+  "H4": {
+   "vamp": {
+    "queries_failing_some_seed": 128,
+    "queries_failing_all_seeds": 7,
+    "success_rate_runs": 0.881,
+    "t_cycle_worst_s": 30.0,
+    "queries": 300
+   },
+   "curobo1": {
+    "queries_failing_some_seed": 17,
+    "queries_failing_all_seeds": 2,
+    "success_rate_runs": 0.9756666666666667,
+    "t_cycle_worst_s": 30.0,
+    "queries": 300
+   },
+   "v2_subsample": {
+    "vamp": {
+     "queries_failing_some_seed": 19,
+     "success_rate_runs": 0.8966666666666666,
+     "t_ready_ms_median_runs": 1.7357770000000001,
+     "t_cycle_med_of_query_meds": 1.6765558421864117
+    },
+    "curobo1": {
+     "queries_failing_some_seed": 3,
+     "success_rate_runs": 0.9766666666666667,
+     "t_ready_ms_median_runs": 279.0791681036353,
+     "t_cycle_med_of_query_meds": 1.7895587699115276
+    },
+    "curobo2": {
+     "queries_failing_some_seed": 3,
+     "success_rate_runs": 0.97,
+     "t_ready_ms_median_runs": 4052.7319139800966,
+     "t_cycle_med_of_query_meds": 5.400764635298401
+    }
+   },
+   "more_robust": "curobo1"
+  }
+ },
+ "heldout": {
+  "H1": {
+   "holds_every_bin": true,
+   "bins": [
+    {
+     "axis": "reach",
+     "bin": "<0.5",
+     "queries": 8,
+     "underpowered": true,
+     "vamp_ms": 3.8448725,
+     "curobo1_ms": 237.53794038202614,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "reach",
+     "bin": "0.5-0.8",
+     "queries": 194,
+     "underpowered": false,
+     "vamp_ms": 5.61879575,
+     "curobo1_ms": 237.86118801217526,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "reach",
+     "bin": ">0.8",
+     "queries": 98,
+     "underpowered": false,
+     "vamp_ms": 6.272483749999999,
+     "curobo1_ms": 242.1128605492413,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "clearance",
+     "bin": "<1cm",
+     "queries": 144,
+     "underpowered": false,
+     "vamp_ms": 5.7025179999999995,
+     "curobo1_ms": 240.55523797869682,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "clearance",
+     "bin": "1-5cm",
+     "queries": 143,
+     "underpowered": false,
+     "vamp_ms": 5.6232995,
+     "curobo1_ms": 239.79340703226626,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "clearance",
+     "bin": ">5cm",
+     "queries": 13,
+     "underpowered": true,
+     "vamp_ms": 1.99849875,
+     "curobo1_ms": 217.12351846508682,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "passage",
+     "bin": "free",
+     "queries": 24,
+     "underpowered": true,
+     "vamp_ms": 1.493176,
+     "curobo1_ms": 233.89166384004056,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "passage",
+     "bin": "blocked-wide",
+     "queries": 249,
+     "underpowered": false,
+     "vamp_ms": 6.18998575,
+     "curobo1_ms": 241.01540562696755,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "passage",
+     "bin": "blocked-narrow",
+     "queries": 27,
+     "underpowered": true,
+     "vamp_ms": 6.7498375,
+     "curobo1_ms": 245.3584570903331,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "limits",
+     "bin": "<0.2rad",
+     "queries": 163,
+     "underpowered": false,
+     "vamp_ms": 5.84577925,
+     "curobo1_ms": 238.37789648678154,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    },
+    {
+     "axis": "limits",
+     "bin": ">=0.2rad",
+     "queries": 137,
+     "underpowered": false,
+     "vamp_ms": 5.514575499999999,
+     "curobo1_ms": 241.3279430475086,
+     "vamp_lower": true,
+     "cis_disjoint": true
+    }
+   ],
+   "overall_ms": {
+    "vamp": 5.4973905,
+    "curobo1": 239.8862480185926
+   }
+  },
+  "H2": {
+   "t_ready_ratio_curobo1_over_vamp": 43.636384939107494,
+   "t_cycle_ratio_curobo1_over_vamp": 3.0049750621029725,
+   "holds": true,
+   "vamp_t_ready_advantage_s": 0.2343888575185926,
+   "curobo1_t_exec_advantage_s": 1.6503796681766656,
+   "curobo1_wins_cycle_by_exec": true,
+   "note": "T_cycle ratio uses the median over queries of per-query median T_cycle, failures at T = 30 s"
+  },
+  "H3": {
+   "rms_jerk_norm": {
+    "vamp_p1": 0.2012275911728303,
+    "curobo1": 0.01485195859945329
+   },
+   "peak_jerk_norm": {
+    "vamp_p1": 1.0000000000003348,
+    "curobo1": 0.10579299926757812
+   },
+   "t_exec_s": {
+    "vamp_p1": 4.742379668176666,
+    "curobo1": 3.092,
+    "vamp_p2": 3.170298410669057,
+    "vamp_p1_same_runs_as_p2": 4.138270317444379
+   },
+   "p2_validity_rate_of_planned": 0.4974025974025974,
+   "min_clearance_m": {
+    "vamp_p1": 0.001217893455994351,
+    "curobo1": 0.009606769768940093
+   },
+   "curobo1_lower_jerk": true,
+   "curobo1_shorter_exec": true,
+   "p2_closes_exec_gap": false
+  },
+  "H4": {
+   "vamp": {
+    "queries_failing_some_seed": 189,
+    "queries_failing_all_seeds": 146,
+    "success_rate_runs": 0.49266666666666664,
+    "t_cycle_worst_s": 30.0,
+    "queries": 300
+   },
+   "curobo1": {
+    "queries_failing_some_seed": 253,
+    "queries_failing_all_seeds": 243,
+    "success_rate_runs": 0.17366666666666666,
+    "t_cycle_worst_s": 30.0,
+    "queries": 300
+   },
+   "v2_subsample": {
+    "vamp": {
+     "queries_failing_some_seed": 51,
+     "success_rate_runs": 0.52,
+     "t_ready_ms_median_runs": 4.109674500000001,
+     "t_cycle_med_of_query_meds": 7.465215648249198
+    },
+    "curobo1": {
+     "queries_failing_some_seed": 80,
+     "success_rate_runs": 0.21666666666666667,
+     "t_ready_ms_median_runs": 227.26434702053666,
+     "t_cycle_med_of_query_meds": 30.0
+    },
+    "curobo2": {
+     "queries_failing_some_seed": 63,
+     "success_rate_runs": 0.37,
+     "t_ready_ms_median_runs": 1950.0064584426582,
+     "t_cycle_med_of_query_meds": 30.0
+    }
+   },
+   "more_robust": "vamp"
+  }
+ },
+ "H5": {
+  "H1_same_sign": true,
+  "H2_same_sign": true,
+  "H3_jerk_same_sign": true,
+  "H3_exec_same_sign": true,
+  "H4_same_sign": false
+ }
+}
