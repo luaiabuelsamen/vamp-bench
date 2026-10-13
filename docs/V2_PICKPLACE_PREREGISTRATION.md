@@ -133,3 +133,16 @@ Home is a fixed configuration per cell.
     - J1 cycle times are a configuration-matched sensitivity, not the headline v1 numbers.
   - **J2:** `success_nojerk` is labelled post hoc. It means "v1 as configured, if the 2× jerk excess were tolerated"; it is never a headline success.
   - **The jerk gate is its own result:** the share of MoveL and free segments within 500 rad/s³ at 1 kHz is reported for every planner (VAMP, v1 in A6/J1/J2, V2 in A6), together with this limit and its source.
+- **A7 addendum, J1b (logged 2026-10-12 19:40, while J1 runs, before J1b runs):**
+  - **J1 smoke result:** at max_jerk 250, MoveL jerk is 1.07–1.17× of 500 and 0/4 picks succeed. By the J1 rule, this was investigated before any claim.
+  - **Cause:**
+    - v1 retimes each trajectory so its stencil jerk reaches the limit: the reported value is 0.92× the limit (median; max 1.00) on the 632 A6 MoveL segments (`wrap/reacher/evaluator.py`).
+    - The executed (per-step) jerk is 2.18× the stencil value (median; p95 2.38, max 2.41).
+    - The central stencil averages two consecutive per-step jerks, so it does not bound step-to-step alternation. The ratio is not fixed at 2.
+    - Prediction for J1 at 250: executed ratio median 1.00, about 52% of MoveL segments within the gate, so few complete picks. J1 is still run and reported as pre-registered.
+  - **J1b, positive control expected to succeed:** v1 with max_jerk = 200 rad/s³ (500/2.5, below 500/2.41); otherwise identical to J1, gate unchanged.
+    - Output: `results/v2/raw/curobo1_pickplace.A6.jerk200.jsonl`.
+    - **Reading:**
+      - If ≥ 80% of picks succeed, v1 works on these cells, and every A6 v1 failure besides 25 planner failures is the jerk-definition mismatch.
+      - If MoveL segments still fail the jerk check at 200, the stencil account is wrong and nothing about v1 jerk is claimed.
+  - **Scheduling:** J1b needs about 1.5 GPU-h after this session.
