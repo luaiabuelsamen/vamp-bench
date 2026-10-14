@@ -73,3 +73,40 @@ Pre-registration and amendments: `docs/V2_PICKPLACE_PREREGISTRATION.md`. Numbers
 - **cuRobo results on them:** v1 completed 0/600 picks and cuRoboV2 120/556 (a partial run).
 - **VAMP:** the A5 VAMP run is void.
 - **Comparison with the main results:** on long joint moves, both cuRobo versions fail many free segments that they plan once the goals are wrapped.
+
+## Post-hoc: uniform slowdown (R2) for every planner
+Not pre-registered (amendment 7f in `docs/BENCHMARK_V2.md`). PyRoki's MoveL (v2.1) is reported both as returned (R1) and after a uniform slowdown (R2). Without the same rescue for the other planners, PyRoki would get one they did not.
+- **R2:** a segment that fails the 1 kHz gate only on velocity, acceleration or jerk is slowed uniformly by s = max(1, r_v, √r_a, ∛r_j), where the r are its peak ratios to the limits. The path is unchanged and the segment is gated again.
+- **How it was computed:**
+  - For the v2 planners, R2 is computed from the stored per-segment peaks and collision results.
+  - **Check:** it was checked first on cuRobo v1 trajectories dumped at 1 kHz. Slowed down and resampled, all 16 pass the full gate, at exactly 1.00 × the limit.
+- **cuRobo v1 source:** its run that continued past jerk-only failures, so every segment is attempted.
+- **Numbers:** `results/v2_1/movel_r2.json` (`bench/v2_1_movel_r2.py`).
+
+| MoveL segments | VAMP | cuRobo v1 (as configured) | cuRoboV2 | PyRoki (v2.1) |
+|---|---|---|---|---|
+| Pass the gate as returned (R1) | 2360/2360 | 200/2304 | 2350/2350 | 0/480 |
+| Pass the gate after slowdown (R2) | 2360/2360 | 2304/2304 | 2350/2350 | 473/479 |
+| Succeed under R2 (gate, endpoints, budget) | 2360/2360 | 2304/2304 | 2350/2350 | 6/480 |
+| Slowdown factor s on slowed segments, median / p95 | — (none needed) | 1.27 / 1.30 | — (none needed) | 2.09 / 5.55 |
+| Added execution time per slowed segment, median | 0 | 0.10 s | 0 | 0.81 s |
+| MoveL execution time under R2, median | 0.75 s | 0.50 s | 0.46 s | 1.56 s |
+
+| Picks (all 6 segments) | VAMP | cuRobo v1 (as configured) | cuRoboV2 |
+|---|---|---|---|
+| Completed, R1 | 587/600 | 0/600 | 585/600 |
+| Completed, R2 | 587/600 | 573/600 | 585/600 |
+| Median cycle time per completed pick, R2 | 6.08 s | 8.15 s | 18.92 s |
+| Median cycle time on the 567 picks all three complete under R2 | 6.06 s | 8.14 s | 18.86 s |
+
+- **cuRobo v1:**
+  - **With the same rescue:** cuRobo v1 as configured completes 573 of 600 picks, against 0 as returned. This is about the same as the max_jerk 200 positive control (572).
+  - **Cost:** the slowdown lengthens each slowed MoveL by 27% (about 0.10 s), adding a median of 0.41 s per pick.
+  - **What the rescue covers:** 2104 MoveL and 13 free segments. All of them failed the gate on jerk alone.
+- **VAMP and cuRoboV2:** every segment passes as returned, so R2 changes nothing for them.
+- **PyRoki:**
+  - Its MoveL needs a larger slowdown (median 2.1×, up to 5.9×).
+  - Under R2 it still succeeds on only 6 segments. The others miss the 1 mm end criterion, and 81 do not start within 1e-3 rad of the start configuration.
+  - It ran single MoveL segments from the stored start configurations, not whole picks, so it has no per-pick numbers.
+- **Ranking unchanged:** on paired picks, VAMP's cycle time is the lowest under R2 as under R1.
+

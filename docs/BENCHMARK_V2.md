@@ -278,6 +278,12 @@ v2's results stand as published; v2.1 adds a third method and changes nothing in
   - **Readings:**
     - **v1 completes picks under R2:** the v2 headline "cuRobo v1 as configured completes 0/600 picks" describes its trajectories as returned, and is reported next to the R2 count.
     - **R2 changes nothing for VAMP and cuRoboV2:** s = 1 on every segment.
+- **7f result (`bench/v2_1_movel_r2.py`, `results/v2_1/movel_r2.json`):**
+  - **Shortcut check passed:**
+    - All 16 dumped cuRobo v1 trajectories, slowed down and resampled, pass the full 1 kHz gate with no colliding sample. The peak after scaling is 1.000 × the limit wherever s > 1.
+    - The predicted s matches PyRoki's recorded s exactly on all 479 segments.
+    - Rescaling takes at most 0.9 ms, which is added to T_ready.
+  - **Results:** in `docs/V2_PICKPLACE_RESULTS.md` (post-hoc section).
 
 **Order of work.**
 1. CPU smoke test (done: `bench/pyroki_smoke.py`, `results/v2_1/smoke_pyroki.json`).
