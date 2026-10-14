@@ -20,17 +20,17 @@ Pre-registration and amendments: `docs/V2_PICKPLACE_PREREGISTRATION.md`. Numbers
 
 ## Results
 
-| | VAMP | cuRobo v1 (as configured) | cuRobo v1, max_jerk 200 (positive control) |  cuRoboV2 |
-|---|---|---|---|---|---|
-| Picks completed | 587/600 | 0/600 | 572/600 |  585/600 |
-| Pick slots failing on some seed (P3) | 8/120 | 120/120 | 11/120 |  3/120 |
-| Pick slots failing on every seed | 0 | 120 | 3 |  3 |
-| Median cycle time per completed pick | 6.08 s | — | 8.22 s |  18.92 s |
-| … planning | 0.35 s | — | 2.76 s |  13.71 s |
-| … execution | 5.72 s | — | 5.47 s |  5.34 s |
-| MoveL max TCP deviation, median / p95 (P1) | 0.04 / 0.07 mm | 0.04 / 0.49 mm | 0.03 / 0.34 mm |  0.65 / 0.92 mm |
-| MoveL max orientation deviation, p95 | 0.03° | 1.89° | 1.51° |  0.05° |
-| First failure on failed picks | 12 free segments collide at 1 kHz; 1 free segment not solved | 575 jerk only; 25 free segments not planned | 27 free segments not planned; 1 jerk only |  15 free segments not planned |
+| | VAMP | cuRobo v1 (as configured) | cuRobo v1, max_jerk 200 (positive control) | cuRoboV2 |
+|---|---|---|---|---|
+| Picks completed | 587/600 | 0/600 | 572/600 | 585/600 |
+| Pick slots failing on some seed (P3) | 8/120 | 120/120 | 11/120 | 3/120 |
+| Pick slots failing on every seed | 0 | 120 | 3 | 3 |
+| Median cycle time per completed pick | 6.08 s | — | 8.22 s | 18.92 s |
+| … planning | 0.35 s | — | 2.76 s | 13.71 s |
+| … execution | 5.72 s | — | 5.47 s | 5.34 s |
+| MoveL max TCP deviation, median / p95 (P1) | 0.04 / 0.07 mm | 0.04 / 0.49 mm | 0.03 / 0.34 mm | 0.65 / 0.92 mm |
+| MoveL max orientation deviation, p95 | 0.03° | 1.89° | 1.51° | 0.05° |
+| First failure on failed picks | 12 free segments collide at 1 kHz; 1 free segment not solved | 575 jerk only; 25 free segments not planned | 27 free segments not planned; 1 jerk only | 15 free segments not planned |
 
 - **P1, MoveL precision:** all three planners meet the pre-registered criterion (median ≤ 1 mm, p95 ≤ 5 mm).
   - VAMP's line is straight by construction, so its deviation is interpolation error only.
@@ -48,13 +48,13 @@ Pre-registration and amendments: `docs/V2_PICKPLACE_PREREGISTRATION.md`. Numbers
 
 ![MoveL executed jerk per planner](../results/v2/pickplace_jerk.png)
 
-| Run (A6 cells) | MoveL segments within 500 rad/s³ | MoveL peak, median / max (× limit) |  Free segments within |
+| Run (A6 cells) | MoveL segments within 500 rad/s³ | MoveL peak, median / max (× limit) | Free segments within |
 |---|---|---|---|
-| VAMP | 2360/2360 | 0.11 / 0.52 |  1192/1192 |
-| cuRobo v1 as configured (max_jerk 500) | 67/632 | 2.00 / 2.33 |  582/592 |
-| cuRobo v1, max_jerk 250 | 74/640 | 1.10 / 1.79 |  588/598 |
-| cuRobo v1, max_jerk 200 | 2302/2303 | 0.89 / 1.22 |  1152/1152 |
-| cuRoboV2 | 2350/2350 | 0.93 / 1.00 |  1175/1175 |
+| VAMP | 2360/2360 | 0.11 / 0.52 | 1192/1192 |
+| cuRobo v1 as configured (max_jerk 500) | 67/632 | 2.00 / 2.33 | 582/592 |
+| cuRobo v1, max_jerk 250 | 74/640 | 1.10 / 1.79 | 588/598 |
+| cuRobo v1, max_jerk 200 | 2302/2303 | 0.89 / 1.22 | 1152/1152 |
+| cuRoboV2 | 2350/2350 | 0.93 / 1.00 | 1175/1175 |
 
 - **Result:** cuRobo v1's MoveL trajectories exceed the configured 500 rad/s³ jerk limit, executed at 1 kHz, by a median factor of 2.0. cuRoboV2's and VAMP's stay within it.
 - **Where the excess is:** in one cell's dumped trajectories (8 MoveL segments, max_jerk 500 and 250), every over-limit sample lies in the first or last 30 ms of the segment; between the ends, jerk stays at or below 0.84 × 500.
@@ -83,7 +83,7 @@ Not pre-registered (amendment 7f in `docs/BENCHMARK_V2.md`). PyRoki's MoveL (v2.
 - **cuRobo v1 source:** its run that continued past jerk-only failures, so every segment is attempted.
 - **Numbers:** `results/v2_1/movel_r2.json` (`bench/v2_1_movel_r2.py`).
 
-| MoveL segments | VAMP | cuRobo v1 (as configured) | cuRoboV2 | PyRoki (v2.1) | PyRoki, PyRoki's endpoint recipe (v2.1, 7g) |
+| MoveL segments | VAMP | cuRobo v1 (as configured) | cuRoboV2 | PyRoki as pre-registered (v2.1) | PyRoki, PyRoki's endpoint recipe (v2.1, 7g) |
 |---|---|---|---|---|---|
 | Pass the gate as returned (R1) | 2360/2360 | 200/2304 | 2350/2350 | 0/480 | 0/480 |
 | Pass the gate after slowdown (R2) | 2360/2360 | 2304/2304 | 2350/2350 | 473/479 | 474/477 |
@@ -92,12 +92,12 @@ Not pre-registered (amendment 7f in `docs/BENCHMARK_V2.md`). PyRoki's MoveL (v2.
 | Added execution time per slowed segment, median | 0 | 0.10 s | 0 | 0.81 s | 0.67 s |
 | MoveL execution time under R2, median | 0.75 s | 0.50 s | 0.46 s | 1.56 s | 1.42 s |
 
-| Picks (all 6 segments) | VAMP | cuRobo v1 (as configured) |  cuRoboV2 |
+| Picks (all 6 segments) | VAMP | cuRobo v1 (as configured) | cuRoboV2 |
 |---|---|---|---|
-| Completed, R1 | 587/600 | 0/600 |  585/600 |
-| Completed, R2 | 587/600 | 573/600 |  585/600 |
-| Median cycle time per completed pick, R2 | 6.08 s | 8.15 s |  18.92 s |
-| Median cycle time on the 567 picks all three complete under R2 | 6.06 s | 8.14 s |  18.86 s |
+| Completed, R1 | 587/600 | 0/600 | 585/600 |
+| Completed, R2 | 587/600 | 573/600 | 585/600 |
+| Median cycle time per completed pick, R2 | 6.08 s | 8.15 s | 18.92 s |
+| Median cycle time on the 567 picks all three complete under R2 | 6.06 s | 8.14 s | 18.86 s |
 
 - **cuRobo v1:**
   - **With the same rescue:** cuRobo v1 as configured completes 573 of 600 picks, against 0 as returned. This is about the same as the max_jerk 200 positive control (572).
