@@ -307,6 +307,14 @@ v2's results stand as published; v2.1 adds a third method and changes nothing in
     - **Readings:**
       - If R2 success rises to most segments, PyRoki's MoveL shortfall was our endpoint handling.
       - If it stays low because of start errors, it is PyRoki's constraint convergence at its defaults.
+  - **7g result (`results/v2_1/raw/pyroki_movel_gpu_recipe.jsonl`; GPU, 2026-10-14 00:29):**
+    - **Recipe endpoints:** 475/480 segments end within 1 mm and 1° (median 0.09 mm), against 13/480 in the pre-registered run.
+    - **R2 success:** 373/480, against 6/480. R1 still passes on no segment.
+    - **Remaining failures:**
+      - 99 segments start more than 1e-3 rad off, 96 of them only for that reason;
+      - 6 fail the gate after slowdown;
+      - 5 miss the end criterion.
+    - **Reading:** most of the shortfall was our endpoint handling. What remains is mostly PyRoki's start constraint not converging at the solver's defaults.
   - **Not rerun:**
     - **Trajopt S1/S2:** these already hold both endpoints on 2 knots each as the recipe does. They omit the recipe's rest cost of 0.01, which pulls toward the zero configuration and does not address their failure modes (collision and budget).
 
