@@ -263,14 +263,14 @@ v2's results stand as published; v2.1 adds a third method and changes nothing in
     - **Rule:** the same as for PyRoki. A segment that fails the 1 kHz gate only on velocity, acceleration or jerk is slowed uniformly by s = max(1, r_v, √r_a, ∛r_j), where the r are the 1 kHz peak ratios to the limits. It then passes if it has no colliding sample and no bound violation.
     - **No re-run:** the v2 runs stored the peak ratios and the collision and bound result of every segment, not the trajectories. A uniform time scaling leaves the path unchanged and divides the peaks by s, s² and s³. So R2 is computed from the stored records.
     - **Check of this shortcut, before it is used:**
-      - **cuRobo v1:** the 8 cuRobo v1 MoveL trajectories dumped at max_jerk 500 (`results/v2/diag_jerk/dump_jerk500`) are rescaled, resampled at 1 kHz (qdd interpolated linearly) and run through the full gate, including collision.
+      - **cuRobo v1:** the cuRobo v1 trajectories dumped in one cell are rescaled, resampled at 1 kHz (qdd interpolated linearly) and run through the full gate, including collision. That is 4 MoveL and 4 free trajectories at max_jerk 500, and the same at 250 (`results/v2/diag_jerk/dump_jerk{500,250}`).
+      - **Rescale time:** the slowest of these is the one added to T_ready.
       - **PyRoki:** the predicted s is compared with the s recorded for PyRoki's R2.
       - **Failure condition:** if any rescaled dump fails the gate, or the peak after scaling exceeds 1.01, the shortcut is not used. cuRobo v1's MoveL is then re-run with trajectories dumped, in a later GPU slot.
   - **Source runs:**
     - **cuRobo v1 as configured:** the jerk-continue run (`curobo1_pickplace.A6.jerkcontinue.jsonl`), which continued past jerk-only failures. Each segment therefore starts where the slowed-down trajectory would end, since the path is unchanged.
     - **VAMP and cuRoboV2:** their A6 pick-place runs.
   - **Time cost:**
-    - **Rescale time:** measured on the dumps and added to T_ready.
     - **Execution time:** grows by (s − 1) × T_exec.
   - **Reported:**
     - **Per planner, in the same columns:** MoveL gate pass and success under R1 and R2, the median and p95 slowdown factor, and the median added execution time per MoveL segment.
