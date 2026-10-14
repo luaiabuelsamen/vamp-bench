@@ -255,6 +255,29 @@ v2's results stand as published; v2.1 adds a third method and changes nothing in
     - **Fix:** batched Cholesky and batched triangular solves now use plain-XLA Cholesky–Banachiewicz and substitution, vectorised over the batch. All eight triangular-solve variants and batched Cholesky match NumPy to within 6e-7.
 - **7d result, margin choice (gantry dev set):** R1 successes out of 21 were 7 at 0 mm, **15 at 5 mm**, 14 at 10 mm, 5 at 20 mm and 1 at 50 mm (`results/v2_1/dev_margin.json`). The rule picks 5 mm, which is used for every held-out run.
 - **7e, MoveL end criterion: unchanged.** The plumbing test missed the 1 mm end criterion by 1.6–2.7 mm, but the criterion is kept: in v2, every other planner's MoveL ends within 0.2 mm of the target.
+- **7f, post-hoc (2026-10-13, after the PyRoki MoveL run): R2 applied to every planner's MoveL segments.** Not in the pre-registration. Requested by the orchestrator as a fairness check: R2 was defined for PyRoki only, so PyRoki got a rescue the others did not.
+  - **What was known when this was written:**
+    - PyRoki's MoveL result: R1 passes the gate on 0 of 480 segments, R2 on 473 of 479.
+    - The v2 pick-place jerk table (`docs/V2_PICKPLACE_RESULTS.md`): every MoveL segment of VAMP and cuRoboV2 passes as returned, and every failed MoveL segment of cuRobo v1 as configured fails on jerk alone.
+  - **R2 for VAMP, cuRobo v1 and cuRoboV2:**
+    - **Rule:** the same as for PyRoki. A segment that fails the 1 kHz gate only on velocity, acceleration or jerk is slowed uniformly by s = max(1, r_v, √r_a, ∛r_j), where the r are the 1 kHz peak ratios to the limits. It then passes if it has no colliding sample and no bound violation.
+    - **No re-run:** the v2 runs stored the peak ratios and the collision and bound result of every segment, not the trajectories. A uniform time scaling leaves the path unchanged and divides the peaks by s, s² and s³. So R2 is computed from the stored records.
+    - **Check of this shortcut, before it is used:**
+      - **cuRobo v1:** the 8 cuRobo v1 MoveL trajectories dumped at max_jerk 500 (`results/v2/diag_jerk/dump_jerk500`) are rescaled, resampled at 1 kHz (qdd interpolated linearly) and run through the full gate, including collision.
+      - **PyRoki:** the predicted s is compared with the s recorded for PyRoki's R2.
+      - **Failure condition:** if any rescaled dump fails the gate, or the peak after scaling exceeds 1.01, the shortcut is not used. cuRobo v1's MoveL is then re-run with trajectories dumped, in a later GPU slot.
+  - **Source runs:**
+    - **cuRobo v1 as configured:** the jerk-continue run (`curobo1_pickplace.A6.jerkcontinue.jsonl`), which continued past jerk-only failures. Each segment therefore starts where the slowed-down trajectory would end, since the path is unchanged.
+    - **VAMP and cuRoboV2:** their A6 pick-place runs.
+  - **Time cost:**
+    - **Rescale time:** measured on the dumps and added to T_ready.
+    - **Execution time:** grows by (s − 1) × T_exec.
+  - **Reported:**
+    - **Per planner, in the same columns:** MoveL gate pass and success under R1 and R2, the median and p95 slowdown factor, and the median added execution time per MoveL segment.
+    - **Per pick, for the three v2 planners:** picks completed and median cycle time under R1 and R2, with R2 applied to every segment. PyRoki ran MoveL segments only, from the stored start configurations, so it has no per-pick numbers.
+  - **Readings:**
+    - **v1 completes picks under R2:** the v2 headline "cuRobo v1 as configured completes 0/600 picks" describes its trajectories as returned, and is reported next to the R2 count.
+    - **R2 changes nothing for VAMP and cuRoboV2:** s = 1 on every segment.
 
 **Order of work.**
 1. CPU smoke test (done: `bench/pyroki_smoke.py`, `results/v2_1/smoke_pyroki.json`).
