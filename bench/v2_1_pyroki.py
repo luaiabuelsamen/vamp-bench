@@ -33,6 +33,7 @@ VM = "ur5erail"; VMAX, AMAX, JMAX = limits(VM)
 T_BUDGET = 30.0; N_KNOTS = 50; EE = "tool0"
 TCP_V, TCP_A, TCP_J, LIFT = 0.25, 1.0, 10.0, 0.10
 END_TOL = np.array([1e-3] * 7)  # rad (rail: m)
+MOVEL_ENDS = os.environ.get("PYROKI_MOVEL_ENDS", "pose")  # 7g
 MARGIN = float(os.environ.get("PYROKI_MARGIN", "0.0"))  # world-collision margin (m); chosen on the gantry dev set (7d)
 acc_limit_constraint = Cost.factory(kind="constraint_leq_zero")(limit_acceleration_residual)
 jerk_limit_constraint = Cost.factory(kind="constraint_leq_zero")(limit_jerk_residual)
@@ -140,21 +141,36 @@ def trajopt_js(robot, coll, wc, q0, q1, init, dt):
 
 
 @jdc.jit
-def trajopt_movel(robot, coll, wc, q0, targets_wxyz_xyz, init, dt):
+def trajopt_movel(robot, coll, wc, q0, q1, targets_wxyz_xyz, init, dt):
+    """MoveL. MOVEL_ENDS 'pose' (pre-registered run): start held on 2 knots, end reached through the per-knot pose cost,
+    end at rest. 'recipe' (7g): PyRoki's own trajopt recipe for endpoints (pyroki_snippets/_trajopt.py): start and end
+    configurations held on 2 knots each (end = the segment's stored IK configuration), rest cost 0.01, and the per-knot
+    pose cost on the interior knots."""
     T = N_KNOTS; tv = robot.joint_var_cls(jnp.arange(T))
 
     @Cost.factory(kind="constraint_eq_zero", name="start")
     def start(vals, var):
         return (vals[var] - q0).flatten()
 
+    @Cost.factory(kind="constraint_eq_zero", name="end")
+    def end(vals, var):
+        return (vals[var] - q1).flatten()
+
     @Cost.factory(kind="constraint_eq_zero", name="end_at_rest")
     def end_rest(vals, va, vb):
         return (vals[va] - vals[vb]).flatten()
 
     rb = jax.tree.map(lambda x: x[None], robot)
-    costs = _common_costs(robot, coll, wc, tv, T, dt) + [
-        start(robot.joint_var_cls(jnp.arange(0, 2))), end_rest(robot.joint_var_cls(T - 1), robot.joint_var_cls(T - 2)),
-        pk.costs.pose_cost(rb, tv, jaxlie.SE3(targets_wxyz_xyz), jnp.array(LINK), jnp.array([50.0] * 3)[None], jnp.array([10.0] * 3)[None])]
+    costs = _common_costs(robot, coll, wc, tv, T, dt) + [start(robot.joint_var_cls(jnp.arange(0, 2)))]
+    if MOVEL_ENDS == "recipe":
+        costs += [end(robot.joint_var_cls(jnp.arange(T - 2, T))),
+                  pk.costs.rest_cost(tv, tv.default_factory()[None], jnp.array([0.01])[None]),
+                  pk.costs.pose_cost(rb, robot.joint_var_cls(jnp.arange(2, T - 2)), jaxlie.SE3(targets_wxyz_xyz[2:T - 2]),
+                                     jnp.array(LINK), jnp.array([50.0] * 3)[None], jnp.array([10.0] * 3)[None])]
+    else:
+        costs += [end_rest(robot.joint_var_cls(T - 1), robot.joint_var_cls(T - 2)),
+                  pk.costs.pose_cost(rb, tv, jaxlie.SE3(targets_wxyz_xyz), jnp.array(LINK), jnp.array([50.0] * 3)[None],
+                                     jnp.array([10.0] * 3)[None])]
     sol = jaxls.LeastSquaresProblem(costs=costs, variables=[tv]).analyze().solve(
         verbose=False, initial_vals=jaxls.VarValues.make((tv.with_value(init),)))
     return sol[tv]
@@ -267,7 +283,7 @@ def run_movel(a, out, done):
         wxyz = np.asarray(jaxlie.SO3.from_matrix(jnp.asarray(R)).wxyz)
         targets = np.array([np.concatenate([wxyz, p0 + s * (p1 - p0) / LIFT]) for s in s_k])
         init = np.linspace(qf, q_end, N_KNOTS)
-        f = lambda: trajopt_movel(ROBOT, COLL, wc, jnp.asarray(qf), jnp.asarray(targets), jnp.asarray(init), dt)
+        f = lambda: trajopt_movel(ROBOT, COLL, wc, jnp.asarray(qf), jnp.asarray(q_end), jnp.asarray(targets), jnp.asarray(init), dt)
         if first:  # compile, on segment 0 (reported separately), then time warm
             _, c0 = timed(f); first = False; info["first_call_s"] = c0
         knots, t_solve = timed(f)
@@ -369,7 +385,7 @@ def main():
     with open(f, "a") as out:
         info = {"ik": run_ik, "movel": run_movel, "trajopt": run_trajopt}[a.mode](a, out, done)
     meta = {"mode": a.mode, "backend": be, "devices": [str(d) for d in jax.devices()], "jax": jax.__version__, "host": platform.node(),
-            "xla_flags": os.environ.get("XLA_FLAGS"), "pyroki": "388e43e", "jaxls": "50a58be", "T_budget_s": T_BUDGET, "n_knots": N_KNOTS, "margin_m": MARGIN, **info}
+            "xla_flags": os.environ.get("XLA_FLAGS"), "pyroki": "388e43e", "jaxls": "50a58be", "T_budget_s": T_BUDGET, "n_knots": N_KNOTS, "margin_m": MARGIN, "movel_ends": MOVEL_ENDS, **info}
     json.dump(meta, open(OUT / f"{name}.meta.json", "w"), indent=1)
     print(json.dumps(meta), flush=True)
 

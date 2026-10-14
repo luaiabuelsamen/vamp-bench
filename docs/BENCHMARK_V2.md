@@ -284,6 +284,31 @@ v2's results stand as published; v2.1 adds a third method and changes nothing in
     - The predicted s matches PyRoki's recorded s exactly on all 479 segments.
     - Rescaling takes at most 0.9 ms, which is added to T_ready.
   - **Results:** in `docs/V2_PICKPLACE_RESULTS.md` (post-hoc section).
+- **7g, post-hoc (2026-10-13, before any rerun): harness check against PyRoki's own recipes.**
+  - **Request:** the orchestrator asked whether PyRoki's MoveL shortfall comes from our setup or from PyRoki: 81 of 480 segments start off the start configuration, and most miss the 1 mm end pose.
+  - **Diagnostics (not results):** `bench/v2_1_movel_diag.py` → `results/v2_1/movel_diag.jsonl`, on 24 MoveL segments (every 20th):
+    - **End pose: our setup.**
+      - As pre-registered, the end is reached only through the soft per-knot pose cost (weights 50/10). PyRoki's own recipe (`pyroki_snippets/_trajopt.py`) instead holds both endpoint configurations on 2 knots, with a rest cost of 0.01.
+      - With the recipe's endpoints (end = the segment's stored IK configuration), 24/24 segments end within 1 mm (median 0.16 mm), against 0/24 as run (median 2.7 mm).
+    - **Start error:**
+      - The start is held by an equality constraint in both versions. The augmented-Lagrangian solve stops at jaxls's default of 100 iterations, and 3/24 (as run) and 8/24 (recipe) segments start more than 1e-3 rad off.
+      - Raising the limit to 500 iterations does not change this (3/24 and 7/24).
+      - This is how PyRoki's solver behaves at its defaults, not something in our setup. It is reported as it is.
+    - **Jerk as returned:**
+      - On 6 segments with saved knots, the knot-level finite-difference acceleration and jerk exceed the limits by 1.2–11×. PyRoki's limit constraints are not satisfied at the default termination.
+      - Our clamped cubic spline then puts the 1 kHz peak in the first or last 15 ms (5–75× the limit), while between the ends it stays at 0.2–1.0× the limit in 5 of the 6 segments.
+      - R1 fails on all 24 under both endpoint treatments, and R2 passes on all 24.
+  - **IK (c) and the margin:**
+    - All 15 IK (c) failures have the goal less than 1 cm from an obstacle in 14 cases (1–5 cm in one), and miss the pose by 1.1–19 mm. The 5 mm hard margin, chosen for trajopt (7d) and also applied to IK (c), conflicts with goals closer to an obstacle than that.
+    - Re-solved at margin 0 (`bench/v2_1_ik_margin_diag.py`): 13 of the 15 succeed, but 3 of 28 control poses that succeeded at 5 mm now collide.
+    - **Reporting:** the margin was not chosen on the test poses, so this is reported as a sensitivity. The pre-registered number stays.
+  - **Rerun (pre-registered here, before it runs):** MoveL on all 480 segments with PyRoki's endpoint recipe (`PYROKI_MOVEL_ENDS=recipe`): start and end configurations held on 2 knots each, rest cost 0.01, and the per-knot pose cost on the interior knots. Everything else is unchanged: margin 5 mm, 50 knots, the TCP profile, the gate, R1/R2, and the 1 mm and 1° end criteria.
+    - **Reporting:** it is reported next to the pre-registered run and labelled post-hoc. The pre-registered run is not replaced.
+    - **Readings:**
+      - If R2 success rises to most segments, PyRoki's MoveL shortfall was our endpoint handling.
+      - If it stays low because of start errors, it is PyRoki's constraint convergence at its defaults.
+  - **Not rerun:**
+    - **Trajopt S1/S2:** these already hold both endpoints on 2 knots each as the recipe does. They omit the recipe's rest cost of 0.01, which pulls toward the zero configuration and does not address their failure modes (collision and budget).
 
 **Order of work.**
 1. CPU smoke test (done: `bench/pyroki_smoke.py`, `results/v2_1/smoke_pyroki.json`).
