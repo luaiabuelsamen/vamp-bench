@@ -1,4 +1,5 @@
-"""Every count and time in README.md and docs/EMAIL_NOTES.md must exist in results/summary.json (STANDARD #7).
+"""Every count and time in README.md and docs/EMAIL_NOTES.md must exist in results/summary.json (STANDARD #7);
+in sections whose heading contains "v2", in the v2 result files (V2_FILES).
 
 Checks:
   - every "a/b" success count in a sentence or table row matches a (success, queries) pair, a flagged count
@@ -69,11 +70,57 @@ for g in S["groups"]:
     for k in ("curobo_v1_vs_vamp_same_queries", "curobo_v2_vs_vamp_same_queries"):
         if g.get(k):
             ratios.add(round(g[k]["median_wall_ratio"]))
+# Benchmark v2 sections (a heading containing "v2") are checked against the v2 result files instead: every count,
+# time, percentage and ratio must equal some value in them at the precision written.
+V2_FILES = ("results/v2/summary.json", "results/v2/hypotheses.json", "results/v2/pickplace_summary.json",
+            "results/v2_1/movel_r2.json")
+v2_vals = []
+
+
+def leaves(x):
+    """Scalar values, skipping lists (curves, per-bin rows) and per-bin breakdowns, which the docs do not quote."""
+    if isinstance(x, dict):
+        for k, v in x.items():
+            if k != "per_bin":
+                yield from leaves(v)
+    elif isinstance(x, (int, float)) and not isinstance(x, bool):
+        yield float(x)
+
+
+for f in V2_FILES:
+    v2_vals += list(leaves(json.load(open(ROOT / f))))
+v2_ints = {round(v) for v in v2_vals if v == round(v)}
+
+
+def v2_match(val, digits, scales):
+    tol = 0.5 * 10 ** (-digits) + 1e-9
+    return any(abs(val - v * k) <= tol for v in v2_vals for k in scales)
+
+
+def check_v2(doc, ln, line, bad):
+    for a, b in re.findall(r"(?<![\d.,])(\d[\d,]*)\s*/\s*(\d[\d,]*)(?![\d.])", line):
+        if not {int(a.replace(",", "")), int(b.replace(",", ""))} <= v2_ints:
+            bad.append(f"{doc}:{ln}: count {a}/{b} not in the v2 results")
+    for m in re.finditer(r"(?<![\w.])(\d+(?:\.(\d+))?)\s*(ms|s|%|×)(?!\w)", line):
+        val, dec, unit = float(m.group(1)), len(m.group(2) or ""), m.group(3)
+        if "rad/s" in line[m.start():m.end() + 4] or (unit == "×" and "1.01" in m.group(0)):
+            continue
+        scales = {"ms": (1, 1000), "s": (1, 0.001), "%": (100, 1), "×": (1,)}[unit]
+        if not v2_match(val, dec, scales):
+            bad.append(f"{doc}:{ln}: {m.group(0)} not in the v2 results")
+
+
 bad = []
 for doc in ("README.md", "docs/EMAIL_NOTES.md"):
     text = (ROOT / doc).read_text()
+    v2 = False
     for ln, line in enumerate(text.splitlines(), 1):
+        if line.startswith("#"):
+            v2 = "v2" in line
         if line.strip().startswith(("```", "#", "cp ", "git ", "CMAKE", "(cd")) or "github.com" in line:
+            continue
+        if v2:
+            check_v2(doc, ln, line, bad)
             continue
         for a, b in re.findall(r"(?<![\d.,])(\d[\d,]*)\s*/\s*(\d[\d,]*)(?![\d.])", line):
             a, b = int(a.replace(",", "")), int(b.replace(",", ""))
@@ -89,5 +136,6 @@ for doc in ("README.md", "docs/EMAIL_NOTES.md"):
                 continue
             if not matches_time(val, unit, len(dec) if dec else 0):
                 bad.append(f"{doc}:{ln}: time {m.group(0)} not in summary.json")
-print("\n".join(bad) if bad else "consistent: every count and time in README.md and docs/EMAIL_NOTES.md is in results/summary.json")
+print("\n".join(bad) if bad else "consistent: every count and time in README.md and docs/EMAIL_NOTES.md is in results/summary.json"
+      " (v2 sections: in the v2 result files)")
 sys.exit(1 if bad else 0)

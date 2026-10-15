@@ -100,6 +100,46 @@ None of this changes the solved counts above.
 
 Every number above is in `results/summary.json` (built by `bench/analyze.py` from `results/records/`).
 
+## Benchmark v2: time to an executable trajectory, and pick-place
+
+Pre-registered design: [docs/V2_PREREGISTRATION.md](docs/V2_PREREGISTRATION.md). Results: [docs/V2_RESULTS.md](docs/V2_RESULTS.md) and [docs/V2_PICKPLACE_RESULTS.md](docs/V2_PICKPLACE_RESULTS.md). Numbers: `results/v2/summary.json`, `results/v2/hypotheses.json`, `results/v2/pickplace_summary.json`.
+
+v2 counts a planner as successful only when its trajectory is executable. It must pass one 1 kHz check: no collision, joint bounds respected, and peak velocity, acceleration and jerk each ≤ 1.01 × the shared limits. Planning plus time-parameterization (T_ready) must fit in 30 s. VAMP's paths are time-parameterized with Ruckig.
+
+**Held-out cells (primary set):**
+- **What it is:** UR5e on a rail, 300 queries × 10 seeds, generated after a frozen commit.
+- **The queries:** each is a pair of collision-free joint configurations at two stations of a cell. They are not tool-down picks (CHANGELOG, 2026-10-11).
+- **Feasibility:** 299 of the 300 have a known path.
+
+| | VAMP, 1 CPU core | cuRobo v1, GPU | cuRoboV2, GPU (100-query subsample, 3 seeds) |
+|---|---|---|---|
+| Success (runs) | 93.1% | 56.9% | 71.0% |
+| Median T_ready, solved runs | 3.5 ms | 210 ms | 1505 ms |
+| Median execution time, solved runs | 3.03 s | 2.06 s | 2.16 s |
+| Median cycle time (failures at 30 s) | 3.09 s | 3.76 s | 4.06 s |
+
+- **Time to an executable trajectory:** VAMP's median T_ready is 59× (held-out), 478× (MBM) and 159× (MπNets) lower than cuRobo v1's, in every bin of every set.
+- **Cycle time (planning + execution):** the gap is far smaller, because execution takes seconds.
+  - **Runs both planners solve (held-out):** cuRobo v1's cycle is shorter, 2.36 s vs 2.67 s. Its trajectories execute 0.97 s faster, while VAMP plans only 0.21 s faster.
+  - **Counting failures:** VAMP's median cycle time is lower.
+- **Smoothness:** cuRobo v1's trajectories are smoother and shorter to execute than VAMP + Ruckig on every set. VAMP + TOPP-RA executes faster, but only 48–71% of its trajectories pass the check.
+- **Robustness:** this differs by set. VAMP has fewer queries failing on some seed on the held-out set (100 vs 160), and cuRobo v1 has fewer on MBM and MπNets.
+- **cuRoboV2:** its median T_ready is 7–15× cuRobo v1's on the same queries and seeds.
+
+**Pick-place with straight-line (MoveL) approach and retreat:**
+- **Task:** 30 cells, 4 picks each, 5 seeds, for 600 picks per planner. A pick counts only if all 6 of its segments pass the check.
+
+| | VAMP | cuRobo v1 as configured | cuRobo v1, `max_jerk` 200 | cuRoboV2 |
+|---|---|---|---|---|
+| Picks completed | 587/600 | 0/600 | 572/600 | 585/600 |
+| Median cycle time per completed pick | 6.08 s | — | 8.22 s | 18.92 s |
+
+- **Why cuRobo v1 completes no pick:** its MoveL trajectories exceed its own configured jerk limit (500 rad/s³) by a median factor of 2.0. The excess sits at the segment ends.
+  - Lowering `max_jerk` to 200 fixes this.
+  - Slowing each segment uniformly until it passes (post hoc, applied to every planner) gives 573/600 picks at 8.15 s.
+- **Where the cycle-time differences come from:** execution times are within 0.4 s of each other, so the differences are planning time.
+- **Timing caveat:** VAMP's pick-place planning ran while other jobs loaded the CPU, so its planning times are upper bounds.
+
 ## Settings and caveats
 - **VAMP:** library defaults (`rrtc` + `simplify`, Halton sampler), the same as its own `scripts/evaluate_mbm.py`. Paper scenes: 10 seeds per query.
 - **cuRobo v1** (`ebb7170`, v0.7.7-5): the settings of its own `benchmark/curobo_benchmark.py` (12 seeds, 20 attempts, graph planner from attempt 1, finetuning, CUDA graphs, warmed up). Paper scenes: 10 seeds per query.
@@ -141,7 +181,7 @@ bench/run_all.sh --curobo-only    # GPU (v1, then V2, then the VAMP cross-check)
 
 ## Also in this repo
 - [docs/SPEEDUP_CLAIMS.md](docs/SPEEDUP_CLAIMS.md): which cuRobo speedup numbers (62x / 50x / 12x, and the paper's 15–25x and 8x) a results file supports. None of them is.
-- [docs/BENCHMARK_V2.md](docs/BENCHMARK_V2.md): the design for a broader benchmark (held-out problems, time to an executable trajectory, quality, variance, industrial motion types). Not yet run.
+- [docs/BENCHMARK_V2.md](docs/BENCHMARK_V2.md): the design of benchmark v2 (held-out problems, time to an executable trajectory, quality, variance, industrial motion types) and its amendments.
 - [docs/PAPER_CLAIMS_AUDIT.md](docs/PAPER_CLAIMS_AUDIT.md): each quantitative claim in arXiv 2508.04146 checked against the committed experiments.
 - [docs/CUROBO_JETSON_FIX.md](docs/CUROBO_JETSON_FIX.md): why cuRobo v1 was broken on this machine, and the non-destructive fix.
 - [docs/VEGA_CUROBO_NOTE.md](docs/VEGA_CUROBO_NOTE.md): how vega_curobo's cuRoboV2 config differs from ours, on this board.

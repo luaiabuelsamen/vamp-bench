@@ -34,10 +34,10 @@
 
 | Set | Certified feasible | Unresolved | Pending reference runs |
 |---|---|---|---|
-| Held-out (A6, primary) | 298 | 0 | 2 |
+| Held-out (A6, primary) | 299 | 1 | 0 |
 | MotionBenchMaker | 300 | 0 | 0 |
-| MπNets | 299 | 0 | 1 |
-| Held-out, unwrapped goals (appendix) | 155 | 127 | 18 |
+| MπNets | 299 | 1 | 0 |
+| Held-out, unwrapped goals (appendix) | 156 | 144 | 0 |
 
 ## Hypotheses
 

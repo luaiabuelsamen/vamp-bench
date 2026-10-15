@@ -8,7 +8,7 @@ Pre-registration and amendments: `docs/V2_PREREGISTRATION.md`.
 
 ## Setup
 - **Sets:**
-  - **Held-out A6 (primary):** UR5e on a rail, 300 queries in industrial cells generated after a frozen commit. Goals are on the 2π branch nearest the start.
+  - **Held-out A6 (primary):** UR5e on a rail, 300 queries in industrial cells generated after a frozen commit. Each query is a pair of collision-free joint configurations at two stations of a cell (station to station). They are not tool-down picks: 498 of the 600 configurations do not have the intended tool orientation (CHANGELOG, 2026-10-11). Goals are on the 2π branch nearest the start.
   - **MotionBenchMaker (MBM)** and **MπNets:** Panda, 300 queries each.
   - **Held-out with the original, unwrapped goals:** reported as an appendix.
 - **Runs:**
@@ -30,7 +30,7 @@ Pre-registration and amendments: `docs/V2_PREREGISTRATION.md`.
 | Median T_exec (solved runs) | 3.03 s | 2.06 s | 2.16 s |
 | Median T_cycle (median over queries of per-query medians, failures at 30 s) | 3.09 s | 3.76 s | 4.06 s |
 
-- **Feasibility:** 298 of 300 queries are certified feasible by some planner run; reference runs for the other 2 are pending.
+- **Feasibility:** 299 of 300 queries are certified feasible by some planner run. For the remaining query, no reference planner found a path (`bench/v2_feasibility_par.py`).
 - **cuRobo v1's failures:** 1289 of its 1292 failed runs end in its trajectory optimizer (`TRAJOPT_FAIL`); none fail the 1 kHz gate.
 
 ## Hypotheses (pre-registered)
@@ -79,5 +79,4 @@ Pre-registration and amendments: `docs/V2_PREREGISTRATION.md`.
   - **Median T_cycle gap:** it shrinks from 20.0 s to 0.7 s against cuRobo v1, and from 22.5 s to 1.1 s against cuRoboV2. On the original set, more than half of cuRobo's runs fail, so this measure sits at the 30 s cap.
   - **Conclusion:** on success rate, VAMP's lead over cuRobo is not an artefact of move length.
 - **Feasibility on the original set:**
-  - 155 queries are certified feasible and 127 have no path found by the reference planners.
-  - Reference runs for 18 queries are still running.
+  - 156 queries are certified feasible; for the other 144, no reference planner found a path.

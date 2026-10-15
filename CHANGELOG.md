@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-14
+- **Benchmark v2 final.** All feasibility reference runs are complete:
+  - held-out A6: 299 of 300 queries certified, 1 with no path found;
+  - MπNets: 299 and 1;
+  - held-out with original goals: 156 and 144.
+  - Hypotheses H1–H5 are unchanged from the partial analysis.
+  - The README and `docs/EMAIL_NOTES.md` now carry the v2 results. `bench/check_consistency.py` checks their v2 sections against the v2 result files.
+- **Held-out set description.** `docs/V2_RESULTS.md` and the README now describe the held-out queries as station-to-station configuration pairs, not tool-down picks (see 2026-10-11).
+- **PyRoki MoveL (v2.1, not yet published).** The pre-registered PyRoki MoveL run succeeded on 6 of 480 segments. That figure reflects our harness, not PyRoki: our endpoint handling differed from PyRoki's own trajopt recipe. With PyRoki's recipe, 373 of 480 succeed under the same rules (amendment 7g, `docs/BENCHMARK_V2.md`). The v2.1 write-up reports 373 first and the 6 as the harness error.
+
 ## 2026-10-11
 - **Held-out and pick-place IK orientations.** The station IK in `bench/gen_v2.py` used an orientation error that is zero at a 180° rotation as well as at the target.
   - **Held-out set:** in the v2 held-out set, 498 of 600 start/goal configurations do not have the intended tool orientation (tool down at bin, conveyor and fixture stations; horizontal at shelves). Positions are as intended. The held-out comparison stands, because every planner receives the same collision-free joint-space start and goal. But these queries are station-to-station configuration pairs, not tool-down picks, and they are described that way.

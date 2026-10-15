@@ -9,6 +9,20 @@ These are facts to use, not a draft. Each one traces to `results/summary.json` o
    - **cuRoboV2:** median 0.38–1.06 s, with `max_attempts=20`, not NVIDIA's 100.
 4. **Availability.** The code, the problem sets and the per-query results are in one repository, so her group can reproduce or extend the comparison (for example, to an x86 CPU or a desktop GPU).
 
+## Benchmark v2 facts (time to an executable trajectory)
+Each fact traces to `results/v2/summary.json`, `results/v2/hypotheses.json` or `results/v2/pickplace_summary.json`. Success means the trajectory passes one 1 kHz check (no collision; joint bounds; velocity, acceleration and jerk ≤ 1.01 × the shared limits) within 30 s. The design was pre-registered before any run (`docs/V2_PREREGISTRATION.md`).
+
+5. **Time to an executable trajectory.** VAMP (with Ruckig time-parameterization) reaches an executable trajectory 59× (held-out UR5e-on-rail cells), 478× (MBM) and 159× (MπNets) sooner than cuRobo v1 in median, in every bin of every set.
+6. **Cycle time is close.** On held-out runs both solve, cuRobo v1's cycle is shorter: 2.36 s vs 2.67 s. Its trajectories execute 0.97 s faster, which outweighs VAMP's 0.21 s planning advantage. Counting failures at 30 s, VAMP's median cycle is lower: 3.09 s vs 3.76 s.
+   - The held-out queries are station-to-station configuration pairs, not tool-down picks.
+7. **Success and robustness.** On the held-out set VAMP succeeds on 93.1% of runs and cuRobo v1 on 56.9%. On MBM and MπNets, cuRobo v1 has fewer queries failing on some seed.
+8. **cuRoboV2.** On the same queries and seeds, its median planning time is 7–15× cuRobo v1's.
+9. **Pick-place with MoveL** (600 picks per planner):
+   - VAMP completes 587/600, median cycle 6.08 s.
+   - cuRoboV2 completes 585/600, median cycle 18.92 s.
+   - cuRobo v1 as configured completes 0/600: its MoveL trajectories exceed its own 500 rad/s³ jerk setting at the segment ends. With `max_jerk` 200 it completes 572/600 at 8.22 s.
+   - VAMP's pick-place planning ran on a loaded CPU, so its planning times are upper bounds.
+
 ## Before writing
 - She read arXiv 2508.04146. `docs/PAPER_CLAIMS_AUDIT.md` lists which of its numbers a committed experiment supports. The 60× is cited from NVIDIA; the 15–25× vs OMPL, 8× vs TrajOpt, CHOMP 92% vs 78% and ABB 40% have no supporting experiment. The 3× matches only a cycle-time ratio against MoveIt/OMPL (3.02 s vs 9.90 s, different poses). The facts above come from this repo's same-board benchmark, not from the paper.
 
