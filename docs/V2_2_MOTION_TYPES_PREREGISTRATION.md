@@ -1,0 +1,165 @@
+# Benchmark v2.2: industrial motion types (pre-registration)
+
+**Status:** pre-registered and committed before any code for it runs on a measured program.
+- **Freeze:** the v2 freeze `6aea6eecf76a173d7ebdf548104aaec854b6b6c7` (H) for the cell builder, the shared limits and the gate.
+- **New seed labels:** `v22_cells_<k>`, `v22_dev_<k>`, `v22_seed0`…`v22_seed9`.
+- **Changes after this commit:** logged as amendments before they are applied.
+
+## Why
+v2 covers one industrial motion type, MoveL. The other motions a cell integrator programs are:
+- waypoint paths with blends (UR `movep`/`movel` with blend radius r > 0);
+- circular moves (MoveC);
+- moves with a programmed constant-acceleration (trapezoidal) speed profile.
+
+v2.2 adds these. For each planner it records how the motion is expressed:
+- natively;
+- by our post-processing;
+- not at all.
+
+A motion a planner cannot express is reported as a result. It is not forced through a workaround.
+
+## Programs
+- **Cells:** 100 cells from `bench/gen_v2.py`'s cell builder (bin, conveyor and fixture stations; the same families and geometry ranges as the held-out set).
+  - Each cell is seeded with `seed_from(H, "v22_cells_<k>")`; the first 100 valid k are kept.
+  - Dev cells (`v22_dev_<k>`, 10 cells) are used for smoke tests and the capability probe only, never for results.
+- **Programs:** each cell gets one program of each type, giving 300 programs (100 per type).
+- **Common to all programs:**
+  - The TCP is `tool0`.
+  - Orientation is constant along the path: tool pointing down, the orientation of the start station.
+  - The path starts 0.10 m above a station, at a collision-free start configuration on the A6 branch rule (nearest 2π branch to the cell's home). This configuration is given to every planner.
+  - Speeds and accelerations are TCP values along the path's arc length.
+
+### W: waypoint path with blends
+- **Geometry:** start above station A and end above station B, through 3–6 via points (uniform count).
+  - Via points are drawn in the free volume above the cell: heights 0.10–0.40 m above the station tops, lateral spread within the cell footprint.
+  - Each leg is ≥ 0.10 m long.
+  - The turn angle at each via point is between 30° and 150°.
+- **Blends:** at each via point, a circular arc tangent to both legs, starting and ending at distance r from the via point along each leg.
+  - r = min(0.05 m, 0.4 × the shorter adjacent leg).
+  - This is the programmed blend geometry. A UR controller's blend is a similar but not identical curve, so the blend-zone deviation is reported separately from the line deviation.
+- **Speed:** constant cruise speed v = 0.25 m/s through the blends (movep semantics). Ramps happen only at the start and end, with a = 1.0 m/s².
+
+### C: circular arc (MoveC)
+- **Geometry:** start above a station; an arc in the horizontal plane through a via point to an end point.
+  - Radius 0.10–0.30 m; central angle 90°–270°.
+  - The via point is at mid-angle.
+  - The arc is fully defined by start, via and end, as in UR `movec`.
+- **Speed:** v = 0.25 m/s, a = 1.0 m/s².
+
+### T: straight line with a programmed trapezoidal profile
+- **Geometry:** a straight line 0.30–0.60 m long between points above two stations.
+- **Profile:** a = 0.25 m/s², cruise v = 0.25 m/s.
+  - Each ramp covers 0.125 m, so every program has a cruise phase of ≥ 0.05 m.
+
+### All program types
+- **Time law:** the programmed time law is a 1-D jerk-limited profile on arc length (Ruckig), with the program's v and a and TCP jerk 10 m/s³.
+  - The jerk-limited corners last 25 ms (W, C) or 100 ms (T, since a/j = 0.025 s per corner). Outside them, acceleration is constant at ±a or 0.
+- **Validity (generator):** a program is kept only if both hold:
+  - its path has a continuous collision-free IK solution from the start configuration: samples every 2 mm, IK seeded from the previous sample, every joint step ≤ 0.05 rad, VAMP `validate_motion` between samples, inside joint bounds;
+  - every path point is at least 1 cm from the obstacles (sphere-model signed distance).
+- **Programmed time law and joint limits:** the programmed time law is not required to fit the joint limits. A planner may have to slow down, and the metrics show it.
+
+## How each planner expresses each motion
+
+| Motion | Cartesian pipeline (ours) + VAMP check | cuRobo v1 | cuRoboV2 | PyRoki (own category, as in v2.1) |
+|---|---|---|---|---|
+| **W** waypoints + blends | **post-processing:** the programmed path, IK every 2 mm (seeded), VAMP `validate_motion`, joint spline, the programmed time law; if a joint limit is exceeded at 1 kHz, v halves (up to 3 times, recorded) | **not expressible** as one blended motion. v1's pose cost takes one goal pose (or goal set) per problem; `PoseCostMetric` can hold axes or add one approach offset, not several via points. **Run as the closest native motion:** one MoveL per leg (hold-line metric as in v2), each stopping at its via point. Reported as "stops at via points", not as a blend. | **native candidate:** per-timestep tool-pose targets (`GoalToolPose` with horizon > 1, `track_position_and_orientation`), targets = the programmed path sampled at its time law. Subject to probe P0; if P0 fails, as for v1 with `linear_motion` per leg. | **native costs, our harness:** a pose cost per knot toward the programmed path at its time law, endpoints held (v2.1 7g recipe), fixed dt = programmed duration / knots |
+| **C** MoveC | post-processing as for W | **not expressible** (no arc or per-timestep pose target; chaining short MoveLs would be our approximation, not v1's motion). Not run. | as for W, if P0 passes; otherwise **not expressible**, not run | as for W |
+| **T** trapezoidal MoveL | post-processing; the programmed profile is applied exactly | **path native, profile not expressible:** v1 MoveL as in v2. Its timing is v1's own time-optimal parameterization; there is no TCP speed or acceleration input. Run, and the profile metrics show the gap. | per-timestep targets if P0 passes (they encode the profile); otherwise `linear_motion` (path only, as for v1) | per-knot targets at the programmed timing |
+
+- **The Cartesian pipeline column:** VAMP is a free-space planner. In this column it only checks collisions; the Cartesian path, IK and time law are ours.
+  - Its geometric success is guaranteed by the generator's validity check (the same IK method), so its success measures the time law against the 1 kHz gate, and its T_ready measures our pipeline's speed.
+  - It is the reference for what the programmed motion costs on this robot. It is not evidence about VAMP's planning.
+- **cuRobo v1 configurations:** as configured (`max_jerk` 500, as in v2) and the A7 positive control (`max_jerk` 200). Both are reported.
+- **Start and end:** every planner gets the start configuration and the programmed path. The end is a pose (the path end); no end configuration is given.
+  - PyRoki's endpoint constraint uses its own IK on the end pose, timed as part of T_ready.
+  - PyRoki is initialised by its own IK on each knot target, seeded from the previous knot, also in T_ready. It is never given the generator's IK path.
+- **Probe P0 (cuRoboV2 per-timestep targets), on the 10 dev cells, before any measured run:**
+  - **Setup:** trajopt with horizon-H targets, dt fixed to programmed duration / H (dt fine-tuning off if the API allows; otherwise recorded), `non_terminal_scale` 1.0.
+  - **Pass:** the API accepts it, and on ≥ 6 of the 10 dev W programs the result passes the gate and keeps the max deviation outside blends ≤ 5 mm.
+  - **Settings:** at most 3 settings (horizon and weight) are tried on dev cells. The one chosen is logged before the measured run.
+  - **On failure:** the fallbacks above apply, and the probe's output is reported.
+- **cuRobo v1 code check:** if the implementation finds a per-timestep pose target in v1 after all, this is logged as an amendment before any run and v1 is probed like V2.
+
+## Metrics
+All metrics are computed at 1 kHz with VAMP's FK.
+- **Path deviation:** the maximum distance from the TCP to the programmed path (the path densely sampled at 0.5 mm, nearest point).
+  - Reported separately in blend zones (the nearest path point on a blend arc) and outside them.
+  - Also reported: maximum orientation deviation, and end pose error.
+- **Speed constancy over the cruise:** the cruise is the time span where the programmed speed equals v.
+  - Mapping: each planner's TCP speed is mapped to the programmed path by arc-length progress, so a planner that runs the path at a different overall pace is compared over its own cruise. The cruise is taken as the middle span between the points where its progress reaches the programmed ramp-end and ramp-start arc lengths.
+  - Reported: mean and max |v − v_prog| / v_prog, and the achieved cruise speed over the programmed v.
+- **Blends (W):** per via point, the minimum TCP speed within the blend zone, over v_prog.
+  - **Stops at via point:** if that minimum is ≤ 0.05 (≤ 12.5 mm/s).
+  - **Holds speed:** if it is ≥ 0.9.
+- **Profile (T):** in each programmed ramp, the median |a_tcp − a_prog| / a_prog, and the ramp duration over the programmed one. Arc length is used as for the cruise.
+- **Times:**
+  - T_ready: planning plus parameterization (all IK and seeding included).
+  - T_exec: the trajectory's duration.
+  - T_cycle = T_ready + T_exec.
+- **Success per run:** all of the following.
+  - It passes the v2 1 kHz gate: no collision; joint bounds; velocity, acceleration and jerk ≤ 1.01 × the shared limits, with jerk 500 rad/s³ per arm joint.
+  - T_ready ≤ 30 s.
+  - End pose ≤ 1 mm and 1°.
+  - Max path deviation outside blend zones ≤ 5 mm, and orientation ≤ 1°.
+  - Speed and blend behaviour are reported, not part of success, since some planners have no speed input.
+- **R2 (uniform slow-down, as in v2.1 7f, pre-registered here for every planner):**
+  - Each failed-only-on-velocity/acceleration/jerk trajectory is slowed by s = max(1, rv, √ra, ∛rj) and reported in its own column with its cycle-time cost. R1, as returned, is primary.
+  - R2 changes the speed, so R2 speed metrics are reported against the programmed v as well.
+
+## Seeds, timing and statistics (as in v2)
+- **Runs:**
+  - cuRobo v1: 10 seeds per program (`v22_seed0`…`9`), both configurations.
+  - cuRoboV2: 3 seeds per program.
+  - Cartesian pipeline: deterministic, one geometric run; T_ready is the median of 10 timed repeats on a quiet CPU.
+  - PyRoki: deterministic given its init, one run (stated as such).
+- **Budget:** T = 30 s per planner call. For the per-leg fallback, the sum over legs counts against 30 s × number of legs, and T_cycle sums the legs.
+- **Statistics:**
+  - Per program type: success over runs; per-program success fractions; medians with bootstrap 95% CIs (2000 resamples over programs).
+  - Paired comparisons only over programs both planners solve.
+  - Bins: path length (W, C), number of vias (W), min path clearance (1–2 cm, 2–5 cm, > 5 cm). Bins with < 30 programs are flagged underpowered.
+- **Hardware:** the GPU must have no other work during GPU runs. The Cartesian pipeline is timed on a quiet CPU at the start of the slot, as v2's pass 2a was.
+
+## How results will be read
+- **E, expressibility:** the table above, with the P0 outcome, is a result by itself. For each planner and motion type it is one of: native, our post-processing, closest native motion (stops at via points / path only), or not expressible.
+- **Q1, path fidelity:** a planner holds a motion type's path if, on its successful runs, the max deviation outside blends has median ≤ 1 mm and p95 ≤ 5 mm. Blend-zone deviation is reported with its median and p95; no pass mark, since blend geometry differs between controllers.
+- **Q2, constant speed:** a planner holds constant TCP speed on a motion type if the median over runs of the max cruise deviation is ≤ 10% and its p95 ≤ 25%.
+- **Q3, blends:** a planner blends if the median per-via minimum speed is ≥ 0.9 v_prog. It stops at via points if the median is ≤ 0.05.
+- **Q4, trapezoid:** a planner follows the programmed profile if the median ramp acceleration error is ≤ 20% and the ramp durations are within 20%.
+- **Q5, cycle time:** median T_cycle per program type, paired over programs both planners solve, with the planning/execution split.
+  - The per-leg fallback for W includes its stops; this is stated wherever it is compared.
+  - If execution dominates, a planning-time advantage is reported as mattering little.
+- **Q6, robustness:** the share of programs failing on some seed, and on every seed.
+
+## Size and cost
+
+| Item | Count | Estimate (from v2 per-call medians on this board) |
+|---|---|---|
+| Programs | 100 W + 100 C + 100 T | |
+| Cartesian pipeline (CPU) | 300 programs × (1 run + 10 timed repeats) | ~0.1–0.3 s per program, < 15 min |
+| cuRobo v1, 2 configurations × 10 seeds | W: ~4.5 legs × 0.62 s; T: 0.62 s; C not run | ~65 min per configuration, ~2.2 h |
+| cuRoboV2, 3 seeds | if P0 passes: 300 calls × ~2.3–5 s; else W 4.5 legs + T, ~2.3 s each | ~0.6–1.5 h |
+| PyRoki, 1 run | 300 programs, ~4–10 s each, plus one compile per knot count | ~0.5–1 h |
+| Probe P0 + smoke on dev cells | | ~0.5 h |
+| **GPU total** | | **~4–5.5 h**, one overnight slot |
+
+- **Window:** the GPU is free until the evening of 2026-10-17.
+- **Order in the slot:**
+  1. Cartesian pipeline timing (quiet CPU);
+  2. P0;
+  3. cuRobo v1 as configured;
+  4. v1 `max_jerk` 200;
+  5. cuRoboV2;
+  6. PyRoki.
+- **Slot rules:** seed-major order, so a cut-off leaves complete seeds. Hard stop and `GPU_RELEASED` by 2026-10-17 12:00.
+
+## UR controller in the loop (URSim e-series): roles, pending a platform
+- **Role 1, reference:** for every W, C and T program, the UR controller's own motion (`movep`/`movel` with blend radius r, `movec`, `movel` with a and v) is run in URSim. Its TCP is recorded at 500 Hz over RTDE.
+  - It is the baseline a UR programmer would use: a planner's blend, arc or profile is compared with the controller's on the same metrics (path deviation inside and outside blends, cruise speed, blend speed, ramps, execution time).
+- **Role 2, execution check (subset):** each planner's successful trajectories on a subset of programs (size set once the platform's throughput is measured) are streamed through `servoj` at the controller's cycle. Recorded: protective stops, speed scaling, and tracking deviation from the commanded trajectory.
+- **Limit of the evidence:** URSim is kinematic. It checks the controller's trajectory generator and its limits, not dynamics, payload or real tracking error. This is stated wherever its results appear.
+- **Platform (feasibility, 2026-10-14):**
+  - URSim e-series is published only for amd64: every tag of `universalrobots/ursim_e-series` on Docker Hub (5.17–5.26 and `latest`, 0.98 GB) is amd64-only. The Jetson is aarch64.
+  - Running it here needs x86 emulation (qemu-user-static, not installed). Whether emulated URControl keeps its real-time cycle on this board is untested.
+  - The alternative is an amd64 or Rosetta host. That needs the owner's approval for that machine.
+  - The URSim part runs only after a platform is approved. Its protocol details (subset size, servoj gain and lookahead) are logged as an amendment before it runs. The planner runs above do not depend on it.
