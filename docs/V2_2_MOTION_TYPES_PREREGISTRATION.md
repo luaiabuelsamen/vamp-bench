@@ -162,4 +162,9 @@ All metrics are computed at 1 kHz with VAMP's FK.
   - URSim e-series is published only for amd64: every tag of `universalrobots/ursim_e-series` on Docker Hub (5.17–5.26 and `latest`, 0.98 GB) is amd64-only. The Jetson is aarch64.
   - Running it here needs x86 emulation (qemu-user-static, not installed). Whether emulated URControl keeps its real-time cycle on this board is untested.
   - The alternative is an amd64 or Rosetta host. That needs the owner's approval for that machine.
+- **PolyScope X simulator (`universalrobots/ursim_polyscopex:10.14.0`), tested 2026-10-14:**
+  - **What the arm64 tag is:** a Docker-in-Docker wrapper (4.18 GB unpacked; its inner image store adds about 6 GB). The six components it starts are all amd64 images, including the UR controller (`controller-artifact` 99.4.49): `bootstrapper`, `citadel`, `controller`, `nginx`, `urauth`, `urservice`.
+  - **Result:** on the Jetson, the first amd64 service (`citadel`) exits with code 255 and the stack stops. It does not run natively on aarch64 either.
+  - **Board-specific fixes needed to get that far:** the board's kernel has no iptables `raw` table (`CONFIG_IP_NF_RAW` not set), so port publishing needs `DOCKER_INSECURE_NO_IPTABLES_RAW=1`; the inner dockerd needs `DOCKER_IPTABLES_LEGACY=1`.
+  - **Licence:** it is a beta SDK image under Universal Robots' SDK licence terms; any use of it here is stated with that.
   - The URSim part runs only after a platform is approved. Its protocol details (subset size, servoj gain and lookahead) are logged as an amendment before it runs. The planner runs above do not depend on it.
