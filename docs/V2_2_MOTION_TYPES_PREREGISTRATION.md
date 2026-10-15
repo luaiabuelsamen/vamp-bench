@@ -183,3 +183,23 @@ Found on the dev cells (`v22_dev_*`) while building the generator. No measured c
   - **Speed:** the log-map orientation error is computed in closed form instead of with scipy. The values are identical to 2e-10 rad on 2000 random poses.
 - **Consequence:** the programs are W, C and T motions in the comfortable part of the arm's workspace, about 1 cell in 6 is accepted, and the acceptance rate is reported.
 - **Generation:** k up to 1500, 4 workers. Memory and disk rules apply: MemAvailable has stayed above 4 GB for hours with no flagship job running, so more than 2 workers is allowed.
+
+## Amendment V2 (logged 2026-10-15, from reading the code, before any cuRobo or PyRoki run for v2.2)
+- **cuRobo straight lines are axis holds.** In both versions, the native line constraint holds selected axes of the goal pose:
+  - **v1:** `PoseCostMetric(hold_partial_pose=True, hold_vec_weight=[rx, ry, rz, px, py, pz], project_to_goal_frame=...)`.
+  - **V2:** `ToolPoseCriteria` with non-terminal axis weights, e.g. `linear_motion(axis)`, and `project_distance_to_goal`.
+  - **What a held axis means:** for every timestep, the distance to the goal pose along that axis (in the goal frame, or in the base frame without projection) is penalised.
+  - **Consequence:** a straight line is held natively only when it is parallel to an axis of the goal frame (the tool axes, since the goal orientation is the programmed R) or of the base frame. The v2 pick-place MoveL lines were vertical, along the tool z axis.
+- **Expression rule for every v2.2 line (T, and each W leg):**
+  - **Native MoveL:** the line is within 1° of a goal-frame or base-frame axis. The other two position axes and all three rotation axes are held.
+  - **Partial (plane):** the line is off-axis, but a frame axis is perpendicular to it within 1° (e.g. a horizontal line, base z). Orientation and that axis are held.
+  - **Partial (orientation only):** otherwise only orientation is held.
+  - **Recording:** the class is recorded per line. Success and the path metrics are measured as pre-registered in every case.
+- **cuRoboV2 per-timestep targets (P0):**
+  - **Code finding:** `GoalToolPose` documents horizon > 1 as per-timestep targets, but `ToolPoseCost.forward` passes `goal_tool_poses.position.squeeze(1)` to a kernel that indexes goals by (problem, link, goal-set entry) only. In this build (`ac5f931`), the cost does not read a target per timestep.
+  - **Expectation:** P0 is expected to fail. It is still run as pre-registered, on the dev cells, to confirm the code reading empirically.
+  - **If it fails:** cuRoboV2 W runs as one line per leg (the expression rule above, stopping at via points), C is not expressible, and T is the line rule above (path only).
+- **cuRobo v1:** no per-timestep pose target was found. Its only multi-point mechanism is one approach offset (`create_grasp_approach_metric`), so W runs as one line per leg and C is not expressible, as pre-registered.
+- **Consequence:**
+  - For the tool-down programs, most cuRobo lines fall in the partial classes. The v2.2 result for cuRobo is then mainly expressibility, which the pre-registration counts as a result.
+  - The programs are not changed to suit an axis. Lines in arbitrary directions are what a cell programmer writes.
