@@ -1,10 +1,11 @@
 """Benchmark v2.2 metrics, identical for every planner (docs/V2_2_MOTION_TYPES_PREREGISTRATION.md, Metrics).
 
 Input: the 1 kHz joint trajectory q (n, 7) and the program. TCP from VAMP's FK (tool0) at every sample.
-  - path deviation: distance from the TCP to the programmed path (dense samples every 0.5 mm, nearest point found in
-    a window that moves forward with the TCP's progress, so a path passing near itself is not confused); max over
-    samples whose nearest path point is in a blend zone ("blend") and over the rest ("outside");
-  - progress: the arc length of that nearest point;
+  - path deviation: distance from the TCP to the programmed path (the polyline through dense samples every 0.5 mm,
+    whose chord error is < 0.01 mm on the smallest blend; global nearest sample, then the two adjacent segments); max
+    over samples whose nearest path point is in a blend zone ("blend") and over the rest ("outside");
+  - progress: arc length of the nearest path point found in a window that moves forward with the TCP's progress (so a
+    path passing near itself is not confused), used for the speed, blend and ramp metrics;
   - orientation deviation from the constant R (max), end pose error (position mm, rotation deg);
   - speed: |dP/dt| by central differences over 5 ms; tangential acceleration: d(speed)/dt over 5 ms;
   - cruise: samples whose progress is in [s_r1, s_r2], the programmed constant-speed span in arc length;
@@ -18,6 +19,7 @@ import math
 
 import numpy as np
 import vamp
+from scipy.spatial import cKDTree
 
 import v2_2_paths as G
 
@@ -41,14 +43,30 @@ def project(P, D, S):
     return idx
 
 
+def seg_refine(P, D, S, idx):
+    """Distance from each P to the polyline D near sample idx (segments idx-1..idx+1) and the arc length there."""
+    dev = np.linalg.norm(P - D[idx], axis=1); s = S[idx].copy()
+    for off in (-1, 0):
+        i0 = np.clip(idx + off, 0, len(D) - 2); A, B = D[i0], D[i0 + 1]; AB = B - A
+        t = np.clip(np.einsum("ij,ij->i", P - A, AB) / np.maximum(np.einsum("ij,ij->i", AB, AB), 1e-18), 0, 1)
+        d = np.linalg.norm(P - (A + t[:, None] * AB), axis=1); better = d < dev
+        dev[better] = d[better]; s[better] = (S[i0] + t * (S[i0 + 1] - S[i0]))[better]
+    return dev, s
+
+
 def metrics(q, prog, R, dt=1e-3):
     q = np.asarray(q, float)
     prims = prog["prims"]; v, a = prog["v"], prog["a"]
     D, S, lab = G.sample(prims, DENSE)
     blend = np.array([prims[k][1] == "blend" for k in lab])
     P, Rs = fk_all(q)
-    idx = project(P, D, S); dev = np.linalg.norm(P - D[idx], axis=1); prog_s = S[idx]
-    inb = blend[idx]
+    # deviation: exact distance to the polyline through the dense samples (global nearest sample by KD-tree, then the
+    # two adjacent segments); the blend label follows that nearest point
+    gi = cKDTree(D).query(P)[1]
+    dev, near = seg_refine(P, D, S, gi)
+    inb = blend[np.clip(np.searchsorted(S, near), 0, len(S) - 1)]
+    # progress (for speed, blends and ramps): the same refinement on the forward-moving windowed nearest sample
+    _, prog_s = seg_refine(P, D, S, project(P, D, S))
     R = np.asarray(R)
     ang = np.degrees(np.arccos(np.clip((np.einsum("ij,nij->n", R, Rs) - 1) / 2, -1, 1)))
     L = S[-1]; end = D[-1]

@@ -203,3 +203,34 @@ Found on the dev cells (`v22_dev_*`) while building the generator. No measured c
 - **Consequence:**
   - For the tool-down programs, most cuRobo lines fall in the partial classes. The v2.2 result for cuRobo is then mainly expressibility, which the pre-registration counts as a result.
   - The programs are not changed to suit an axis. Lines in arbitrary directions are what a cell programmer writes.
+
+## Amendment V2a (logged 2026-10-15, from the dev-cell smoke test, before any measured cuRobo run)
+- **Problem:** cuRobo v1 refuses a partial hold whose start and goal differ by more than 5 mm on a held axis (`motion_gen.py`, "Partial position between start and goal is not equal"). V2's 1° angle tolerance allows up to 8.7 mm on a 0.5 m leg, and one dev leg was refused for this reason.
+- **New rule:** a position axis of the goal or base frame can be held if the line's start-to-end displacement along it is ≤ 1 mm.
+  - **Native:** two axes of one frame can be held, so the line runs along the third.
+  - **Plane:** one axis can be held.
+  - **Orientation only:** none can be held.
+  - **Ties:** the base frame wins.
+- **Dev smoke test (3 cells, v1, seed 0):** every T line and almost every W leg was in the orientation-only class. In those runs the path is not held: max deviation 2–27 mm, against the pre-registered 5 mm success limit.
+
+## Probe P0 result (2026-10-15, dev cells, before any measured run)
+- **Outcome: fails on all 10 dev W programs under all 3 settings.** The settings were `non_terminal_scale` 1 and 10 with dt fixed, and 1 with the solver's own dt.
+  - **Where it fails:** cuRoboV2's trajopt (`trajopt_solver.solve_pose`, action horizon 16) rejects a goal of horizon 16.
+  - **Why:** the goal buffer is allocated with horizon 1: `manager_goal.update_goal_buffer` gives "output with shape [1, 1, 1, 1, 3] doesn't match the broadcast shape [1, 16, 1, 1, 3]".
+  - Records: `results/v2_2/p0.jsonl`.
+- **Consequence for cuRoboV2** (as pre-registered for a P0 failure):
+  - W runs as one line per leg, stopping at the via points.
+  - C is not expressible and is not run.
+  - T uses the line rule (V2a).
+
+## Execution notes (2026-10-15, before the measured runs)
+- **Dev smoke tests:** every harness ran end to end on dev cells (`results/v2_2/dev/`). These are dev records only, not results.
+- **Deviation metric:** fixed on dev data before any measured run.
+  - Deviation is the exact distance to the programmed path: the polyline through 0.5 mm samples, with segment refinement and the global nearest point.
+  - Progress for the speed metrics uses a forward-moving window.
+  - The first version measured to the nearest sample, which put a 0.25 mm floor on every deviation.
+- **Cartesian pipeline on dev W programs:** the circular blends make the programmed speed infeasible at 0.25 m/s on 9 of 10 dev programs.
+  - The cause is the curvature step at blend entry, which makes the joint jerk spike.
+  - The pre-registered retry halves v for the whole program, and the speed metrics show it against the programmed 0.25 m/s.
+- **PyRoki knot counts:** set by the pre-registered rule (spacing ≤ 40 ms for the longest program of each type), computed on the measured set. On dev, W needs about 24 s of T_ready per program, against the 30 s budget.
+- **Slot:** `bench/gpu_slot_v2_2.sh`, which starts once the program generator has finished.
