@@ -168,3 +168,18 @@ All metrics are computed at 1 kHz with VAMP's FK.
   - **Board-specific fixes needed to get that far:** the board's kernel has no iptables `raw` table (`CONFIG_IP_NF_RAW` not set), so port publishing needs `DOCKER_INSECURE_NO_IPTABLES_RAW=1`; the inner dockerd needs `DOCKER_IPTABLES_LEGACY=1`.
   - **Licence:** it is a beta SDK image under Universal Robots' SDK licence terms; any use of it here is stated with that.
   - The URSim part runs only after a platform is approved. Its protocol details (subset size, servoj gain and lookahead) are logged as an amendment before it runs. The planner runs above do not depend on it.
+
+## Amendment V1 (logged 2026-10-15, before any program set was generated for results and before any planner run)
+Found on the dev cells (`v22_dev_*`) while building the generator. No measured cell was generated and no planner was run.
+- **Problem.** As written, almost no programs were valid. Of the first candidates, 99% of W, 88% of T and about half of C failed the path-IK check, for three reasons:
+  - **Start inside the station:** the start point 0.10 m above the sampled grasp point can lie inside a bin's walls.
+  - **Paths over the robot:** paths toward a station on the other side of the rail run over the robot's own base, where the folded arm collides with itself.
+  - **Elbow singularity:** high via points and wide arcs reach the stretched-elbow singularity. With the tool pointing down, the UR5e's usable TCP reach is well below its 0.85 m nominal reach.
+- **Rules, applied to every program type:**
+  - **Start and end points:** "0.10 m above a station" means 0.10 m above the station's highest box, directly over the sampled target (or 0.10 m above the target if that is higher). The start configuration is the IK at the target, followed by a straight vertical line up to this point.
+  - **End station:** W ends above, and T heads toward, a station on the same side of the rail as the start station. Cells without such a pair are skipped.
+  - **Workspace bounds:** every path point must be at least 0.35 m horizontally from the base axis (the rail carriage's vertical axis) and within 0.70 m of the shoulder. The two bounds were set on the dev cells: 0.30 and 0.80 m still left elbow jumps and arm collisions. W via points are drawn within the pre-registered ranges and redrawn (up to 20 times) until they meet these bounds.
+  - **Rail:** fixed along every path. Each program is a fixed-base UR5e motion, which is also what a UR controller (URSim) runs.
+  - **Speed:** the log-map orientation error is computed in closed form instead of with scipy. The values are identical to 2e-10 rad on 2000 random poses.
+- **Consequence:** the programs are W, C and T motions in the comfortable part of the arm's workspace, about 1 cell in 6 is accepted, and the acceptance rate is reported.
+- **Generation:** k up to 1500, 4 workers. Memory and disk rules apply: MemAvailable has stayed above 4 GB for hours with no flagship job running, so more than 2 workers is allowed.
