@@ -23,6 +23,23 @@ Each fact traces to `results/v2/summary.json`, `results/v2/hypotheses.json` or `
    - cuRobo v1 as configured completes 0/600: its MoveL trajectories exceed its own 500 rad/s³ jerk setting at the segment ends. With `max_jerk` 200 it completes 572/600 at 8.22 s.
    - VAMP's pick-place planning ran on a loaded CPU, so its planning times are upper bounds.
 
+## Benchmark v2.2 facts (industrial motion types)
+Each fact traces to `results/v2_2/summary.json`. Pre-registered in `docs/V2_2_MOTION_TYPES_PREREGISTRATION.md`; results in `docs/V2_2_RESULTS.md`. 100 UR5e programs per type: waypoint paths with blends (W), MoveC (C), and a straight line with a trapezoidal TCP profile (T).
+
+10. **Expressibility is the main cuRobo result.**
+    - **Straight lines:** cuRobo (v1 and V2) holds a line by holding axes of the goal or base frame, and none of the 583 programmed lines runs along such an axis.
+    - **Other motions:** waypoint paths run as one line per leg, stopping at every via point. MoveC and a programmed speed profile are not expressible.
+    - **cuRoboV2's per-timestep pose targets:** they are rejected by its trajectory optimiser (the goal buffer has horizon 1).
+11. **T line, success over runs:**
+    - cuRoboV2: 120/300.
+    - cuRobo v1: 319/1000 with `max_jerk` 200, and 29/1000 as configured.
+    - Most failures exceed 5 mm path deviation. cuRobo runs the line at about 4.4–4.9 times the programmed speed.
+12. **PyRoki:** in its own trajectory-optimiser category, it follows the T line and its trapezoid (84/100; median deviation 0.21 mm).
+    - **W and C as returned:** they mostly exceed the joint jerk limit. A uniform slow-down gives 19/100 and 88/100, below the programmed speed.
+    - **Planning time on W:** a median of 41.0 s.
+13. **The programmed motions are executable:** our Cartesian pipeline (VAMP as collision check) completes all 300. The circular blends force half speed on 76 of 100 waypoint paths. This is a reference for the programs, not a VAMP planning result.
+    - No UR controller (URSim) has run these programs yet.
+
 ## Before writing
 - She read arXiv 2508.04146. `docs/PAPER_CLAIMS_AUDIT.md` lists which of its numbers a committed experiment supports. The 60× is cited from NVIDIA; the 15–25× vs OMPL, 8× vs TrajOpt, CHOMP 92% vs 78% and ABB 40% have no supporting experiment. The 3× matches only a cycle-time ratio against MoveIt/OMPL (3.02 s vs 9.90 s, different poses). The facts above come from this repo's same-board benchmark, not from the paper.
 

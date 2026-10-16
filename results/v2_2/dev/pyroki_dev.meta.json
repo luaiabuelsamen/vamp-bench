@@ -1,0 +1,23 @@
+{
+ "backend": "gpu",
+ "device": "cuda:0",
+ "margin_m": 0.005,
+ "knot_dt_max_s": 0.04,
+ "compile": {
+  "W": {
+   "first_call_s": 210.02484537987038,
+   "warm_s": 25.006504007149488,
+   "n_knots": 141
+  },
+  "C": {
+   "first_call_s": 187.87421012995765,
+   "warm_s": 7.238353239838034,
+   "n_knots": 77
+  },
+  "T": {
+   "first_call_s": 169.68692935910076,
+   "warm_s": 8.019986666273326,
+   "n_knots": 86
+  }
+ }
+}

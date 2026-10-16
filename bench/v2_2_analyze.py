@@ -12,6 +12,9 @@ Per planner and program type (W, C, T):
   Q4  ramps (T): median ramp acceleration error and ramp duration ratios
   Q5  T_ready, T_exec, T_cycle medians (bootstrap 95% CI over programs) and paired T_cycle vs the Cartesian pipeline
 Q1-Q4 are computed on the runs that have a trajectory; "_success" variants restrict to successful runs.
+Also: failure reasons (non-exclusive) over failed runs; success by the pre-registered bins (path length: below / at or
+above the type's median, fixed after the run since the pre-registration gave no edges; number of vias (W); min path
+clearance 1-2 / 2-5 / > 5 cm), bins with < 30 programs flagged; the Cartesian pipeline's speed halvings.
 Writes results/v2_2/summary.json.
 """
 import json, pickle
@@ -54,7 +57,7 @@ def normalise(planner, r):
         return {"cell": r["cell"], "type": r["type"], "seed_k": 0, "success": r["R1"]["success"], "metrics": m, "gate": g,
                 "t_ready_s": r["t_ready_s"], "t_exec_s": t_exec, "classes": ["per-knot costs"],
                 "r2_success": bool(r2["success"]) if r2 else r["R1"]["success"], "r2_scale": r2["scale"] if r2 else 1.0,
-                "r2_t_exec_s": r2["t_exec_s"] if r2 else t_exec}
+                "r2_t_exec_s": r2["t_exec_s"] if r2 else t_exec, "start_ok": r["start_ok"], "speed_retries": None}
     m, g = r.get("metrics"), r.get("gate")
     out = {"cell": r["cell"], "type": r["type"], "seed_k": r.get("seed_k", 0), "success": r["success"], "metrics": m, "gate": g,
            "t_ready_s": r["t_ready_s"], "t_exec_s": r.get("t_exec_s"),
@@ -64,10 +67,43 @@ def normalise(planner, r):
         s = max(1.0, g["max_vel_ratio"], np.sqrt(g["max_acc_ratio"]), np.cbrt(g["max_jerk_ratio"]))
         out["r2_scale"] = float(s); out["r2_t_exec_s"] = out["t_exec_s"] * s
         out["r2_success"] = bool(path_ok(m) and r["t_ready_s"] <= 30)
+    out["start_ok"] = r.get("start_ok", True); out["speed_retries"] = r.get("speed_retries")
     return out
 
 
-def summarise(recs, cart_by_prog):
+def reasons(r):
+    """Why a run failed (non-exclusive)."""
+    m, g = r["metrics"], r["gate"]
+    if m is None:
+        return ["no_trajectory"] + (["time"] if r["t_ready_s"] > 30 else [])
+    f = {"collision": g["colliding_samples"] > 0, "bounds": g.get("bound_violation_rad", 0) > 1e-5,
+         "velocity": g["max_vel_ratio"] > 1.01, "acceleration": g["max_acc_ratio"] > 1.01, "jerk": g["max_jerk_ratio"] > 1.01,
+         "path_dev_outside": m["max_dev_outside_mm"] > 5, "orientation": m["max_orient_dev_deg"] > 1,
+         "end_pose": m["end_pos_err_mm"] > 1 or m["end_rot_err_deg"] > 1, "time": r["t_ready_s"] > 30, "start": not r["start_ok"]}
+    out = [k for k, v in f.items() if v]
+    if out and set(out) <= {"velocity", "acceleration", "jerk"}:
+        out.append("dynamics_only")
+    return out
+
+
+def bins(recs, progs, t):
+    """Success over runs per pre-registered bin."""
+    def rate(sel):
+        rs = [r for r in recs if sel(progs[r["cell"]]["programs"][t])]
+        n = len({r["cell"] for r in rs})
+        return {"programs": n, "success_rate_runs": float(np.mean([r["success"] for r in rs])) if rs else None,
+                "r2_success_rate_runs": float(np.mean([r["r2_success"] for r in rs])) if rs else None, "underpowered": n < 30}
+    med = float(np.median([c["programs"][t]["path_length_m"] for c in progs.values()]))
+    out = {"path_length_median_m": med, "path_length": {"short": rate(lambda p: p["path_length_m"] < med),
+                                                         "long": rate(lambda p: p["path_length_m"] >= med)},
+           "clearance": {k: rate(lambda p, lo=lo, hi=hi: lo <= p["min_clearance_m"] < hi)
+                         for k, lo, hi in (("1-2cm", 0.0, 0.02), ("2-5cm", 0.02, 0.05), (">5cm", 0.05, 9.0))}}
+    if t == "W":
+        out["vias"] = {str(n): rate(lambda p, n=n: len(p["via_points"]) == n) for n in (3, 4, 5, 6)}
+    return out
+
+
+def summarise(recs, cart_by_prog, progs=None, t=None):
     by_prog = defaultdict(list)
     for r in recs:
         by_prog[r["cell"]].append(r)
@@ -75,6 +111,7 @@ def summarise(recs, cart_by_prog):
     M = lambda rs, k: [r["metrics"][k] for r in rs]
     S = {"runs": len(recs), "programs": len(by_prog), "success_rate_runs": float(np.mean([r["success"] for r in recs])) if recs else None,
          "r2_success_rate_runs": float(np.mean([r["r2_success"] for r in recs])) if recs else None,
+         "successes_runs": sum(r["success"] for r in recs), "r2_successes_runs": sum(r["r2_success"] for r in recs),
          "programs_failing_some_seed": sum(1 for v in by_prog.values() if not all(r["success"] for r in v)),
          "programs_failing_every_seed": sum(1 for v in by_prog.values() if not any(r["success"] for r in v)),
          "classes": {c: sum(c in r["classes"] for r in recs) for c in sorted({c for r in recs for c in r["classes"]})},
@@ -104,6 +141,17 @@ def summarise(recs, cart_by_prog):
     both = sorted(set(mine) & set(cart_by_prog))
     S["Q5_paired_vs_cartesian"] = {"programs": len(both), "t_cycle_s_median": float(np.median([mine[c] for c in both])) if both else None,
                                    "cartesian_t_cycle_s_median": float(np.median([cart_by_prog[c] for c in both])) if both else None}
+    fails = [r for r in recs if not r["success"]]
+    S["fail_reasons"] = {"failed_runs": len(fails)}
+    for r in fails:
+        for k in reasons(r):
+            S["fail_reasons"][k] = S["fail_reasons"].get(k, 0) + 1
+    S["t_ready_s_all"] = {"median": q([r["t_ready_s"] for r in recs], 50), "p95": q([r["t_ready_s"] for r in recs], 95),
+                          "over_30s": sum(r["t_ready_s"] > 30 for r in recs)}
+    if progs is not None:
+        S["bins"] = bins(recs, progs, t)
+    if recs and recs[0]["speed_retries"] is not None:
+        S["speed_halvings"] = {str(k): sum(r["speed_retries"] == k for r in recs) for k in sorted({r["speed_retries"] for r in recs})}
     return S
 
 
@@ -116,6 +164,7 @@ def group(rs):
 
 def main():
     progs = pickle.load(open(os.environ.get("V22_PROBLEMS", ROOT / "problems/v2_2_programs.pkl"), "rb"))["cells"]
+    by_index = {c["index"]: c for c in progs}
     data = {}
     for p, f in RUNS.items():
         fp = RAW / f
@@ -129,7 +178,7 @@ def main():
         cart = {r["cell"]: r["t_cycle"] for r in data.get("cartesian", []) if r["type"] == t and r["success"]}
         for p, recs in data.items():
             rs = [r for r in recs if r["type"] == t]
-            out["planners"].setdefault(p, {})[t] = summarise(rs, cart) if rs else {"runs": 0, "note": "not run (not expressible)"}
+            out["planners"].setdefault(p, {})[t] = summarise(rs, cart, by_index, t) if rs else {"runs": 0, "note": "not run (not expressible)"}
     json.dump(out, open(os.environ.get("V22_OUT", ROOT / "results/v2_2/summary.json"), "w"), indent=1)
     for p, v in out["planners"].items():
         print(p, {t: (s.get("runs"), None if s.get("success_rate_runs") is None else round(s["success_rate_runs"], 3),

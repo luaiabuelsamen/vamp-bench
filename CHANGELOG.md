@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-15
+- **Benchmark v2.2 (industrial motion types) results.** `docs/V2_2_RESULTS.md`, `results/v2_2/summary.json` and `results/v2_2/motion_types.png`; README and `docs/EMAIL_NOTES.md` sections added. `bench/check_consistency.py` now also checks them against `results/v2_2/summary.json`.
+- **Pre-registration text, jerk-limited corners.** `docs/V2_2_MOTION_TYPES_PREREGISTRATION.md` gives the corner durations as 25 ms for W and C and 100 ms for T. The time law (a / j with j = 10 m/s³) gives the reverse: 100 ms for W and C (a = 1 m/s²) and 25 ms for T (a = 0.25 m/s²). The code used a / j throughout, so no result is affected.
+- **Analysis additions, after the run:**
+  - `bench/v2_2_analyze.py` now records failure reasons, success counts and the Cartesian pipeline's speed halvings.
+  - It also reports the pre-registered bins. Path length is split at each type's median, since the pre-registration set no bin edges.
+
 ## 2026-10-14
 - **Benchmark v2 final.** All feasibility reference runs are complete:
   - held-out A6: 299 of 300 queries certified, 1 with no path found;

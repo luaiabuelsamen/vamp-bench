@@ -140,6 +140,37 @@ v2 counts a planner as successful only when its trajectory is executable. It mus
 - **Where the cycle-time differences come from:** execution times are within 0.4 s of each other, so the differences are planning time.
 - **Timing caveat:** VAMP's pick-place planning ran while other jobs loaded the CPU, so its planning times are upper bounds.
 
+## Benchmark v2.2: industrial motion types (waypoints with blends, MoveC, trapezoidal MoveL)
+
+Pre-registered design: [docs/V2_2_MOTION_TYPES_PREREGISTRATION.md](docs/V2_2_MOTION_TYPES_PREREGISTRATION.md). Results: [docs/V2_2_RESULTS.md](docs/V2_2_RESULTS.md). Numbers: `results/v2_2/summary.json`. Figure: `results/v2_2/motion_types.png`.
+
+- **Task:** 100 UR5e cells, each with three programmed tool-down motions:
+  - **W:** a path through 3–6 via points with circular blends, at a constant 0.25 m/s;
+  - **C:** a circular arc (MoveC);
+  - **T:** a straight line with a trapezoidal TCP speed profile.
+- **Success:** the same 1 kHz check, plus the TCP within 5 mm of the programmed path outside blend zones.
+- **How each planner expresses each motion:**
+  - **cuRobo (v1 and V2):** a straight line is held by holding axes of the goal or base frame. Of 483 waypoint legs and 100 T lines, none runs along a holdable axis, so most lines hold orientation only.
+    - A waypoint path runs as one line per leg, stopping at every via point.
+    - MoveC and a programmed speed profile are not expressible; MoveC is not run.
+    - cuRoboV2's documented per-timestep pose targets are rejected by its trajectory optimiser.
+  - **PyRoki:** per-knot pose costs in our harness.
+  - **Cartesian pipeline:** our path IK and time law, with VAMP as the collision check. It is a reference for the programmed motion, not a VAMP planning result.
+
+| Success (runs, as returned) | Cartesian pipeline | cuRobo v1 | cuRobo v1, `max_jerk` 200 | cuRoboV2 | PyRoki |
+|---|---|---|---|---|---|
+| W, waypoints + blends | 100/100 | 0/1000 | 10/1000 | 3/300 | 1/100 |
+| C, MoveC | 100/100 | not expressible | not expressible | not expressible | 3/100 |
+| T, trapezoidal line | 100/100 | 29/1000 | 319/1000 | 120/300 | 84/100 |
+
+- **cuRobo on the T line:** it misses the 5 mm path limit on most runs (median max deviation 7.59–9.27 mm over all runs). It runs the line at about 4.4–4.9 times the programmed speed, since it has no TCP speed input.
+- **PyRoki:**
+  - **Fidelity:** it follows the path, the speed and the trapezoid closely (T: median deviation 0.21 mm, ramp acceleration error 6.8%).
+  - **W and C as returned:** most trajectories exceed the joint jerk limit. A uniform slow-down gives 19/100 (W) and 88/100 (C), below the programmed speed.
+  - **Planning time on W:** a median of 41.0 s, against the 30 s budget.
+- **Cartesian pipeline:** holds every path to 0.04 mm (p95). At the programmed 0.25 m/s, the circular blends exceed the joint jerk limit on 76 of 100 waypoint paths, so it halves the speed there.
+- **Not yet done:** no UR controller (URSim) has run these programs yet; the platform is pending.
+
 ## Settings and caveats
 - **VAMP:** library defaults (`rrtc` + `simplify`, Halton sampler), the same as its own `scripts/evaluate_mbm.py`. Paper scenes: 10 seeds per query.
 - **cuRobo v1** (`ebb7170`, v0.7.7-5): the settings of its own `benchmark/curobo_benchmark.py` (12 seeds, 20 attempts, graph planner from attempt 1, finetuning, CUDA graphs, warmed up). Paper scenes: 10 seeds per query.

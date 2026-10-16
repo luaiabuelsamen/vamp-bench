@@ -73,7 +73,7 @@ for g in S["groups"]:
 # Benchmark v2 sections (a heading containing "v2") are checked against the v2 result files instead: every count,
 # time, percentage and ratio must equal some value in them at the precision written.
 V2_FILES = ("results/v2/summary.json", "results/v2/hypotheses.json", "results/v2/pickplace_summary.json",
-            "results/v2_1/movel_r2.json")
+            "results/v2_1/movel_r2.json", "results/v2_2/summary.json")
 v2_vals = []
 
 
