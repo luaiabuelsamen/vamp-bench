@@ -1,0 +1,110 @@
+{
+ "status": "provisional (v2.1 write-up pending)",
+ "movel_preregistered": {
+  "segments": 480,
+  "R1_success": 0,
+  "R2_success": 6,
+  "end_ok": 13,
+  "start_off": 81,
+  "start_off_only_reason": 7,
+  "end_pos_err_mm_median": 2.6357562886431154,
+  "R2_gate_fail": 7,
+  "t_solve_s_median": 4.761869705514982
+ },
+ "movel_recipe_7g": {
+  "segments": 480,
+  "R1_success": 0,
+  "R2_success": 373,
+  "end_ok": 475,
+  "start_off": 99,
+  "start_off_only_reason": 96,
+  "end_pos_err_mm_median": 0.08902369566024004,
+  "R2_gate_fail": 6,
+  "t_solve_s_median": 4.546830287901685
+ },
+ "ik_pyroki": {
+  "poses": 300,
+  "default": {
+   "success": 86,
+   "t_s_median": 0.014256230555474758
+  },
+  "rand64": {
+   "success": 59,
+   "t_s_median": 0.5248627476394176
+  },
+  "coll_rand64": {
+   "success": 285,
+   "t_s_median": 0.9094846430234611
+  }
+ },
+ "ik_curobo1": {
+  "poses": 300,
+  "default": {
+   "success": 298,
+   "t_s_median": 0.03580985264852643
+  },
+  "high_precision": {
+   "success": 300,
+   "t_s_median": 0.056991792749613523
+  }
+ },
+ "ik_margin_sensitivity_m0": {
+  "failed_at_5mm": 15,
+  "succeed_at_0": 13,
+  "controls": 28,
+  "controls_collide_at_0": 3
+ },
+ "trajopt_s1": {
+  "queries": 300,
+  "R1_success": 105,
+  "R2_success": 127,
+  "t_ready_s_median_R2_success": 20.292648517526686
+ },
+ "trajopt_s2": {
+  "queries": 300,
+  "R1_success": 104,
+  "R2_success": 169,
+  "t_ready_s_median_R2_success": 24.961844571866095
+ },
+ "curobo1_at_seed_dump": {
+  "queries": 300,
+  "success": 168
+ },
+ "margin_choice": {
+  "set": "gantry_pillars every 5th query (21), S1, GPU",
+  "rule": "most R1 successes, ties to larger margin",
+  "chosen_m": 0.005,
+  "results": {
+   "0.0": {
+    "queries": 21,
+    "R1": 7,
+    "R2": 10,
+    "median_t_ready_s": 31.052068847697228
+   },
+   "0.005": {
+    "queries": 21,
+    "R1": 15,
+    "R2": 15,
+    "median_t_ready_s": 20.187618787866086
+   },
+   "0.01": {
+    "queries": 21,
+    "R1": 14,
+    "R2": 15,
+    "median_t_ready_s": 23.999284338206053
+   },
+   "0.02": {
+    "queries": 21,
+    "R1": 5,
+    "R2": 5,
+    "median_t_ready_s": 31.147854669950902
+   },
+   "0.05": {
+    "queries": 21,
+    "R1": 1,
+    "R2": 1,
+    "median_t_ready_s": 31.732730694115162
+   }
+  }
+ }
+}

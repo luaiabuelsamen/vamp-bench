@@ -162,6 +162,38 @@ def group(rs):
     return g
 
 
+def program_set(progs):
+    """Generator acceptance and the shape of the kept set (from the program file)."""
+    W = [c["programs"]["W"] for c in progs]; C = [c["programs"]["C"]["prims"][0] for c in progs]
+    L = lambda t: [c["programs"][t]["path_length_m"] for c in progs]
+    return {"cells": len(progs), "candidates": max(c["k"] for c in progs) + 1,
+            "acceptance": len(progs) / (max(c["k"] for c in progs) + 1),
+            "w_vias": {str(n): sum(len(w["via_points"]) == n for w in W) for n in range(3, 7)},
+            "c_sweep_deg": {"min": float(np.degrees(min(p[7] for p in C))), "median": float(np.degrees(np.median([p[7] for p in C]))),
+                            "max": float(np.degrees(max(p[7] for p in C)))},
+            "c_radius_m_median": float(np.median([p[5] for p in C])),
+            "path_length_m": {t: {"min": min(L(t)), "median": float(np.median(L(t))), "max": max(L(t))} for t in "WCT"},
+            "v_mps": {t: progs[0]["programs"][t]["v"] for t in "WCT"}, "a_mps2": {t: progs[0]["programs"][t]["a"] for t in "WCT"},
+            "clearance_below_5cm": {t: sum(c["programs"][t]["min_clearance_m"] < 0.05 for c in progs) for t in "WCT"}}
+
+
+def line_classes():
+    """cuRobo line classes (amendment V2a) per W leg and T line; geometric, so identical for v1 and V2 (seed 0 of v1)."""
+    fp = RAW / RUNS["curobo1"]
+    if not fp.exists():
+        return None
+    out = {t: {"lines": 0, "native": 0, "plane": 0, "orient": 0} for t in "WT"}
+    for l in open(fp):
+        r = json.loads(l)
+        if r.get("seed_k", 0) != 0:
+            continue
+        for g in r["legs"]:
+            out[r["type"]]["lines"] += 1; out[r["type"]][g["class"]] += 1
+    out["all_lines"] = out["W"]["lines"] + out["T"]["lines"]
+    out["all_native"] = out["W"]["native"] + out["T"]["native"]
+    return out
+
+
 def main():
     progs = pickle.load(open(os.environ.get("V22_PROBLEMS", ROOT / "problems/v2_2_programs.pkl"), "rb"))["cells"]
     by_index = {c["index"]: c for c in progs}
@@ -173,7 +205,8 @@ def main():
             for r in data[p]:
                 r["t_cycle"] = (r["t_ready_s"] or 0) + (r["t_exec_s"] or 0)
                 r["r2_t_cycle"] = (r["t_ready_s"] or 0) + (r["r2_t_exec_s"] or 0)
-    out = {"programs": {t: len(progs) for t in "WCT"}, "planners": {}}
+    out = {"programs": {t: len(progs) for t in "WCT"}, "planners": {}, "program_set": program_set(progs),
+           "expressibility_lines": line_classes()}
     for t in "WCT":
         cart = {r["cell"]: r["t_cycle"] for r in data.get("cartesian", []) if r["type"] == t and r["success"]}
         for p, recs in data.items():

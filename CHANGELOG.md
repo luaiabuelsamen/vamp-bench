@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-15 (technical report)
+- **Technical report PDF:** `report/vamp_bench_report.pdf`, built from `report/vamp_bench_report.tex`. No new runs.
+  - Every number comes from the committed result files through `report/make_numbers.py`, which writes `report/generated/`.
+  - `bench/check_consistency.py` now also checks the report: the generated files must match the result files, the source must contain no typed numbers, and every number in the PDF must come from the generated files or the document structure.
+- **v2.1 summary:** `bench/v2_1_summary.py` writes `results/v2_1/summary.json` from the stored v2.1 runs. It covers MoveL as pre-registered and with PyRoki's endpoint recipe, IK, trajectory optimisation S1/S2 and the margin sensitivity, and is provisional until the v2.1 write-up.
+- **v2.2 summary additions:** `results/v2_2/summary.json` gains the generator's acceptance and set shape (`program_set`) and the cuRobo line classes (`expressibility_lines`), so the report reads them from JSON.
+
 ## 2026-10-15
 - **Benchmark v2.2 (industrial motion types) results.** `docs/V2_2_RESULTS.md`, `results/v2_2/summary.json` and `results/v2_2/motion_types.png`; README and `docs/EMAIL_NOTES.md` sections added. `bench/check_consistency.py` now also checks them against `results/v2_2/summary.json`.
 - **Pre-registration text, jerk-limited corners.** `docs/V2_2_MOTION_TYPES_PREREGISTRATION.md` gives the corner durations as 25 ms for W and C and 100 ms for T. The time law (a / j with j = 10 m/s³) gives the reverse: 100 ms for W and C (a = 1 m/s²) and 25 ms for T (a = 0.25 m/s²). The code used a / j throughout, so no result is affected.

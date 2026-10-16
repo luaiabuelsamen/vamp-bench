@@ -1,0 +1,433 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.3cm]{geometry}
+\usepackage{graphicx,booktabs,array,tabularx,caption,enumitem,microtype}
+\usepackage[hidelinks]{hyperref}
+\setlist{itemsep=2pt,topsep=4pt}
+\captionsetup{font=small,labelfont=bf}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\input{generated/numbers}
+% Every number in this document is a macro from generated/numbers.tex or a table from generated/tab_*.tex,
+% both written by report/make_numbers.py from the committed result files. Do not type numbers here.
+
+\title{VAMP, cuRobo and PyRoki on one Jetson Orin NX:\\ planning speed, executable trajectories and industrial motion types}
+\author{vamp-bench technical report}
+\date{\reportDate}
+
+\begin{document}
+\maketitle
+
+\section{Summary}
+This report compares motion planners on a single Jetson Orin NX \boardMem\,GB. VAMP is a vectorised sampling-based planner that runs on one CPU core. cuRobo v1 and cuRoboV2 are GPU trajectory optimisers. PyRoki, a JAX trajectory-optimisation library with no global planner, is reported in its own category. All planners check the same collision spheres against the same obstacles and are compared only on this board. The work has three parts.
+\begin{itemize}
+  \item \textbf{v1} measures planning time on VAMP's standard benchmark and on the scenes of our earlier paper.
+  \item \textbf{v2} measures the time to a trajectory that passes a common \gateHz\,kHz executability check, on a held-out set and in pick-place.
+  \item \textbf{v2.2} tests motions that cell integrators program: waypoint paths with blends, circular moves (MoveC) and straight lines with a trapezoidal speed profile.
+\end{itemize}
+Each part was pre-registered before it ran. Changes after registration are logged as amendments.
+
+\paragraph{Takeaways.}
+\begin{enumerate}
+  \item \textbf{Planning time.} On this board, VAMP on one CPU core plans faster than cuRobo on the whole GPU.
+  \begin{itemize}
+    \item \textbf{v1:} cuRobo v1's median planning time is \vOneRatioMin\ to \vOneRatioMax\ VAMP's on the same queries, and cuRoboV2's is \vTwoRatioMin\ to \vTwoRatioMax.
+    \item \textbf{v2:} counting time-parameterisation, VAMP reaches an executable trajectory \readyRatioMin\ to \readyRatioMax\ sooner than cuRobo v1, in every bin of every set.
+  \end{itemize}
+  \item \textbf{Cycle time is much closer than planning time}, because execution takes seconds.
+  \begin{itemize}
+    \item \textbf{Held-out runs both planners solve:} cuRobo v1's cycle is shorter (\aBothVOne\ against \aBothVamp). Its smoother trajectories execute \aExecAdv\ faster, which outweighs VAMP's \aReadyAdv\ planning advantage.
+    \item \textbf{Counting failures:} VAMP's median cycle is lower (\aVampCycle\ against \aVOneCycle).
+  \end{itemize}
+  \item \textbf{The finding of v2.2 is expressibility.} Neither cuRobo version can follow a programmed Cartesian path: it holds a straight line only along an axis of the goal or base frame.
+  \begin{itemize}
+    \item \textbf{Lines:} none of the \ttLinesAll\ programmed lines runs along such an axis.
+    \item \textbf{Other motions:} waypoint paths run as separate lines that stop at every via point. MoveC and a programmed speed profile cannot be expressed.
+    \item \textbf{PyRoki:} it expresses all three motion types, and follows the trapezoidal line closely. As returned, its blended and circular trajectories mostly exceed the joint jerk limit.
+  \end{itemize}
+\end{enumerate}
+
+\section{Setup}
+\begin{itemize}
+  \item \textbf{Hardware:} one Jetson Orin NX \boardMem\,GB.
+  \begin{itemize}
+    \item VAMP runs on one Cortex-A78AE core with NEON. cuRobo and PyRoki run on the GPU, with no other GPU work during their runs.
+    \item No result here is transferred from other hardware.
+  \end{itemize}
+  \item \textbf{Planners:}
+  \begin{itemize}
+    \item VAMP \texttt{\vampCommit} with its library defaults (RRT-Connect, simplification, Halton sampler);
+    \item cuRobo v1 \texttt{\curoboOneCommit} (\curoboOneVersion), the version our earlier paper used, with the settings of its own benchmark script;
+    \item cuRoboV2 \texttt{\curoboTwoCommit} (\curoboTwoVersion), with NVIDIA's benchmark settings except \texttt{max\_attempts} \vOneAttempts\ instead of \nvidiaAttempts;
+    \item PyRoki with its own example settings (Section~\ref{sec:pyroki}).
+  \end{itemize}
+  \item \textbf{Shared collision model:} all planners use the same sphere model of each robot, the same obstacles and the same joint-space start and goal.
+  \begin{itemize}
+    \item On \agreeN\ random configurations, VAMP's and cuRobo's collision checkers agree on \agreeShare\ of them.
+  \end{itemize}
+  \item \textbf{Executability check (v2 onward):} every trajectory, from every planner, is sampled at \gateHz\,kHz and must pass all of the following:
+  \begin{itemize}
+    \item no collision under the shared model;
+    \item joint bounds respected;
+    \item peak velocity, acceleration and jerk each at most \gateTol\ times the shared limits.
+  \end{itemize}
+  The UR5e jerk limit is \jerkLimit\,rad/s\textsuperscript{3}, taken from cuRobo's shipped configuration, since Universal Robots publishes none. Planning plus time-parameterisation (T\textsubscript{ready}) must finish within T $=$ \budget\,s.
+  \item \textbf{Two versions of each trajectory:}
+  \begin{itemize}
+    \item \textbf{R1} is the trajectory as returned.
+    \item \textbf{R2} applies a uniform slow-down to a trajectory that failed only on velocity, acceleration or jerk. The factor is the smallest that brings all three peaks within the limits (velocity scales with the factor, acceleration with its square, jerk with its cube). R2 is post-processing and is labelled wherever it appears.
+  \end{itemize}
+\end{itemize}
+
+\section{v1: planning speed}
+\label{sec:v1}
+The problem sets are VAMP's MotionBenchMaker problems (Panda, UR5) and the three scenes of our earlier paper (a UR5e on a rail, with and without pillars, and a fixed-base UR5e).
+\begin{itemize}
+  \item \textbf{Timing:} wall-clock time per query, measured from Python, including the world update.
+  \item \textbf{Solved:} the planner reports success.
+  \item \textbf{cuRoboV2 subset:} V2 runs a fixed subsample of the MotionBenchMaker problems and one trial per paper problem, because of its run time.
+\end{itemize}
+
+\begin{table}[ht]\centering\footnotesize
+\caption{Solved queries and wall time per query (median, p95 in parentheses). Rail: the UR5e on a rail of our earlier paper; UR5e: its fixed-base UR5e scene.}\label{tab:v1}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l rl rl rl@{}}\toprule
+ & \multicolumn{2}{c}{VAMP, one CPU core} & \multicolumn{2}{c}{cuRobo v1, GPU} & \multicolumn{2}{c}{cuRoboV2, GPU} \\\midrule
+\input{generated/tab_v1_sets}\end{tabular}
+\end{table}
+
+\begin{table}[ht]\centering\footnotesize
+\caption{Median wall time relative to VAMP on the same queries.}\label{tab:v1ratio}
+\begin{tabularx}{\linewidth}{@{}l CCCCC@{}}\toprule
+ & \input{generated/tab_v1_ratio_head} \\\midrule
+\input{generated/tab_v1_ratios}\end{tabularx}
+\end{table}
+
+\begin{figure}[ht]\centering
+\includegraphics[width=0.92\linewidth]{../results/figure.png}
+\caption{Wall-clock time per solved query on each problem set (log scale). Bars show the interquartile range, ticks the median.}\label{fig:v1}
+\end{figure}
+
+\paragraph{Panda MotionBenchMaker.}
+\begin{itemize}
+  \item \textbf{Medians:} VAMP \pandaVampMs, cuRobo v1 \pandaVOneMs, cuRoboV2 \pandaVTwoMs.
+  \item \textbf{cuRoboV2's success is a lower bound:} it solves \pandaVTwoSolved\ with \texttt{max\_attempts} \vOneAttempts. NVIDIA's own benchmark uses \nvidiaAttempts.
+  \item \textbf{v1 on the same subset:} it solves \pandaVOneOnVTwo\ with a median of \pandaVOneOnVTwoMs.
+\end{itemize}
+On this board the GPU gives cuRobo no planning-time advantage, and cuRoboV2 is slower than v1.
+
+\paragraph{Notes.}
+\begin{itemize}
+  \item \textbf{UR5 velocity limit:} VAMP's UR5 model caps every joint at a velocity cuRobo's time-parameterised optimiser cannot work with. Both cuRobo versions therefore receive the real UR5 limit, with identical geometry. cuRobo v1 still solves only \urFiveVOneSolved.
+  \item \textbf{Provisional, penetrations between waypoints:} VAMP's straight-line check between consecutive returned waypoints flags a few successes of both cuRobo versions (Table~\ref{tab:flag}).
+  \begin{itemize}
+    \item \textbf{Size:} median penetration \penMedMin--\penMedMax\,mm per set, at most \penMax\,mm, never at a waypoint.
+    \item \textbf{Open question:} whether the continuous cuRobo trajectory itself penetrates is not established.
+    \item The solved counts above are not changed.
+  \end{itemize}
+\end{itemize}
+
+\begin{table}[ht]\centering\footnotesize
+\caption{Provisional: successes flagged by VAMP's segment check between returned waypoints.}\label{tab:flag}
+\begin{tabular}{@{}lcc@{}}\toprule
+ & cuRobo v1 & cuRoboV2 \\\midrule
+\input{generated/tab_v1_flagged}\end{tabular}
+\end{table}
+
+\section{v2: time to an executable trajectory}
+\label{sec:v2}
+v1 measures time to a path. v2 measures time to a trajectory a controller can execute.
+\begin{itemize}
+  \item \textbf{What counts:} a planner succeeds only if its output passes the executability check within T $=$ \budget\,s. VAMP's paths are time-parameterised with Ruckig, and the Ruckig time counts.
+  \item \textbf{Sets:}
+  \begin{itemize}
+    \item \textbf{Held-out cells (primary):} \vTwoQueries\ UR5e-on-rail queries generated after a frozen commit. Each query is a pair of collision-free configurations at two stations of a cell, not a tool-down pick.
+    \item MotionBenchMaker and M$\pi$Nets Panda queries.
+  \end{itemize}
+  \item \textbf{Seeds:} \vTwoSeeds\ per query. cuRoboV2 runs a \vTwoSubQ-query subsample with \vTwoSubSeeds\ seeds.
+  \item \textbf{Feasibility:} a reference planner certifies \feasA\ of \feasQA\ held-out queries, \feasMbm\ of \feasQMbm\ MotionBenchMaker queries and \feasMpi\ of \feasQMpi\ M$\pi$Nets queries as feasible.
+\end{itemize}
+
+\begin{table}[ht]\centering\footnotesize
+\caption{Held-out cells (UR5e on a rail). cuRoboV2 on its subsample; on the same runs VAMP succeeds on \aSubVamp\ and cuRobo v1 on \aSubVOne.}\label{tab:v2}
+\begin{tabular}{@{}l ccc@{}}\toprule
+ & VAMP & cuRobo v1 & cuRoboV2 \\\midrule
+\input{generated/tab_v2_heldout}\end{tabular}
+\end{table}
+
+\begin{table}[ht]\centering\footnotesize
+\caption{Pre-registered hypotheses H1--H4, per set.}\label{tab:hyp}
+\begin{tabular}{@{}p{6.2cm} ccc@{}}\toprule
+ & Held-out & MotionBenchMaker & M$\pi$Nets \\\midrule
+\input{generated/tab_v2_hyp}\end{tabular}
+\end{table}
+
+\paragraph{Results.}
+\begin{itemize}
+  \item \textbf{Time to an executable trajectory:} VAMP reaches one \readyRatioA\ (held-out), \readyRatioMbm\ (MotionBenchMaker) and \readyRatioMpi\ (M$\pi$Nets) sooner than cuRobo v1 in median. This holds in every bin of every set (Figure~\ref{fig:bins}).
+  \item \textbf{Cycle time:} the gap is far smaller (Table~\ref{tab:hyp}, H2).
+  \begin{itemize}
+    \item \textbf{Held-out runs both planners solve:} cuRobo v1's cycle is shorter, because its execution is shorter.
+    \item \textbf{Counting failures at T:} VAMP's median cycle is lower.
+  \end{itemize}
+  \item \textbf{Smoothness:} cuRobo v1's trajectories have lower jerk and shorter execution than VAMP with Ruckig, on every set (H3).
+  \begin{itemize}
+    \item \textbf{VAMP with TOPP-RA:} it executes faster, but only \toppraValidMin\ to \toppraValidMax\ of its trajectories pass the check.
+  \end{itemize}
+  \item \textbf{Robustness differs by set (H4):} VAMP has fewer queries failing on some seed on the held-out set, and cuRobo v1 has fewer on MotionBenchMaker and M$\pi$Nets.
+  \item \textbf{cuRoboV2:} its median T\textsubscript{ready} is \vTwoOverVOneMin\ to \vTwoOverVOneMax\ cuRobo v1's on the same queries and seeds.
+  \item \textbf{Appendix set (H5):} on the held-out set with its original, unwrapped goals, \feasOrig\ of \feasQOrig\ queries are certified. The signs of \hFiveHolds\ agree with the primary set; \hFiveFails\ does not.
+\end{itemize}
+
+\begin{figure}[ht]\centering
+\includegraphics[width=\linewidth]{../results/v2/per_bin_heldout_a6.png}
+\caption{Held-out cells: success rate, T\textsubscript{ready} and T\textsubscript{cycle} per bin, with bootstrap confidence intervals over queries. Hollow markers are bins with fewer than \ttBinMin\ queries.}\label{fig:bins}
+\end{figure}
+
+\subsection{Pick-place with straight-line approach and retreat}
+\begin{itemize}
+  \item \textbf{Task:} \ppCells\ cells with \ppPerCell\ picks each, run with \ppSeeds\ seeds, for \ppPicks\ picks per planner.
+  \item \textbf{Picks:} each pick has \ppSegments\ segments: free-space moves to the pre-grasp and pre-place poses, and straight-line (MoveL) moves down and up at each.
+  \item \textbf{Success:} a pick counts only if every segment passes the check.
+\end{itemize}
+
+\begin{table}[ht]\centering\footnotesize
+\caption{Pick-place with MoveL (UR5e on a rail).}\label{tab:pp}
+\begin{tabular}{@{}p{5.2cm} cccc@{}}\toprule
+ & \input{generated/tab_pickplace_head} \\\midrule
+\input{generated/tab_pickplace}\end{tabular}
+\end{table}
+
+\paragraph{Results.}
+\begin{itemize}
+  \item \textbf{Picks completed:} VAMP \ppVampDone, cuRoboV2 \ppVTwoDone, cuRobo v1 as configured \ppVOneDone.
+  \item \textbf{cuRobo v1 as configured:} its MoveL trajectories exceed its own configured jerk limit at the segment ends (Figure~\ref{fig:jerk}). Only \ppMoveLPassOne\ of its MoveL segments pass.
+  \begin{itemize}
+    \item \textbf{Lower jerk setting:} with \texttt{max\_jerk} lowered to \ppJerkLow, it completes \ppJDone.
+    \item \textbf{Uniform slow-down (R2, post hoc):} with a median factor of \ppRTwoSlow\ it completes \ppRTwoDone\ at a median cycle of \ppRTwoCycle.
+  \end{itemize}
+  \item \textbf{Paired cycle times:}
+  \begin{itemize}
+    \item \textbf{VAMP and cuRoboV2} (\ppPairTwoN\ picks both complete): \ppPairTwoVamp\ against \ppPairTwo, a median ratio of \ppPairTwoRatio.
+    \item \textbf{VAMP and the v1 control} (\ppPairJN\ picks): \ppPairJVamp\ against \ppPairJ, a ratio of \ppPairJRatio.
+  \end{itemize}
+  Execution times are close, so the differences are planning time.
+  \item \textbf{Timing caveat:} VAMP's pick-place planning ran while other jobs loaded the CPU, so its planning times are upper bounds.
+\end{itemize}
+
+\begin{figure}[ht]\centering
+\includegraphics[width=0.85\linewidth]{../results/v2/pickplace_jerk.png}
+\caption{Peak joint jerk on each executed MoveL segment, relative to the configured limit.}\label{fig:jerk}
+\end{figure}
+
+\section{v2.2: industrial motion types}
+\label{sec:v22}
+\paragraph{Programs.} \ttCells\ UR5e cells each carry three programmed tool-down motions:
+\begin{itemize}
+  \item \textbf{W:} a path through \ttViasMin--\ttViasMax\ via points with circular blends (radius up to \ttBlendR\,cm), at a constant \ttV\,m/s through the blends;
+  \item \textbf{C:} a horizontal circular arc through start, via and end points (MoveC);
+  \item \textbf{T:} a straight line of \ttTLenMin--\ttTLenMax\,m with a trapezoidal TCP speed profile (acceleration \ttTA\,m/s\textsuperscript{2}, cruise \ttV\,m/s).
+\end{itemize}
+Each time law is jerk-limited along the path (TCP jerk \ttTcpJerk\,m/s\textsuperscript{3}).
+
+\paragraph{Success.} A run must pass all of the following:
+\begin{itemize}
+  \item the executability check;
+  \item planning within T;
+  \item an end pose within \ttEndMm\,mm and \ttEndDeg$^\circ$;
+  \item a TCP within \ttPathLimit\,mm of the programmed path outside blend zones, with orientation within \ttEndDeg$^\circ$.
+\end{itemize}
+Speed, blend and profile behaviour are measured but are not part of success, because some planners have no speed input.
+
+\paragraph{Runs.} cuRobo v1 ran with \ttSeedsVOne\ seeds per program, both as configured and with \texttt{max\_jerk} lowered as in pick-place. cuRoboV2 ran with \ttSeedsVTwo\ seeds, and PyRoki once (it is deterministic).
+
+\paragraph{Cartesian pipeline.} This column is our own path IK, spline and time law, with VAMP used only as the collision check. It is a reference for what the programmed motion costs on this robot, not a result about VAMP's planning.
+
+\subsection{Expressibility}
+\begin{table}[ht]\centering\footnotesize
+\caption{How each planner expresses each motion type. This is the main v2.2 result.}\label{tab:expr}
+\begin{tabularx}{\linewidth}{@{}p{2.2cm} YYY@{}}\toprule
+Motion & cuRobo v1 and cuRoboV2 & PyRoki & Cartesian pipeline \\\midrule
+W, waypoints with blends & Closest native motion: one line per leg, stopping at each via point. Of \ttLinesW\ legs, \ttLinesWNative\ run along a holdable axis, \ttLinesWPlane\ can hold one axis, and \ttLinesWOrient\ hold orientation only. & Per-knot pose costs (our harness) & Our post-processing \\
+C, MoveC & Not expressible; not run & Per-knot pose costs & Our post-processing \\
+T, trapezoidal line & Line only, by the same rule: of \ttLinesT\ lines, \ttLinesTNative\ along an axis, \ttLinesTPlane\ plane, \ttLinesTOrient\ orientation only. The speed profile is not expressible (no TCP speed or acceleration input). & Per-knot targets at the programmed timing & Our post-processing; profile exact \\
+\bottomrule\end{tabularx}
+\end{table}
+
+\begin{itemize}
+  \item \textbf{How cuRobo holds a line:} both versions hold a straight line by holding axes of the goal frame or the base frame. An axis can be held only when the line's displacement along it is at most \ttAxisHold\,mm.
+  \begin{itemize}
+    \item A tool-down line in an arbitrary direction usually has no such axis. Only orientation is then held, and the TCP path between the endpoints is unconstrained.
+  \end{itemize}
+  \item \textbf{cuRoboV2's per-timestep targets:} its interface documents per-timestep tool-pose targets, but its trajectory optimiser rejects a goal of more than one timestep. A probe on development cells, logged before the measured runs, confirmed this.
+  \item \textbf{What the cuRobo results measure:} cuRobo runs these programs through its closest native motion. Its results below measure that gap, not its free-space planning.
+\end{itemize}
+
+\subsection{Results per motion type}
+\begin{table}[ht]\centering\footnotesize
+\caption{W, waypoint paths with blends (\ttCells\ programs).}\label{tab:w}
+\begin{tabularx}{\linewidth}{@{}p{4.1cm} CCCCC@{}}\toprule
+ & \input{generated/tab_tt_head} \\\midrule
+\input{generated/tab_tt_W}\end{tabularx}
+\end{table}
+\begin{table}[ht]\centering\footnotesize
+\caption{C, circular arcs (\ttCells\ programs).}\label{tab:c}
+\begin{tabularx}{\linewidth}{@{}p{4.1cm} CCCCC@{}}\toprule
+ & \input{generated/tab_tt_head} \\\midrule
+\input{generated/tab_tt_C}\end{tabularx}
+\end{table}
+\begin{table}[ht]\centering\footnotesize
+\caption{T, straight lines with a trapezoidal profile (\ttCells\ programs).}\label{tab:t}
+\begin{tabularx}{\linewidth}{@{}p{4.1cm} CCCCC@{}}\toprule
+ & \input{generated/tab_tt_head} \\\midrule
+\input{generated/tab_tt_T}\end{tabularx}
+\end{table}
+
+\begin{figure}[ht]\centering
+\includegraphics[width=\linewidth]{../results/v2_2/motion_types.png}
+\caption{Path deviation outside blend zones (left) and cruise speed relative to the programmed speed (right), for every run with a trajectory.}\label{fig:v22}
+\end{figure}
+
+\paragraph{cuRobo.}
+\begin{itemize}
+  \item \textbf{Waypoint paths:} one program succeeds (\ttWVTwo\ for cuRoboV2, \ttWJ\ for v1 with the lower jerk setting). Its legs all hold orientation only and happen to stay within the path limit. Every cuRobo waypoint path stops at the via points.
+  \item \textbf{T lines:} cuRoboV2 succeeds on \ttTVTwo\ runs, v1 with the lower jerk setting on \ttTJ\ and v1 as configured on \ttTVOne.
+  \begin{itemize}
+    \item \textbf{Path:} over all runs the median maximum deviation is \ttCuroboDevMin--\ttCuroboDevMax\,mm. On successful runs it is \ttCuroboDevSuccMin--\ttCuroboDevSuccMax\,mm, so the pre-registered path-fidelity mark (median at most \ttEndMm\,mm) is not met.
+    \item \textbf{Speed:} cuRobo moves the line at its own time-optimal speed, \ttCuroboSpeedMin\ to \ttCuroboSpeedMax\ times the programmed speed in median. Its ramps last \ttCuroboRampMin--\ttCuroboRampMax\ of the programmed duration.
+    \item \textbf{Cycle time:} its cycle is shorter than the Cartesian pipeline's on the programs both solve (cuRoboV2 \ttPairTwo\,s against \ttPairTwoCart\,s over \ttPairTwoN\ programs). That cycle is not the cycle of the programmed motion.
+    \item \textbf{Line length:} success falls with length. cuRoboV2 succeeds on \ttLenTwoShort\ of runs on lines shorter than the median and \ttLenTwoLong\ on longer ones; for v1 with the lower jerk setting the figures are \ttLenJShort\ and \ttLenJLong.
+  \end{itemize}
+  \item \textbf{cuRobo v1 as configured:} as in pick-place, its trajectories exceed the jerk limit (\ttVOneTJerkFail\ of \ttVOneTFail\ failed T runs).
+\end{itemize}
+
+\paragraph{PyRoki.}
+\begin{itemize}
+  \item \textbf{T lines:} it succeeds on \ttPySuccT, with a median deviation of \ttPyDevT\,mm and a ramp acceleration error of \ttPyRampT.
+  \begin{itemize}
+    \item \textbf{Cycle time:} planning dominates (\ttPyReadyT\,s planning, \ttPyExecT\,s execution).
+  \end{itemize}
+  \item \textbf{W and C, as returned:} the trajectories keep the programmed speed, including through the blends (median via-point speed \ttPyBlendW\ of programmed). But \ttPyJerkW\ of \ttPyFailW\ failed W runs and \ttPyJerkC\ of \ttPyFailC\ failed C runs exceed the jerk limit.
+  \item \textbf{W and C after slow-down (R2):} \ttPyRTwoW\ (W) and \ttPyRTwoC\ (C) succeed, at median slow-downs of \ttPyScaleW\ and \ttPyScaleC, so below the programmed speed.
+  \item \textbf{Planning time on W:} with knots at most \ttKnotDt\,ms apart, W planning takes a median of \ttPyReadyW\,s, and \ttPyOverW\ programs exceed T.
+\end{itemize}
+
+\paragraph{Cartesian pipeline.}
+\begin{itemize}
+  \item \textbf{Fidelity and planning time:} it completes \ttCartSuccAll\ programs and holds every path to \ttCartDevPNinetyFive\,mm (p95). Planning takes a median of \ttCartReadyMin--\ttCartReadyMax\,s per program type.
+  \item \textbf{Speed:} at the programmed speed, the circular blends exceed the joint limits on \ttCartHalvedW\ of \ttCells\ waypoint paths, and so do \ttCartHalvedC\ arcs. By the pre-registered rule it then halves the program speed.
+  \item \textbf{Cycle time on W:} its median is \ttCartCycleW\,s, including the halved speed.
+\end{itemize}
+
+\section{v2.1: PyRoki as a trajectory optimiser (provisional)}
+\label{sec:pyroki}
+\noindent\textbf{Status: provisional.} The v2.1 write-up is pending. These numbers come from the stored runs, summarised by a script, and may be revised.
+
+\paragraph{Correction first: MoveL succeeds on \moRecipe\ segments, not \moPre.}
+\begin{itemize}
+  \item \textbf{The setup:} PyRoki ran the \moSegs\ MoveL segments of the \moPicks\ pick slots of the pick-place study, one run each, on the GPU.
+  \item \textbf{The pre-registered run:} it reached the end pose only through the per-knot pose cost. It ended within \ttEndMm\,mm on only \moEndPre\ segments (median end error \moEndMedPre\,mm) and succeeded on \moPre\ after slow-down.
+  \item \textbf{Where the shortfall came from:} our harness, not PyRoki. With PyRoki's own endpoint recipe (both endpoint configurations held over the end knots, with a small rest cost), \moEndRecipe\ segments end within tolerance (median \moEndMedRecipe\,mm) and \moRecipe\ succeed after slow-down. This rerun is logged as a post-hoc amendment.
+  \item \textbf{Remaining failures:}
+  \begin{itemize}
+    \item \moStartOff\ segments start more than \moStartTol\,rad off the given configuration, \moStartOnly\ of them for that reason alone. This is PyRoki's start constraint not converging at the solver's default iteration limit.
+    \item \moGateFail\ fail the check after slow-down.
+  \end{itemize}
+  \item \textbf{As returned:} R1 passes on \moROne\ segments. The knot trajectories exceed the jerk limit near the segment ends.
+\end{itemize}
+
+\paragraph{Inverse kinematics.} Each goal pose of the held-out set is solved by PyRoki's IK variants and by cuRobo v1's IK solver. Success requires all of the following:
+\begin{itemize}
+  \item the pose within \ttEndMm\,mm and \ttEndDeg$^\circ$;
+  \item within joint bounds;
+  \item collision-free under the shared check.
+\end{itemize}
+\begin{table}[ht]\centering\footnotesize
+\caption{IK on the held-out goal poses (GPU).}\label{tab:ik}
+\begin{tabular}{@{}l cc@{}}\toprule
+ & Success & Median time \\\midrule
+\input{generated/tab_ik}\end{tabular}
+\end{table}
+\begin{itemize}
+  \item \textbf{Collision terms:} PyRoki's basic IK reaches the poses but often collides, since it has no collision terms.
+  \item \textbf{Margin sensitivity:} the collision-aware variant uses the \pyMargin\,mm margin chosen for trajectory optimisation.
+  \begin{itemize}
+    \item At margin zero, \ikZeroOk\ of its \ikFailFive\ failures succeed, but \ikCtrlColl\ of \ikCtrl\ control poses then collide.
+    \item This is reported as a sensitivity; the pre-registered number stands.
+  \end{itemize}
+\end{itemize}
+
+\paragraph{Free-space trajectory optimisation.} PyRoki optimises \pyKnots-knot trajectories on the held-out queries from two kinds of seed:
+\begin{itemize}
+  \item \textbf{S1:} the straight joint-space line;
+  \item \textbf{S2:} the seeds cuRobo v1 itself used, attempt by attempt.
+\end{itemize}
+At the seed-dump random seed, cuRobo v1 solves \vOneSeedDump\ of the same queries.
+\begin{table}[ht]\centering\footnotesize
+\caption{PyRoki trajectory optimisation on the held-out queries (GPU, one run per query).}\label{tab:trajopt}
+\begin{tabular}{@{}l ccc@{}}\toprule
+ & R1 success & R2 success & Median T\textsubscript{ready}, R2 successes \\\midrule
+\input{generated/tab_trajopt}\end{tabular}
+\end{table}
+\begin{itemize}
+  \item \textbf{Why the categories differ:} PyRoki has no global planner, so local optimisation from a seed is expected to fail where a passage is blocked. It is not ranked against the global planners.
+  \item \textbf{Margin choice:} the world-collision margin was chosen on separate development problems by the rule ``\marginRule'' (R1 successes out of \marginQueries: \marginList), giving \marginChosen\,mm.
+\end{itemize}
+
+\section{Limitations}
+\begin{itemize}
+  \item \textbf{One board.} Every number is from one Jetson Orin NX \boardMem\,GB. On a desktop GPU the balance between VAMP and cuRobo may differ, and nothing here measures that.
+  \item \textbf{No UR controller in the loop.} No v2.2 program has been run on a UR controller (URSim). That leaves two gaps:
+  \begin{itemize}
+    \item there is no comparison with the controller's own blends, arcs and profiles;
+    \item no planner trajectory has been streamed through \texttt{servoj}.
+  \end{itemize}
+  URSim is published only for amd64, and this board is aarch64. URSim would in any case be kinematic: it checks the controller's trajectory generator and limits, not dynamics or tracking.
+  \item \textbf{v2.2 program-set skew.} The generator kept \ttCells\ of \ttCandidates\ candidate cells (\ttAccept). A program had to have a continuous collision-free IK path and stay between \ttInner\,m and \ttOuter\,m of the robot. The kept set is skewed:
+  \begin{itemize}
+    \item \textbf{Vias:} W has \ttViasThree\ three-via programs against \ttViasFour, \ttViasFive\ and \ttViasSix\ with four, five and six vias.
+    \item \textbf{Arcs:} the median arc sweep is \ttSweepMed$^\circ$ (range \ttSweepMin--\ttSweepMax$^\circ$).
+    \item \textbf{Clearance:} only \ttClearW\ (W), \ttClearC\ (C) and \ttClearT\ (T) programs have less than \ttBlendR\,cm minimum clearance.
+  \end{itemize}
+  Results on harder programs may differ.
+  \item \textbf{Shared jerk limit.} The UR5e jerk limit is cuRobo's configuration value, since Universal Robots publishes none. A different limit changes which trajectories pass.
+  \item \textbf{Load on the CPU.} VAMP's pick-place planning ran with other jobs on the CPU, and the v1 GPU slot shared the CPU with another job. Those times are upper bounds.
+  \item \textbf{Subsampled cuRoboV2 runs.} cuRoboV2 runs on subsets, and its success rates in the v1 benchmark are lower bounds (\texttt{max\_attempts} \vOneAttempts).
+  \item \textbf{Our own components.} The Cartesian pipeline, the blend geometry and the v2.2 metrics are ours. Blend-zone deviation has no pass mark, because controllers blend differently.
+  \item \textbf{PyRoki results are provisional} and come from one deterministic run per input.
+\end{itemize}
+
+\section{Reproducibility}
+\begin{itemize}
+  \item \textbf{Code and data:} everything is in the vamp-bench repository.
+  \begin{itemize}
+    \item The v2 and v2.2 problem sets are generated from the frozen commit \texttt{\freezeHash}, with seeds derived from it.
+    \item The pre-registrations and every amendment are in \texttt{docs/}:
+    \begin{itemize}
+      \item v2: \texttt{V2\_PREREGISTRATION.md} and \texttt{V2\_PICKPLACE\_PREREGISTRATION.md};
+      \item v2.1: \texttt{BENCHMARK\_V2.md};
+      \item v2.2: \texttt{V2\_2\_MOTION\_TYPES\_PREREGISTRATION.md}.
+    \end{itemize}
+    \item Corrections are in \texttt{CHANGELOG.md}.
+  \end{itemize}
+  \item \textbf{Result files:}
+  \begin{itemize}
+    \item v1: \texttt{results/summary.json} (\texttt{bench/analyze.py});
+    \item v2: \texttt{results/v2/summary.json}, \texttt{hypotheses.json}, \texttt{pickplace\_summary.json};
+    \item v2.1: \texttt{results/v2\_1/summary.json} (\texttt{bench/v2\_1\_summary.py}) and\\ \texttt{results/v2\_1/movel\_r2.json};
+    \item v2.2: \texttt{results/v2\_2/summary.json} (\texttt{bench/v2\_2\_analyze.py}).
+  \end{itemize}
+  \item \textbf{This report:} every number is generated from those files by \texttt{report/make\_numbers.py}.
+  \begin{itemize}
+    \item \texttt{bench/check\_consistency.py} checks that the report source contains no typed numbers and that the generated files match the result files.
+    \item It also checks that every number in the built PDF comes from them.
+  \end{itemize}
+  \item \textbf{Build:}
+\begin{verbatim}
+.venv/bin/python report/make_numbers.py
+cd report && latexmk -pdf vamp_bench_report.tex
+.venv/bin/python bench/check_consistency.py
+\end{verbatim}
+  \item \textbf{Planner builds:} the VAMP build, cuRobo v1's Jetson fix and the cuRoboV2 build are described in the README and \texttt{docs/CUROBO\_JETSON\_FIX.md}.
+\end{itemize}
+
+\end{document}

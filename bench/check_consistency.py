@@ -8,7 +8,7 @@ Checks:
 The figure is drawn from summary.json by bench/analyze.py, so it is consistent by construction.
 Exit code 1 on any mismatch.
 """
-import json, re, sys
+import json, subprocess, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -136,6 +136,35 @@ for doc in ("README.md", "docs/EMAIL_NOTES.md"):
                 continue
             if not matches_time(val, unit, len(dec) if dec else 0):
                 bad.append(f"{doc}:{ln}: time {m.group(0)} not in summary.json")
+# Technical report (report/): generated numbers up to date, no typed numbers in the source, and every number in the
+# built PDF either generated from the result files (report/make_numbers.py) or document structure (sections, pages).
+NUM = re.compile(r"(?<![\w.\-/\\])\d+(?:[.,]\d+)*")
+rep = ROOT / "report"
+r = subprocess.run([sys.executable, str(rep / "make_numbers.py"), "--check"], capture_output=True, text=True)
+if r.returncode:
+    bad.append("report: " + (r.stdout + r.stderr).strip())
+tex = (rep / "vamp_bench_report.tex").read_text()
+body = tex.split("\\begin{document}", 1)[1]
+for ln, line in enumerate(body.splitlines(), tex[:tex.index("\\begin{document}")].count("\n") + 1):
+    line = re.sub(r"(?<!\\)%.*", "", line)
+    line = re.sub(r"\\includegraphics(\[[^\]]*\])?\{[^}]*\}|p\{[\d.]+cm\}|\\multicolumn\{\d+\}|\\textsuperscript\{\d\}|\{\d+(pt|cm|mm|em)\}", "", line)
+    for m in NUM.finditer(line):
+        bad.append(f"report/vamp_bench_report.tex:{ln}: typed number {m.group(0)}")
+pdf = rep / "vamp_bench_report.pdf"
+if pdf.exists() and pdf.stat().st_mtime < max(p.stat().st_mtime for p in [rep / "vamp_bench_report.tex", *(rep / "generated").glob("*.tex")]):
+    bad.append("report/vamp_bench_report.pdf is older than its source; rebuild it (cd report && latexmk -pdf vamp_bench_report.tex)")
+if pdf.exists():
+    gen = "".join(f.read_text() for f in sorted((rep / "generated").glob("*.tex"))).replace("{,}", ",")
+    allowed = set(NUM.findall(gen))
+    aux = rep / "vamp_bench_report.aux"
+    allowed |= set(NUM.findall(aux.read_text())) if aux.exists() else set()
+    text = subprocess.run(["pdftotext", "-layout", str(pdf), "-"], capture_output=True, text=True).stdout.replace("\u2212", "-")
+    pages = text.count("\f") + 1
+    allowed |= {str(i) for i in range(1, pages + 1)}
+    for tok in sorted(set(NUM.findall(text)) - allowed):
+        bad.append(f"report/vamp_bench_report.pdf: number {tok} not generated from the result files")
+else:
+    bad.append("report/vamp_bench_report.pdf missing (cd report && latexmk -pdf vamp_bench_report.tex)")
 print("\n".join(bad) if bad else "consistent: every count and time in README.md and docs/EMAIL_NOTES.md is in results/summary.json"
-      " (v2 sections: in the v2 result files)")
+      " (v2 sections: in the v2 result files); the report's numbers are all generated from the result files")
 sys.exit(1 if bad else 0)

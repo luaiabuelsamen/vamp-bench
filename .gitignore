@@ -9,3 +9,9 @@ results/v2/diag_jerk/
 results/v2_1/*.npz
 results/v2_1/raw/
 results/v2_2/raw/
+report/*.aux
+report/*.log
+report/*.fls
+report/*.fdb_latexmk
+report/*.out
+report/*.toc
