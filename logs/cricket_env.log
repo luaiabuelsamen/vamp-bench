@@ -10,7 +10,7 @@ Resolving Environment                                                           
 
 Transaction
 
-  Prefix: /home/jetson3/projects/vamp-bench/third_party/mm/cricket
+  Prefix: ~/projects/vamp-bench/third_party/mm/cricket
 
   Updating specs:
 
@@ -305,9 +305,9 @@ Transaction finished
 
 To activate this environment, use:
 
-    micromamba activate /home/jetson3/projects/vamp-bench/third_party/mm/cricket
+    micromamba activate ~/projects/vamp-bench/third_party/mm/cricket
 
 Or to execute a single command in this environment, use:
 
-    micromamba run -p /home/jetson3/projects/vamp-bench/third_party/mm/cricket mycommand
+    micromamba run -p ~/projects/vamp-bench/third_party/mm/cricket mycommand
 

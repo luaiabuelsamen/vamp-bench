@@ -27,12 +27,13 @@ ap = argparse.ArgumentParser(); ap.add_argument("--freeze", required=True); a = 
 VM, TOOL = "ur5erail", "tool0"
 P = yaml.safe_load(open(ROOT / "configs/v2_planners.yaml"))
 cells = pickle.load(open(ROOT / "problems/v2_2_dev.pkl", "rb"))["cells"]
-robot = yaml.safe_load(open(ROOT / "configs/v2/ur5e_rail_v2.yml"))["robot_cfg"]
+robot = load_robot_cfg("configs/v2/ur5e_rail_v2.yml")
 dev = lambda x: torch.as_tensor(np.asarray(x, np.float32), device="cuda:0")
 
 from curobo.motion_planner import MotionPlanner, MotionPlannerCfg
 from curobo.types import GoalToolPose, JointState, ToolPoseCriteria
 from scipy.spatial.transform import Rotation
+from robot_cfg import load_robot_cfg
 
 S = P["curobo_v2"]["settings"]
 mp = MotionPlanner(MotionPlannerCfg.create(robot=robot, scene_model=problem_to_world(cells[0]), collision_cache={"obb": 60, "mesh": 30},

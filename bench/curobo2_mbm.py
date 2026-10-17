@@ -38,7 +38,8 @@ args = ap.parse_args()
 data = pickle.load(open(args.problems or ROOT / f"third_party/vamp/resources/{args.robot}/problems.pkl", "rb"))
 cfg_path = args.robot_cfg or str(ROOT / f"configs/{args.robot}_vamp_spheres_v2.yml")
 import yaml
-robot = yaml.safe_load(open(cfg_path))["robot_cfg"]
+from robot_cfg import load_robot_cfg
+robot = load_robot_cfg(cfg_path)
 
 if args.preset == "benchmark":
     SETTINGS = dict(

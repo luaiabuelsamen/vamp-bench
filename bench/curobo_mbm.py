@@ -13,6 +13,7 @@ from curobo.util_file import load_yaml
 from curobo.wrap.reacher.motion_gen import MotionGen, MotionGenConfig, MotionGenPlanConfig
 
 from mbm_world import problem_to_world
+from robot_cfg import load_robot_cfg
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -28,7 +29,7 @@ args = ap.parse_args()
 
 data = pickle.load(open(args.problems or ROOT / f"third_party/vamp/resources/{args.robot}/problems.pkl", "rb"))
 robot_cfg_path = args.robot_cfg or str(ROOT / f"configs/{args.robot}_vamp_spheres.yml")
-robot_cfg = load_yaml(robot_cfg_path)["robot_cfg"]
+robot_cfg = load_robot_cfg(robot_cfg_path)
 
 SETTINGS = dict(
     collision_checker_type="MESH", collision_cache={"obb": 50, "mesh": 20}, use_cuda_graph=True,

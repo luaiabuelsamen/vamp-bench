@@ -7,7 +7,7 @@ DEADLINE=$(date -d '2026-10-14 08:40' +%s); KILL_AT=$(date -d '2026-10-14 08:50'
 export PYROKI_MARGIN=$(cat results/v2_1/margin.txt) PYROKI_MOVEL_ENDS=recipe
 cleanup(){ kill $WD 2>/dev/null; touch ~/projects/_ops/GPU_RELEASED; log "touched GPU_RELEASED"; }
 trap cleanup EXIT
-( while [ $(date +%s) -lt $KILL_AT ]; do sleep 30; done; pkill -TERM -f '^/home/jetson3/projects/vamp-bench/.venv-pyroki/bin/python bench/v2_1_pyroki\.py' && echo "$(date '+%H:%M') watchdog killed PyRoki run" ) &
+( while [ $(date +%s) -lt $KILL_AT ]; do sleep 30; done; pkill -TERM -f "^$PWD/.venv-pyroki/bin/python bench/v2_1_pyroki\.py" && echo "$(date '+%H:%M') watchdog killed PyRoki run" ) &
 WD=$!
 rm -f ~/projects/_ops/GPU_RELEASED
 log "MoveL recipe rerun starts; margin $PYROKI_MARGIN m; MemAvailable $(awk '/MemAvailable/ {printf "%.1f", $2/1048576}' /proc/meminfo) GB"

@@ -308,29 +308,29 @@ wrote results/raw/curobo_mbm_ur5.json
 powerlog results/raw/curobo_mbm_ur5.power.json VDD_IN mean mW 15072 GR3D mean 76
 gantry_pillars 838/1030 median plan ms 158.0
 Traceback (most recent call last):
-  File "/home/jetson3/projects/vamp-bench/bench/curobo_mbm.py", line 89, in <module>
+  File "~/projects/vamp-bench/bench/curobo_mbm.py", line 89, in <module>
     "robot": args.robot, "robot_model": str(Path(robot_cfg_path).relative_to(ROOT)), "problems": str(args.problems or "vamp resources"),
   File "/usr/lib/python3.10/pathlib.py", line 818, in relative_to
     raise ValueError("{!r} is not in the subpath of {!r}"
-ValueError: 'configs/ur5e_rail_shared.yml' is not in the subpath of '/home/jetson3/projects/vamp-bench' OR one path is relative and the other is absolute.
+ValueError: 'configs/ur5e_rail_shared.yml' is not in the subpath of '~/projects/vamp-bench' OR one path is relative and the other is absolute.
 powerlog results/raw/curobo_gantry_pillars_ur5e_rail.power.json VDD_IN mean mW 13913 GR3D mean 53
 FAILED v1 gantry_pillars
 gantry_free 1030/1030 median plan ms 143.7
 Traceback (most recent call last):
-  File "/home/jetson3/projects/vamp-bench/bench/curobo_mbm.py", line 89, in <module>
+  File "~/projects/vamp-bench/bench/curobo_mbm.py", line 89, in <module>
     "robot": args.robot, "robot_model": str(Path(robot_cfg_path).relative_to(ROOT)), "problems": str(args.problems or "vamp resources"),
   File "/usr/lib/python3.10/pathlib.py", line 818, in relative_to
     raise ValueError("{!r} is not in the subpath of {!r}"
-ValueError: 'configs/ur5e_rail_shared.yml' is not in the subpath of '/home/jetson3/projects/vamp-bench' OR one path is relative and the other is absolute.
+ValueError: 'configs/ur5e_rail_shared.yml' is not in the subpath of '~/projects/vamp-bench' OR one path is relative and the other is absolute.
 powerlog results/raw/curobo_gantry_free_ur5e_rail.power.json VDD_IN mean mW 13964 GR3D mean 51
 FAILED v1 gantry_free
 ur5e_pillars 988/1030 median plan ms 364.0
 Traceback (most recent call last):
-  File "/home/jetson3/projects/vamp-bench/bench/curobo_mbm.py", line 89, in <module>
+  File "~/projects/vamp-bench/bench/curobo_mbm.py", line 89, in <module>
     "robot": args.robot, "robot_model": str(Path(robot_cfg_path).relative_to(ROOT)), "problems": str(args.problems or "vamp resources"),
   File "/usr/lib/python3.10/pathlib.py", line 818, in relative_to
     raise ValueError("{!r} is not in the subpath of {!r}"
-ValueError: 'configs/ur5e_shared.yml' is not in the subpath of '/home/jetson3/projects/vamp-bench' OR one path is relative and the other is absolute.
+ValueError: 'configs/ur5e_shared.yml' is not in the subpath of '~/projects/vamp-bench' OR one path is relative and the other is absolute.
 powerlog results/raw/curobo_ur5e_pillars_ur5e.power.json VDD_IN mean mW 13890 GR3D mean 49
 FAILED v1 ur5e_pillars
 Mesh already in cache, reusing existing instance: bookshelf_thin_1_Can1

@@ -20,6 +20,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from mbm_world import problem_to_world
 from v2_common import ROOT, seed_from
 from v2_validate import validate
+from robot_cfg import load_robot_cfg
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--version", required=True, choices=["v1", "v2"]); ap.add_argument("--freeze", required=True)
@@ -40,7 +41,7 @@ probs = pickle.load(open(ROOT / PK, "rb"))["problems"][KEY]
 # A6: a subset file is keyed by the original set name, so heldout_a6 uses the same query indices as heldout
 idx = json.load(open(a.subset))[a.set.removesuffix("_a6")] if a.subset else list(range(len(probs)))
 idx = idx[: a.limit or None]
-robot = yaml.safe_load(open(ROOT / f"configs/v2/{RB}_{a.version}.yml"))["robot_cfg"]
+robot = load_robot_cfg(f"configs/v2/{RB}_{a.version}.yml")
 seeds = [seed_from(a.freeze, f"seed{k}") for k in range(a.seeds)]
 first = probs[idx[0]]
 sync = torch.cuda.synchronize

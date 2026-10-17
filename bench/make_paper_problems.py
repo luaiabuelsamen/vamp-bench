@@ -23,6 +23,7 @@ from curobo.util_file import load_yaml
 from curobo.wrap.reacher.ik_solver import IKSolver, IKSolverConfig
 
 from mbm_world import problem_to_world
+from robot_cfg import load_robot_cfg
 
 ROOT = Path(__file__).resolve().parents[1]
 torch.manual_seed(0); rng = np.random.default_rng(0)
@@ -60,7 +61,7 @@ def quat_mul(a, b):
 
 
 def make_ik(robot, boxes):
-    cfg = RobotConfig.from_dict(load_yaml(str(ROOT / f"configs/{robot}_shared.yml"))["robot_cfg"], TA)
+    cfg = RobotConfig.from_dict(load_robot_cfg(f"configs/{robot}_shared.yml"), TA)
     p = {"problem": "x", "box": boxes or [box("dummy", (50, 50, 50), (0.01, 0.01, 0.01))], "cylinder": [], "sphere": []}
     ik = IKSolver(IKSolverConfig.load_from_robot_config(cfg, problem_to_world(p), num_seeds=64,
                                                         self_collision_check=True, use_cuda_graph=False,

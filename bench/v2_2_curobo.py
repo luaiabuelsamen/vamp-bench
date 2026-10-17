@@ -31,6 +31,7 @@ from mbm_world import problem_to_world
 from v2_2_metrics import metrics
 from v2_common import ROOT, seed_from
 from v2_validate import validate
+from robot_cfg import load_robot_cfg
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--version", required=True, choices=["v1", "v2"]); ap.add_argument("--freeze", required=True)
@@ -42,7 +43,7 @@ a = ap.parse_args()
 VM, TOOL = "ur5erail", "tool0"
 P = yaml.safe_load(open(ROOT / "configs/v2_planners.yaml")); T_BUDGET = float(P["budget"]["T_s"])
 D = pickle.load(open(a.problems, "rb")); cells = D["cells"][: a.limit or None]
-robot = yaml.safe_load(open(ROOT / f"configs/v2/ur5e_rail_{a.version}.yml"))["robot_cfg"]
+robot = load_robot_cfg(f"configs/v2/ur5e_rail_{a.version}.yml")
 if a.max_jerk is not None:
     cs = robot["kinematics"]["cspace"]; cs["max_jerk"] = [a.max_jerk] * len(cs["max_jerk"]); print("planner max_jerk", cs["max_jerk"], flush=True)
 sync = torch.cuda.synchronize

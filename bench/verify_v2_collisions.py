@@ -23,6 +23,7 @@ from curobo.collision_checking import RobotCollisionChecker, RobotCollisionCheck
 from curobo._src.types.robot import RobotCfg
 
 from mbm_world import problem_to_world
+from robot_cfg import load_robot_cfg
 
 ROOT = Path(__file__).resolve().parents[1]
 N_CONTROLS = int(sys.argv[1]) if len(sys.argv) > 1 else 5
@@ -61,7 +62,7 @@ for tag, robot, vm, cfg, pk in CASES:
     raw = json.load(open(ROOT / f"results/raw/curobo2_{tag}_{robot}.json"))
     probs = pickle.load(open(pk, "rb"))["problems"]
     vmod = getattr(vamp, vm)
-    rdict = yaml.safe_load(open(ROOT / cfg))["robot_cfg"]
+    rdict = load_robot_cfg(cfg)
     succ = [r for r in raw["records"] if r.get("success")]
     flagged = [r for r in succ if not r.get("vamp_validated")]
     controls = [r for r in succ if r.get("vamp_validated")][:N_CONTROLS]

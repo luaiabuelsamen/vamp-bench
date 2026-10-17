@@ -2,6 +2,8 @@
 
 **Technical report (PDF):** [report/vamp_bench_report.pdf](report/vamp_bench_report.pdf), covering v1, v2, v2.2 and the provisional v2.1 PyRoki results.
 
+**Third-party material:** [THIRD_PARTY.md](THIRD_PARTY.md) lists the committed files derived from cuRobo, VAMP, robometrics and Cricket, and their licences. The cuRobo-derived UR5e configs are for non-commercial use only.
+
 This repo compares three motion planners on the same board, a Jetson Orin NX 16 GB:
 - **[VAMP](https://github.com/KavrakiLab/vamp):** a CPU SIMD-vectorized RRT-Connect, running on one Cortex-A78AE core with NEON.
 - **cuRobo v1:** the version our paper used (arXiv 2508.04146), running on the Orin NX GPU.

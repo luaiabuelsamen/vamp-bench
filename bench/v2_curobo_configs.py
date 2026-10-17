@@ -17,12 +17,12 @@ SRC = {"panda": ROOT / "configs/panda_vamp_spheres.yml", "ur5e_rail": ROOT / "co
 
 for name, src in SRC.items():
     lim = L[name]; cfg = yaml.safe_load(open(src)); k = cfg["robot_cfg"]["kinematics"]
-    tree = ET.parse(k["urdf_path"]); vel = dict(zip(lim["joints"], lim["velocity"]))
+    tree = ET.parse(ROOT / k["urdf_path"]); vel = dict(zip(lim["joints"], lim["velocity"]))
     for j in tree.getroot().findall("joint"):
         if j.get("name") in vel:
             j.find("limit").set("velocity", repr(float(vel[j.get("name")])))
     urdf = OUT / f"{name}.urdf"; tree.write(urdf)
-    k["urdf_path"] = str(urdf)
+    k["urdf_path"] = str(urdf.relative_to(ROOT))  # relative to the repo root (bench/robot_cfg.py)
     order = k["cspace"]["joint_names"]; assert order == lim["joints"], (order, lim["joints"])
     k["cspace"]["max_acceleration"] = [float(x) for x in lim["acceleration"]]
     k["cspace"]["max_jerk"] = [float(x) for x in lim["jerk"]]

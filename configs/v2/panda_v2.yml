@@ -1,7 +1,7 @@
 robot_cfg:
   kinematics:
-    urdf_path: /home/jetson3/projects/vamp-bench/configs/v2/panda.urdf
-    asset_root_path: /home/jetson3/projects/vamp-bench/third_party/vamp/resources/panda
+    urdf_path: configs/v2/panda.urdf
+    asset_root_path: third_party/vamp/resources/panda
     base_link: panda_link0
     collision_link_names:
     - panda_hand

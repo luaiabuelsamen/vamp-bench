@@ -21,6 +21,7 @@ ap.add_argument("--name", required=True)
 ap.add_argument("--struct", required=True)
 ap.add_argument("--limit", action="append", default=[], help="joint=lo,hi override (applied to both planners)")
 a = ap.parse_args()
+ROOT = Path(__file__).resolve().parents[1]
 out = Path("configs").resolve()
 
 kin = yaml.safe_load(open(a.yml))["robot_cfg"]["kinematics"]
@@ -85,7 +86,7 @@ shared = copy.deepcopy(kin)
 ign = defaultdict(list)
 for x, y in sorted(pairs):
     ign[x].append(y)
-shared.update(urdf_path=str(urdf_out), asset_root_path=str(out), collision_link_names=coll,
+shared.update(urdf_path=str(urdf_out.resolve().relative_to(ROOT)), asset_root_path=str(out.resolve().relative_to(ROOT)), collision_link_names=coll,
               collision_spheres={l: spheres[l] for l in coll}, collision_sphere_buffer=0.0,
               self_collision_ignore=dict(ign), self_collision_buffer={l: 0.0 for l in coll},
               extra_collision_spheres=None, mesh_link_names=[], use_usd_kinematics=False)

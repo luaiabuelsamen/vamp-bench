@@ -1,8 +1,8 @@
-Using pip 26.2.1 from /home/jetson3/projects/vamp-bench/.venv/lib/python3.10/site-packages/pip (python 3.10)
+Using pip 26.2.1 from ~/projects/vamp-bench/.venv/lib/python3.10/site-packages/pip (python 3.10)
 Processing ./third_party/vamp
   Installing build dependencies: started
   Running command installing build dependencies
-  Using pip 26.2.1 from /home/jetson3/projects/vamp-bench/.venv/lib/python3.10/site-packages/pip (python 3.10)
+  Using pip 26.2.1 from ~/projects/vamp-bench/.venv/lib/python3.10/site-packages/pip (python 3.10)
   Collecting scikit-build-core>=0.4.3
     Obtaining dependency information for scikit-build-core>=0.4.3 from https://files.pythonhosted.org/packages/01/1b/83913d6d5c6a7f8ad5bf5d67b2d57ab09475f1bb9dd0c7a3f44067d59b90/scikit_build_core-1.1.1-py3-none-any.whl.metadata
     Downloading scikit_build_core-1.1.1-py3-none-any.whl.metadata (19 kB)
@@ -78,7 +78,7 @@ Building wheels for collected packages: vamp-planner
   -- CPM: Adding package nigh@0 (97130999440647c204e0265d05a997dbd8da4e70)
   -- CPM: Adding package pdqsort@0 (b1ef26a55cdb60d236a5cb199c4234c704f46726)
   -- CPM: Adding package cddlib@0.94 (0.94m)
-  -- Found Python: /home/jetson3/projects/vamp-bench/.venv/bin/python3 (found suitable version "3.10.12", minimum required is "3.8") found components: Interpreter Development.Module Development.SABIModule
+  -- Found Python: ~/projects/vamp-bench/.venv/bin/python3 (found suitable version "3.10.12", minimum required is "3.8") found components: Interpreter Development.Module Development.SABIModule
   -- CPM: Adding package nanobind@0 (9a25aed8a7edfe60ef9ad1c911e57667bc4916c4)
   -- VAMP build configuration:
   --   - C++ library: ON
@@ -90,168 +90,168 @@ Building wheels for collected packages: vamp-planner
   --   - C++ unit tests: OFF
   -- Configuring done (18.3s)
   -- Generating done (0.1s)
-  -- Build files have been written to: /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64
+  -- Build files have been written to: ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64
   *** Building project with Ninja...
   [1/35] Building C object CMakeFiles/cdd.dir/_deps/cddlib-src/lib-src/cddmp.c.o
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddmp.c: In function ‘ddd_clear’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddmp.c:109:23: warning: unused parameter ‘a’ [-Wunused-parameter]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddmp.c: In function ‘ddd_clear’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddmp.c:109:23: warning: unused parameter ‘a’ [-Wunused-parameter]
     109 | void ddd_clear(mytype a)
         |                ~~~~~~~^
   [2/35] Building C object CMakeFiles/cdd.dir/_deps/cddlib-src/lib-src/cddlib.c.o
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlib.c: In function ‘dd_DDMain’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlib.c:114:7: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlib.c: In function ‘dd_DDMain’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlib.c:114:7: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
     114 |       for (itemp=1; cone->OrderVector[itemp]!=hh; itemp++);
         |       ^~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlib.c:115:9: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlib.c:115:9: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
     115 |         otemp=cone->OrderVector[cone->Iteration];
         |         ^~~~~
   [3/35] Building C object CMakeFiles/cdd.dir/_deps/cddlib-src/lib-src/cddproj.c.o
   [4/35] Building C object CMakeFiles/cdd.dir/_deps/cddlib-src/lib-src/setoper.c.o
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_addelem’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:93:17: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_addelem’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:93:17: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
      93 |         if (elem<=set[0])
         |                 ^~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_delelem’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:109:17: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_delelem’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:109:17: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
     109 |         if (elem<=set[0])
         |                 ^~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_compl’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:163:22: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_compl’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:163:22: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
     163 |         for (j=l+1; j<=SETBITS-1; j++){
         |                      ^~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_member’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:190:17: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_member’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:190:17: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
     190 |         if (elem<=set[0])
         |                 ^~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_write’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:237:25: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_write’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:237:25: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
     237 |         for (elem=1;elem<=set[0];elem++)
         |                         ^~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_fwrite’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:249:25: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_fwrite’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:249:25: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
     249 |         for (elem=1;elem<=set[0];elem++)
         |                         ^~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_fwrite_compl’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:261:25: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c: In function ‘set_fwrite_compl’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/setoper.c:261:25: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘long unsigned int’ [-Wsign-compare]
     261 |         for (elem=1;elem<=set[0];elem++)
         |                         ^~
   [5/35] Building C object CMakeFiles/cdd.dir/_deps/cddlib-src/lib-src/cddio.c.o
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_SetInputFile’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:26:9: warning: variable ‘dotpos’ set but not used [-Wunused-but-set-variable]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_SetInputFile’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:26:9: warning: variable ‘dotpos’ set but not used [-Wunused-but-set-variable]
      26 |   int i,dotpos=0,trial=0;
         |         ^~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_SetWriteFileName’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:124:14: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_SetWriteFileName’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:124:14: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
     124 |   for (i=0; i< strlen(inputfile); i++){
         |              ^
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_MatrixRowRemove2’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:534:70: warning: unused parameter ‘newpos’ [-Wunused-parameter]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_MatrixRowRemove2’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:534:70: warning: unused parameter ‘newpos’ [-Wunused-parameter]
     534 | int dd_MatrixRowRemove2(dd_MatrixPtr *M, dd_rowrange r, dd_rowindex *newpos) /* 094 */
         |                                                         ~~~~~~~~~~~~~^~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_PolyFile2Matrix’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:893:50: warning: variable ‘successful’ set but not used [-Wunused-but-set-variable]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_PolyFile2Matrix’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:893:50: warning: variable ‘successful’ set but not used [-Wunused-but-set-variable]
     893 |   dd_boolean found=dd_FALSE, newformat=dd_FALSE, successful=dd_FALSE, linearity=dd_FALSE;
         |                                                  ^~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:893:30: warning: variable ‘newformat’ set but not used [-Wunused-but-set-variable]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:893:30: warning: variable ‘newformat’ set but not used [-Wunused-but-set-variable]
     893 |   dd_boolean found=dd_FALSE, newformat=dd_FALSE, successful=dd_FALSE, linearity=dd_FALSE;
         |                              ^~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_sread_rational_value’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:1951:16: warning: assignment discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_sread_rational_value’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:1951:16: warning: assignment discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
    1951 |    numerator_s = s;
         |                ^
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_SetInputFile’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:34:5: warning: ignoring return value of ‘scanf’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_SetInputFile’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:34:5: warning: ignoring return value of ‘scanf’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
      34 |     scanf("%s",inputfile);
         |     ^~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_ProcessCommandLine’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:178:5: warning: ignoring return value of ‘fgets’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_ProcessCommandLine’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:178:5: warning: ignoring return value of ‘fgets’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
     178 |     fgets(newline,dd_linelenmax,f);
         |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:189:9: warning: ignoring return value of ‘fscanf’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:189:9: warning: ignoring return value of ‘fscanf’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
     189 |         fscanf(f, "%lf", &rvalue);
         |         ^~~~~~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_PolyFile2Matrix’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:919:9: warning: ignoring return value of ‘fgets’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_PolyFile2Matrix’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:919:9: warning: ignoring return value of ‘fgets’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
     919 |         fgets(comsave,dd_linelenmax,f);
         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:924:3: warning: ignoring return value of ‘fscanf’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:924:3: warning: ignoring return value of ‘fscanf’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
     924 |   fscanf(f, "%ld %ld %s", &m_input, &d_input, numbtype);
         |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:942:9: warning: ignoring return value of ‘fscanf’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:942:9: warning: ignoring return value of ‘fscanf’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
     942 |         fscanf(f, "%lf", &rvalue);
         |         ^~~~~~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:967:5: warning: ignoring return value of ‘fscanf’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:967:5: warning: ignoring return value of ‘fscanf’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
     967 |     fscanf(f,"%s", command);
         |     ^~~~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:969:5: warning: ignoring return value of ‘fgets’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:969:5: warning: ignoring return value of ‘fgets’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
     969 |     fgets(command,dd_linelenmax,f); /* skip the CR/LF */
         |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_fread_rational_value’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:2014:4: warning: ignoring return value of ‘fscanf’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c: In function ‘dd_fread_rational_value’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddio.c:2014:4: warning: ignoring return value of ‘fscanf’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
    2014 |    fscanf(f, "%s ", number_s);
         |    ^~~~~~~~~~~~~~~~~~~~~~~~~~
   [6/35] Building C object CMakeFiles/cdd.dir/_deps/cddlib-src/lib-src/cddcore.c.o
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddcore.c: In function ‘dd_StoreRay2’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddcore.c:176:14: warning: variable ‘localdebug’ set but not used [-Wunused-but-set-variable]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddcore.c: In function ‘dd_StoreRay2’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddcore.c:176:14: warning: variable ‘localdebug’ set but not used [-Wunused-but-set-variable]
     176 |   dd_boolean localdebug=dd_debug;
         |              ^~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddcore.c: In function ‘dd_PermutePartialCopyAmatrix’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddcore.c:680:126: warning: unused parameter ‘p’ [-Wunused-parameter]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddcore.c: In function ‘dd_PermutePartialCopyAmatrix’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddcore.c:680:126: warning: unused parameter ‘p’ [-Wunused-parameter]
     680 | void dd_PermutePartialCopyAmatrix(mytype **Acopy, mytype **A, dd_rowrange m, dd_colrange d, dd_rowindex roworder,dd_rowrange p, dd_rowrange q)
         |                                                                                                                  ~~~~~~~~~~~~^
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddcore.c:680:141: warning: unused parameter ‘q’ [-Wunused-parameter]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddcore.c:680:141: warning: unused parameter ‘q’ [-Wunused-parameter]
     680 | void dd_PermutePartialCopyAmatrix(mytype **Acopy, mytype **A, dd_rowrange m, dd_colrange d, dd_rowindex roworder,dd_rowrange p, dd_rowrange q)
         |                                                                                                                                 ~~~~~~~~~~~~^
   [7/35] Building CXX object CMakeFiles/_core_ext.dir/python.cc.o
   [8/35] Building C object CMakeFiles/cdd.dir/_deps/cddlib-src/lib-src/cddlp.c.o
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_GetRedundancyInformation’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:495:15: warning: unused parameter ‘nbindex’ [-Wunused-parameter]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_GetRedundancyInformation’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:495:15: warning: unused parameter ‘nbindex’ [-Wunused-parameter]
     495 |   dd_colindex nbindex,dd_rowindex bflag, dd_rowset redset)
         |   ~~~~~~~~~~~~^~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_SelectDualSimplexPivot’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:523:54: warning: unused parameter ‘OV’ [-Wunused-parameter]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_SelectDualSimplexPivot’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:523:54: warning: unused parameter ‘OV’ [-Wunused-parameter]
     523 |     int Phase1,dd_Amatrix A,dd_Bmatrix T,dd_rowindex OV,
         |                                          ~~~~~~~~~~~~^~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_TableauEntry’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:668:44: warning: unused parameter ‘m_size’ [-Wunused-parameter]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_TableauEntry’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:668:44: warning: unused parameter ‘m_size’ [-Wunused-parameter]
     668 | void dd_TableauEntry(mytype *x,dd_rowrange m_size, dd_colrange d_size, dd_Amatrix X, dd_Bmatrix T,
         |                                ~~~~~~~~~~~~^~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_SelectPivot2’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:685:29: warning: unused parameter ‘roworder’ [-Wunused-parameter]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_SelectPivot2’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:685:29: warning: unused parameter ‘roworder’ [-Wunused-parameter]
     685 |             dd_RowOrderType roworder,dd_rowindex ordervec, rowset equalityset,
         |             ~~~~~~~~~~~~~~~~^~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_DualSimplexMaximize’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:1419:41: warning: variable ‘redgain’ set but not used [-Wunused-but-set-variable]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_DualSimplexMaximize’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:1419:41: warning: variable ‘redgain’ set but not used [-Wunused-but-set-variable]
    1419 |   double redpercent=0,redpercent_prev=0,redgain=0;
         |                                         ^~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_SelectPreorderedNext2’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:1812:62: warning: unused parameter ‘d_size’ [-Wunused-parameter]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_SelectPreorderedNext2’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:1812:62: warning: unused parameter ‘d_size’ [-Wunused-parameter]
    1812 | void dd_SelectPreorderedNext2(dd_rowrange m_size,dd_colrange d_size,
         |                                                  ~~~~~~~~~~~~^~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_RedundantRowsViaShooting’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:2954:28: warning: too many arguments for format [-Wformat-extra-args]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_RedundantRowsViaShooting’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:2954:28: warning: too many arguments for format [-Wformat-extra-args]
    2954 |     if (localdebug) printf("No interior-point is found and thus the standard LP technique will be used.\n", ired);
         |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_MatrixCanonicalizeLinearity’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:3293:15: warning: variable ‘rank’ set but not used [-Wunused-but-set-variable]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_MatrixCanonicalizeLinearity’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:3293:15: warning: variable ‘rank’ set but not used [-Wunused-but-set-variable]
    3293 |   dd_rowrange rank;
         |               ^~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_FindRelativeInterior’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:3472:15: warning: variable ‘rank’ set but not used [-Wunused-but-set-variable]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_FindRelativeInterior’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:3472:15: warning: variable ‘rank’ set but not used [-Wunused-but-set-variable]
    3472 |   dd_colrange rank;
         |               ^~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_DualSimplexMaximize’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:1541:37: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_DualSimplexMaximize’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:1541:37: warning: this statement may fall through [-Wimplicit-fallthrough=]
    1541 |         case dd_Inconsistent: lp->re=r;
         |                               ~~~~~~^~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:1542:9: note: here
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:1542:9: note: here
    1542 |         case dd_DualInconsistent: lp->se=s;
         |         ^~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_CrissCrossMaximize’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:1654:37: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c: In function ‘dd_CrissCrossMaximize’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:1654:37: warning: this statement may fall through [-Wimplicit-fallthrough=]
    1654 |         case dd_Inconsistent: lp->re=r;
         |                               ~~~~~~^~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:1655:9: note: here
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/cddlib-src/lib-src/cddlp.c:1655:9: note: here
    1655 |         case dd_DualInconsistent: lp->se=s;
         |         ^~~~
   [9/35] Linking C static library libcdd.a
@@ -260,52 +260,52 @@ Building wheels for collected packages: vamp-planner
   [12/35] Building CXX object CMakeFiles/nanobind-static.dir/_deps/nanobind-src/src/nb_internals.cpp.o
   [13/35] Building CXX object CMakeFiles/nanobind-static.dir/_deps/nanobind-src/src/nb_func.cpp.o
   [14/35] Building CXX object CMakeFiles/_core_ext.dir/sphere.cc.o
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/sphere.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Sphere]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/sphere.cc:8:52:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:382:13: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/sphere.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Sphere]’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/sphere.cc:8:52:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:382:13: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     382 |             []() -> std::pair<float, float> { return {Robot::min_radius, Robot::max_radius}; },
         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘static vamp::binding::NDArrayInput<Robot>::ConfigurationBlock<rake> vamp::binding::NDArrayInput<Robot>::block(const Type&) [with long unsigned int rake = 1; Robot = vamp::robots::Sphere; vamp::binding::NDArrayInput<Robot>::ConfigurationBlock<rake> = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 1>; vamp::binding::NDArrayInput<Robot>::Type = nanobind::ndarray<float, nanobind::numpy, nanobind::detail::shape<3>, nanobind::device::cpu>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:242:66:   required from ‘static std::vector<vamp::collision::Sphere<float>, std::allocator<vamp::collision::Sphere<float> > > vamp::binding::Helper<Robot, Input>::fk(const Type&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::NDArrayInput<vamp::robots::Sphere>; vamp::binding::Helper<Robot, Input>::Type = nanobind::ndarray<float, nanobind::numpy, nanobind::detail::shape<3>, nanobind::device::cpu>]’
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:580:9:   required from ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Sphere]’
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/sphere.cc:8:52:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:102:28: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 1>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘static vamp::binding::NDArrayInput<Robot>::ConfigurationBlock<rake> vamp::binding::NDArrayInput<Robot>::block(const Type&) [with long unsigned int rake = 1; Robot = vamp::robots::Sphere; vamp::binding::NDArrayInput<Robot>::ConfigurationBlock<rake> = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 1>; vamp::binding::NDArrayInput<Robot>::Type = nanobind::ndarray<float, nanobind::numpy, nanobind::detail::shape<3>, nanobind::device::cpu>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:242:66:   required from ‘static std::vector<vamp::collision::Sphere<float>, std::allocator<vamp::collision::Sphere<float> > > vamp::binding::Helper<Robot, Input>::fk(const Type&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::NDArrayInput<vamp::robots::Sphere>; vamp::binding::Helper<Robot, Input>::Type = nanobind::ndarray<float, nanobind::numpy, nanobind::detail::shape<3>, nanobind::device::cpu>]’
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:580:9:   required from ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Sphere]’
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/sphere.cc:8:52:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:102:28: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 1>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     102 |         inline static auto block(const Type &a) -> ConfigurationBlock<rake>
         |                            ^~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘static vamp::binding::NDArrayInput<Robot>::ConfigurationBlock<rake> vamp::binding::NDArrayInput<Robot>::block(const Type&) [with long unsigned int rake = 4; Robot = vamp::robots::Sphere; vamp::binding::NDArrayInput<Robot>::ConfigurationBlock<rake> = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 4>; vamp::binding::NDArrayInput<Robot>::Type = nanobind::ndarray<float, nanobind::numpy, nanobind::detail::shape<3>, nanobind::device::cpu>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:257:97:   required from ‘static typename Robot::Debug vamp::binding::Helper<Robot, Input>::debug(const Type&, const EnvironmentInput&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::NDArrayInput<vamp::robots::Sphere>; typename Robot::Debug = std::pair<std::vector<std::vector<std::__cxx11::basic_string<char> > >, std::vector<std::pair<long unsigned int, long unsigned int> > >; vamp::binding::Helper<Robot, Input>::Type = nanobind::ndarray<float, nanobind::numpy, nanobind::detail::shape<3>, nanobind::device::cpu>; vamp::binding::Helper<Robot, Input>::EnvironmentInput = vamp::collision::Environment<float>]’
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:590:9:   required from ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Sphere]’
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/sphere.cc:8:52:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:102:28: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 4>’ when C++17 is enabled changed to match C++14 in GCC 10.1
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In static member function ‘static std::vector<std::array<float, 3> > vamp::binding::Helper<Robot, Input>::filter_self_from_pointcloud(const std::vector<std::array<float, 3> >&, float, const Type&, const EnvironmentInput&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::ArrayInput<vamp::robots::Sphere>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:322:66: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 1>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘static vamp::binding::NDArrayInput<Robot>::ConfigurationBlock<rake> vamp::binding::NDArrayInput<Robot>::block(const Type&) [with long unsigned int rake = 4; Robot = vamp::robots::Sphere; vamp::binding::NDArrayInput<Robot>::ConfigurationBlock<rake> = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 4>; vamp::binding::NDArrayInput<Robot>::Type = nanobind::ndarray<float, nanobind::numpy, nanobind::detail::shape<3>, nanobind::device::cpu>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:257:97:   required from ‘static typename Robot::Debug vamp::binding::Helper<Robot, Input>::debug(const Type&, const EnvironmentInput&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::NDArrayInput<vamp::robots::Sphere>; typename Robot::Debug = std::pair<std::vector<std::vector<std::__cxx11::basic_string<char> > >, std::vector<std::pair<long unsigned int, long unsigned int> > >; vamp::binding::Helper<Robot, Input>::Type = nanobind::ndarray<float, nanobind::numpy, nanobind::detail::shape<3>, nanobind::device::cpu>; vamp::binding::Helper<Robot, Input>::EnvironmentInput = vamp::collision::Environment<float>]’
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:590:9:   required from ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Sphere]’
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/sphere.cc:8:52:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:102:28: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 4>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In static member function ‘static std::vector<std::array<float, 3> > vamp::binding::Helper<Robot, Input>::filter_self_from_pointcloud(const std::vector<std::array<float, 3> >&, float, const Type&, const EnvironmentInput&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::ArrayInput<vamp::robots::Sphere>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:322:66: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 1>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     322 |             Robot::template sphere_fk<1>(Input::template block<1>(c_in), out);
         |                                          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In static member function ‘static typename Robot::Debug vamp::binding::Helper<Robot, Input>::debug(const Type&, const EnvironmentInput&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::ArrayInput<vamp::robots::Sphere>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:257:97: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 4>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In static member function ‘static typename Robot::Debug vamp::binding::Helper<Robot, Input>::debug(const Type&, const EnvironmentInput&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::ArrayInput<vamp::robots::Sphere>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:257:97: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 4>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     257 |             return Robot::fkcc_debug(EnvironmentVector(environment), Input::template block<rake>(c_in));
         |                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In static member function ‘static std::vector<vamp::collision::Sphere<float>, std::allocator<vamp::collision::Sphere<float> > > vamp::binding::Helper<Robot, Input>::fk(const Type&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::ArrayInput<vamp::robots::Sphere>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:242:66: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 1>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In static member function ‘static std::vector<vamp::collision::Sphere<float>, std::allocator<vamp::collision::Sphere<float> > > vamp::binding::Helper<Robot, Input>::fk(const Type&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::ArrayInput<vamp::robots::Sphere>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:242:66: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 1>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     242 |             Robot::template sphere_fk<1>(Input::template block<1>(c_in), out);
         |                                          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/sphere.cc:1:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/sphere.cc:1:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     275 |                        cap->func((in.template get<Is>())
         |                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
     276 |                                      .operator cast_t<Args>()...),
         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/sphere.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In static member function ‘static std::vector<vamp::collision::Sphere<float>, std::allocator<vamp::collision::Sphere<float> > > vamp::binding::Helper<Robot, Input>::fk(const Type&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::ArrayInput<vamp::robots::Sphere>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:242:66: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 1>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/sphere.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In static member function ‘static std::vector<vamp::collision::Sphere<float>, std::allocator<vamp::collision::Sphere<float> > > vamp::binding::Helper<Robot, Input>::fk(const Type&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::ArrayInput<vamp::robots::Sphere>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:242:66: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 1>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     242 |             Robot::template sphere_fk<1>(Input::template block<1>(c_in), out);
         |                                          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In static member function ‘static typename Robot::Debug vamp::binding::Helper<Robot, Input>::debug(const Type&, const EnvironmentInput&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::ArrayInput<vamp::robots::Sphere>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:257:97: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 4>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In static member function ‘static typename Robot::Debug vamp::binding::Helper<Robot, Input>::debug(const Type&, const EnvironmentInput&) [with Robot = vamp::robots::Sphere; Input = vamp::binding::ArrayInput<vamp::robots::Sphere>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:257:97: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 3, 4>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     257 |             return Robot::fkcc_debug(EnvironmentVector(environment), Input::template block<rake>(c_in));
         |                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
   [15/35] Building CXX object CMakeFiles/nanobind-static.dir/_deps/nanobind-src/src/nb_type.cpp.o
@@ -319,233 +319,233 @@ Building wheels for collected packages: vamp-planner
   [23/35] Building CXX object CMakeFiles/nanobind-static.dir/_deps/nanobind-src/src/implicit.cpp.o
   [24/35] Linking CXX static library libnanobind-static.a
   [25/35] Building CXX object CMakeFiles/_core_ext.dir/ur5.cc.o
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::operator+(vamp::VectorInterface<DerivedT, Sig>::D) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 6>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/robots/ur5.hh:75:59:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:499:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::operator+(vamp::VectorInterface<DerivedT, Sig>::D) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 6>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/robots/ur5.hh:75:59:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:499:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     499 |         inline constexpr auto operator+(D o) const noexcept -> D
         |                               ^~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::UR5]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:8:49:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:382:13: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::UR5]’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:8:49:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:382:13: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     382 |             []() -> std::pair<float, float> { return {Robot::min_radius, Robot::max_radius}; },
         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::interpolate(vamp::VectorInterface<DerivedT, Sig>::D, typename Sig::S::ScalarT) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 6>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>; typename Sig::S::ScalarT = float; vamp::VectorInterface<DerivedT, Sig>::S = vamp::SIMDVector<__Float32x4_t>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/plan.hh:44:58:   required from ‘auto vamp::planning::Path<Robot>::subdivide() [with Robot = vamp::robots::UR5]’
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:497:17:   required from ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::UR5]’
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:8:49:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:422:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::interpolate(vamp::VectorInterface<DerivedT, Sig>::D, typename Sig::S::ScalarT) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 6>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>; typename Sig::S::ScalarT = float; vamp::VectorInterface<DerivedT, Sig>::S = vamp::SIMDVector<__Float32x4_t>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/plan.hh:44:58:   required from ‘auto vamp::planning::Path<Robot>::subdivide() [with Robot = vamp::robots::UR5]’
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:497:17:   required from ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::UR5]’
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:8:49:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:422:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     422 |         inline constexpr auto interpolate(D other, typename S::ScalarT alpha) const noexcept -> D
         |                               ^~~~~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:1:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:1:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     275 |                        cap->func((in.template get<Is>())
         |                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
     276 |                                      .operator cast_t<Args>()...),
         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:416:81: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:416:81: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     416 |                 [](typename RNG::Ptr rng) -> NDArray { return NA::from(rng->next()); },
         |                                                                        ~~~~~~~~~^~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:1:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/ur5.cc:1:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     275 |                        cap->func((in.template get<Is>())
         |                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
     276 |                                      .operator cast_t<Args>()...),
         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 6>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     275 |                        cap->func((in.template get<Is>())
         |                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
     276 |                                      .operator cast_t<Args>()...),
         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   [26/35] Building CXX object CMakeFiles/_core_ext.dir/panda.cc.o
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::operator+(vamp::VectorInterface<DerivedT, Sig>::D) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 7>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/robots/panda.hh:79:59:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:499:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::operator+(vamp::VectorInterface<DerivedT, Sig>::D) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 7>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/robots/panda.hh:79:59:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:499:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     499 |         inline constexpr auto operator+(D o) const noexcept -> D
         |                               ^~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Panda]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:8:51:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:382:13: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Panda]’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:8:51:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:382:13: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     382 |             []() -> std::pair<float, float> { return {Robot::min_radius, Robot::max_radius}; },
         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::interpolate(vamp::VectorInterface<DerivedT, Sig>::D, typename Sig::S::ScalarT) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 7>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>; typename Sig::S::ScalarT = float; vamp::VectorInterface<DerivedT, Sig>::S = vamp::SIMDVector<__Float32x4_t>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/plan.hh:44:58:   required from ‘auto vamp::planning::Path<Robot>::subdivide() [with Robot = vamp::robots::Panda]’
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:497:17:   required from ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Panda]’
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:8:51:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:422:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::interpolate(vamp::VectorInterface<DerivedT, Sig>::D, typename Sig::S::ScalarT) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 7>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>; typename Sig::S::ScalarT = float; vamp::VectorInterface<DerivedT, Sig>::S = vamp::SIMDVector<__Float32x4_t>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/plan.hh:44:58:   required from ‘auto vamp::planning::Path<Robot>::subdivide() [with Robot = vamp::robots::Panda]’
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:497:17:   required from ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Panda]’
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:8:51:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:422:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     422 |         inline constexpr auto interpolate(D other, typename S::ScalarT alpha) const noexcept -> D
         |                               ^~~~~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:1:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:1:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     275 |                        cap->func((in.template get<Is>())
         |                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
     276 |                                      .operator cast_t<Args>()...),
         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:416:81: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:416:81: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     416 |                 [](typename RNG::Ptr rng) -> NDArray { return NA::from(rng->next()); },
         |                                                                        ~~~~~~~~~^~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:1:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/panda.cc:1:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     275 |                        cap->func((in.template get<Is>())
         |                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
     276 |                                      .operator cast_t<Args>()...),
         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 7>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     275 |                        cap->func((in.template get<Is>())
         |                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
     276 |                                      .operator cast_t<Args>()...),
         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   [27/35] Building CXX object CMakeFiles/_core_ext.dir/baxter.cc.o
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::operator+(vamp::VectorInterface<DerivedT, Sig>::D) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 14>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/robots/baxter.hh:107:59:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:499:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::operator+(vamp::VectorInterface<DerivedT, Sig>::D) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 14>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/robots/baxter.hh:107:59:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:499:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     499 |         inline constexpr auto operator+(D o) const noexcept -> D
         |                               ^~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Baxter]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:8:52:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:382:13: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Baxter]’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:8:52:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:382:13: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     382 |             []() -> std::pair<float, float> { return {Robot::min_radius, Robot::max_radius}; },
         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::interpolate(vamp::VectorInterface<DerivedT, Sig>::D, typename Sig::S::ScalarT) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 14>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>; typename Sig::S::ScalarT = float; vamp::VectorInterface<DerivedT, Sig>::S = vamp::SIMDVector<__Float32x4_t>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/plan.hh:44:58:   required from ‘auto vamp::planning::Path<Robot>::subdivide() [with Robot = vamp::robots::Baxter]’
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:497:17:   required from ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Baxter]’
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:8:52:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:422:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::interpolate(vamp::VectorInterface<DerivedT, Sig>::D, typename Sig::S::ScalarT) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 14>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>; typename Sig::S::ScalarT = float; vamp::VectorInterface<DerivedT, Sig>::S = vamp::SIMDVector<__Float32x4_t>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/plan.hh:44:58:   required from ‘auto vamp::planning::Path<Robot>::subdivide() [with Robot = vamp::robots::Baxter]’
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:497:17:   required from ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Baxter]’
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:8:52:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:422:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     422 |         inline constexpr auto interpolate(D other, typename S::ScalarT alpha) const noexcept -> D
         |                               ^~~~~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:1:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:1:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     275 |                        cap->func((in.template get<Is>())
         |                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
     276 |                                      .operator cast_t<Args>()...),
         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:416:81: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:416:81: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     416 |                 [](typename RNG::Ptr rng) -> NDArray { return NA::from(rng->next()); },
         |                                                                        ~~~~~~~~~^~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:1:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/baxter.cc:1:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     275 |                        cap->func((in.template get<Is>())
         |                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
     276 |                                      .operator cast_t<Args>()...),
         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 14>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     275 |                        cap->func((in.template get<Is>())
         |                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
     276 |                                      .operator cast_t<Args>()...),
         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   [28/35] Building CXX object CMakeFiles/_core_ext.dir/fetch.cc.o
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::operator+(vamp::VectorInterface<DerivedT, Sig>::D) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 8>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/robots/fetch.hh:83:59:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:499:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::operator+(vamp::VectorInterface<DerivedT, Sig>::D) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 8>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/robots/fetch.hh:83:59:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:499:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     499 |         inline constexpr auto operator+(D o) const noexcept -> D
         |                               ^~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Fetch]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:8:51:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:382:13: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In instantiation of ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Fetch]’:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:8:51:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:382:13: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     382 |             []() -> std::pair<float, float> { return {Robot::min_radius, Robot::max_radius}; },
         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::interpolate(vamp::VectorInterface<DerivedT, Sig>::D, typename Sig::S::ScalarT) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 8>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>; typename Sig::S::ScalarT = float; vamp::VectorInterface<DerivedT, Sig>::S = vamp::SIMDVector<__Float32x4_t>]’:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/plan.hh:44:58:   required from ‘auto vamp::planning::Path<Robot>::subdivide() [with Robot = vamp::robots::Fetch]’
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:497:17:   required from ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Fetch]’
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:8:51:   required from here
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:422:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/random/rng.hh:4,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/phs.hh:10,
+                   from ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:6,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh: In instantiation of ‘constexpr vamp::VectorInterface<DerivedT, Sig>::D vamp::VectorInterface<DerivedT, Sig>::interpolate(vamp::VectorInterface<DerivedT, Sig>::D, typename Sig::S::ScalarT) const [with DerivedT = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>; Sig = vamp::VectorSignature<vamp::SIMDVector<__Float32x4_t>, 1, 8>; vamp::VectorInterface<DerivedT, Sig>::D = vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>; typename Sig::S::ScalarT = float; vamp::VectorInterface<DerivedT, Sig>::S = vamp::SIMDVector<__Float32x4_t>]’:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/planning/plan.hh:44:58:   required from ‘auto vamp::planning::Path<Robot>::subdivide() [with Robot = vamp::robots::Fetch]’
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:497:17:   required from ‘nanobind::module_ vamp::binding::init_robot(nanobind::module_&) [with Robot = vamp::robots::Fetch]’
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:8:51:   required from here
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/vector/interface.hh:422:31: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     422 |         inline constexpr auto interpolate(D other, typename S::ScalarT alpha) const noexcept -> D
         |                               ^~~~~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:1:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:1:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     275 |                        cap->func((in.template get<Is>())
         |                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
     276 |                                      .operator cast_t<Args>()...),
         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:3:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:416:81: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:3:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/src/impl/vamp/bindings/python/robot_helper.hh:416:81: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     416 |                 [](typename RNG::Ptr rng) -> NDArray { return NA::from(rng->next()); },
         |                                                                        ~~~~~~~~~^~
-  In file included from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
-                   from /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:1:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  In file included from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nanobind.h:55,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/vamp_python_init.hh:1,
+                   from ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/fetch.cc:1:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘std::pair<float, float>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     275 |                        cap->func((in.template get<Is>())
         |                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
     276 |                                      .operator cast_t<Args>()...),
         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
-  /home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>’ when C++17 is enabled changed to match C++14 in GCC 10.1
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h: In lambda function:
+  ~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/_deps/nanobind-src/include/nanobind/nb_func.h:275:33: note: parameter passing for argument of type ‘vamp::Vector<vamp::SIMDVector<__Float32x4_t>, 1, 8>’ when C++17 is enabled changed to match C++14 in GCC 10.1
     275 |                        cap->func((in.template get<Is>())
         |                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
     276 |                                      .operator cast_t<Args>()...),
@@ -555,32 +555,32 @@ Building wheels for collected packages: vamp-planner
   Module "_core_ext" ..
     - importing ..
     - analyzing ..
-    - writing stub "/home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/stubs/__init__.pyi" ..
+    - writing stub "~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/stubs/__init__.pyi" ..
   [30/35] Generating stubs/sphere.pyi
   Module "_core_ext.sphere" ..
     - importing ..
     - analyzing ..
-    - writing stub "/home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/stubs/sphere.pyi" ..
+    - writing stub "~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/stubs/sphere.pyi" ..
   [31/35] Generating stubs/ur5.pyi
   Module "_core_ext.ur5" ..
     - importing ..
     - analyzing ..
-    - writing stub "/home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/stubs/ur5.pyi" ..
+    - writing stub "~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/stubs/ur5.pyi" ..
   [32/35] Generating stubs/panda.pyi
   Module "_core_ext.panda" ..
     - importing ..
     - analyzing ..
-    - writing stub "/home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/stubs/panda.pyi" ..
+    - writing stub "~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/stubs/panda.pyi" ..
   [33/35] Generating stubs/fetch.pyi
   Module "_core_ext.fetch" ..
     - importing ..
     - analyzing ..
-    - writing stub "/home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/stubs/fetch.pyi" ..
+    - writing stub "~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/stubs/fetch.pyi" ..
   [34/35] Generating stubs/baxter.pyi
   Module "_core_ext.baxter" ..
     - importing ..
     - analyzing ..
-    - writing stub "/home/jetson3/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/stubs/baxter.pyi" ..
+    - writing stub "~/projects/vamp-bench/third_party/vamp/build/cp310-cp310-linux_aarch64/stubs/baxter.pyi" ..
   *** Installing project into wheel...
   -- Install configuration: "Release"
   -- Installing: /tmp/tmp85v3ihw9/wheel/platlib/lib/cmake/nigh/nighTargets.cmake
@@ -589,12 +589,12 @@ Building wheels for collected packages: vamp-planner
   -- Installing: /tmp/tmp85v3ihw9/wheel/platlib/lib/cmake/cdd/cddTargets.cmake
   -- Installing: /tmp/tmp85v3ihw9/wheel/platlib/lib/cmake/cdd/cddTargets-release.cmake
   -- Installing: /tmp/tmp85v3ihw9/wheel/platlib/vamp/_core/_core_ext.cpython-310-aarch64-linux-gnu.so
-  -- Installing: /home/jetson3/projects/vamp-bench/third_party/vamp/src/vamp/_core/__init__.pyi
-  -- Installing: /home/jetson3/projects/vamp-bench/third_party/vamp/src/vamp/_core/sphere.pyi
-  -- Installing: /home/jetson3/projects/vamp-bench/third_party/vamp/src/vamp/_core/ur5.pyi
-  -- Installing: /home/jetson3/projects/vamp-bench/third_party/vamp/src/vamp/_core/panda.pyi
-  -- Installing: /home/jetson3/projects/vamp-bench/third_party/vamp/src/vamp/_core/fetch.pyi
-  -- Installing: /home/jetson3/projects/vamp-bench/third_party/vamp/src/vamp/_core/baxter.pyi
+  -- Installing: ~/projects/vamp-bench/third_party/vamp/src/vamp/_core/__init__.pyi
+  -- Installing: ~/projects/vamp-bench/third_party/vamp/src/vamp/_core/sphere.pyi
+  -- Installing: ~/projects/vamp-bench/third_party/vamp/src/vamp/_core/ur5.pyi
+  -- Installing: ~/projects/vamp-bench/third_party/vamp/src/vamp/_core/panda.pyi
+  -- Installing: ~/projects/vamp-bench/third_party/vamp/src/vamp/_core/fetch.pyi
+  -- Installing: ~/projects/vamp-bench/third_party/vamp/src/vamp/_core/baxter.pyi
   -- Installing: /tmp/tmp85v3ihw9/wheel/platlib/include/vamp
   -- Installing: /tmp/tmp85v3ihw9/wheel/platlib/include/vamp/planning
   -- Installing: /tmp/tmp85v3ihw9/wheel/platlib/include/vamp/planning/prm.hh

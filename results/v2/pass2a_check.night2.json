@@ -1,12 +1,12 @@
 {
  "top_processes_at_start": [
-  " 203 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=8, pipe_handle=14) --multiprocessing-fork",
-  " 195 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=8, pipe_handle=12) --multiprocessing-fork",
+  " 203 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=8, pipe_handle=14) --multiprocessing-fork",
+  " 195 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=8, pipe_handle=12) --multiprocessing-fork",
   "95.0 .venv/bin/python bench/v2_vamp_pass2a.py --freeze 6aea6eecf76a173d7ebdf548104aaec854b6b6c7 --deadline 1791643800",
   " 2.7 claude --dangerously-skip-permissions",
-  " 2.5 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-  " 2.1 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-  " 1.9 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
+  " 2.5 ~/.local/bin/claude --dangerously-skip-permissions",
+  " 2.1 ~/.local/bin/claude --dangerously-skip-permissions",
+  " 1.9 ~/.local/bin/claude --dangerously-skip-permissions"
  ],
  "slowdown": {
   "heldout": {

@@ -22,7 +22,8 @@ from v2_vamp_pass1 import SETS, run_one
 ap = argparse.ArgumentParser(); ap.add_argument("--freeze", required=True); ap.add_argument("--deadline", type=float, default=0)
 ap.add_argument("--sets", nargs="+", default=["heldout", "mbm", "mpinets"]); ap.add_argument("--check-out", default="results/v2/pass2a_check.json")
 a = ap.parse_args()
-load = subprocess.run(["ps", "-eo", "pcpu,args", "--sort=-pcpu"], capture_output=True, text=True).stdout.splitlines()[1:8]
+load = [l.replace(__import__("os").path.expanduser("~") + "/", "~/")  # no home paths in committed results
+       for l in subprocess.run(["ps", "-eo", "pcpu,args", "--sort=-pcpu"], capture_output=True, text=True).stdout.splitlines()[1:8]]
 check = {"top_processes_at_start": load, "slowdown": {}, "killed_sample": []}
 for s in a.sets:
     vm, pk, key = SETS[s]; probs = pickle.load(open(ROOT / pk, "rb"))["problems"][key]

@@ -1,6 +1,6 @@
 {
  "cmd": [
-  "/home/jetson3/projects/curobo_berkeley/venv/bin/python",
+  "~/projects/curobo_berkeley/venv/bin/python",
   "bench/curobo_mbm.py",
   "--robot",
   "panda",
@@ -36,12 +36,12 @@
   "max": 86.843
  },
  "top_processes_at_start": [
-  "37.9 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_state --arm so101 --stiffness stiff --cond pos --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_pos_act_state_s0.json",
-  "11.0 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-  " 8.5 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-  " 6.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-  " 4.0 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+  "37.9 ~/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_state --arm so101 --stiffness stiff --cond pos --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_pos_act_state_s0.json",
+  "11.0 ~/.local/bin/claude --dangerously-skip-permissions",
+  " 8.5 ~/.local/bin/claude --dangerously-skip-permissions",
+  " 6.6 ~/.local/bin/claude --dangerously-skip-permissions",
+  " 4.0 ~/.local/bin/claude --dangerously-skip-permissions",
   " 3.1 claude --dangerously-skip-permissions",
-  " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789"
+  " 1.8 ~/.nvm/versions/node/v24.15.0/bin/node ~/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789"
  ]
 }

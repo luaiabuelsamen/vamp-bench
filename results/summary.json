@@ -77,13 +77,13 @@
       "max": 74.437
      },
      "top_processes_at_start": [
-      "35.9 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
-      " 5.7 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      "35.9 ~/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
+      " 5.7 ~/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 ~/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 ~/.local/bin/claude --dangerously-skip-permissions",
       " 3.1 claude --dangerously-skip-permissions",
-      " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
-      " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
+      " 1.8 ~/.nvm/versions/node/v24.15.0/bin/node ~/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
+      " 1.6 ~/.local/bin/claude --dangerously-skip-permissions"
      ]
     },
     "settings": null,
@@ -162,7 +162,7 @@
     },
     "power": {
      "cmd": [
-      "/home/jetson3/projects/curobo_berkeley/venv/bin/python",
+      "~/projects/curobo_berkeley/venv/bin/python",
       "bench/curobo_mbm.py",
       "--robot",
       "panda",
@@ -203,8 +203,8 @@
       "68.3 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
       "68.3 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
       "68.3 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "65.9 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork",
-      "65.6 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork"
+      "65.9 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork",
+      "65.6 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork"
      ]
     },
     "settings": {
@@ -559,7 +559,7 @@
     },
     "power": {
      "cmd": [
-      "/home/jetson3/projects/clean_env/venv/bin/python",
+      "~/projects/clean_env/venv/bin/python",
       "bench/curobo2_mbm.py",
       "--robot",
       "panda",
@@ -606,8 +606,8 @@
       "84.6 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
       "84.6 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
       "84.6 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "49.5 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
-      "48.7 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
+      "49.5 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
+      "48.7 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
      ]
     },
     "settings": {
@@ -868,13 +868,13 @@
       "max": 74.562
      },
      "top_processes_at_start": [
-      "35.9 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
-      " 5.7 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      "35.9 ~/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
+      " 5.7 ~/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 ~/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 ~/.local/bin/claude --dangerously-skip-permissions",
       " 3.1 claude --dangerously-skip-permissions",
-      " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
-      " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
+      " 1.8 ~/.nvm/versions/node/v24.15.0/bin/node ~/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
+      " 1.6 ~/.local/bin/claude --dangerously-skip-permissions"
      ]
     },
     "settings": null,
@@ -953,7 +953,7 @@
     },
     "power": {
      "cmd": [
-      "/home/jetson3/projects/curobo_berkeley/venv/bin/python",
+      "~/projects/curobo_berkeley/venv/bin/python",
       "bench/curobo_mbm.py",
       "--robot",
       "ur5",
@@ -994,8 +994,8 @@
       "99.7 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
       "99.7 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
       "99.7 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
-      "32.4 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
-      "31.9 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
+      "32.4 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
+      "31.9 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
      ]
     },
     "settings": {
@@ -2394,7 +2394,7 @@
     },
     "power": {
      "cmd": [
-      "/home/jetson3/projects/clean_env/venv/bin/python",
+      "~/projects/clean_env/venv/bin/python",
       "bench/curobo2_mbm.py",
       "--robot",
       "ur5",
@@ -2441,8 +2441,8 @@
       " 101 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
       " 100 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
       " 100 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
-      "29.1 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
-      "28.7 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
+      "29.1 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
+      "28.7 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
      ]
     },
     "settings": {
@@ -2785,13 +2785,13 @@
       "max": 77.687
      },
      "top_processes_at_start": [
-      "35.9 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
-      " 5.7 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      "35.9 ~/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
+      " 5.7 ~/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 ~/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 ~/.local/bin/claude --dangerously-skip-permissions",
       " 3.1 claude --dangerously-skip-permissions",
-      " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
-      " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
+      " 1.8 ~/.nvm/versions/node/v24.15.0/bin/node ~/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
+      " 1.6 ~/.local/bin/claude --dangerously-skip-permissions"
      ]
     },
     "settings": null,
@@ -2860,7 +2860,7 @@
     },
     "power": {
      "cmd": [
-      "/home/jetson3/projects/curobo_berkeley/venv/bin/python",
+      "~/projects/curobo_berkeley/venv/bin/python",
       "bench/curobo_mbm.py",
       "--robot",
       "ur5e_rail",
@@ -2909,8 +2909,8 @@
       "98.2 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
       "98.2 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
       "98.2 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
-      "34.7 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
-      "34.2 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
+      "34.7 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
+      "34.2 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
      ]
     },
     "settings": {
@@ -3125,7 +3125,7 @@
     },
     "power": {
      "cmd": [
-      "/home/jetson3/projects/clean_env/venv/bin/python",
+      "~/projects/clean_env/venv/bin/python",
       "bench/curobo2_mbm.py",
       "--robot",
       "ur5e_rail",
@@ -3178,8 +3178,8 @@
       "85.0 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
       "82.9 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
       "81.5 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "43.3 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
-      "42.6 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
+      "43.3 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
+      "42.6 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
      ]
     },
     "settings": {
@@ -3394,13 +3394,13 @@
       "max": 78.468
      },
      "top_processes_at_start": [
-      "36.1 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
-      " 5.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      "36.1 ~/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
+      " 5.6 ~/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 ~/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 ~/.local/bin/claude --dangerously-skip-permissions",
       " 3.1 claude --dangerously-skip-permissions",
-      " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
-      " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
+      " 1.8 ~/.nvm/versions/node/v24.15.0/bin/node ~/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
+      " 1.6 ~/.local/bin/claude --dangerously-skip-permissions"
      ]
     },
     "settings": null,
@@ -3455,7 +3455,7 @@
     },
     "power": {
      "cmd": [
-      "/home/jetson3/projects/curobo_berkeley/venv/bin/python",
+      "~/projects/curobo_berkeley/venv/bin/python",
       "bench/curobo_mbm.py",
       "--robot",
       "ur5e_rail",
@@ -3504,8 +3504,8 @@
       "99.3 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
       "99.3 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
       "99.3 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
-      "33.1 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
-      "32.6 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
+      "33.1 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
+      "32.6 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
      ]
     },
     "settings": {
@@ -3579,7 +3579,7 @@
     },
     "power": {
      "cmd": [
-      "/home/jetson3/projects/clean_env/venv/bin/python",
+      "~/projects/clean_env/venv/bin/python",
       "bench/curobo2_mbm.py",
       "--robot",
       "ur5e_rail",
@@ -3632,8 +3632,8 @@
       "84.1 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
       "82.1 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
       "80.7 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "42.8 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
-      "42.1 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
+      "42.8 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
+      "42.1 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
      ]
     },
     "settings": {
@@ -3824,13 +3824,13 @@
       "max": 78.843
      },
      "top_processes_at_start": [
-      "36.1 /home/jetson3/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
-      " 5.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
-      " 3.3 /home/jetson3/.local/bin/claude --dangerously-skip-permissions",
+      "36.1 ~/projects/clean_env/venv/bin/python scripts/train_local.py --state-only --demos outputs/demos/so101_stiff_human_v2_state --arm so101 --stiffness stiff --cond poshist --kind act --seed 0 --steps 10000 --batch 64 --episodes 100 --workers 6 --out results/local/so101_stiff_poshist_act_state_s0.json",
+      " 5.6 ~/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 ~/.local/bin/claude --dangerously-skip-permissions",
+      " 3.3 ~/.local/bin/claude --dangerously-skip-permissions",
       " 3.1 claude --dangerously-skip-permissions",
-      " 1.8 /home/jetson3/.nvm/versions/node/v24.15.0/bin/node /home/jetson3/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
-      " 1.6 /home/jetson3/.local/bin/claude --dangerously-skip-permissions"
+      " 1.8 ~/.nvm/versions/node/v24.15.0/bin/node ~/.nvm/versions/node/v24.15.0/lib/node_modules/openclaw/dist/index.js gateway --port 18789",
+      " 1.6 ~/.local/bin/claude --dangerously-skip-permissions"
      ]
     },
     "settings": null,
@@ -3885,7 +3885,7 @@
     },
     "power": {
      "cmd": [
-      "/home/jetson3/projects/curobo_berkeley/venv/bin/python",
+      "~/projects/curobo_berkeley/venv/bin/python",
       "bench/curobo_mbm.py",
       "--robot",
       "ur5e",
@@ -3934,8 +3934,8 @@
       "99.4 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
       "99.4 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
       "99.4 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96",
-      "32.9 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
-      "32.4 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
+      "32.9 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork",
+      "32.4 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=66) --multiprocessing-fork"
      ]
     },
     "settings": {
@@ -4093,7 +4093,7 @@
     },
     "power": {
      "cmd": [
-      "/home/jetson3/projects/clean_env/venv/bin/python",
+      "~/projects/clean_env/venv/bin/python",
       "bench/curobo2_mbm.py",
       "--robot",
       "ur5e",
@@ -4146,8 +4146,8 @@
       "83.8 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
       "81.8 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
       "80.4 python scripts/collect_local.py --arm so101 --stiffness stiff --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_stiff_human_v2_img96",
-      "56.0 /home/jetson3/venvs/kaggle/bin/python3.12 /home/jetson3/venvs/kaggle/bin/kaggle kernels status luaiabuelsamen/contact-insertion-smoke-test",
-      "42.7 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork"
+      "56.0 ~/venvs/kaggle/bin/python3.12 ~/venvs/kaggle/bin/kaggle kernels status luaiabuelsamen/contact-insertion-smoke-test",
+      "42.7 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=60, pipe_handle=64) --multiprocessing-fork"
      ]
     },
     "settings": {

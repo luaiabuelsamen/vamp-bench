@@ -4,9 +4,9 @@ start-state: 10-07-2026 22:13:49 RAM 8909/15656MB (lfb 23x4MB) SWAP 4673/7828MB 
 22:13 GPU idle 10 min; starting slot 2
 other job running: 606877 python scripts/collect_local.py --arm so101 --stiffness compliant --per-clearance 100 --human --image-size 96 --jpeg --workers 5 --out outputs/demos/so101_compliant_human_v2_img96
 Traceback (most recent call last):
-  File "/home/jetson3/projects/vamp-bench/bench/verify_v2_collisions.py", line 78, in <module>
+  File "~/projects/vamp-bench/bench/verify_v2_collisions.py", line 78, in <module>
     v_ok = np.array([vmod.validate(x.tolist(), env0) for x in qr]); c_ok = v2_check(chk0, qr)[0]
-  File "/home/jetson3/projects/vamp-bench/bench/verify_v2_collisions.py", line 53, in v2_check
+  File "~/projects/vamp-bench/bench/verify_v2_collisions.py", line 53, in v2_check
     return (d_scene <= 0) & (d_self <= 0), d_scene, d_self
 ValueError: operands could not be broadcast together with shapes (236000,) (4000,) 
 22:14 FAILED verify

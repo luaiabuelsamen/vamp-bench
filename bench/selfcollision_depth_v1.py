@@ -15,6 +15,7 @@ from curobo.types.base import TensorDeviceType
 from curobo.util_file import load_yaml
 from curobo.wrap.model.robot_world import RobotWorld, RobotWorldConfig
 from mbm_world import problem_to_world
+from robot_cfg import load_robot_cfg
 
 ROOT = Path(__file__).resolve().parents[1]
 TA = TensorDeviceType()
@@ -22,7 +23,7 @@ probs = pickle.load(open(ROOT / "third_party/vamp/resources/ur5/problems.pkl", "
 raw = json.load(open(ROOT / "results/raw/curobo_mbm_ur5.json"))["records"]
 pdep = json.load(open(ROOT / "results/penetration_depth.json"))["curobo_mbm_ur5"]
 obst = {tuple(k[:3]): d for k, d in zip(pdep["keys"], pdep["depth_mm"])}
-cfg = load_yaml(str(ROOT / "configs/ur5_vamp_spheres.yml"))["robot_cfg"]
+cfg = load_robot_cfg("configs/ur5_vamp_spheres.yml")
 flagged = [r for r in raw if r.get("success") and r.get("vamp_validated") is False]
 
 rows = []

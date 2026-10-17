@@ -1,7 +1,19 @@
+##
+## Copyright (c) 2023 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+##
+## NVIDIA CORPORATION, its affiliates and licensors retain all intellectual
+## property and proprietary rights in and to this material, related
+## documentation and any modifications thereto. Any use, reproduction,
+## disclosure or distribution of this material and related documentation
+## without an express license agreement from NVIDIA CORPORATION or
+## its affiliates is strictly prohibited.
+##
+## Derived from cuRobo's robot configs (NVlabs/curobo); distributed under the NVIDIA License, licenses/NVIDIA_cuRobo_LICENSE.txt.
+## Non-commercial (research or evaluation) use only. See THIRD_PARTY.md.
 robot_cfg:
   kinematics:
-    urdf_path: /home/jetson3/projects/vamp-bench/configs/ur5e_spherized.urdf
-    asset_root_path: /home/jetson3/projects/vamp-bench/configs
+    urdf_path: configs/ur5e_spherized.urdf
+    asset_root_path: configs
     base_link: base_link
     lock_joints: null
     extra_links: null

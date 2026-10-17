@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-17 (public release preparation)
+- **No home-directory paths in the repository.** Robot configs now give `urdf_path` and `asset_root_path` relative to the repository root. `bench/robot_cfg.py` makes them absolute at load time, and every script that loads a robot config uses it. The loaded configs are identical to before for all 12 files. The config writers (`bench/v2_curobo_configs.py`, `bench/curobo_to_spherized.py`) write relative paths. In committed logs and result files, the home-directory prefix is replaced by `~`. This affects only path strings, such as process lists and tracebacks, never a number. `bench/powerlog.py` and `bench/v2_vamp_pass2a.py` now record process lists that way. Two watchdogs match the PyRoki process by `$PWD` instead of a fixed path. Older commits still contain the original paths. History is not rewritten, because the freeze commit `6aea6eec` is cited by hash and seeds the runs.
+- **Licences of third-party material.** Added `THIRD_PARTY.md` and `licenses/` (cuRobo's NVIDIA License, VAMP's Apache 2.0, MIT for robometrics and Cricket). The cuRobo-derived UR5e configs carry NVIDIA's notice as a header comment. Comments only, so the loaded configs are unchanged.
+
 ## 2026-10-15 (technical report)
 - **Technical report PDF:** `report/vamp_bench_report.pdf`, built from `report/vamp_bench_report.tex`. No new runs.
   - Every number comes from the committed result files through `report/make_numbers.py`, which writes `report/generated/`.

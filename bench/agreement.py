@@ -11,6 +11,7 @@ from curobo.types.base import TensorDeviceType
 from curobo.util_file import load_yaml
 from curobo.wrap.model.robot_world import RobotWorld, RobotWorldConfig
 from mbm_world import problem_to_world
+from robot_cfg import load_robot_cfg
 
 ROOT = Path(__file__).resolve().parents[1]
 TA = TensorDeviceType()
@@ -23,7 +24,7 @@ rng = np.random.default_rng(0)
 for mod, cfgname, pk, scene in CASES:
     p = next(x for x in pickle.load(open(pk, "rb"))["problems"][scene] if x["valid"])
     vm = getattr(vamp, mod); env = vamp.problem_dict_to_vamp(p)
-    cfg = load_yaml(str(ROOT / f"configs/{cfgname}.yml"))["robot_cfg"]
+    cfg = load_robot_cfg(f"configs/{cfgname}.yml")
     rw = RobotWorld(RobotWorldConfig.load_from_config(cfg, problem_to_world(p), collision_activation_distance=0.0,
                                                       collision_checker_type=__import__("curobo.geom.sdf.world", fromlist=["x"]).CollisionCheckerType.MESH))
     lo, hi = np.array(vm.lower_bounds()) if hasattr(vm, "lower_bounds") else None, None

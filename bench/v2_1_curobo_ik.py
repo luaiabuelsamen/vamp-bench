@@ -29,6 +29,7 @@ from curobo.types.base import TensorDeviceType
 from curobo.types.math import Pose
 from curobo.types.robot import RobotConfig
 from curobo.wrap.reacher.ik_solver import IKSolver, IKSolverConfig
+from robot_cfg import load_robot_cfg
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--freeze", required=True); ap.add_argument("--limit", type=int, default=0)
@@ -37,7 +38,7 @@ a = ap.parse_args()
 VM = "ur5erail"; N_SEEDS = 64
 probs = pickle.load(open(ROOT / "problems/v2_heldout_a6.pkl", "rb"))["problems"]["v2_heldout_a6"]
 pp = pickle.load(open(ROOT / "problems/v2_pickplace.pkl", "rb"))["cells"]
-robot = RobotConfig.from_dict(yaml.safe_load(open(ROOT / "configs/v2/ur5e_rail_v1.yml"))["robot_cfg"])
+robot = RobotConfig.from_dict(load_robot_cfg("configs/v2/ur5e_rail_v1.yml"))
 seed = seed_from(a.freeze, "seed0") % (2 ** 31)
 ta = TensorDeviceType()
 OUT = ROOT / "results/v2_1/raw"; OUT.mkdir(parents=True, exist_ok=True)

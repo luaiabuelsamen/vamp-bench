@@ -26,7 +26,7 @@ a = ap.parse_args()
 P = yaml.safe_load(open(ROOT / "configs/v2_planners.yaml"))
 probs = pickle.load(open(ROOT / "problems/v2_heldout_a6.pkl", "rb"))["problems"]["v2_heldout_a6"]
 idx = list(range(len(probs)))[: a.limit or None]
-robot = yaml.safe_load(open(ROOT / "configs/v2/ur5e_rail_v1.yml"))["robot_cfg"]
+robot = load_robot_cfg("configs/v2/ur5e_rail_v1.yml")
 seed = seed_from(a.freeze, "seed0")
 OUT = ROOT / "results/v2_1/raw"; OUT.mkdir(parents=True, exist_ok=True)
 meta_f = OUT / "curobo1_seeds_heldout_a6.jsonl"; npz_dir = OUT / "curobo1_seeds_heldout_a6"; npz_dir.mkdir(exist_ok=True)
@@ -36,6 +36,7 @@ done = {json.loads(l)["q"] for l in open(meta_f)} if meta_f.exists() else set()
 from curobo.geom.sdf.world import CollisionCheckerType
 from curobo.types.robot import JointState
 from curobo.wrap.reacher.motion_gen import MotionGen, MotionGenConfig, MotionGenPlanConfig
+from robot_cfg import load_robot_cfg
 
 S = P["curobo_v1"]["settings"]
 cfg = MotionGenConfig.load_from_robot_config(

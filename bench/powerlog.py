@@ -7,7 +7,8 @@ and the other heavy processes on the machine at start, so contention is visible 
 import json, re, subprocess, sys, time, statistics as st
 
 out = sys.argv[1]; cmd = sys.argv[sys.argv.index("--") + 1:]
-others = subprocess.run(["ps", "-eo", "pcpu,args", "--sort=-pcpu"], capture_output=True, text=True).stdout.splitlines()[1:8]
+others = [l.replace(__import__("os").path.expanduser("~") + "/", "~/")  # no home paths in committed results
+         for l in subprocess.run(["ps", "-eo", "pcpu,args", "--sort=-pcpu"], capture_output=True, text=True).stdout.splitlines()[1:8]]
 tg = subprocess.Popen(["tegrastats", "--interval", "250"], stdout=subprocess.PIPE, text=True)
 t0 = time.time(); rc = None
 samples = []

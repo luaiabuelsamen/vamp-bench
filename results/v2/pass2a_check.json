@@ -1,7 +1,7 @@
 {
  "top_processes_at_start": [
-  " 133 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=8, pipe_handle=14) --multiprocessing-fork",
-  " 124 /home/jetson3/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=8, pipe_handle=12) --multiprocessing-fork",
+  " 133 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=8, pipe_handle=14) --multiprocessing-fork",
+  " 124 ~/projects/clean_env/venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=8, pipe_handle=12) --multiprocessing-fork",
   "99.5 .venv/bin/python bench/v2_vamp_pass2a.py --freeze 6aea6eecf76a173d7ebdf548104aaec854b6b6c7 --deadline 1791730200",
   "95.3 .venv/bin/python bench/v2_feasibility_par.py --freeze 6aea6eecf76a173d7ebdf548104aaec854b6b6c7 --workers 2 --max-workers 6",
   "93.2 .venv/bin/python bench/v2_feasibility_par.py --freeze 6aea6eecf76a173d7ebdf548104aaec854b6b6c7 --workers 2 --max-workers 6",
