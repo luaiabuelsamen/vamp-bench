@@ -97,8 +97,7 @@ M("curoboTwoCommit", vers(PLN["curobo_v2"]["version"]))
 M("curoboOneVersion", re.search(r"\((v[^)]*)\)", PLN["curobo_v1"]["version"]).group(1))
 M("curoboTwoVersion", re.search(r"\((v[^)]*)\)", PLN["curobo_v2"]["version"]).group(1))
 M("freezeHash", PROG["freeze"][:12])
-head = subprocess.run(["git", "-C", str(ROOT), "log", "-1", "--format=%cs"], capture_output=True, text=True).stdout.strip()
-M("reportDate", head)
+M("reportDate", "2026-10-15")  # date of the report's content; change it when the report is revised (was: last commit date)
 
 # ---------------------------------------------------------------- v1
 agree = V1["collision_model_agreement"]

@@ -1,4 +1,4 @@
-"""Every count and time in README.md and docs/EMAIL_NOTES.md must exist in results/summary.json (STANDARD #7);
+"""Every count and time in README.md (and in any extra Markdown files given as arguments) must exist in results/summary.json (STANDARD #7);
 in sections whose heading contains "v2", in the v2 result files (V2_FILES).
 
 Checks:
@@ -111,7 +111,7 @@ def check_v2(doc, ln, line, bad):
 
 
 bad = []
-for doc in ("README.md", "docs/EMAIL_NOTES.md"):
+for doc in ("README.md", *sys.argv[1:]):
     text = (ROOT / doc).read_text()
     v2 = False
     for ln, line in enumerate(text.splitlines(), 1):
@@ -165,6 +165,6 @@ if pdf.exists():
         bad.append(f"report/vamp_bench_report.pdf: number {tok} not generated from the result files")
 else:
     bad.append("report/vamp_bench_report.pdf missing (cd report && latexmk -pdf vamp_bench_report.tex)")
-print("\n".join(bad) if bad else "consistent: every count and time in README.md and docs/EMAIL_NOTES.md is in results/summary.json"
+print("\n".join(bad) if bad else "consistent: every count and time in " + ", ".join(("README.md", *sys.argv[1:])) + " is in results/summary.json"
       " (v2 sections: in the v2 result files); the report's numbers are all generated from the result files")
 sys.exit(1 if bad else 0)

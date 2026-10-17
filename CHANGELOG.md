@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-17 (licence; internal notes removed)
+- **Licence:** MIT (`LICENSE`) for this repository's own code and documents. Third-party material keeps its own licence (`THIRD_PARTY.md`).
+- **`docs/EMAIL_NOTES.md` removed** from the repository. It held drafting notes for correspondence and is now kept outside it. It is still in the history. `bench/check_consistency.py` checks README.md by default, plus any Markdown files given as arguments.
+- **`STATUS.md`** no longer describes the machine's operating setup.
+- **Report date** is now fixed at the date of the report's content (2026-10-15) instead of the last commit's date, which made the report fail the consistency check after any later commit. The PDF was rebuilt, and its text is unchanged.
+
 ## 2026-10-17 (public release preparation)
 - **No home-directory paths in the repository.** Robot configs now give `urdf_path` and `asset_root_path` relative to the repository root. `bench/robot_cfg.py` makes them absolute at load time, and every script that loads a robot config uses it. The loaded configs are identical to before for all 12 files. The config writers (`bench/v2_curobo_configs.py`, `bench/curobo_to_spherized.py`) write relative paths. In committed logs and result files, the home-directory prefix is replaced by `~`. This affects only path strings, such as process lists and tracebacks, never a number. `bench/powerlog.py` and `bench/v2_vamp_pass2a.py` now record process lists that way. Two watchdogs match the PyRoki process by `$PWD` instead of a fixed path. Older commits still contain the original paths. History is not rewritten, because the freeze commit `6aea6eec` is cited by hash and seeds the runs.
 - **Licences of third-party material.** Added `THIRD_PARTY.md` and `licenses/` (cuRobo's NVIDIA License, VAMP's Apache 2.0, MIT for robometrics and Cricket). The cuRobo-derived UR5e configs carry NVIDIA's notice as a header comment. Comments only, so the loaded configs are unchanged.

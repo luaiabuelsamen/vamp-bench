@@ -58,7 +58,7 @@ So on this board, VAMP on one of the 8 CPU cores is about 500x faster than cuRob
 
 ## All problem sets
 
-Wall-clock time per query; median, with p95 in parentheses. **Solved** means the planner reported success. This definition is used everywhere in this repo: tables, figure and `docs/EMAIL_NOTES.md`. A provisional cross-check with VAMP's checker is described below, and it does not change these counts.
+Wall-clock time per query; median, with p95 in parentheses. **Solved** means the planner reported success. This definition is used everywhere in this repo: tables and figure. A provisional cross-check with VAMP's checker is described below, and it does not change these counts.
 
 | Problem set | VAMP | cuRobo v1 | cuRoboV2 |
 |---|---|---|---|
